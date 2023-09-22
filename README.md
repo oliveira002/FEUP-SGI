@@ -1,10 +1,10 @@
 # SGI 2023/2024
 
-## Group T0xG0y
+## Group T03G02
 | Name             | Number    | E-Mail             |
 | ---------------- | --------- | ------------------ |
-| John Doe         | 201901010 | ...                |
-| Jane Doe         | 201901011 | ...                |
+| Gustavo Costa         | 202004187 | ...                |
+| João Oliveira         | 202004407 | ...                |
 
 ----
 
