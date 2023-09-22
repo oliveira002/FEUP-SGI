@@ -1,11 +1,10 @@
 # SGI 2023/2024 - TP3
 
-## Group: T0xG0y
-
+## Group T03G02
 | Name             | Number    | E-Mail             |
 | ---------------- | --------- | ------------------ |
-| John Doe         | 201901010 | ...                |
-| Jane Doe         | 201901011 | ...                |
+| Gustavo Costa         | 202004187 | up202004187@edu.fe.up.pt |
+| João Oliveira         | 202004407 | up202004407@edu.fe.up.pt |
 
 ----
 ## Project information
