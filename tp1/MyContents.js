@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { MyAxis } from './MyAxis.js';
 import { MyWalls } from './MyObjects/MyWalls.js';
+import {MyTable} from './MyObjects/MyTable.js'
 
 /**
  *  This class contains the contents of our application
@@ -87,6 +88,9 @@ class MyContents {
             this.walls = new MyWalls(this, 10, 10)
             this.app.scene.add(this.walls)
         }
+
+        this.table = new MyTable(this,3,0.1,1,1)
+        this.app.scene.add(this.table)
     }
     
     /**
@@ -136,7 +140,7 @@ class MyContents {
         if (this.boxEnabled !== this.lastBoxEnabled) {
             this.lastBoxEnabled = this.boxEnabled
             if (this.boxEnabled) {
-                this.app.scene.add(this.boxMesh)
+                //this.app.scene.add(this.boxMesh)
             }
             else {
                 this.app.scene.remove(this.boxMesh)
