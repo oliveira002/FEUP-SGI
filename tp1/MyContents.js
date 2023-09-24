@@ -1,10 +1,11 @@
 import * as THREE from 'three';
 import { MyAxis } from './MyAxis.js';
+import { MyWalls } from './MyObjects/MyWalls.js';
 
 /**
- *  This class contains the contents of out application
+ *  This class contains the contents of our application
  */
-class MyContents  {
+class MyContents {
 
     /**
        constructs the object
@@ -13,6 +14,7 @@ class MyContents  {
     constructor(app) {
         this.app = app
         this.axis = null
+        this.walls = null
 
         // box related attributes
         this.boxMesh = null
@@ -22,11 +24,12 @@ class MyContents  {
         this.boxDisplacement = new THREE.Vector3(0,2,0)
 
         // plane related attributes
-        this.diffusePlaneColor = "#00ffff"
+        this.diffusePlaneColor = "#d3d3d3"
         this.specularPlaneColor = "#777777"
         this.planeShininess = 30
         this.planeMaterial = new THREE.MeshPhongMaterial({ color: this.diffusePlaneColor, 
-            specular: this.diffusePlaneColor, emissive: "#000000", shininess: this.planeShininess })
+            specular: this.specularPlaneColor, emissive: "#000000", shininess: this.planeShininess })
+
     }
 
     /**
@@ -72,12 +75,18 @@ class MyContents  {
         this.buildBox()
         
         // Create a Plane Mesh with basic material
-        
         let plane = new THREE.PlaneGeometry( 10, 10 );
         this.planeMesh = new THREE.Mesh( plane, this.planeMaterial );
         this.planeMesh.rotation.x = -Math.PI / 2;
         this.planeMesh.position.y = -0;
         this.app.scene.add( this.planeMesh );
+        
+        // Create the walls
+        if (this.walls === null) {
+            // create and attach the walls to the scene
+            this.walls = new MyWalls(this, 10, 10)
+            this.app.scene.add(this.walls)
+        }
     }
     
     /**
@@ -121,7 +130,7 @@ class MyContents  {
     /**
      * updates the box mesh if required
      * this method is called from the render method of the app
-     * updates are trigered by boxEnabled property changes
+     * updates are triggered by boxEnabled property changes
      */
     updateBoxIfRequired() {
         if (this.boxEnabled !== this.lastBoxEnabled) {
