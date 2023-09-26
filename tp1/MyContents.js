@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { MyAxis } from './MyAxis.js';
 import { MyWalls } from './MyObjects/MyWalls.js';
 import {MyTable} from './MyObjects/MyTable.js'
+import { MyPlate } from './MyObjects/MyPlate.js';
 
 /**
  *  This class contains the contents of our application
@@ -90,7 +91,9 @@ class MyContents {
         }
 
         this.table = new MyTable(this,3,0.1,1,1)
+        this.plate = new MyPlate(this,0.32,0.2)
         this.app.scene.add(this.table)
+        this.app.scene.add(this.plate)
     }
     
     /**
