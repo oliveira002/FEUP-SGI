@@ -4,6 +4,7 @@ import { MyWalls } from './MyObjects/MyWalls.js';
 import {MyTable} from './MyObjects/MyTable.js'
 import { MyPlate } from './MyObjects/MyPlate.js';
 import { MyCake } from './MyObjects/MyCake.js';
+import { MyCandle } from './MyObjects/MyCandle.js';
 
 /**
  *  This class contains the contents of our application
@@ -23,6 +24,7 @@ class MyContents {
         this.table = null
         this.plate = null
         this.cake = null
+        this.candle = null
 
         // box related attributes
         this.boxMesh = null
@@ -49,6 +51,8 @@ class MyContents {
 
         // cake related attributes
         this.cakeHeight = null
+        this.cakeRadius = null
+        this.cakeSliceSize = null
     }
 
     /**
@@ -74,7 +78,7 @@ class MyContents {
         if (this.axis === null) {
             // create and attach the axis to the scene
             this.axis = new MyAxis(this)
-            this.app.scene.add(this.axis)
+            //this.app.scene.add(this.axis)
         }
 
         // add a point light on top of the model
@@ -131,6 +135,14 @@ class MyContents {
             this.cake = new MyCake(this, this.cakeRadius, this.cakeHeight, this.cakeSliceSize)
             this.cake.translateY((this.tableHeight+this.plateHeight+this.cakeHeight/2))
             this.app.scene.add(this.cake)
+        }
+
+        if(this.candle === null){
+            this.candleRadius = 0.025
+            this.candleHeight = this.candleRadius * 8
+            this.candle = new MyCandle(this, this.candleRadius, this.candleHeight)
+            this.candle.translateY((this.tableHeight+this.plateHeight+this.cakeHeight+this.candleHeight/2))
+            this.app.scene.add(this.candle)
         }
         
     }

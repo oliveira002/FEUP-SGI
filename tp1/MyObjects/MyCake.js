@@ -10,7 +10,7 @@ class MyCake extends THREE.Object3D {
      * 
      * @param {MyApp} app the application object
      * @param {number} radius the radius of the cake. Default is `0.8`
-     * @param {number} height the height of the plate. Default is `radius/2`
+     * @param {number} height the height of the cake. Default is `radius/2`
      * @param {number} sliceSize the size (radians) of the missing slice. Default is `PI/4`
      * @param {number} diffuseCakeColor the diffuse component of the cake's color. Default `#eb8a52`
      * @param {number} specularCakeColor the specular component of the cake's color. Default `#777777`
