@@ -4,7 +4,7 @@ import { MyWalls } from './MyObjects/MyWalls.js';
 import {MyTable} from './MyObjects/MyTable.js'
 import { MyPlate } from './MyObjects/MyPlate.js';
 import { MyCake } from './MyObjects/MyCake.js';
-
+import { MyChair } from './MyObjects/MyChair.js';
 /**
  *  This class contains the contents of our application
  */
@@ -23,6 +23,7 @@ class MyContents {
         this.table = null
         this.plate = null
         this.cake = null
+        this.chair = null
 
         // box related attributes
         this.boxMesh = null
@@ -42,6 +43,11 @@ class MyContents {
         this.tableWidth = null
         this.tableLength = null
         this.tableHeight = null
+
+        // table related attributes
+        this.chairWidth = null
+        this.chairLength = null
+        this.chairHeight = null
             
         // plate related attributes
         this.plateRadius = null
@@ -132,6 +138,18 @@ class MyContents {
             this.cake.translateY((this.tableHeight+this.plateHeight+this.cakeHeight/2))
             this.app.scene.add(this.cake)
         }
+
+        if(this.chair === null) {
+            this.chairWidth = 0.65
+            this.chairLength = 0.65
+            this.chairHeight = 0.85
+            this.chair = new MyChair(this, this.chairWidth, this.chairLength, this.chairHeight)
+            this.chair.translateY(this.chairHeight/2)
+            this.chair.translateZ(-this.tableLength/2)
+            this.app.scene.add(this.chair)
+        }
+
+
         
     }
     
