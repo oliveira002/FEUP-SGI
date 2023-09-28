@@ -31,9 +31,23 @@ class MyCake extends THREE.Object3D {
             specular: this.specularCakeColor, emissive: "#000000", shininess: this.cakeShininess })
 
         let cake = new THREE.CylinderGeometry(this.radius, this.radius, this.height, 32, 1, false, 0, (2*Math.PI - this.sliceSize))
+        let cake_inside = new THREE.PlaneGeometry(this.radius, this.height)
         
+        // cake
         this.cakeMesh = new THREE.Mesh(cake, this.cakeMaterial)
         this.add( this.cakeMesh );
+
+        // left inside part
+        this.leftInsideMesh = new THREE.Mesh(cake_inside, this.cakeMaterial)
+        this.leftInsideMesh.rotateY(this.sliceSize)
+        this.leftInsideMesh.translateX(-this.radius/2)
+        this.add( this.leftInsideMesh )
+
+        // right inside part
+        this.rightInsideMesh = new THREE.Mesh(cake_inside, this.cakeMaterial)
+        this.rightInsideMesh.rotateY(-Math.PI/2)
+        this.rightInsideMesh.translateX(this.radius/2)
+        this.add( this.rightInsideMesh )
         
     }
 }
