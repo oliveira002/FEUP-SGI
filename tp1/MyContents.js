@@ -24,8 +24,8 @@ class MyContents {
         this.table = null
         this.plate = null
         this.cake = null
-        this.chair = null
         this.candle = null
+        this.chair = null
 
         // box related attributes
         this.boxMesh = null
@@ -59,6 +59,15 @@ class MyContents {
         this.cakeHeight = null
         this.cakeRadius = null
         this.cakeSliceSize = null
+
+        // candle related attributes
+        this.candleRadius = null
+        this.candleHeight = null
+        
+        // chair related attributes
+        this.chairWidth = null
+        this.chairLength = null
+        this.chairHeight = null
     }
 
     /**
@@ -143,6 +152,14 @@ class MyContents {
             this.app.scene.add(this.cake)
         }
 
+        if(this.candle === null){
+            this.candleRadius = 0.025
+            this.candleHeight = this.candleRadius * 8
+            this.candle = new MyCandle(this, this.candleRadius, this.candleHeight)
+            this.candle.translateY((this.tableHeight+this.plateHeight+this.cakeHeight+this.candleHeight/2))
+            this.app.scene.add(this.candle)
+        }
+
         if(this.chair === null) {
             this.chairWidth = 0.65
             this.chairLength = 0.65
@@ -153,16 +170,6 @@ class MyContents {
             this.app.scene.add(this.chair)
         }
 
-
-
-        if(this.candle === null){
-            this.candleRadius = 0.025
-            this.candleHeight = this.candleRadius * 8
-            this.candle = new MyCandle(this, this.candleRadius, this.candleHeight)
-            this.candle.translateY((this.tableHeight+this.plateHeight+this.cakeHeight+this.candleHeight/2))
-            this.app.scene.add(this.candle)
-        }
-        
     }
     
     /**
