@@ -9,9 +9,11 @@ class MyWalls extends THREE.Object3D {
     /**
      * 
      * @param {MyApp} app the application object
-     * @param {number} height the height of the wall
-     * @param {number} floor_length the distance of each wall to the center of the room 
-     * @param {number} color the hexadecimal representation of the walls' color
+     * @param {number} height the height of the wall. Default is `1`
+     * @param {number} floor_length the distance of each wall to the center of the room. Default is `1`
+     * @param {number} diffuseWallColor the diffuse component of the wall's color. Default `#fdfd96`
+     * @param {number} specularWallColor the specular component of the wall's color. Default `#777777`
+     * @param {number} wallShininess the shininess component of the wall's color. Default `30`
      */
     constructor(app, height, floor_length, diffuseWallColor, specularWallColor, wallShininess) {
         super();
@@ -19,7 +21,7 @@ class MyWalls extends THREE.Object3D {
         this.type = 'Group';
         this.height = height || 1
         this.floor_length = floor_length || 1;
-        this.diffuseWallColor = diffuseWallColor || "#c4a484"
+        this.diffuseWallColor = diffuseWallColor || "#fdfd96"
         this.specularWallColor = specularWallColor || "#777777"
         this.wallShininess = wallShininess || 30
 

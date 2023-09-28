@@ -3,6 +3,7 @@ import { MyAxis } from './MyAxis.js';
 import { MyWalls } from './MyObjects/MyWalls.js';
 import {MyTable} from './MyObjects/MyTable.js'
 import { MyPlate } from './MyObjects/MyPlate.js';
+import { MyCake } from './MyObjects/MyCake.js';
 
 /**
  *  This class contains the contents of our application
@@ -14,9 +15,14 @@ class MyContents {
        @param {MyApp} app The application object
     */ 
     constructor(app) {
+        
+        // objects
         this.app = app
         this.axis = null
         this.walls = null
+        this.table = null
+        this.plate = null
+        this.cake = null
 
         // box related attributes
         this.boxMesh = null
@@ -26,12 +32,23 @@ class MyContents {
         this.boxDisplacement = new THREE.Vector3(0,2,0)
 
         // plane related attributes
-        this.diffusePlaneColor = "#d3d3d3"
+        this.diffusePlaneColor = "#C19A6B"
         this.specularPlaneColor = "#777777"
-        this.planeShininess = 30
+        this.planeShininess = 0
         this.planeMaterial = new THREE.MeshPhongMaterial({ color: this.diffusePlaneColor, 
             specular: this.specularPlaneColor, emissive: "#000000", shininess: this.planeShininess })
 
+        // table related attributes
+        this.tableWidth = null
+        this.tableLength = null
+        this.tableHeight = null
+            
+        // plate related attributes
+        this.plateRadius = null
+        this.plateHeight = null
+
+        // cake related attributes
+        this.cakeHeight = null
     }
 
     /**
@@ -83,17 +100,39 @@ class MyContents {
         this.planeMesh.position.y = -0;
         this.app.scene.add( this.planeMesh );
         
-        // Create the walls
+        // Create the objects
         if (this.walls === null) {
             // create and attach the walls to the scene
             this.walls = new MyWalls(this, 10, 10)
             this.app.scene.add(this.walls)
         }
 
-        this.table = new MyTable(this,3,0.1,1,1)
-        this.plate = new MyPlate(this,0.32,0.2)
-        this.app.scene.add(this.table)
-        this.app.scene.add(this.plate)
+        if(this.table === null){
+            this.tableWidth = 1.5
+            this.tableLength = 3
+            this.tableHeight = 1.5
+            this.table = new MyTable(this, this.tableWidth, this.tableLength, this.tableHeight)
+            this.table.translateY(this.tableHeight/2)
+            this.app.scene.add(this.table)
+        }
+
+        if(this.plate === null) {
+            this.plateRadius = 0.5
+            this.plateHeight = this.plateRadius/5
+            this.plate = new MyPlate(this, this.plateRadius, this.plateHeight)
+            this.plate.translateY((this.tableHeight+this.plateHeight/2))
+            this.app.scene.add(this.plate)
+        }
+
+        if(this.cake === null){
+            this.cakeRadius = this.plateRadius*0.8
+            this.cakeHeight = this.cakeRadius/2
+            this.cakeSliceSize = Math.PI/4
+            this.cake = new MyCake(this, this.cakeRadius, this.cakeHeight, this.cakeSliceSize)
+            this.cake.translateY((this.tableHeight+this.plateHeight+this.cakeHeight/2))
+            this.app.scene.add(this.cake)
+        }
+        
     }
     
     /**
