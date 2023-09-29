@@ -4,7 +4,9 @@ import { MyWalls } from './MyObjects/MyWalls.js';
 import {MyTable} from './MyObjects/MyTable.js'
 import { MyPlate } from './MyObjects/MyPlate.js';
 import { MyCake } from './MyObjects/MyCake.js';
-import { MyChair } from './MyObjects/MyChair.js';import { MyCandle } from './MyObjects/MyCandle.js';
+import { MyChair } from './MyObjects/MyChair.js';
+import { MyCandle } from './MyObjects/MyCandle.js';
+import { MyLamp } from './MyObjects/MyLamp.js';
 
 /**
  *  This class contains the contents of our application
@@ -169,6 +171,10 @@ class MyContents {
             this.chair.translateZ(-this.tableLength/2)
             this.app.scene.add(this.chair)
         }
+
+        var lamp = new MyLamp(this,0.1,2,1);
+        this.app.scene.add(lamp)
+
 
     }
     
