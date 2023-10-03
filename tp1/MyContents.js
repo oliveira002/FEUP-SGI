@@ -8,6 +8,7 @@ import { MyChair } from './MyObjects/MyChair.js';
 import { MyCandle } from './MyObjects/MyCandle.js';
 import { MyPortrait } from './MyObjects/MyPortrait.js';
 import { MyLamp } from './MyObjects/MyLamp.js';
+import { MyBulb } from './MyObjects/MyBulb.js';
 
 /**
  *  This class contains the contents of our application
@@ -24,6 +25,7 @@ class MyContents {
         this.app = app
         this.axis = null
         this.floor = null
+        this.ceiling = null
         this.walls = null
         this.table = null
         this.plate = null
@@ -32,6 +34,7 @@ class MyContents {
         this.chair = null
         this.portrait1 = null
         this.portrait2 = null
+        this.lamp = null
 
         // axis related attributes
         this.axisEnabled = false
@@ -52,7 +55,13 @@ class MyContents {
             specular: this.specularFloorColor, emissive: "#000000", shininess: this.floorShininess })
 
         // ceiling related attributes
-        this.ceilingSize = this.floorSize
+        this.ceilingSize = null
+        this.ceilingHeight = null
+        this.diffuseCeilingColor = "#C19A6B"
+        this.specularCeilingColor = "#777777"
+        this.ceilingShininess = 0
+        this.ceilingMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseCeilingColor, 
+            specular: this.specularCeilingColor, emissive: "#000000", shininess: this.ceilingShininess })
 
         // wall related attributes
         this.wallHeight = null
@@ -94,6 +103,10 @@ class MyContents {
         this.portrait2Width = null
         this.portrait2Length = null
         this.portrait2Depth = null
+
+        // lamp related attributes
+        this.lampHeight = null
+        this.isLampOn = null
     }
 
     /**
@@ -115,16 +128,6 @@ class MyContents {
      */
     init() {
        
-        // add a point light on top of the model
-        const pointLight = new THREE.PointLight( 0xffffff, 500, 0 );
-        pointLight.position.set( 0, 20, 0 );
-        this.app.scene.add( pointLight );
-
-        // add a point light helper for the previous point light
-        const sphereSize = 0.5;
-        const pointLightHelper = new THREE.PointLightHelper( pointLight, sphereSize );
-        this.app.scene.add( pointLightHelper );
-
         // add an ambient light
         const ambientLight = new THREE.AmbientLight( 0x555555 );
         this.app.scene.add( ambientLight );
@@ -149,9 +152,19 @@ class MyContents {
             this.floorMesh.position.y = -0;
             this.app.scene.add( this.floorMesh );
         }
+
+        if(this.ceiling === null){
+            this.ceilingSize = this.floorSize
+            this.ceilingHeight = 10
+            this.ceiling = this.floor
+            this.ceilingMesh = new THREE.Mesh(this.ceiling,this.ceilingMaterial)
+            this.ceilingMesh.rotation.x = Math.PI/2
+            this.ceilingMesh.position.y = this.ceilingHeight
+            this.app.scene.add(this.ceilingMesh)
+        }
         
         if (this.walls === null) {
-            this.wallHeight = this.floorSize
+            this.wallHeight = this.ceilingHeight
             this.walls = new MyWalls(this, this.wallHeight, this.floorSize)
             this.walls.translateY(this.wallHeight/2)
             this.app.scene.add(this.walls)
@@ -224,6 +237,16 @@ class MyContents {
             this.portrait2.translateZ(-this.floorSize/2+this.portrait2Depth/2+0.01)
             this.app.scene.add(this.portrait2)
         }
+
+        if(this.lamp === null){
+            this.lampHeight = 2
+            this.isLampOn = true
+            this.lamp = new MyLamp(this, this.isLampOn, undefined, this.lampHeight)
+            this.lamp.translateY(-this.lampHeight/2)
+            this.lamp.translateY(this.ceilingHeight)
+            this.app.scene.add(this.lamp)
+        }
+
     }
     
     /**
