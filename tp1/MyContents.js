@@ -1,11 +1,13 @@
 import * as THREE from 'three';
 import { MyAxis } from './MyAxis.js';
 import { MyWalls } from './MyObjects/MyWalls.js';
-import {MyTable} from './MyObjects/MyTable.js'
+import { MyTable } from './MyObjects/MyTable.js'
 import { MyPlate } from './MyObjects/MyPlate.js';
 import { MyCake } from './MyObjects/MyCake.js';
-import { MyChair } from './MyObjects/MyChair.js';import { MyCandle } from './MyObjects/MyCandle.js';
+import { MyChair } from './MyObjects/MyChair.js';
+import { MyCandle } from './MyObjects/MyCandle.js';
 import { MyPortrait } from './MyObjects/MyPortrait.js';
+import { MyLamp } from './MyObjects/MyLamp.js';
 
 /**
  *  This class contains the contents of our application
