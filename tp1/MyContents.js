@@ -5,6 +5,7 @@ import {MyTable} from './MyObjects/MyTable.js'
 import { MyPlate } from './MyObjects/MyPlate.js';
 import { MyCake } from './MyObjects/MyCake.js';
 import { MyChair } from './MyObjects/MyChair.js';import { MyCandle } from './MyObjects/MyCandle.js';
+import { MyPortrait } from './MyObjects/MyPortrait.js';
 
 /**
  *  This class contains the contents of our application
@@ -20,33 +21,46 @@ class MyContents {
         // objects
         this.app = app
         this.axis = null
+        this.floor = null
         this.walls = null
         this.table = null
         this.plate = null
         this.cake = null
         this.candle = null
         this.chair = null
+        this.portrait1 = null
+        this.portrait2 = null
+
+        // axis related attributes
+        this.axisEnabled = false
 
         // box related attributes
         this.boxMesh = null
         this.boxMeshSize = 1.0
-        this.boxEnabled = true
+        this.boxEnabled = false
         this.lastBoxEnabled = null
         this.boxDisplacement = new THREE.Vector3(0,2,0)
 
-        // plane related attributes
-        this.diffusePlaneColor = "#C19A6B"
-        this.specularPlaneColor = "#777777"
-        this.planeShininess = 0
-        this.planeMaterial = new THREE.MeshPhongMaterial({ color: this.diffusePlaneColor, 
-            specular: this.specularPlaneColor, emissive: "#000000", shininess: this.planeShininess })
+        // floor related attributes
+        this.floorSize = null
+        this.diffuseFloorColor = "#C19A6B"
+        this.specularFloorColor = "#777777"
+        this.floorShininess = 0
+        this.floorMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseFloorColor, 
+            specular: this.specularFloorColor, emissive: "#000000", shininess: this.floorShininess })
+
+        // ceiling related attributes
+        this.ceilingSize = this.floorSize
+
+        // wall related attributes
+        this.wallHeight = null
 
         // table related attributes
         this.tableWidth = null
         this.tableLength = null
         this.tableHeight = null
 
-        // table related attributes
+        // chair related attributes
         this.chairWidth = null
         this.chairLength = null
         this.chairHeight = null
@@ -68,6 +82,16 @@ class MyContents {
         this.chairWidth = null
         this.chairLength = null
         this.chairHeight = null
+
+        // portrait1 related attributes
+        this.portrait1Width = null
+        this.portrait1Length = null
+        this.portrait1Depth = null 
+        
+        // portrait2 related attributes
+        this.portrait2Width = null
+        this.portrait2Length = null
+        this.portrait2Depth = null
     }
 
     /**
@@ -89,13 +113,6 @@ class MyContents {
      */
     init() {
        
-        // create once 
-        if (this.axis === null) {
-            // create and attach the axis to the scene
-            this.axis = new MyAxis(this)
-            //this.app.scene.add(this.axis)
-        }
-
         // add a point light on top of the model
         const pointLight = new THREE.PointLight( 0xffffff, 500, 0 );
         pointLight.position.set( 0, 20, 0 );
@@ -110,19 +127,31 @@ class MyContents {
         const ambientLight = new THREE.AmbientLight( 0x555555 );
         this.app.scene.add( ambientLight );
 
-        this.buildBox()
-        
-        // Create a Plane Mesh with basic material
-        let plane = new THREE.PlaneGeometry( 10, 10 );
-        this.planeMesh = new THREE.Mesh( plane, this.planeMaterial );
-        this.planeMesh.rotation.x = -Math.PI / 2;
-        this.planeMesh.position.y = -0;
-        this.app.scene.add( this.planeMesh );
-        
+        // create once 
+        if (this.axis === null) {
+            // create and attach the axis to the scene
+            this.axis = new MyAxis(this)
+            
+            if(this.axisEnabled === true)
+                this.app.scene.add(this.axis)
+        }
+
         // Create the objects
+        this.buildBox()
+               
+        if(this.floor === null){
+            this.floorSize = 15
+            this.floor = new THREE.PlaneGeometry( this.floorSize , this.floorSize );
+            this.floorMesh = new THREE.Mesh( this.floor, this.floorMaterial );
+            this.floorMesh.rotation.x = -Math.PI / 2;
+            this.floorMesh.position.y = -0;
+            this.app.scene.add( this.floorMesh );
+        }
+        
         if (this.walls === null) {
-            // create and attach the walls to the scene
-            this.walls = new MyWalls(this, 10, 10)
+            this.wallHeight = this.floorSize
+            this.walls = new MyWalls(this, this.wallHeight, this.floorSize)
+            this.walls.translateY(this.wallHeight/2)
             this.app.scene.add(this.walls)
         }
 
@@ -170,31 +199,54 @@ class MyContents {
             this.app.scene.add(this.chair)
         }
 
+        if(this.portrait1 === null){
+            this.portrait1Width = 1
+            this.portrait1Length = 1.5
+            this.portrait1Depth = 0.1
+            this.portrait1 = new MyPortrait(this, this.portrait1Width, this.portrait1Length, this.portrait1Depth)
+            this.portrait1.rotateY(-Math.PI/2)
+            this.portrait1.translateX(-(this.portrait1Length/2+this.floorSize/20))
+            this.portrait1.translateY(this.wallHeight/5);
+            this.portrait1.translateZ(-this.floorSize/2+this.portrait1Depth/2+0.01)
+            this.app.scene.add(this.portrait1)
+        }
+
+        if(this.portrait2 === null){
+            this.portrait2Width = 1
+            this.portrait2Length = 1.5
+            this.portrait2Depth = 0.1
+            this.portrait2 = new MyPortrait(this, this.portrait2Width, this.portrait2Length, this.portrait2Depth)
+            this.portrait2.rotateY(-Math.PI/2)
+            this.portrait2.translateX(this.portrait2Length/2+this.floorSize/20)
+            this.portrait2.translateY(this.wallHeight/5);
+            this.portrait2.translateZ(-this.floorSize/2+this.portrait2Depth/2+0.01)
+            this.app.scene.add(this.portrait2)
+        }
     }
     
     /**
      * updates the diffuse plane color and the material
      * @param {THREE.Color} value 
      */
-    updateDiffusePlaneColor(value) {
-        this.diffusePlaneColor = value
-        this.planeMaterial.color.set(this.diffusePlaneColor)
+    updateDiffuseFloorColor(value) {
+        this.diffuseFloorColor = value
+        this.floorMaterial.color.set(this.diffuseFloorColor)
     }
     /**
      * updates the specular plane color and the material
      * @param {THREE.Color} value 
      */
-    updateSpecularPlaneColor(value) {
-        this.specularPlaneColor = value
-        this.planeMaterial.specular.set(this.specularPlaneColor)
+    updateSpecularFloorColor(value) {
+        this.specularFloorColor = value
+        this.floorMaterial.specular.set(this.specularFloorColor)
     }
     /**
      * updates the plane shininess and the material
      * @param {number} value 
      */
-    updatePlaneShininess(value) {
-        this.planeShininess = value
-        this.planeMaterial.shininess = this.planeShininess
+    updateFloorShininess(value) {
+        this.floorShininess = value
+        this.floorMaterial.shininess = this.floorShininess
     }
     
     /**
@@ -219,7 +271,7 @@ class MyContents {
         if (this.boxEnabled !== this.lastBoxEnabled) {
             this.lastBoxEnabled = this.boxEnabled
             if (this.boxEnabled) {
-                //this.app.scene.add(this.boxMesh)
+                this.app.scene.add(this.boxMesh)
             }
             else {
                 this.app.scene.remove(this.boxMesh)

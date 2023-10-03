@@ -9,7 +9,7 @@ class MyChair extends THREE.Object3D {
      * 
      * @param {MyApp} app the application object
      */
-    constructor(app, chairWidth, chairLength, chairHeight, chairTopHeight, legRadius, diffusechairColor, specularchairColor, chairShininess) {
+    constructor(app, chairWidth, chairLength, chairHeight, chairTopHeight, legRadius, diffuseChairColor, specularChairColor, chairShininess) {
         super();
         this.app = app;
         this.type = 'Group';
@@ -19,12 +19,12 @@ class MyChair extends THREE.Object3D {
         this.chairTopHeight = chairTopHeight || 0.2
         this.legRadius = legRadius || this.chairWidth/10
         this.legHeight = this.chairHeight - this.chairTopHeight
-        this.diffusechairColor = diffusechairColor || "#F0E5D8"
-        this.specularchairColor = specularchairColor || "#777777"
+        this.diffuseChairColor = diffuseChairColor || "#F0E5D8"
+        this.specularChairColor = specularChairColor || "#777777"
         this.chairShininess = chairShininess || 10
 
-        this.chairMaterial = new THREE.MeshPhongMaterial({ color: this.diffusechairColor, 
-            specular: this.specularchairColor, emissive: "#000000", shininess: this.chairShininess })
+        this.chairMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseChairColor, 
+            specular: this.specularChairColor, emissive: "#000000", shininess: this.chairShininess })
 
         let chairTop = new THREE.BoxGeometry(this.chairLength, this.chairTopHeight, this.chairWidth)
         let chairBack = new THREE.BoxGeometry(this.chairLength, this.chairTopHeight / 2.5, this.chairWidth * 2)

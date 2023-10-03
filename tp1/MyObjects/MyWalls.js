@@ -56,6 +56,8 @@ class MyWalls extends THREE.Object3D {
         this.frontWallMesh.translateY(this.height/2)
         this.frontWallMesh.rotateY(-Math.PI/2)
         this.add( this.frontWallMesh );
+
+        this.translateY(-this.height/2)
     }
 }
 
