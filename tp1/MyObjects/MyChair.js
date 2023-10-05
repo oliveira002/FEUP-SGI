@@ -8,8 +8,17 @@ class MyChair extends THREE.Object3D {
     /**
      * 
      * @param {MyApp} app the application object
+     * @param {number} chairWidth the width of the chair in relation to the Z axis. Default `1`
+     * @param {number} chairLength the length of the chair in relation to the X axis. Default `1`
+     * @param {number} chairHeight the height of the chair in relation to the Y axis. Default `1`
+     * @param {number} chairTopHeight the height of the chair top in relation to the Y axis. Default `0.2`
+     * @param {number} legRadius the radius of the chair's legs. Default `chairWidth/10`
+     * @param {string} tableTexturePath the path of the texture to be used on the chair. Default `undefined`
+     * @param {number} diffuseTableColor the diffuse component of the chair's color. Default `#F0E5D8`
+     * @param {number} specularTableColor the specular component of the chair's color. Default `#FFFFFF`
+     * @param {number} tableShininess the shininess component of the chair's color. Default `100`
      */
-    constructor(app, chairWidth, chairLength, chairHeight, chairTopHeight, legRadius, diffuseChairColor, specularChairColor, chairShininess) {
+    constructor(app, chairWidth, chairLength, chairHeight, chairTopHeight, legRadius, chairTexturePath, diffuseChairColor, specularChairColor, chairShininess) {
         super();
         this.app = app;
         this.type = 'Group';
@@ -19,12 +28,19 @@ class MyChair extends THREE.Object3D {
         this.chairTopHeight = chairTopHeight || 0.2
         this.legRadius = legRadius || this.chairWidth/10
         this.legHeight = this.chairHeight - this.chairTopHeight
+        this.chairTexturePath = chairTexturePath
         this.diffuseChairColor = diffuseChairColor || "#F0E5D8"
-        this.specularChairColor = specularChairColor || "#777777"
-        this.chairShininess = chairShininess || 10
+        this.specularChairColor = specularChairColor || "#FFFFFF"
+        this.chairShininess = chairShininess || 100
+
+        if(this.chairTexturePath){
+            this.chairTexture = new THREE.TextureLoader().load(this.chairTexturePath);
+            this.chairTexture.wrapS = THREE.RepeatWrapping;
+            this.chairTexture.wrapT = THREE.RepeatWrapping;
+        }
 
         this.chairMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseChairColor, 
-            specular: this.specularChairColor, emissive: "#000000", shininess: this.chairShininess })
+            specular: this.specularChairColor, emissive: "#000000", shininess: this.chairShininess, map: this.chairTexture })
 
         let chairTop = new THREE.BoxGeometry(this.chairLength, this.chairTopHeight, this.chairWidth)
         let chairBack = new THREE.BoxGeometry(this.chairLength, this.chairTopHeight / 2.5, this.chairWidth * 2)

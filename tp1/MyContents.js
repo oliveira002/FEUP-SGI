@@ -8,7 +8,6 @@ import { MyChair } from './MyObjects/MyChair.js';
 import { MyCandle } from './MyObjects/MyCandle.js';
 import { MyPortrait } from './MyObjects/MyPortrait.js';
 import { MyLamp } from './MyObjects/MyLamp.js';
-import { MyBulb } from './MyObjects/MyBulb.js';
 import { MyFurniture } from './MyObjects/MyFurniture.js';
 
 /**
@@ -38,7 +37,6 @@ class MyContents {
         this.lamp = null
         this.furniture = null
         this.tv = null
-        this.screen = null
 
         // axis related attributes
         this.axisEnabled = false
@@ -80,11 +78,13 @@ class MyContents {
         this.tableWidth = null
         this.tableLength = null
         this.tableHeight = null
+        this.tableTexturePath = null
 
         // chair related attributes
         this.chairWidth = null
         this.chairLength = null
         this.chairHeight = null
+        this.chairTexturePath = null
             
         // plate related attributes
         this.plateRadius = null
@@ -94,6 +94,8 @@ class MyContents {
         this.cakeHeight = null
         this.cakeRadius = null
         this.cakeSliceSize = null
+        this.cakeInsideTexturePath = null
+        this.cakeOutsideTexturePath = null
 
         // candle related attributes
         this.candleRadius = null
@@ -124,6 +126,7 @@ class MyContents {
         this.furnitureDepth = null
         this.furnitureLength = null
         this.furnitureHeight = null
+        this.furnitureTexturePath = null
 
         // tv related attributes
         this.tvWidth = null
@@ -216,7 +219,8 @@ class MyContents {
             this.tableWidth = 1.5
             this.tableLength = 3
             this.tableHeight = 1.5
-            this.table = new MyTable(this, this.tableWidth, this.tableLength, this.tableHeight)
+            this.tableTexturePath = "textures/furniture.jpg"
+            this.table = new MyTable(this, this.tableWidth, this.tableLength, this.tableHeight, undefined, undefined, this.tableTexturePath)
             this.table.translateY(this.tableHeight/2)
             this.app.scene.add(this.table)
         }
@@ -233,7 +237,9 @@ class MyContents {
             this.cakeRadius = this.plateRadius*0.8
             this.cakeHeight = this.cakeRadius/2
             this.cakeSliceSize = Math.PI/4
-            this.cake = new MyCake(this, this.cakeRadius, this.cakeHeight, this.cakeSliceSize)
+            this.cakeInsideTexturePath = "textures/cake_inside.jpg"
+            this.cakeOutsideTexturePath = "textures/cake_outside.jpeg"
+            this.cake = new MyCake(this, this.cakeRadius, this.cakeHeight, this.cakeSliceSize, undefined, this.cakeInsideTexturePath, this.cakeOutsideTexturePath)
             this.cake.translateY((this.tableHeight+this.plateHeight+this.cakeHeight/2))
             this.app.scene.add(this.cake)
         }
@@ -250,7 +256,8 @@ class MyContents {
             this.chairWidth = 0.65
             this.chairLength = 0.65
             this.chairHeight = 0.85
-            this.chair = new MyChair(this, this.chairWidth, this.chairLength, this.chairHeight)
+            this.chairTexturePath = "textures/furniture.jpg"
+            this.chair = new MyChair(this, this.chairWidth, this.chairLength, this.chairHeight, undefined, undefined, this.chairTexturePath)
             this.chair.translateY(this.chairHeight/2)
             this.chair.translateZ(-this.tableLength/2)
             this.app.scene.add(this.chair)
@@ -295,7 +302,8 @@ class MyContents {
             this.furnitureHeight = 1
             this.furnitureDepth = 1
             this.furnitureLength = 5
-            this.furniture = new MyFurniture(this,this.furnitureHeight,this.furnitureDepth,this.furnitureLength)
+            this.furnitureTexturePath = "textures/furniture.jpg"
+            this.furniture = new MyFurniture(this,this.furnitureHeight,this.furnitureDepth,this.furnitureLength, this.furnitureTexturePath)
             this.furniture.translateY(this.furnitureHeight / 2)
             this.furniture.translateZ(this.floorSizeU / 2 - this.furnitureDepth / 2)
             this.furniture.rotateY(Math.PI)

@@ -9,14 +9,15 @@ class MyFurniture extends THREE.Object3D {
     /**
      * 
      * @param {MyApp} app the application object
-     * @param {boolean} isTurnedOn whether the light bulb inside the lamp is turned on or not. Default `false`
-     * @param {number} pieceRadius the radius of the top and bottom lamp supports. Default is `0.1`
-     * @param {number} lampHeight the total height of the lamp. Default is `2`
-     * @param {number} diffuseLampColor the diffuse component of the lamp's color. Default `#F0E5D8`
-     * @param {number} specularLampColor the specular component of the lamps's color. Default `#777777`
-     * @param {number} lampShininess the shininess component of the lamp's color. Default `10`
+     * @param {boolean} furnitureHeight the height of the furniture piece relative to the Y axis.
+     * @param {number} furnitureDepth the depth of the furniture piece relative to the Z axis.
+     * @param {number} furLength the length of the furniture piece relative to the X axis. Default is `4`
+     * @param {string} furnitureTexturePath the path of the texture to be used on the furniture. Default `undefined`
+     * @param {number} diffuseFurnitureColor the diffuse component of the furniture's color. Default `#EADDCA`
+     * @param {number} specularFurnitureColor the specular component of the furniture's color. Default `#EADDCA`
+     * @param {number} furnitureShininess the shininess component of the furniture's color. Default `10`
      */
-    constructor(app, furnitureHeight, furnitureDepth, furLength, diffuseFurnitureColor, specularFurnitureColor, furnitureShininess) {
+    constructor(app, furnitureHeight, furnitureDepth, furLength, furnitureTexturePath, diffuseFurnitureColor, specularFurnitureColor, furnitureShininess) {
         super();
         this.app = app;
         this.type = 'Group';
@@ -25,21 +26,19 @@ class MyFurniture extends THREE.Object3D {
         this.furDepth = 1
         this.furnitureHeight = furnitureHeight
         this.furnitureDepth = furnitureDepth
+        this.furnitureTexturePath = furnitureTexturePath
         this.diffuseFurnitureColor = diffuseFurnitureColor || "#EADDCA"
         this.specularFurnitureColor = specularFurnitureColor || "#EADDCA"
         this.furnitureShininess = furnitureShininess || 10
 
-        this.furMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseFurnitureColor, 
-            specular: this.specularFurnitureColor, emissive: "#000000", shininess: this.furnitureShininess })
-        
-            
-        this.furMaterial2 = new THREE.MeshPhongMaterial({ color: "#EADDCA", 
-            specular: "#EADDCA", emissive: "#000000", shininess: this.furnitureShininess })
+        if(this.furnitureTexturePath){
+            this.furnitureTexture = new THREE.TextureLoader().load(this.furnitureTexturePath);
+            this.furnitureTexture.wrapS = THREE.RepeatWrapping;
+            this.furnitureTexture.wrapT = THREE.RepeatWrapping;
+        }
 
-        this.furMaterial3 = new THREE.MeshPhongMaterial({ color: "#EADDCA", 
-        specular: "#EADDCA", emissive: "#000000", shininess: this.furnitureShininess })
-        
-        
+        this.furMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseFurnitureColor, 
+            specular: this.specularFurnitureColor, emissive: "#000000", shininess: this.furnitureShininess, map: this.furnitureTexture })
         
         let top = new THREE.BoxGeometry(this.furLength, this.furHeight * 0.05, this.furDepth)
         let bot = new THREE.BoxGeometry(this.furLength, this.furHeight * 0.05, this.furDepth)
@@ -65,13 +64,13 @@ class MyFurniture extends THREE.Object3D {
         this.boxLeftMesh.translateX(-this.furLength * 0.375)
         this.add( this.boxLeftMesh );
 
-        this.frontDrawer = new THREE.Mesh(drawer, this.furMaterial2)
+        this.frontDrawer = new THREE.Mesh(drawer, this.furMaterial)
         this.frontDrawer.translateZ(this.furHeight / 2 - this.furHeight  * 0.05 / 2)
         this.frontDrawer.translateY(this.furDepth / 4 + (this.furHeight * 0.05 / 2))
         this.frontDrawer.rotateX(Math.PI / 2)
         this.add(this.frontDrawer);
 
-        this.insideDrawer = new THREE.Mesh(inside, this.furMaterial2)
+        this.insideDrawer = new THREE.Mesh(inside, this.furMaterial)
         this.insideDrawer.translateY(this.furHeight * 0.5)
         this.add( this.insideDrawer );
 

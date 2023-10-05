@@ -13,11 +13,12 @@ class MyTable extends THREE.Object3D {
      * @param {number} tableHeight the height of the table in relation to the Y axis. Default `1`
      * @param {number} tableTopHeight the height of the table top in relation to the Y axis. Default `0.2`
      * @param {number} legRadius the radius of the table's legs. Default `tableWidth/10`
+     * @param {string} tableTexturePath the path of the texture to be used on the table. Default `undefined`
      * @param {number} diffuseTableColor the diffuse component of the table's color. Default `#F0E5D8`
-     * @param {number} specularTableColor the specular component of the table's color. Default `#777777`
-     * @param {number} tableShininess the shininess component of the table's color. Default `10`
+     * @param {number} specularTableColor the specular component of the table's color. Default `#FFFFFF`
+     * @param {number} tableShininess the shininess component of the table's color. Default `100`
      */
-    constructor(app, tableWidth, tableLength, tableHeight, tableTopHeight, legRadius, diffuseTableColor, specularTableColor, tableShininess) {
+    constructor(app, tableWidth, tableLength, tableHeight, tableTopHeight, legRadius, tableTexturePath, diffuseTableColor, specularTableColor, tableShininess) {
         super();
         this.app = app;
         this.type = 'Group';
@@ -27,12 +28,19 @@ class MyTable extends THREE.Object3D {
         this.tableTopHeight = tableTopHeight || 0.2
         this.legRadius = legRadius || this.tableWidth/10
         this.legHeight = this.tableHeight - this.tableTopHeight
+        this.tableTexturePath = tableTexturePath
         this.diffuseTableColor = diffuseTableColor || "#F0E5D8"
-        this.specularTableColor = specularTableColor || "#777777"
-        this.tableShininess = tableShininess || 10
+        this.specularTableColor = specularTableColor || "#FFFFFF"
+        this.tableShininess = tableShininess || 100
+        
+        if(this.tableTexturePath){
+            this.tableTexture = new THREE.TextureLoader().load(this.tableTexturePath);
+            this.tableTexture.wrapS = THREE.RepeatWrapping;
+            this.tableTexture.wrapT = THREE.RepeatWrapping;
+        }
 
         this.tableMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseTableColor, 
-            specular: this.specularTableColor, emissive: "#000000", shininess: this.tableShininess })
+            specular: this.specularTableColor, emissive: "#000000", shininess: this.tableShininess, map: this.tableTexture })
 
         let tableTop = new THREE.BoxGeometry(this.tableLength, this.tableTopHeight, this.tableWidth)
         let leg = new THREE.CylinderGeometry(this.legRadius, this.legRadius, this.legHeight); 
