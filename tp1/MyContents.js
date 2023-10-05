@@ -9,6 +9,7 @@ import { MyCandle } from './MyObjects/MyCandle.js';
 import { MyPortrait } from './MyObjects/MyPortrait.js';
 import { MyLamp } from './MyObjects/MyLamp.js';
 import { MyBulb } from './MyObjects/MyBulb.js';
+import { MyFurniture } from './MyObjects/MyFurniture.js';
 
 /**
  *  This class contains the contents of our application
@@ -35,6 +36,7 @@ class MyContents {
         this.portrait1 = null
         this.portrait2 = null
         this.lamp = null
+        this.furniture = null
 
         // axis related attributes
         this.axisEnabled = true
@@ -112,6 +114,11 @@ class MyContents {
         // lamp related attributes
         this.lampHeight = null
         this.isLampOn = null
+
+        // furniture related attributes
+        this.furnitureDepth = null
+        this.furnitureLength = null
+        this.furnitureHeight = null
     }
 
     /**
@@ -180,13 +187,14 @@ class MyContents {
             this.app.scene.add(this.ceilingMesh)
         }
         
+        
         if (this.walls === null) {
             this.wallHeight = this.ceilingHeight
             this.walls = new MyWalls(this, this.wallHeight, this.floorSizeU, this.floorSizeV)
             this.walls.translateY(this.wallHeight/2)
             this.app.scene.add(this.walls)
         }
-
+            
         if(this.table === null){
             this.tableWidth = 1.5
             this.tableLength = 3
@@ -264,6 +272,16 @@ class MyContents {
             this.app.scene.add(this.lamp)
         }
 
+        if(this.furniture === null) {
+            this.furnitureHeight = 1
+            this.furnitureDepth = 1
+            this.furnitureLength = 5
+            this.furniture = new MyFurniture(this,this.furnitureHeight,this.furnitureDepth,this.furnitureLength)
+            this.furniture.translateY(this.furnitureHeight / 2)
+            this.furniture.translateZ(-this.floorSizeU / 2 + this.furnitureDepth / 2)
+            
+            this.app.scene.add(this.furniture)
+        }
     }
     
     /**
@@ -310,7 +328,7 @@ class MyContents {
      * updates are triggered by boxEnabled property changes
      */
     updateBoxIfRequired() {
-        if (this.boxEnabled !== this.lastBoxEnabled) {
+        if (this.boxEnabled !== this.ltableTopMeshstBoxEnabled) {
             this.lastBoxEnabled = this.boxEnabled
             if (this.boxEnabled) {
                 this.app.scene.add(this.boxMesh)

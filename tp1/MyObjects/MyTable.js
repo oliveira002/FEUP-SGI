@@ -73,6 +73,8 @@ class MyTable extends THREE.Object3D {
         this.add( this.legBackRightMesh );
 
         this.translateY(-this.tableHeight/2);
+
+
     }
 }
 
