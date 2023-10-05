@@ -37,7 +37,7 @@ class MyContents {
         this.lamp = null
 
         // axis related attributes
-        this.axisEnabled = false
+        this.axisEnabled = true
 
         // box related attributes
         this.boxMesh = null
@@ -47,12 +47,17 @@ class MyContents {
         this.boxDisplacement = new THREE.Vector3(0,2,0)
 
         // floor related attributes
-        this.floorSize = null
-        this.diffuseFloorColor = "#C19A6B"
-        this.specularFloorColor = "#777777"
+        this.floorSizeU = null
+        this.floorSizeV = null
+        this.diffuseFloorColor = "#d6c6ab"
+        this.specularFloorColor = "#d6c6ab"
         this.floorShininess = 0
+        this.floorTexture = new THREE.TextureLoader().load('textures/floor.jpg');
+        this.floorTexture.wrapS = THREE.RepeatWrapping;
+        this.floorTexture.wrapT = THREE.RepeatWrapping;
         this.floorMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseFloorColor, 
-            specular: this.specularFloorColor, emissive: "#000000", shininess: this.floorShininess })
+            specular: this.specularFloorColor, emissive: "#000000", shininess: this.floorShininess, map: this.floorTexture })
+        //this.floorMaterial = new THREE.MeshLambertMaterial({map : this.planeTexture })
 
         // ceiling related attributes
         this.ceilingSize = null
@@ -145,16 +150,28 @@ class MyContents {
         this.buildBox()
                
         if(this.floor === null){
-            this.floorSize = 15
-            this.floor = new THREE.PlaneGeometry( this.floorSize , this.floorSize );
+
+            this.floorSizeU = 15 // x axis
+            this.floorSizeV = 15 // z axis
+            let floorUVRate = this.floorSizeV / this.floorSizeU;
+
+            let floorTextureUVRate = 729 / 599; // image dimensions
+            let floorTextureRepeatU = 1;
+            let floorTextureRepeatV = floorTextureRepeatU * floorUVRate * floorTextureUVRate;
+            this.floorTexture.repeat.set(floorTextureRepeatU, floorTextureRepeatV );
+            this.floorTexture.rotation = 0;
+            this.floorTexture.offset = new THREE.Vector2(0,0);
+
+            this.floor = new THREE.PlaneGeometry( this.floorSizeU , this.floorSizeV );
             this.floorMesh = new THREE.Mesh( this.floor, this.floorMaterial );
             this.floorMesh.rotation.x = -Math.PI / 2;
-            this.floorMesh.position.y = -0;
+            this.floorMesh.position.y = 0;
             this.app.scene.add( this.floorMesh );
         }
 
         if(this.ceiling === null){
-            this.ceilingSize = this.floorSize
+            this.ceilingSizeU = this.floorSizeU
+            this.ceilingSizeV = this.floorSizeV
             this.ceilingHeight = 10
             this.ceiling = this.floor
             this.ceilingMesh = new THREE.Mesh(this.ceiling,this.ceilingMaterial)
@@ -165,7 +182,7 @@ class MyContents {
         
         if (this.walls === null) {
             this.wallHeight = this.ceilingHeight
-            this.walls = new MyWalls(this, this.wallHeight, this.floorSize)
+            this.walls = new MyWalls(this, this.wallHeight, this.floorSizeU, this.floorSizeV)
             this.walls.translateY(this.wallHeight/2)
             this.app.scene.add(this.walls)
         }
@@ -220,9 +237,9 @@ class MyContents {
             this.portrait1Depth = 0.1
             this.portrait1 = new MyPortrait(this, this.portrait1Width, this.portrait1Length, this.portrait1Depth)
             this.portrait1.rotateY(-Math.PI/2)
-            this.portrait1.translateX(-(this.portrait1Length/2+this.floorSize/20))
+            this.portrait1.translateX(-(this.portrait1Length/2+this.floorSizeU/20))
             this.portrait1.translateY(this.wallHeight/5);
-            this.portrait1.translateZ(-this.floorSize/2+this.portrait1Depth/2+0.01)
+            this.portrait1.translateZ(-this.floorSizeV/2+this.portrait1Depth/2+0.01)
             this.app.scene.add(this.portrait1)
         }
 
@@ -232,9 +249,9 @@ class MyContents {
             this.portrait2Depth = 0.1
             this.portrait2 = new MyPortrait(this, this.portrait2Width, this.portrait2Length, this.portrait2Depth)
             this.portrait2.rotateY(-Math.PI/2)
-            this.portrait2.translateX(this.portrait2Length/2+this.floorSize/20)
+            this.portrait2.translateX(this.portrait2Length/2+this.floorSizeU/20)
             this.portrait2.translateY(this.wallHeight/5);
-            this.portrait2.translateZ(-this.floorSize/2+this.portrait2Depth/2+0.01)
+            this.portrait2.translateZ(-this.floorSizeV/2+this.portrait2Depth/2+0.01)
             this.app.scene.add(this.portrait2)
         }
 
