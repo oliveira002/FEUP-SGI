@@ -10,21 +10,27 @@ class MyPortrait extends THREE.Object3D {
      * @param {number} portraitLength the length of the portrait in relation to the X axis. Default `1`
      * @param {number} portraitDepth the height of the portrait in relation to the Z axis. Default `0.1`
      * @param {string} portraitTexturePath the path of the texture to be used inside the portrait. Default `undefined`
+     * @param {number} horizontalPieceWidth the width of the horizontal part of the portrait's frame. Default `portraitWidth/10`
+     * @param {number} horizontalPieceLength the length of the horizontal part of the portrait's frame. Default `9*portraitLength/10`
+     * @param {number} verticalPieceWidth the width of the vertical part of the portrait's frame. Default `portraitLength/10`
+     * @param {number} verticalPieceLength the length of the vertical part of the portrait's frame. Default `9*portraitWidth/10`
      * @param {number} diffuseFrameColor the diffuse component of the portrait's color. Default `#331800`
      * @param {number} specularFrameColor the specular component of the portrait's color. Default `#777777`
      * @param {number} frameShininess the shininess component of the portrait's color. Default `10`
      */
-    constructor(app, portraitWidth, portraitLength, portraitDepth, portraitTexturePath, diffuseFrameColor, specularFrameColor, frameShininess) {
+    constructor(app, portraitWidth, portraitLength, portraitDepth, portraitTexturePath, horizontalPieceWidth, horizontalPieceLength, 
+                verticalPieceWidth, verticalPieceLength, diffuseFrameColor, specularFrameColor, frameShininess) {
+
         super();
         this.app = app;
         this.type = 'Group';
         this.portraitWidth = portraitWidth || 2
         this.portraitLength = portraitLength || 3
         this.portraitDepth = portraitDepth || 0.1
-        this.horizontalPieceWidth = this.portraitWidth/10
-        this.horizontalPieceLength = 9*this.portraitLength/10
-        this.verticalPieceWidth = this.portraitLength/10
-        this.verticalPieceLength = 9*this.portraitWidth/10
+        this.horizontalPieceWidth = horizontalPieceWidth || this.portraitWidth/10
+        this.horizontalPieceLength = horizontalPieceLength || 9*this.portraitLength/10
+        this.verticalPieceWidth = verticalPieceWidth || this.portraitLength/10
+        this.verticalPieceLength = verticalPieceLength || 9*this.portraitWidth/10
         this.portraitInnerWidth = this.portraitWidth-2*this.horizontalPieceWidth
         this.portraitInnerLength = this.portraitLength-2*this.verticalPieceWidth
         this.portraitTexturePath = portraitTexturePath

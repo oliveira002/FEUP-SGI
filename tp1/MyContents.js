@@ -129,7 +129,12 @@ class MyContents {
         this.tvWidth = null
         this.tvLength = null
         this.tvDepth = null
-        this.tvTexture = null 
+        this.tvTexturePath = null
+        this.horizontalTvPieceWidth = null
+        this.horizontalTvPieceLength = null
+        this.verticalTvPieceWidth = null
+        this.verticalTvPieceLength = null
+        this.diffuseTvColor = null
     }
 
     /**
@@ -298,12 +303,20 @@ class MyContents {
         }
 
         if(this.tv === null) {
-            this.tvWidth = 1
-            this.tvLength = 2
+            this.tvWidth = 2
+            this.tvLength = 4
             this.tvDepth = 0.02
-            this.tv = new MyPortrait(this,this.tvWidth,this.tvLength,this.tvDepth)
-            this.tv.translateZ(-this.floorSizeU / 2 + this.tvDepth / 2 + 0.01)
-            this.tv.translateY(2.2)
+            this.tvTexturePath = "textures/tv.png"
+            this.horizontalTvPieceWidth = this.tvWidth/40
+            this.horizontalTvPieceLength = 39*this.tvLength/40
+            this.verticalTvPieceWidth = this.tvLength/40
+            this.verticalTvPieceLength = 39*this.tvWidth/40
+            this.diffuseTvColor = "#000000"
+            this.tv = new MyPortrait(this,this.tvWidth,this.tvLength,this.tvDepth, this.tvTexturePath, 
+                this.horizontalTvPieceWidth, this.horizontalTvPieceLength, this.verticalTvPieceWidth, this.verticalTvPieceLength, this.diffuseTvColor)
+            this.tv.translateY(3)
+            this.tv.translateZ(this.floorSizeU / 2 - this.tvDepth / 2 - 0.01)
+            this.tv.rotateY(Math.PI)
             this.app.scene.add(this.tv)
         }
     }
