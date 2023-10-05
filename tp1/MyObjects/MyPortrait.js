@@ -9,11 +9,12 @@ class MyPortrait extends THREE.Object3D {
      * @param {number} portraitWidth the width of the portrait in relation to the Y axis. Default `1`
      * @param {number} portraitLength the length of the portrait in relation to the X axis. Default `1`
      * @param {number} portraitDepth the height of the portrait in relation to the Z axis. Default `0.1`
+     * @param {string} portraitTexturePath the path of the texture to be used inside the portrait. Default `undefined`
      * @param {number} diffuseFrameColor the diffuse component of the portrait's color. Default `#331800`
      * @param {number} specularFrameColor the specular component of the portrait's color. Default `#777777`
      * @param {number} frameShininess the shininess component of the portrait's color. Default `10`
      */
-    constructor(app, portraitWidth, portraitLength, portraitDepth, diffuseFrameColor, specularFrameColor, frameShininess) {
+    constructor(app, portraitWidth, portraitLength, portraitDepth, portraitTexturePath, diffuseFrameColor, specularFrameColor, frameShininess) {
         super();
         this.app = app;
         this.type = 'Group';
@@ -26,14 +27,24 @@ class MyPortrait extends THREE.Object3D {
         this.verticalPieceLength = 9*this.portraitWidth/10
         this.portraitInnerWidth = this.portraitWidth-2*this.horizontalPieceWidth
         this.portraitInnerLength = this.portraitLength-2*this.verticalPieceWidth
+        this.portraitTexturePath = portraitTexturePath
+        this.portraitTexture = null
         this.diffuseFrameColor = diffuseFrameColor || "#331800"
         this.specularFrameColor = specularFrameColor || "#777777"
         this.frameShininess = frameShininess || 10
 
+
         this.frameMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseFrameColor, 
             specular: this.specularFrameColor, emissive: "#000000", shininess: this.frameShininess })
-        this.portraitInnerMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseFrameColor, 
-            specular: this.specularFrameColor, emissive: "#000000", shininess: this.frameShininess })
+        
+        if(this.portraitTexturePath){
+            this.portraitTexture = new THREE.TextureLoader().load(portraitTexturePath);
+            this.portraitTexture.wrapS = THREE.RepeatWrapping;
+            this.portraitTexture.wrapT = THREE.RepeatWrapping;
+        }
+
+        this.portraitInnerMaterial = new THREE.MeshPhongMaterial({ /*color: this.diffuseFrameColor, 
+            specular: this.specularFrameColor, emissive: "#000000", shininess: this.frameShininess,*/ map: this.portraitTexture })
 
         let horizontalFrame = new THREE.BoxGeometry(this.horizontalPieceLength, this.horizontalPieceWidth, this.portraitDepth)
         let verticalFrame = new THREE.BoxGeometry(this.verticalPieceWidth, this.verticalPieceLength, this.portraitDepth)

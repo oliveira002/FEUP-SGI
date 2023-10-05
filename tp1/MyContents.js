@@ -8,7 +8,6 @@ import { MyChair } from './MyObjects/MyChair.js';
 import { MyCandle } from './MyObjects/MyCandle.js';
 import { MyPortrait } from './MyObjects/MyPortrait.js';
 import { MyLamp } from './MyObjects/MyLamp.js';
-import { MyBulb } from './MyObjects/MyBulb.js';
 
 /**
  *  This class contains the contents of our application
@@ -37,7 +36,7 @@ class MyContents {
         this.lamp = null
 
         // axis related attributes
-        this.axisEnabled = true
+        this.axisEnabled = false
 
         // box related attributes
         this.boxMesh = null
@@ -55,9 +54,9 @@ class MyContents {
         this.floorTexture = new THREE.TextureLoader().load('textures/floor.jpg');
         this.floorTexture.wrapS = THREE.RepeatWrapping;
         this.floorTexture.wrapT = THREE.RepeatWrapping;
-        this.floorMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseFloorColor, 
-            specular: this.specularFloorColor, emissive: "#000000", shininess: this.floorShininess, map: this.floorTexture })
-        //this.floorMaterial = new THREE.MeshLambertMaterial({map : this.planeTexture })
+        //this.floorMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseFloorColor, 
+          //  specular: this.specularFloorColor, emissive: "#000000", shininess: this.floorShininess, map: this.floorTexture })
+        this.floorMaterial = new THREE.MeshLambertMaterial({map : this.floorTexture })
 
         // ceiling related attributes
         this.ceilingSize = null
@@ -102,12 +101,14 @@ class MyContents {
         // portrait1 related attributes
         this.portrait1Width = null
         this.portrait1Length = null
-        this.portrait1Depth = null 
+        this.portrait1Depth = null
+        this.portrait1TexturePath = null 
         
         // portrait2 related attributes
         this.portrait2Width = null
         this.portrait2Length = null
         this.portrait2Depth = null
+        this.portrait2TexturePath = null 
 
         // lamp related attributes
         this.lampHeight = null
@@ -235,7 +236,8 @@ class MyContents {
             this.portrait1Width = 1
             this.portrait1Length = 1.5
             this.portrait1Depth = 0.1
-            this.portrait1 = new MyPortrait(this, this.portrait1Width, this.portrait1Length, this.portrait1Depth)
+            this.portrait1TexturePath = "textures/gustavo_costa.png" 
+            this.portrait1 = new MyPortrait(this, this.portrait1Width, this.portrait1Length, this.portrait1Depth, this.portrait1TexturePath)
             this.portrait1.rotateY(-Math.PI/2)
             this.portrait1.translateX(-(this.portrait1Length/2+this.floorSizeU/20))
             this.portrait1.translateY(this.wallHeight/5);
@@ -247,7 +249,8 @@ class MyContents {
             this.portrait2Width = 1
             this.portrait2Length = 1.5
             this.portrait2Depth = 0.1
-            this.portrait2 = new MyPortrait(this, this.portrait2Width, this.portrait2Length, this.portrait2Depth)
+            this.portrait2TexturePath = "textures/joao_oliveira.jpg" 
+            this.portrait2 = new MyPortrait(this, this.portrait2Width, this.portrait2Length, this.portrait2Depth, this.portrait2TexturePath)
             this.portrait2.rotateY(-Math.PI/2)
             this.portrait2.translateX(this.portrait2Length/2+this.floorSizeU/20)
             this.portrait2.translateY(this.wallHeight/5);
