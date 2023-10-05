@@ -8,7 +8,7 @@ class MyPortrait extends THREE.Object3D {
      * @param {MyApp} app the application object
      * @param {number} portraitWidth the width of the portrait in relation to the Y axis. Default `1`
      * @param {number} portraitLength the length of the portrait in relation to the X axis. Default `1`
-     * @param {number} portraitDepth the height of the portrait in relation to the Z axis. Default `0.1`
+     * @param {number} portraitDepth the depth of the portrait in relation to the Z axis. Default `0.1`
      * @param {string} portraitTexturePath the path of the texture to be used inside the portrait. Default `undefined`
      * @param {number} horizontalPieceWidth the width of the horizontal part of the portrait's frame. Default `portraitWidth/10`
      * @param {number} horizontalPieceLength the length of the horizontal part of the portrait's frame. Default `9*portraitLength/10`

@@ -9,6 +9,7 @@ import { MyCandle } from './MyObjects/MyCandle.js';
 import { MyPortrait } from './MyObjects/MyPortrait.js';
 import { MyLamp } from './MyObjects/MyLamp.js';
 import { MyFurniture } from './MyObjects/MyFurniture.js';
+import { MyWindow } from './MyObjects/MyWindow.js';
 
 /**
  *  This class contains the contents of our application
@@ -37,6 +38,7 @@ class MyContents {
         this.lamp = null
         this.furniture = null
         this.tv = null
+        this.window = null
 
         // axis related attributes
         this.axisEnabled = false
@@ -138,6 +140,9 @@ class MyContents {
         this.verticalTvPieceWidth = null
         this.verticalTvPieceLength = null
         this.diffuseTvColor = null
+
+        // window related attributes
+
     }
 
     /**
@@ -326,6 +331,23 @@ class MyContents {
             this.tv.translateZ(this.floorSizeU / 2 - this.tvDepth / 2 - 0.01)
             this.tv.rotateY(Math.PI)
             this.app.scene.add(this.tv)
+        }
+
+        if(this.window === null){
+            this.windowWidth = 3
+            this.windowLength = this.floorSizeU-2
+            this.windowDepth = 0.1
+            this.windowTexturePath = "textures/landscape.png" 
+            this.horizontalWindowPieceWidth = this.windowWidth/40
+            this.horizontalWindowPieceLength = 119*this.windowLength/120
+            this.verticalWindowPieceWidth = this.windowLength/120
+            this.verticalWindowPieceLength = 39*this.windowWidth/40
+            this.window = new MyWindow(this, this.windowWidth, this.windowLength, this.windowDepth, this.windowTexturePath,
+                this.horizontalWindowPieceWidth, this.horizontalWindowPieceLength, this.verticalWindowPieceWidth, this.verticalWindowPieceLength, this.diffuseTvColor)
+            this.window.rotateY(Math.PI/2)
+            this.window.translateY(this.wallHeight/2);
+            this.window.translateZ(-this.floorSizeV/2+this.windowDepth/2+0.01)
+            this.app.scene.add(this.window)
         }
     }
     
