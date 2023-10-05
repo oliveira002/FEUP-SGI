@@ -37,6 +37,8 @@ class MyContents {
         this.portrait2 = null
         this.lamp = null
         this.furniture = null
+        this.tv = null
+        this.screen = null
 
         // axis related attributes
         this.axisEnabled = false
@@ -122,6 +124,12 @@ class MyContents {
         this.furnitureDepth = null
         this.furnitureLength = null
         this.furnitureHeight = null
+
+        // tv related attributes
+        this.tvWidth = null
+        this.tvLength = null
+        this.tvDepth = null
+        this.tvTexture = null 
     }
 
     /**
@@ -287,6 +295,16 @@ class MyContents {
             this.furniture.translateZ(this.floorSizeU / 2 - this.furnitureDepth / 2)
             this.furniture.rotateY(Math.PI)
             this.app.scene.add(this.furniture)
+        }
+
+        if(this.tv === null) {
+            this.tvWidth = 1
+            this.tvLength = 2
+            this.tvDepth = 0.02
+            this.tv = new MyPortrait(this,this.tvWidth,this.tvLength,this.tvDepth)
+            this.tv.translateZ(-this.floorSizeU / 2 + this.tvDepth / 2 + 0.01)
+            this.tv.translateY(2.2)
+            this.app.scene.add(this.tv)
         }
     }
     
