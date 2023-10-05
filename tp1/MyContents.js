@@ -203,7 +203,7 @@ class MyContents {
             this.tableHeight = 1.5
             this.table = new MyTable(this, this.tableWidth, this.tableLength, this.tableHeight)
             this.table.translateY(this.tableHeight/2)
-            // this.app.scene.add(this.table)
+            this.app.scene.add(this.table)
         }
 
         if(this.plate === null) {
