@@ -25,8 +25,8 @@ class MyFurniture extends THREE.Object3D {
         this.furDepth = 1
         this.furnitureHeight = furnitureHeight
         this.furnitureDepth = furnitureDepth
-        this.diffuseFurnitureColor = diffuseFurnitureColor || "#F0E5D8"
-        this.specularFurnitureColor = specularFurnitureColor || "#777777"
+        this.diffuseFurnitureColor = diffuseFurnitureColor || "#EADDCA"
+        this.specularFurnitureColor = specularFurnitureColor || "#EADDCA"
         this.furnitureShininess = furnitureShininess || 10
 
         this.furMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseFurnitureColor, 
@@ -74,6 +74,8 @@ class MyFurniture extends THREE.Object3D {
         this.insideDrawer = new THREE.Mesh(inside, this.furMaterial2)
         this.insideDrawer.translateY(this.furHeight * 0.5)
         this.add( this.insideDrawer );
+
+        
 
 
         this.translateY(-this.furnitureHeight * 0.5)

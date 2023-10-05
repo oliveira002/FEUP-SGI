@@ -16,19 +16,35 @@ class MyWalls extends THREE.Object3D {
      * @param {number} specularWallColor the specular component of the wall's color. Default `#777777`
      * @param {number} wallShininess the shininess component of the wall's color. Default `30`
      */
-    constructor(app, height, floor_length, floor_width, diffuseWallColor, specularWallColor, wallShininess) {
+    constructor(app, height, floor_length, floor_width, wallsTexturePath, diffuseWallColor, specularWallColor, wallShininess) {
         super();
         this.app = app;
         this.type = 'Group';
         this.height = height || 1
         this.floor_length = floor_length || 1;
         this.floor_width = floor_width || 1;
+        this.wallsTexturePath = wallsTexturePath
         this.diffuseWallColor = diffuseWallColor || "#fdfd96"
         this.specularWallColor = specularWallColor || "#777777"
         this.wallShininess = wallShininess || 30
 
-        this.wallMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseWallColor, 
-            specular: this.specularWallColor, emissive: "#000000", shininess: this.wallShininess })
+        if(this.wallsTexturePath){
+            this.wallsTexture = new THREE.TextureLoader().load(wallsTexturePath);
+            this.wallsTexture.wrapS = THREE.RepeatWrapping;
+            this.wallsTexture.wrapT = THREE.RepeatWrapping;
+            let wallsTextureRepeatU = 3;
+            let wallsTextureRepeatV = 3;
+            this.wallsTexture.repeat.set(wallsTextureRepeatU, wallsTextureRepeatV );
+
+            /*let floorUVRate = this.floorSizeV / this.floorSizeU;
+
+            let floorTextureUVRate = 620 / 620; // image dimensions
+            this.floorTexture.rotation = 0;
+            this.floorTexture.offset = new THREE.Vector2(0,0);*/
+        }
+
+        this.wallMaterial = new THREE.MeshPhongMaterial({ /*color: this.diffuseWallColor, 
+            specular: this.specularWallColor, emissive: "#000000", shininess: this.wallShininess,*/ map: this.wallsTexture })
 
         let wallX = new THREE.PlaneGeometry(this.floor_length, this.height)
         let wallZ = new THREE.PlaneGeometry(this.floor_width, this.height)

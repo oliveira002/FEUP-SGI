@@ -64,14 +64,15 @@ class MyContents {
         // ceiling related attributes
         this.ceilingSize = null
         this.ceilingHeight = null
-        this.diffuseCeilingColor = "#C19A6B"
-        this.specularCeilingColor = "#777777"
+        this.diffuseCeilingColor = "#FFFFFF"
+        this.specularCeilingColor = "#FFFFFF"
         this.ceilingShininess = 0
         this.ceilingMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseCeilingColor, 
             specular: this.specularCeilingColor, emissive: "#000000", shininess: this.ceilingShininess })
 
         // wall related attributes
         this.wallHeight = null
+        this.wallsTexturePath = null
 
         // table related attributes
         this.tableWidth = null
@@ -192,7 +193,8 @@ class MyContents {
         
         if (this.walls === null) {
             this.wallHeight = this.ceilingHeight
-            this.walls = new MyWalls(this, this.wallHeight, this.floorSizeU, this.floorSizeV)
+            this.wallsTexturePath = "textures/wall.jpg" 
+            this.walls = new MyWalls(this, this.wallHeight, this.floorSizeU, this.floorSizeV, this.wallsTexturePath)
             this.walls.translateY(this.wallHeight/2)
             this.app.scene.add(this.walls)
         }
@@ -242,27 +244,27 @@ class MyContents {
         }
 
         if(this.portrait1 === null){
-            this.portrait1Width = 1
+            this.portrait1Width = 2
             this.portrait1Length = 1.5
             this.portrait1Depth = 0.1
             this.portrait1TexturePath = "textures/gustavo_costa.png" 
             this.portrait1 = new MyPortrait(this, this.portrait1Width, this.portrait1Length, this.portrait1Depth, this.portrait1TexturePath)
             this.portrait1.rotateY(-Math.PI/2)
             this.portrait1.translateX(-(this.portrait1Length/2+this.floorSizeU/20))
-            this.portrait1.translateY(this.wallHeight/5);
+            this.portrait1.translateY(this.wallHeight/3);
             this.portrait1.translateZ(-this.floorSizeV/2+this.portrait1Depth/2+0.01)
             this.app.scene.add(this.portrait1)
         }
 
         if(this.portrait2 === null){
-            this.portrait2Width = 1
+            this.portrait2Width = 2
             this.portrait2Length = 1.5
             this.portrait2Depth = 0.1
             this.portrait2TexturePath = "textures/joao_oliveira.jpg" 
             this.portrait2 = new MyPortrait(this, this.portrait2Width, this.portrait2Length, this.portrait2Depth, this.portrait2TexturePath)
             this.portrait2.rotateY(-Math.PI/2)
             this.portrait2.translateX(this.portrait2Length/2+this.floorSizeU/20)
-            this.portrait2.translateY(this.wallHeight/5);
+            this.portrait2.translateY(this.wallHeight/3);
             this.portrait2.translateZ(-this.floorSizeV/2+this.portrait2Depth/2+0.01)
             this.app.scene.add(this.portrait2)
         }
@@ -282,8 +284,8 @@ class MyContents {
             this.furnitureLength = 5
             this.furniture = new MyFurniture(this,this.furnitureHeight,this.furnitureDepth,this.furnitureLength)
             this.furniture.translateY(this.furnitureHeight / 2)
-            this.furniture.translateZ(-this.floorSizeU / 2 + this.furnitureDepth / 2)
-            
+            this.furniture.translateZ(this.floorSizeU / 2 - this.furnitureDepth / 2)
+            this.furniture.rotateY(Math.PI)
             this.app.scene.add(this.furniture)
         }
     }
