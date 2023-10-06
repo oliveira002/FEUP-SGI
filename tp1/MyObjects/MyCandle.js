@@ -75,7 +75,9 @@ class MyCandle extends THREE.Object3D {
         this.flameMesh.translateY((this.candleBodyHeight + this.candleWickHeight + this.flameHeight/2))
         this.add( this.flameMesh )   
 
-        
+        //const pointLight = new THREE.PointLight( 0xffffff, 125, 0, 2 );
+        //pointLight.position.set( 0, -(this.bulbSupportHeight + this.bulbBottomHeight + (this.bulbRadius - this.bulbRadius*(1-Math.cos(Math.PI/4)))), 0 );
+        //this.add( pointLight );
 
         this.translateY(-this.height/2)
     }
