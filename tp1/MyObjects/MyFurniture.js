@@ -35,16 +35,23 @@ class MyFurniture extends THREE.Object3D {
             this.furnitureTexture = new THREE.TextureLoader().load(this.furnitureTexturePath);
             this.furnitureTexture.wrapS = THREE.RepeatWrapping;
             this.furnitureTexture.wrapT = THREE.RepeatWrapping;
+            this.handleTexture = new THREE.TextureLoader().load("textures/handle.jpg");
+            this.handleTexture.wrapS = THREE.RepeatWrapping;
+            this.handleTexture.wrapT = THREE.RepeatWrapping;
         }
 
         this.furMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseFurnitureColor, 
             specular: this.specularFurnitureColor, emissive: "#000000", shininess: this.furnitureShininess, map: this.furnitureTexture })
+
+        this.handleMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseFurnitureColor, 
+            specular: this.specularFurnitureColor, emissive: "#000000", shininess: this.furnitureShininess, map: this.handleTexture })
         
         let top = new THREE.BoxGeometry(this.furLength, this.furHeight * 0.05, this.furDepth)
         let bot = new THREE.BoxGeometry(this.furLength, this.furHeight * 0.05, this.furDepth)
         let box = new THREE.BoxGeometry(this.furLength * 0.25, this.furHeight * 0.90, this.furDepth)
         let drawer = new THREE.BoxGeometry(this.furLength * 0.5, this.furHeight * 0.05, this.furDepth * 0.5)
         let inside = new THREE.BoxGeometry(this.furLength * 0.5, this.furHeight * 0.05, this.furDepth)
+        let handle = new THREE.BoxGeometry(this.furLength * 0.02, this.furHeight * 0.1,this.furDepth * 0.2)
 
         this.topFur = new THREE.Mesh(top, this.furMaterial)
         this.topFur.translateY(this.furHeight * 0.95)
@@ -73,6 +80,12 @@ class MyFurniture extends THREE.Object3D {
         this.insideDrawer = new THREE.Mesh(inside, this.furMaterial)
         this.insideDrawer.translateY(this.furHeight * 0.5)
         this.add( this.insideDrawer );
+
+        this.handleMesh = new THREE.Mesh(handle,this.handleMaterial)
+        this.handleMesh.rotateY(Math.PI / 2)
+        this.handleMesh.translateX(- this.furDepth / 2 - this.furLength * 0.01)
+        this.handleMesh.translateY(this.furHeight / 4)
+        this.add(this.handleMesh)
 
         
 

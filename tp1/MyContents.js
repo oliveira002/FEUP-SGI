@@ -343,7 +343,7 @@ class MyContents {
             this.verticalWindowPieceWidth = this.windowLength/120
             this.verticalWindowPieceLength = 39*this.windowWidth/40
             this.window = new MyWindow(this, this.windowWidth, this.windowLength, this.windowDepth, this.windowTexturePath,
-                this.horizontalWindowPieceWidth, this.horizontalWindowPieceLength, this.verticalWindowPieceWidth, this.verticalWindowPieceLength, this.diffuseTvColor)
+            this.horizontalWindowPieceWidth, this.horizontalWindowPieceLength, this.verticalWindowPieceWidth, this.verticalWindowPieceLength, this.diffuseTvColor)
             this.window.rotateY(Math.PI/2)
             this.window.translateY(this.wallHeight/2);
             this.window.translateZ(-this.floorSizeV/2+this.windowDepth/2+0.01)
