@@ -18,13 +18,14 @@ class MyBulb extends THREE.Object3D {
      * @param {number} specularBulbSupportColor the specular component of the bulb's support color. Default `#777777`
      * @param {number} bulbSupportShininess the shininess component of the bulb's support color. Default `10`
      */
-    constructor(app, isTurnedOn, bulbRadius, diffuseBulbColor, specularBulbColor, bulbShininess, diffuseBulbSupportColor, specularBulbSupportColor, bulbSupportShininess) {
+    constructor(app, isTurnedOn, bulbRadius, bulbTexturePath, diffuseBulbColor, specularBulbColor, bulbShininess, diffuseBulbSupportColor, specularBulbSupportColor, bulbSupportShininess) {
         super();
         this.app = app;
         this.type = 'Group';
         this.isTurnedOn = isTurnedOn || false
         this.bulbRadius = bulbRadius || 0.05
         this.bulbHeight = this.bulbRadius*3
+        this.bulbTexturePath = bulbTexturePath
         this.bulbGlassHeight = this.bulbHeight * 0.9
         this.bulbBottomRadiusBottom = this.bulbRadius/2
         this.bulbBottomRadiusTop = this.bulbRadius*Math.sin(Math.PI/4)
@@ -38,8 +39,19 @@ class MyBulb extends THREE.Object3D {
         this.specularBulbSupportColor = specularBulbSupportColor || "#777777"
         this.bulbSupportShininess = bulbSupportShininess || 10
 
-        this.bulbMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseBulbColor, 
-            specular: this.specularBulbColor, emissive: "#000000", shininess: this.bulbShininess })
+        if(this.bulbTexturePath){
+            this.bulbTexture = new THREE.TextureLoader().load(this.bulbTexturePath);
+            this.bulbTexture.wrapS = THREE.RepeatWrapping;
+            this.bulbTexture.wrapT = THREE.RepeatWrapping;
+        }
+
+        if(this.bulbTexture) {
+            this.bulbMaterial = new THREE.MeshPhongMaterial({map : this.bulbTexture})
+        }
+        else {
+            this.bulbMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseBulbColor, 
+                specular: this.specularBulbColor, emissive: "#000000", shininess: this.bulbShininess})
+        }
         this.bulbSupportMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseBulbSupportColor, 
             specular: this.specularBulbSupportColor, emissive: "#000000", shininess: this.bulbSupportShininess })
         
@@ -67,7 +79,7 @@ class MyBulb extends THREE.Object3D {
             //pointLight.position.set( 0, -(this.bulbSupportHeight + this.bulbBottomHeight + (this.bulbRadius - this.bulbRadius*(1-Math.cos(Math.PI/4)))), 0 );
             //this.add( pointLight );
 
-            const spotLight = new THREE.SpotLight( 0xffffff, 125, 0, Math.PI/8);
+            const spotLight = new THREE.SpotLight( 0xffffff, 125, 0, Math.PI);
             spotLight.position.set( 0, -(this.bulbSupportHeight + this.bulbBottomHeight + (this.bulbRadius - this.bulbRadius*(1-Math.cos(Math.PI/4)))), 0 );
             spotLight.castShadow = true;
             this.add(spotLight)
