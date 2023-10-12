@@ -10,6 +10,7 @@ import { MyPortrait } from './MyObjects/MyPortrait.js';
 import { MyLamp } from './MyObjects/MyLamp.js';
 import { MyFurniture } from './MyObjects/MyFurniture.js';
 import { MyWindow } from './MyObjects/MyWindow.js';
+import { MyBeetleCarFrame } from './MyObjects/MyBeetleCarFrame.js';
 
 /**
  *  This class contains the contents of our application
@@ -39,6 +40,7 @@ class MyContents {
         this.furniture = null
         this.tv = null
         this.window = null
+        this.beetleCarFrame = null
 
         // axis related attributes
         this.axisEnabled = false
@@ -142,7 +144,18 @@ class MyContents {
         this.diffuseTvColor = null
 
         // window related attributes
+        this.windowWidth = null
+        this.windowLength = null
+        this.windowDepth = null
+        this.windowTexturePath = null 
+        this.horizontalWindowPieceWidth = null
+        this.horizontalWindowPieceLength = null
+        this.verticalWindowPieceWidth = null
+        this.verticalWindowPieceLength = null
 
+        // beetle car frame related attributes
+        this.beetleCarFrameLength = null
+        this.beetleCarFrameDepth = null
     }
 
     /**
@@ -348,6 +361,16 @@ class MyContents {
             this.window.translateY(this.wallHeight/2);
             this.window.translateZ(-this.floorSizeV/2+this.windowDepth/2+0.01)
             this.app.scene.add(this.window)
+        }
+
+        if(this.beetleCarFrame === null){
+            this.beetleCarFrameLength = 1
+            this.beetleCarFrameDepth = 0.1
+            this.beetleCarFrame = new MyBeetleCarFrame(this, undefined, 1, this.beetleCarFrameDepth)
+            this.beetleCarFrame.translateY(this.beetleCarFrameLength/2 + 3 + this.tvWidth/2 + 1)
+            this.beetleCarFrame.translateZ(this.floorSizeU / 2 - this.beetleCarFrameDepth / 2 - 0.01)
+            this.beetleCarFrame.rotateY(Math.PI)
+            this.app.scene.add(this.beetleCarFrame)
         }
     }
     

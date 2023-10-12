@@ -67,7 +67,7 @@ class MyBulb extends THREE.Object3D {
             //pointLight.position.set( 0, -(this.bulbSupportHeight + this.bulbBottomHeight + (this.bulbRadius - this.bulbRadius*(1-Math.cos(Math.PI/4)))), 0 );
             //this.add( pointLight );
 
-            const spotLight = new THREE.SpotLight( 0xffffff, 125, 0, Math.PI/8);
+            const spotLight = new THREE.SpotLight( 0xffffff, 125, 0, Math.PI);
             spotLight.position.set( 0, -(this.bulbSupportHeight + this.bulbBottomHeight + (this.bulbRadius - this.bulbRadius*(1-Math.cos(Math.PI/4)))), 0 );
             spotLight.castShadow = true;
             this.add(spotLight)

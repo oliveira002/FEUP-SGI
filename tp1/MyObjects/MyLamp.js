@@ -51,7 +51,6 @@ class MyLamp extends THREE.Object3D {
         // bulb cover
         this.bulbCoverMesh = new THREE.Mesh(bulbCover,this.lampMaterial)
         this.bulbCoverMesh.material.side = THREE.DoubleSide
-        this.bulbCoverMesh.geometry.center()
         this.bulbCoverMesh.translateY(0.472) // there's no way to calculate a lathe's height afaik, which means we have to translate it until it seems right. This also means the lampHeight is not guaranteed.
         this.bulbCoverMesh.rotateX(Math.PI)
         this.bulbCoverMesh.scale.set(0.014,0.014,0.014)
