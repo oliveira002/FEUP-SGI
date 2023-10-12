@@ -10,14 +10,15 @@ class MyDoor extends THREE.Object3D {
 
     /**
      * 
-     * @param {MyApp} app the application object
-     * @param {boolean} furnitureHeight the height of the furniture piece relative to the Y axis.
-     * @param {number} furnitureDepth the depth of the furniture piece relative to the Z axis.
-     * @param {number} furLength the length of the furniture piece relative to the X axis. Default is `4`
-     * @param {string} furnitureTexturePath the path of the texture to be used on the furniture. Default `undefined`
-     * @param {number} diffuseFurnitureColor the diffuse component of the furniture's color. Default `#EADDCA`
-     * @param {number} specularFurnitureColor the specular component of the furniture's color. Default `#EADDCA`
-     * @param {number} furnitureShininess the shininess component of the furniture's color. Default `10`
+     * @param {MyApp} app 
+     * @param {number} doorWidth the width of the door
+     * @param {number} doorLength the length of the door
+     * @param {number} doorDepth the depth of the door
+     * @param {number} doorTexturePath path to the door texture
+     * @param {number} knobTexturePath path to the knob texture
+     * @param {number} diffuseDoorColor diffuse color, default is #EADDCA
+     * @param {number} specularDoorColor specular color, default is #EADDCA
+     * @param {number} doorShininess door chiniess, default is 10
      */
     constructor(app, doorWidth, doorLength, doorDepth, doorTexturePath, knobTexturePath, diffuseDoorColor, specularDoorColor, doorShininess) {
         super();
