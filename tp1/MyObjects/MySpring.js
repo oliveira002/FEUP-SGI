@@ -2,28 +2,32 @@ import * as THREE from 'three';
 import { MyApp } from '../MyApp.js';
 
 /**
- * This class contains the vase representation
+ * This class contains spring representation
  */
-class MyVase extends THREE.Object3D {
+class MySpring extends THREE.Object3D {
 
     /**
      * 
      * @param {MyApp} app 
      */
-    constructor(app) {
+    constructor(app, radius, height, coilsNumber) {
 
         super();
         this.app = app;
         this.type = 'Group';
 
-        this.bottom = null
-        this.top = null
-        this.vaseTexturePath = "textures/spring.png"
+        this.radius = radius || 0.06
+        this.height = height || 0.5
+        this.coilsNumber = coilsNumber || 10
+
+        this.spring = null
+        this.numberOfSamples = 2000
+        this.springTexturePath = "textures/spring.png"
 
         this.recompute()
     }
 
-    initVaseBottom(){
+    initSpring(){
         let points = []
 
         let coilPoints = 20;
@@ -49,18 +53,10 @@ class MyVase extends THREE.Object3D {
         this.add(this.spring); 
     }
 
-    initVaseTop(){
-        
-    }
-
     recompute() {
-        if (this.bottom !== null) 
-          this.app.scene.remove(this.bottom);
-        this.initVaseBottom();
-
-        if (this.top !== null) 
-          this.app.scene.remove(this.top);
-        this.initVaseTop();
+        if (this.spring !== null) 
+          this.app.scene.remove(this.spring);
+        this.initSpring();
     }
     
 }

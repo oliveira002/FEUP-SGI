@@ -3,7 +3,7 @@ import { MyApp } from '../MyApp.js';
 import { MyPortrait } from './MyPortrait.js';
 
 /**
- * This class contains walls representation for a square floor
+ * This class contains the beetle car representation
  */
 class MyBeetleCarFrame extends THREE.Object3D {
 
@@ -37,7 +37,7 @@ class MyBeetleCarFrame extends THREE.Object3D {
 
         this.carRadius = 0.9 * Math.min(this.frameWidth, this.frameLength) - 2 * Math.min(this.horizontalPieceWidth, this.verticalPieceLength)
 
-        this.carColor = 0xFF0000
+        this.carColor = 0xFC0FC0
         this.beetleTrunk = null
         this.beetleWindshield = null
         this.beetleHood = null
@@ -165,7 +165,7 @@ class MyBeetleCarFrame extends THREE.Object3D {
       let position = new THREE.Vector3(0, 0, 0)
       const geometry = new THREE.BufferGeometry().setFromPoints(points)
 
-      this.beetleBottom = new THREE.Line(geometry,new THREE.LineBasicMaterial({ color: 0xff0000 }));
+      this.beetleBottom = new THREE.Line(geometry,new THREE.LineBasicMaterial({ color: this.carColor }));
       this.beetleBottom.position.set(...position)
       this.add(this.beetleBottom)
     }

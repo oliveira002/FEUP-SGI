@@ -10,7 +10,10 @@ import { MyPortrait } from './MyObjects/MyPortrait.js';
 import { MyLamp } from './MyObjects/MyLamp.js';
 import { MyFurniture } from './MyObjects/MyFurniture.js';
 import { MyWindow } from './MyObjects/MyWindow.js';
+import { MyShelf } from './MyObjects/MyShelf.js';
+import { MyDoor } from './MyObjects/MyDoor.js';
 import { MyBeetleCarFrame } from './MyObjects/MyBeetleCarFrame.js';
+import { MySpring } from './MyObjects/MySpring.js';
 
 /**
  *  This class contains the contents of our application
@@ -40,7 +43,10 @@ class MyContents {
         this.furniture = null
         this.tv = null
         this.window = null
+        this.shelf = null
+        this.door = null
         this.beetleCarFrame = null
+        this.spring = null
 
         // axis related attributes
         this.axisEnabled = false
@@ -132,6 +138,12 @@ class MyContents {
         this.furnitureHeight = null
         this.furnitureTexturePath = null
 
+        // shelf related attributes
+        this.shelfDepth = null
+        this.shelfLength = null
+        this.shelfHeight = null
+        this.shelfTexturePath = null
+
         // tv related attributes
         this.tvWidth = null
         this.tvLength = null
@@ -142,6 +154,17 @@ class MyContents {
         this.verticalTvPieceWidth = null
         this.verticalTvPieceLength = null
         this.diffuseTvColor = null
+
+        // door related attributes
+        this.doorWidth = null
+        this.doorLength = null
+        this.doorDepth = null
+        this.doorTexturePath = null
+        this.knobTexturePath = null
+
+        // carpet related attributes
+        this.carpet = null
+        this.carpetTexturePath = null 
 
         // window related attributes
         this.windowWidth = null
@@ -156,6 +179,9 @@ class MyContents {
         // beetle car frame related attributes
         this.beetleCarFrameLength = null
         this.beetleCarFrameDepth = null
+        this.beetleCarBackground = null
+
+        // spring related attributes
     }
 
     /**
@@ -234,8 +260,8 @@ class MyContents {
         }
             
         if(this.table === null){
-            this.tableWidth = 1.5
-            this.tableLength = 3
+            this.tableWidth = 2.5
+            this.tableLength = 4
             this.tableHeight = 1.5
             this.tableTexturePath = "textures/furniture.jpg"
             this.table = new MyTable(this, this.tableWidth, this.tableLength, this.tableHeight, undefined, undefined, this.tableTexturePath)
@@ -276,9 +302,14 @@ class MyContents {
             this.chairHeight = 0.85
             this.chairTexturePath = "textures/furniture.jpg"
             this.chair = new MyChair(this, this.chairWidth, this.chairLength, this.chairHeight, undefined, undefined, this.chairTexturePath)
+            this.chair2 = new MyChair(this, this.chairWidth, this.chairLength, this.chairHeight, undefined, undefined, this.chairTexturePath)
             this.chair.translateY(this.chairHeight/2)
-            this.chair.translateZ(-this.tableLength/2)
-            this.app.scene.add(this.chair)
+            this.chair.translateZ(-this.tableWidth/2)
+            this.chair.translateX(-this.tableLength / 5)
+            this.chair2.translateY(this.chairHeight/2)
+            this.chair2.translateZ(-this.tableWidth/2)
+            this.chair2.translateX(this.tableLength / 5)
+            this.app.scene.add(this.chair,this.chair2)
         }
 
         if(this.portrait1 === null){
@@ -363,14 +394,69 @@ class MyContents {
             this.app.scene.add(this.window)
         }
 
+        if(this.shelf === null) {
+            this.shelfHeight = 2.6
+            this.shelfDepth = 0.5
+            this.shelfLength = 2
+            this.shelfTexturePath = "textures/furniture.jpg"
+            this.shelf = new MyShelf(this,this.shelfHeight,this.shelfDepth,this.shelfLength,"textures/furniture.jpg")
+            this.shelf2 = new MyShelf(this,this.shelfHeight,this.shelfDepth,this.shelfLength,"textures/furniture.jpg")
+            this.shelf.translateZ(this.floorSizeU / 2 - this.shelfDepth / 2 - 0.01)
+            this.shelf.translateX(this.floorSizeU / 4 + 0.2)
+            this.shelf.rotateY(Math.PI)
+            this.shelf2.translateZ(this.floorSizeU / 2 - this.shelfDepth / 2 - 0.01)
+            this.shelf2.translateX(-this.floorSizeU / 4 - 0.2)
+            this.shelf2.rotateY(Math.PI)
+            this.app.scene.add(this.shelf,this.shelf2)
+        }
+
+        if(this.door === null) {
+            this.doorWidth = 4
+            this.doorLength = 2
+            this.doorDepth = 0.05
+            this.doorTexturePath = "textures/minedoor.png"
+            //this.knobTexturePath = "textures/knob.jpg"
+            this.door = new MyDoor(this,this.doorWidth,this.doorLength,this.doorDepth, this.doorTexturePath, this.knobTexturePath)
+            this.door.translateY(this.doorWidth / 2 - this.doorWidth / 10 - 0.01)
+            this.door.translateZ(-this.floorSizeU / 2 + 0.03)
+            this.door.rotateY(Math.PI * 2)
+            this.app.scene.add(this.door)
+        }
+
+        if(this.carpet === null) {
+            this.carpetGeometry = new THREE.PlaneGeometry(this.tableLength * 2.2,this.tableWidth * 2.2)
+            this.carpetTexturePath = "textures/carpet.png"
+
+            this.carpetTexture = new THREE.TextureLoader().load(this.carpetTexturePath);
+            this.carpetTexture.wrapS = THREE.RepeatWrapping;
+            this.carpetTexture.wrapT = THREE.RepeatWrapping;
+
+            this.carpetMaterial = new THREE.MeshPhongMaterial({map : this.carpetTexture})
+            this.carpetMesh = new THREE.Mesh(this.carpetGeometry,this.carpetMaterial)
+            this.carpetMesh.rotateX(-Math.PI / 2)
+            this.carpetMesh.translateZ(0.01)
+            this.app.scene.add(this.carpetMesh)
+        }
+
         if(this.beetleCarFrame === null){
             this.beetleCarFrameLength = 1
             this.beetleCarFrameDepth = 0.1
-            this.beetleCarFrame = new MyBeetleCarFrame(this, undefined, 1, this.beetleCarFrameDepth)
+            this.beetleCarBackground = "textures/beetle_view.jpg"
+            this.beetleCarFrame = new MyBeetleCarFrame(this, undefined, 1, this.beetleCarFrameDepth, this.beetleCarBackground)
             this.beetleCarFrame.translateY(this.beetleCarFrameLength/2 + 3 + this.tvWidth/2 + 1)
             this.beetleCarFrame.translateZ(this.floorSizeU / 2 - this.beetleCarFrameDepth / 2 - 0.01)
             this.beetleCarFrame.rotateY(Math.PI)
             this.app.scene.add(this.beetleCarFrame)
+        }
+
+        if(this.spring === null){
+            this.springRadius = 0.06
+            this.spring = new MySpring(this, this.springRadius, 0.5)
+            this.spring.translateX(1.2)
+            this.spring.translateY(this.springRadius+this.tableHeight)
+            this.spring.translateZ(-0.3)
+            this.spring.rotateY(Math.PI/3)
+            this.app.scene.add(this.spring)
         }
     }
     
