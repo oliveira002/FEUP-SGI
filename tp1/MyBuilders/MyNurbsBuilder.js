@@ -4,13 +4,7 @@ import { ParametricGeometry } from 'three/addons/geometries/ParametricGeometry.j
 
 class MyNurbsBuilder {
 
-    /**
-       constructs the object
-       @param {MyApp} app The application object
-    */
-    constructor(app) {
-        this.app = app
-    }
+    constructor() {}
 
     build(controlPoints, degree1, degree2, samples1, samples2, material) {
 
@@ -54,7 +48,7 @@ class MyNurbsBuilder {
         function getSurfacePoint(u, v, target) {
             return nurbsSurface.getPoint(u, v, target);
         }
-        
+
         const geometry = new ParametricGeometry(getSurfacePoint,samples1, samples2);
         
         return geometry;

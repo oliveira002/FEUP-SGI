@@ -14,6 +14,7 @@ import { MyShelf } from './MyObjects/MyShelf.js';
 import { MyDoor } from './MyObjects/MyDoor.js';
 import { MyBeetleCarFrame } from './MyObjects/MyBeetleCarFrame.js';
 import { MySpring } from './MyObjects/MySpring.js';
+import { MyVase } from './MyObjects/MyVase.js';
 
 /**
  *  This class contains the contents of our application
@@ -47,9 +48,10 @@ class MyContents {
         this.door = null
         this.beetleCarFrame = null
         this.spring = null
-
+        this.vase = null
+    
         // axis related attributes
-        this.axisEnabled = false
+        this.axisEnabled = true
 
         // box related attributes
         this.boxMesh = null
@@ -182,6 +184,10 @@ class MyContents {
         this.beetleCarBackground = null
 
         // spring related attributes
+        this.springRadius = null
+
+        // vase related attributes
+
     }
 
     /**
@@ -457,6 +463,11 @@ class MyContents {
             this.spring.translateZ(-0.3)
             this.spring.rotateY(Math.PI/3)
             this.app.scene.add(this.spring)
+        }
+
+        if(this.vase === null){
+            this.vase = new MyVase(this)
+            this.app.scene.add(this.vase)
         }
     }
     
