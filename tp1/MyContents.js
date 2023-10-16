@@ -17,6 +17,9 @@ import { MySpring } from './MyObjects/MySpring.js';
 import { MyVase } from './MyObjects/MyVase.js';
 
 import { Reflector } from 'three/addons/objects/Reflector.js';
+import { MyCaution } from './MyObjects/MyCaution.js';
+import { MyTableCover } from './MyObjects/MyTableCover.js';
+import { MyPartyHat } from './MyObjects/MyPartyHat.js';
 
 /**
  *  This class contains the contents of our application
@@ -51,6 +54,7 @@ class MyContents {
         this.beetleCarFrame = null
         this.spring = null
         this.vase = null
+        this.caution = null
     
         // axis related attributes
         this.axisEnabled = true
@@ -190,7 +194,24 @@ class MyContents {
         // spring related attributes
         this.springRadius = null
 
+
         // vase related attributes
+
+        // caution
+        this.cautionWidth = null
+        this.cautionHeight = null
+        this.cautionDepth = null
+
+        // carpet related attributes
+        this.blood = null
+        this.bloodTexturePath = null 
+
+        // cover
+        this.cover = null
+        this.coverWidth = null
+        this.coverHeight = null
+        this.coverDepth = null
+        this.coverTexturePath = null 
 
     }
 
@@ -215,7 +236,7 @@ class MyContents {
        
         // add an ambient light
         const ambientLight = new THREE.AmbientLight( 0x555555 );
-        this.app.scene.add( ambientLight );
+        //this.app.scene.add( ambientLight );
 
         // create once 
         if (this.axis === null) {
@@ -281,13 +302,15 @@ class MyContents {
         }
             
         if(this.table === null){
-            this.tableWidth = 2.5
-            this.tableLength = 4
+            this.tableWidth = 6
+            this.tableLength = 2.5
             this.tableHeight = 1.5
-            this.tableTexturePath = "textures/furniture.jpg"
+            this.tableTexturePath = "textures/rusty.jpg"
             this.table = new MyTable(this, this.tableWidth, this.tableLength, this.tableHeight, undefined, undefined, this.tableTexturePath)
             this.table.translateY(this.tableHeight/2)
-            //this.app.scene.add(this.table)
+            this.table.translateX(this.floorSizeU / 2 - this.tableLength / 2 - 0.8)
+            this.table.translateZ(this.floorSizeV / 2 - this.tableWidth / 2)
+            this.app.scene.add(this.table)
         }
 
         if(this.plate === null) {
@@ -327,9 +350,14 @@ class MyContents {
             this.chair.translateY(this.chairHeight/2)
             this.chair.translateZ(-this.tableWidth/2)
             this.chair.translateX(-this.tableLength / 5)
-            this.chair2.translateY(this.chairHeight/2)
-            this.chair2.translateZ(-this.tableWidth/2)
-            this.chair2.translateX(this.tableLength / 5)
+            this.chair.rotateY(Math.PI / 4)
+            this.chair2.translateY(this.chairWidth + this.chairWidth / 5)
+            this.chair2.translateX(this.chairLength * 3)
+            //this.chair2.translateZ(-this.tableWidth/2)
+            //this.chair2.translateX(this.tableLength / 5)
+            this.chair2.rotateX(-Math.PI / 2)
+            this.chair2.rotateY(-Math.PI / 3.7)
+            this.chair2.translateX(this.chairWidth / 8)
             this.app.scene.add(this.chair,this.chair2)
         }
 
@@ -372,10 +400,10 @@ class MyContents {
             this.furnitureHeight = 1
             this.furnitureDepth = 1
             this.furnitureLength = 5
-            this.furnitureTexturePath = "textures/furniture.jpg"
+            this.furnitureTexturePath = "textures/rusty.jpg"
             this.furniture = new MyFurniture(this,this.furnitureHeight,this.furnitureDepth,this.furnitureLength, this.furnitureTexturePath)
             this.furniture.translateY(this.furnitureHeight / 2)
-            this.furniture.translateZ(this.floorSizeU / 2 - this.furnitureDepth / 2)
+            this.furniture.translateZ(this.floorSizeV / 2 - this.furnitureDepth / 2)
             this.furniture.rotateY(Math.PI)
             this.app.scene.add(this.furniture)
         }
@@ -392,9 +420,10 @@ class MyContents {
             this.diffuseTvColor = "#000000"
             this.tv = new MyPortrait(this,this.tvWidth,this.tvLength,this.tvDepth, this.tvTexturePath, 
                 this.horizontalTvPieceWidth, this.horizontalTvPieceLength, this.verticalTvPieceWidth, this.verticalTvPieceLength, this.diffuseTvColor)
-            this.tv.translateY(3)
-            this.tv.translateZ(this.floorSizeU / 2 - this.tvDepth / 2 - 0.01)
+            this.tv.translateY(3.5)
+            this.tv.translateZ(this.floorSizeV / 2 - this.tvDepth / 2 - 0.01)
             this.tv.rotateY(Math.PI)
+            this.tv.rotateZ(Math.PI / 32)
             this.app.scene.add(this.tv)
         }
 
@@ -416,19 +445,21 @@ class MyContents {
         }
 
         if(this.shelf === null) {
-            this.shelfHeight = 2.6
-            this.shelfDepth = 0.5
-            this.shelfLength = 2
+            this.shelfHeight = 4.6
+            this.shelfDepth = 0.8
+            this.shelfLength = 2.7
             this.shelfTexturePath = "textures/furniture.jpg"
             this.shelf = new MyShelf(this,this.shelfHeight,this.shelfDepth,this.shelfLength,"textures/furniture.jpg")
             this.shelf2 = new MyShelf(this,this.shelfHeight,this.shelfDepth,this.shelfLength,"textures/furniture.jpg")
-            this.shelf.translateZ(this.floorSizeU / 2 - this.shelfDepth / 2 - 0.01)
-            this.shelf.translateX(this.floorSizeU / 4 + 0.2)
+            this.shelf.translateZ(this.floorSizeV / 2 - this.shelfDepth / 2 - 0.01)
+            this.shelf.translateX(this.floorSizeV / 4 + 0.2)
             this.shelf.rotateY(Math.PI)
-            this.shelf2.translateZ(this.floorSizeU / 2 - this.shelfDepth / 2 - 0.01)
-            this.shelf2.translateX(-this.floorSizeU / 4 - 0.2)
+            this.shelf2.translateZ(this.floorSizeV / 2 - this.shelfLength / 2 - 1.2)
+            this.shelf2.translateX(-this.floorSizeU / 2 + this.shelfDepth / 2 + 0.01)
             this.shelf2.rotateY(Math.PI)
-            this.app.scene.add(this.shelf,this.shelf2)
+            this.shelf2.rotateY(-Math.PI / 2)
+            //this.app.scene.add(this.shelf)
+            this.app.scene.add(this.shelf2)
         }
 
         if(this.door === null) {
@@ -441,7 +472,7 @@ class MyContents {
             this.door.translateY(this.doorWidth / 2 - this.doorWidth / 10 - 0.01)
             this.door.translateZ(-this.floorSizeU / 2 + 0.03)
             this.door.rotateY(Math.PI * 2)
-            this.app.scene.add(this.door)
+            //this.app.scene.add(this.door)
         }
 
         if(this.carpet === null) {
@@ -465,7 +496,7 @@ class MyContents {
             this.beetleCarBackground = "textures/beetle_view.jpg"
             this.beetleCarFrame = new MyBeetleCarFrame(this, undefined, 1, this.beetleCarFrameDepth, this.beetleCarBackground)
             this.beetleCarFrame.translateY(this.beetleCarFrameLength/2 + 3 + this.tvWidth/2 + 1)
-            this.beetleCarFrame.translateZ(this.floorSizeU / 2 - this.beetleCarFrameDepth / 2 - 0.01)
+            this.beetleCarFrame.translateZ(this.floorSizeV / 2 - this.beetleCarFrameDepth / 2 - 0.01)
             this.beetleCarFrame.rotateY(Math.PI)
             this.app.scene.add(this.beetleCarFrame)
         }
@@ -487,6 +518,60 @@ class MyContents {
             this.vase.translateZ(this.floorSizeV/2-this.furnitureDepth/2)
             this.app.scene.add(this.vase)
         }
+        
+        if(this.caution === null) {
+            this.cautionWidth = 0.8
+            this.cautionHeight = 1.6
+            this.cautionDepth = 0.14
+            this.caution = new MyCaution(this,this.cautionWidth,this.cautionDepth,this.cautionHeight)
+            this.caution.translateY(Math.sin(Math.PI /3) * (this.cautionHeight / 2))
+            this.app.scene.add(this.caution)
+        }
+
+        if(this.blood === null) {
+            this.bloodGeometry = new THREE.PlaneGeometry(5,5)
+            this.bloodTexturePath = "textures/blood.png"
+
+            this.bloodTexture = new THREE.TextureLoader().load(this.bloodTexturePath);
+            this.bloodTexture.wrapS = THREE.RepeatWrapping;
+            this.bloodTexture.wrapT = THREE.RepeatWrapping;
+
+            this.bloodMaterial = new THREE.MeshPhongMaterial({
+                map: this.bloodTexture,
+                transparent: true,
+                shininess: 80,
+                opacity: 0.9,
+                specular: 0x440000, 
+                emissive: 0x110000, 
+              });
+
+            this.blood = new THREE.Mesh(this.bloodGeometry,this.bloodMaterial)
+            this.blood.rotateX(-Math.PI / 2)
+            this.blood.translateZ(0.03)
+            this.app.scene.add(this.blood)
+        }
+
+        if(this.cover === null) {
+            this.coverWidth = this.tableLength + 0.1
+            this.coverTexturePath = "textures/cover.jpg"
+            this.cover = new MyTableCover(this,this.coverWidth,this.tableHeight,this.tableWidth,this.coverTexturePath)
+            this.cover.translateY(this.tableHeight + 0.02)
+            this.cover.translateX(this.floorSizeU / 2 - this.tableLength / 2 - 0.8)
+            this.cover.translateZ(this.floorSizeV / 2 - this.tableWidth / 2)
+            this.app.scene.add(this.cover)
+        }
+
+        var cone = new MyPartyHat(this,0.5,1,"textures/partyhat.jpg")
+        this.app.scene.add(cone)
+
+        const spotLight = new THREE.SpotLight( 0xffffff, 600, 0, Math.PI / 5, 0.5, 2.2);
+            spotLight.position.set(2,8,-15);
+            spotLight.target = this.tv
+            spotLight.castShadow = true;
+        
+        const spotLightHelper = new THREE.SpotLightHelper(spotLight,"#FFFFFF")
+        this.app.scene.add(spotLightHelper)
+        this.app.scene.add(spotLight)
     }
     
     /**

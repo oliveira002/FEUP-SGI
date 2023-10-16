@@ -26,7 +26,7 @@ class MyTable extends THREE.Object3D {
         this.tableLength = tableLength || 1
         this.tableHeight = tableHeight || 1
         this.tableTopHeight = tableTopHeight || 0.2
-        this.legRadius = legRadius || this.tableWidth/14
+        this.legRadius = legRadius || this.tableWidth/70
         this.legHeight = this.tableHeight - this.tableTopHeight
         this.tableTexturePath = tableTexturePath
         this.diffuseTableColor = diffuseTableColor || "#F0E5D8"
@@ -81,8 +81,6 @@ class MyTable extends THREE.Object3D {
         this.add( this.legBackRightMesh );
 
         this.translateY(-this.tableHeight/2);
-
-
     }
 }
 
