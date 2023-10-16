@@ -16,6 +16,8 @@ import { MyBeetleCarFrame } from './MyObjects/MyBeetleCarFrame.js';
 import { MySpring } from './MyObjects/MySpring.js';
 import { MyVase } from './MyObjects/MyVase.js';
 
+import { Reflector } from 'three/addons/objects/Reflector.js';
+
 /**
  *  This class contains the contents of our application
  */
@@ -63,15 +65,17 @@ class MyContents {
         // floor related attributes
         this.floorSizeU = null
         this.floorSizeV = null
-        this.diffuseFloorColor = "#d6c6ab"
-        this.specularFloorColor = "#d6c6ab"
-        this.floorShininess = 0
+        this.diffuseFloorColor = "#CCCCCC"
+        this.specularFloorColor = "#CCCCCC"
+        this.floorShininess = 3
         this.floorTexture = new THREE.TextureLoader().load('textures/floor.jpg');
         this.floorTexture.wrapS = THREE.RepeatWrapping;
         this.floorTexture.wrapT = THREE.RepeatWrapping;
-        //this.floorMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseFloorColor, 
-          //  specular: this.specularFloorColor, emissive: "#000000", shininess: this.floorShininess, map: this.floorTexture })
-        this.floorMaterial = new THREE.MeshLambertMaterial({map : this.floorTexture })
+        this.floorMaterial = new THREE.MeshPhongMaterial({ 
+            map: this.floorTexture,
+            transparent: true,
+            opacity: 0.9
+        })
 
         // ceiling related attributes
         this.ceilingSize = null
@@ -227,8 +231,8 @@ class MyContents {
                
         if(this.floor === null){
 
-            this.floorSizeU = 15 // x axis
-            this.floorSizeV = 15 // z axis
+            this.floorSizeU = 13 // x axis
+            this.floorSizeV = 18 // z axis
             let floorUVRate = this.floorSizeV / this.floorSizeU;
 
             let floorTextureUVRate = 729 / 599; // image dimensions
@@ -243,6 +247,17 @@ class MyContents {
             this.floorMesh.rotation.x = -Math.PI / 2;
             this.floorMesh.position.y = 0;
             this.app.scene.add( this.floorMesh );
+
+            this.floorMirror = new THREE.PlaneGeometry( this.floorSizeU , this.floorSizeV );
+            this.floorMirrorMesh = new Reflector( this.floorMirror, {
+                clipBias: 0.003,
+                textureWidth: 729,
+                textureHeight: 599,
+                color: 0xc1cbcb
+            });
+            this.floorMirrorMesh.rotation.x = -Math.PI / 2;
+            this.floorMirrorMesh.position.y = -0.01;
+            this.app.scene.add(this.floorMirrorMesh)
         }
 
         if(this.ceiling === null){
@@ -259,7 +274,7 @@ class MyContents {
         
         if (this.walls === null) {
             this.wallHeight = this.ceilingHeight
-            this.wallsTexturePath = "textures/wall.jpg" 
+            this.wallsTexturePath = "textures/wall.png" 
             this.walls = new MyWalls(this, this.wallHeight, this.floorSizeU, this.floorSizeV, this.wallsTexturePath)
             this.walls.translateY(this.wallHeight/2)
             this.app.scene.add(this.walls)
@@ -272,7 +287,7 @@ class MyContents {
             this.tableTexturePath = "textures/furniture.jpg"
             this.table = new MyTable(this, this.tableWidth, this.tableLength, this.tableHeight, undefined, undefined, this.tableTexturePath)
             this.table.translateY(this.tableHeight/2)
-            this.app.scene.add(this.table)
+            //this.app.scene.add(this.table)
         }
 
         if(this.plate === null) {
@@ -280,7 +295,7 @@ class MyContents {
             this.plateHeight = this.plateRadius/5
             this.plate = new MyPlate(this, this.plateRadius, this.plateHeight)
             this.plate.translateY((this.tableHeight+this.plateHeight/2))
-            this.app.scene.add(this.plate)
+            //this.app.scene.add(this.plate)
         }
 
         if(this.cake === null){
@@ -291,7 +306,7 @@ class MyContents {
             this.cakeOutsideTexturePath = "textures/cake_outside.jpeg"
             this.cake = new MyCake(this, this.cakeRadius, this.cakeHeight, this.cakeSliceSize, undefined, this.cakeInsideTexturePath, this.cakeOutsideTexturePath)
             this.cake.translateY((this.tableHeight+this.plateHeight+this.cakeHeight/2))
-            this.app.scene.add(this.cake)
+            //this.app.scene.add(this.cake)
         }
 
         if(this.candle === null){
@@ -299,7 +314,7 @@ class MyContents {
             this.candleHeight = this.candleRadius * 8
             this.candle = new MyCandle(this, this.candleRadius, this.candleHeight)
             this.candle.translateY((this.tableHeight+this.plateHeight+this.cakeHeight+this.candleHeight/2))
-            this.app.scene.add(this.candle)
+            //this.app.scene.add(this.candle)
         }
 
         if(this.chair === null) {
@@ -441,7 +456,7 @@ class MyContents {
             this.carpetMesh = new THREE.Mesh(this.carpetGeometry,this.carpetMaterial)
             this.carpetMesh.rotateX(-Math.PI / 2)
             this.carpetMesh.translateZ(0.01)
-            this.app.scene.add(this.carpetMesh)
+            //this.app.scene.add(this.carpetMesh)
         }
 
         if(this.beetleCarFrame === null){
@@ -467,6 +482,9 @@ class MyContents {
 
         if(this.vase === null){
             this.vase = new MyVase(this)
+            this.vase.translateX(this.furnitureLength/2-0.6)
+            this.vase.translateY(this.furnitureHeight)
+            this.vase.translateZ(this.floorSizeV/2-this.furnitureDepth/2)
             this.app.scene.add(this.vase)
         }
     }

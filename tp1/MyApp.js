@@ -50,6 +50,8 @@ class MyApp  {
         this.renderer = new THREE.WebGLRenderer({antialias:true});
         this.renderer.setPixelRatio( window.devicePixelRatio );
         this.renderer.setClearColor("#000000");
+        this.renderer.shadowMap.enabled = true;
+        this.renderer.shadowMap.type = THREE.PCFSoftShadowMap; // search for other alternatives
 
         // Configure renderer size
         this.renderer.setSize( window.innerWidth, window.innerHeight );
@@ -69,7 +71,7 @@ class MyApp  {
 
         // Create a basic perspective camera
         const perspective1 = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 )
-        perspective1.position.set(-10,10,-3)
+        perspective1.position.set(8,12,-12)
         this.cameras['Perspective 1'] = perspective1
 
         const perspective2 = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 )

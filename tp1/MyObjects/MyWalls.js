@@ -31,17 +31,11 @@ class MyWalls extends THREE.Object3D {
 
         if(this.wallsTexturePath){
             this.wallsTexture = new THREE.TextureLoader().load(this.wallsTexturePath);
-            this.wallsTexture.wrapS = THREE.RepeatWrapping;
-            this.wallsTexture.wrapT = THREE.RepeatWrapping;
-            let wallsTextureRepeatU = 3;
-            let wallsTextureRepeatV = 3;
+            this.wallsTexture.wrapS = THREE.MirroredRepeatWrapping ;
+            this.wallsTexture.wrapT = THREE.ClampToEdgeWrapping;
+            let wallsTextureRepeatU = 1;
+            let wallsTextureRepeatV = 1;
             this.wallsTexture.repeat.set(wallsTextureRepeatU, wallsTextureRepeatV );
-
-            /*let floorUVRate = this.floorSizeV / this.floorSizeU;
-
-            let floorTextureUVRate = 620 / 620; // image dimensions
-            this.floorTexture.rotation = 0;
-            this.floorTexture.offset = new THREE.Vector2(0,0);*/
         }
 
         this.wallMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseWallColor, 

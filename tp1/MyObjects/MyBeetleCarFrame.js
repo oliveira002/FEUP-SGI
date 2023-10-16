@@ -48,7 +48,7 @@ class MyBeetleCarFrame extends THREE.Object3D {
         this.beetleBottom = null
         this.numberOfSamples = 20
       
-        this.frame = new MyPortrait(app, this.frameWidth, this.frameLength, this.frameDepth, this.frameTexturePath)
+        this.frame = new MyPortrait(app, this.frameWidth, this.frameLength, this.frameDepth)
         this.add(this.frame)
 
         this.recompute()
