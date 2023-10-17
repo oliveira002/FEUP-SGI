@@ -39,8 +39,7 @@ class MyChair extends THREE.Object3D {
             this.chairTexture.wrapT = THREE.RepeatWrapping;
         }
 
-        this.chairMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseChairColor, 
-            specular: this.specularChairColor, emissive: "#000000", shininess: this.chairShininess, map: this.chairTexture })
+        this.chairMaterial = new THREE.MeshPhysicalMaterial({map: this.chairTexture, metalness: 0.2, roughness: 0.3 })
 
         let chairTop = new THREE.BoxGeometry(this.chairLength, this.chairTopHeight, this.chairWidth)
         let chairBack = new THREE.BoxGeometry(this.chairLength, this.chairTopHeight / 2.5, this.chairWidth * 2)

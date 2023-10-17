@@ -38,8 +38,7 @@ class MyShelf extends THREE.Object3D {
             this.shelfTexture.wrapT = THREE.RepeatWrapping;
         }
 
-        this.shelfMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseShelfColor, 
-            specular: this.specularShelfColor,side: THREE.DoubleSide, emissive: "#000000", shininess: this.shelfShininess, map: this.shelfTexture })
+        this.shelfMaterial = new THREE.MeshPhysicalMaterial({map: this.shelfTexture, metalness: 0.2, roughness: 0.3, side: THREE.DoubleSide })
 
         var materials = [
             this.shelfMaterial, // Right face

@@ -25,7 +25,7 @@ class MyPlate extends THREE.Object3D {
         this.plateShininess = plateShininess || 30
 
         this.plateMaterial = new THREE.MeshPhongMaterial({ color: this.diffusePlateColor, 
-            specular: this.specularPlateColor, emissive: "#000000", shininess: this.plateShininess })
+            specular: this.specularPlateColor, emissive: "#2F4F4F", shininess: this.plateShininess })
 
 
         let plate = new THREE.CylinderGeometry( this.radius, this.radius * 0.5, this.height, 32 ); 
