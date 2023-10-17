@@ -263,8 +263,8 @@ class MyContents {
     init() {
        
         // add an ambient light
-        const ambientLight = new THREE.AmbientLight( 0x555555 );
-        //this.app.scene.add( ambientLight );
+        const ambientLight = new THREE.AmbientLight( 0x555555, 0.5 );
+        this.app.scene.add( ambientLight );
 
         // create once 
         if (this.axis === null) {
