@@ -79,10 +79,10 @@ class MyBulb extends THREE.Object3D {
             //pointLight.position.set( 0, -(this.bulbSupportHeight + this.bulbBottomHeight + (this.bulbRadius - this.bulbRadius*(1-Math.cos(Math.PI/4)))), 0 );
             //this.add( pointLight );
 
-            const spotLight = new THREE.SpotLight( 0xffffff, 300, 0, Math.PI / 7, 0.5, 2.5);
+            const spotLight = new THREE.SpotLight( 0xffffff, 1000, 0, Math.PI , 0.5, 2.5);
             spotLight.position.set( 0, -(this.bulbSupportHeight + this.bulbBottomHeight + (this.bulbRadius - this.bulbRadius*(1-Math.cos(Math.PI/4)))), 0 );
             spotLight.castShadow = true;
-            //this.add(spotLight)
+            this.add(spotLight)
 
             // add a point light helper for the previous point light -> if the light's position is updated, the helper's position isn't
             //const sphereSize = 0.1;

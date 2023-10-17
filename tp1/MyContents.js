@@ -20,6 +20,7 @@ import { Reflector } from 'three/addons/objects/Reflector.js';
 import { MyCaution } from './MyObjects/MyCaution.js';
 import { MyTableCover } from './MyObjects/MyTableCover.js';
 import { MyPartyHat } from './MyObjects/MyPartyHat.js';
+import { MySpotlight } from './MyObjects/MySpotlight.js';
 
 /**
  *  This class contains the contents of our application
@@ -389,7 +390,7 @@ class MyContents {
 
         if(this.lamp === null){
             this.lampHeight = 2
-            this.isLampOn = true
+            this.isLampOn = false
             this.lamp = new MyLamp(this, this.isLampOn, undefined, this.lampHeight)
             this.lamp.translateY(-this.lampHeight/2)
             this.lamp.translateY(this.ceilingHeight)
@@ -561,17 +562,33 @@ class MyContents {
             this.app.scene.add(this.cover)
         }
 
-        var cone = new MyPartyHat(this,0.5,1,"textures/partyhat.jpg")
-        this.app.scene.add(cone)
 
-        const spotLight = new THREE.SpotLight( 0xffffff, 600, 0, Math.PI / 5, 0.5, 2.2);
-            spotLight.position.set(2,8,-15);
-            spotLight.target = this.tv
-            spotLight.castShadow = true;
-        
-        const spotLightHelper = new THREE.SpotLightHelper(spotLight,"#FFFFFF")
-        this.app.scene.add(spotLightHelper)
+        this.targetGeo = new THREE.PlaneGeometry(0.01, 0.01)
+        this.targetMat = new THREE.MeshBasicMaterial({transparent:true})
+        this.target = new THREE.Mesh(this.targetGeo, this.targetMat)
+        this.target.position.set(2, 3.5, this.floorSizeV / 2 - this.tvDepth / 2 - 0.01)
+        this.app.scene.add(this.target)
+
+
+        this.spotLightPos = new THREE.Vector3(this.floorSizeU/2-0.5,this.ceilingHeight-.53,-this.floorSizeV/2+.3)
+        this.spotLightLookAt = this.target.position
+        this.spotLightObject = new MySpotlight(this, this.spotLightPos, this.spotLightLookAt)
+        this.app.scene.add(this.spotLightObject)
+
+        var cone = new MyPartyHat(this,0.5,1,"textures/partyhat.jpg")
+        //this.app.scene.add(cone)
+
+        const spotLight = new THREE.SpotLight( 0xffffff, 700, 0, Math.PI / 4, 0.5, 2);
+        var offset = new THREE.Vector3(0,0,0).subVectors(this.spotLightLookAt, this.spotLightPos).normalize()
+        offset.multiplyScalar(2)
+        spotLight.position.set(...(this.spotLightPos.sub(offset)));
+        spotLight.target = this.target
+        spotLight.castShadow = true;
         this.app.scene.add(spotLight)
+
+        const spotLightHelper = new THREE.SpotLightHelper(spotLight,"#FFFFFF")
+        //this.app.scene.add(spotLightHelper)
+
     }
     
     /**
