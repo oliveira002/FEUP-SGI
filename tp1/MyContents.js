@@ -402,12 +402,14 @@ class MyContents {
             this.portrait1Width = 2
             this.portrait1Length = 1.5
             this.portrait1Depth = 0.1
-            this.portrait1TexturePath = "textures/gustavo_costa.png" 
-            this.portrait1 = new MyPortrait(this, this.portrait1Width, this.portrait1Length, this.portrait1Depth, this.portrait1TexturePath)
+            this.portrait1TexturePath = "textures/poster2.jpg" 
+            this.framePath = "textures/oldwood.jpg"
+            this.portrait1 = new MyPortrait(this, this.portrait1Width, this.portrait1Length, this.portrait1Depth, this.portrait1TexturePath,this.framePath)
             this.portrait1.rotateY(-Math.PI/2)
             this.portrait1.translateX(-(this.portrait1Length/2+this.floorSizeU/20))
             this.portrait1.translateY(this.wallHeight/3);
-            this.portrait1.translateZ(-this.floorSizeV/2+this.portrait1Depth/2+0.01)
+            this.portrait1.translateZ(-this.floorSizeU/2+this.portrait1Depth/2+0.01)
+            this.portrait1.rotateZ(Math.PI / 12)
             this.app.scene.add(this.portrait1)
         }
 
@@ -415,12 +417,15 @@ class MyContents {
             this.portrait2Width = 2
             this.portrait2Length = 1.5
             this.portrait2Depth = 0.1
-            this.portrait2TexturePath = "textures/joao_oliveira.jpg" 
-            this.portrait2 = new MyPortrait(this, this.portrait2Width, this.portrait2Length, this.portrait2Depth, this.portrait2TexturePath)
+            this.portrait2TexturePath = "textures/poster1.jpg" 
+            this.framePath = "textures/oldwood.jpg"
+            this.portrait2 = new MyPortrait(this, this.portrait2Width, this.portrait2Length, this.portrait2Depth, this.portrait2TexturePath,this.framePath)
             this.portrait2.rotateY(-Math.PI/2)
+            this.portrait2.rotateY(Math.PI)
             this.portrait2.translateX(this.portrait2Length/2+this.floorSizeU/20)
             this.portrait2.translateY(this.wallHeight/3);
-            this.portrait2.translateZ(-this.floorSizeV/2+this.portrait2Depth/2+0.01)
+            this.portrait2.translateZ(-this.floorSizeU/2+this.portrait2Depth/2+0.03)
+            this.portrait2.rotateZ(Math.PI / 12)
             this.app.scene.add(this.portrait2)
         }
 
@@ -455,7 +460,8 @@ class MyContents {
             this.verticalTvPieceWidth = this.tvLength/40
             this.verticalTvPieceLength = 39*this.tvWidth/40
             this.diffuseTvColor = "#000000"
-            this.tv = new MyPortrait(this,this.tvWidth,this.tvLength,this.tvDepth, this.tvTexturePath, 
+            this.framePath = "textures/furniture.jpg"
+            this.tv = new MyPortrait(this,this.tvWidth,this.tvLength,this.tvDepth, this.tvTexturePath, null,
                 this.horizontalTvPieceWidth, this.horizontalTvPieceLength, this.verticalTvPieceWidth, this.verticalTvPieceLength, this.diffuseTvColor)
             this.tv.translateY(3.5)
             this.tv.translateZ(this.floorSizeV / 2 - this.tvDepth / 2 - 0.01)
@@ -486,8 +492,8 @@ class MyContents {
             this.shelfDepth = 0.8
             this.shelfLength = 3.6
             this.shelfTexturePath = "textures/furniture.jpg"
-            this.shelf = new MyShelf(this,this.shelfHeight * 0.8,this.shelfDepth,this.shelfLength,"textures/furniture.jpg")
-            this.shelf2 = new MyShelf(this,this.shelfHeight,this.shelfDepth,this.shelfLength,"textures/furniture.jpg")
+            this.shelf = new MyShelf(this,this.shelfHeight * 0.8,this.shelfDepth,this.shelfLength,this.shelfTexturePath)
+            this.shelf2 = new MyShelf(this,this.shelfHeight,this.shelfDepth,this.shelfLength,this.shelfTexturePath)
             //this.shelf.translateZ(this.floorSizeV / 2 - this.shelfDepth / 2 )
             //this.shelf.translateX(this.floorSizeV / 4 + 0.2)
             this.shelf.rotateY(Math.PI)

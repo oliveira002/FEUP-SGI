@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import { MyApp } from '../MyApp.js';
-import { MyPortrait } from './MyPortrait.js';
 import { MyBulb } from './MyBulb.js';
 
 

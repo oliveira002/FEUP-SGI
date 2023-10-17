@@ -46,7 +46,6 @@ class MyShelf extends THREE.Object3D {
             this.shelfMaterial, // Top face
             this.shelfMaterial, // Bottom face
             new THREE.MeshBasicMaterial({
-                color: 0x00ff00,
                 transparent: true,
                 opacity: 0
               }), 
@@ -59,7 +58,7 @@ class MyShelf extends THREE.Object3D {
         this.add(this.bottomCube)
 
         this.midCube = new THREE.Mesh(cube, materials)
-        this.midCube.translateY(this.shelfHeight * 0.33)
+        this.midCube.translateY(this.shelfHeight * 0.331)
         this.add(this.midCube)
 
         this.topCube = new THREE.Mesh(cube, materials)

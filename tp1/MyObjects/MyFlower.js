@@ -67,7 +67,7 @@ class MyFlower extends THREE.Object3D {
             this.add(petalMesh)
           }
         
-          this.scale.set(0.5,0.5,0.5)
+          this.scale.set(0.3,0.3,0.3)
           this.add(this.stalkMesh)
           this.add(this.flow)
     }

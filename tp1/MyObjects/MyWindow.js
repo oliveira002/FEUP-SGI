@@ -37,9 +37,10 @@ class MyWindow extends THREE.Object3D {
         this.diffuseFrameColor = diffuseFrameColor || "#331800"
         this.specularFrameColor = specularFrameColor || "#777777"
         this.frameShininess = frameShininess || 10
+        this.framePath = "textures/rusty.jpg"
 
         this.frame = new MyPortrait(this.app, this.windowWidth, this.windowLength, this.windowDepth, 
-            this.landscapeTexturePath, this.horizontalPieceWidth, this.horizontalPieceLength, 
+            this.landscapeTexturePath,this.framePath, this.horizontalPieceWidth, this.horizontalPieceLength, 
             this.verticalPieceWidth, this.verticalPieceLength, this.diffuseFrameColor, this.specularFrameColor, this.frameShininess)
         this.add(this.frame)
         
