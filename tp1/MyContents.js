@@ -22,6 +22,9 @@ import { MyTableCover } from './MyObjects/MyTableCover.js';
 import { MyPartyHat } from './MyObjects/MyPartyHat.js';
 import { MySpotlight } from './MyObjects/MySpotlight.js';
 import { MyFlower } from './MyObjects/MyFlower.js';
+import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+import {TTFLoader} from 'three/addons/loaders/TTFLoader.js'
 
 import { TTFLoader } from 'three/addons/loaders/TTFLoader.js';
 import { Font } from 'three/addons/loaders/FontLoader.js';
@@ -245,6 +248,9 @@ class MyContents {
 
         //
         this.flower = null
+
+        //
+        this.wallBlood = null
     }
 
     /**
@@ -460,7 +466,7 @@ class MyContents {
             this.tvWidth = 2
             this.tvLength = 4
             this.tvDepth = 0.02
-            this.tvTexturePath = "textures/tv.png"
+            this.tvTexturePath = "/textures/video.mp4"
             this.horizontalTvPieceWidth = this.tvWidth/40
             this.horizontalTvPieceLength = 39*this.tvLength/40
             this.verticalTvPieceWidth = this.tvLength/40
@@ -628,6 +634,28 @@ class MyContents {
             this.cover.translateX(this.floorSizeU / 2 - this.tableLength / 2 - this.tableWallOffset)
             this.cover.translateZ(this.floorSizeV / 2 - this.tableWidth / 2)
             this.app.scene.add(this.cover)
+        }
+
+        if(this.wallBlood === null) {
+            this.wallBloodGeometry = new THREE.PlaneGeometry(this.bloodSize/2,this.bloodSize/2)
+            this.wallBloodTexturePath = "textures/help.png"
+
+            this.wallBloodTexture = new THREE.TextureLoader().load(this.wallBloodTexturePath);
+            this.wallBloodTexture.wrapS = THREE.RepeatWrapping;
+            this.wallBloodTexture.wrapT = THREE.RepeatWrapping;
+
+            this.wallBloodMaterial= new THREE.MeshPhongMaterial({
+                map: this.wallBloodTexture,
+                transparent: true,
+                opacity: 0.9,
+              });
+
+            this.wallBlood = new THREE.Mesh(this.wallBloodGeometry,this.wallBloodMaterial)
+            this.wallBlood.translateX(-this.floorSizeU / 2 + 0.01)
+            this.wallBlood.translateY(this.wallHeight / 3)
+            this.wallBlood.translateZ(this.floorSizeU / 4)
+            this.wallBlood.rotateY(Math.PI / 2)
+            this.app.scene.add(this.wallBlood)
         }
 
 
