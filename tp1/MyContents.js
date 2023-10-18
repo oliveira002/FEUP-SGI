@@ -23,6 +23,10 @@ import { MyPartyHat } from './MyObjects/MyPartyHat.js';
 import { MySpotlight } from './MyObjects/MySpotlight.js';
 import { MyFlower } from './MyObjects/MyFlower.js';
 
+import { TTFLoader } from 'three/addons/loaders/TTFLoader.js';
+import { Font } from 'three/addons/loaders/FontLoader.js';
+import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+
 /**
  *  This class contains the contents of our application
  */
@@ -33,7 +37,7 @@ class MyContents {
        @param {MyApp} app The application object
     */ 
     constructor(app) {
-        
+
         // objects
         this.app = app
         this.axis = null
@@ -57,7 +61,7 @@ class MyContents {
         this.spring = null
         this.vase = null
         this.caution = null
-    
+
         // axis related attributes
         this.axisEnabled = false
 
@@ -262,6 +266,8 @@ class MyContents {
      */
     init() {
        
+        const scene = this.app.scene
+
         // add an ambient light
         const ambientLight = new THREE.AmbientLight( 0x555555, 0.5 );
         this.app.scene.add( ambientLight );
@@ -590,7 +596,7 @@ class MyContents {
             this.blood = new THREE.Mesh(this.bloodGeometry,this.bloodMaterial)
             this.blood.rotateX(-Math.PI / 2)
             this.blood.translateZ(0.03)
-            this.app.scene.add(this.blood)
+            scene.add(this.blood)
         }
 
         if(this.vent === null) {
@@ -624,6 +630,37 @@ class MyContents {
             this.app.scene.add(this.cover)
         }
 
+
+
+        const loader = new TTFLoader();
+
+        loader.load( 'fonts/blood.ttf', function ( json ) {
+
+            let bloodFont = new Font( json );
+            let textGeo = new TextGeometry( "run away", {
+                font: bloodFont,
+                size: 1,
+                height: 0.002,
+                curveSegments: 4,
+                bevelThickness: 2,
+                bevelSize: 0.01,
+                bevelEnabled: false
+
+            } );
+
+            let material = new THREE.MeshPhongMaterial( { color: 0x8b0000, flatShading: true } );
+            let textMesh1 = new THREE.Mesh( textGeo, material );
+
+            textMesh1.position.x = 0;
+            textMesh1.position.y = 0;
+            textMesh1.position.z = 0;
+
+            textMesh1.rotation.x = 0;
+            textMesh1.rotation.y = Math.PI * 2;
+
+            scene.add(textMesh1)
+
+        } );
 
         this.targetGeo = new THREE.PlaneGeometry(0.01, 0.01)
         this.targetMat = new THREE.MeshBasicMaterial({transparent:true})
