@@ -712,8 +712,8 @@ class MyContents {
         this.app.scene.add( doorLightHelper );
         this.app.scene.add(doorLight)
 
-        const windowLight = new THREE.PointLight(0xffffffff,3,0,1.7)
-        windowLight.position.set(this.floorSizeU / 2,this.windowHeight / 2 + this.wallHeight / 2.2 - 0.13,1.5)
+        const windowLight = new THREE.PointLight(0xffffff,3,0,1.7)
+        windowLight.position.set(this.floorSizeU / 2 + 1.5,this.windowHeight / 2 + this.wallHeight / 2.2 - 0.13,1.5)
         const windowLightHelper = new THREE.PointLightHelper( windowLight, sphereSize );
         this.app.scene.add(windowLightHelper);
         this.app.scene.add(windowLight)
