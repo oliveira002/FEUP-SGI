@@ -41,9 +41,14 @@ class MyPortrait extends THREE.Object3D {
         this.frameShininess = frameShininess || 10
 
 
-    
         
-        if(this.portraitTexturePath){
+        if(this.portraitTexturePath === "/textures/video.mp4") {
+            const video = document.getElementById( 'video' );
+            video.play()
+            this.portraitTexture = new THREE.VideoTexture( video );
+        }
+
+        else if(this.portraitTexturePath) {
             this.portraitTexture = new THREE.TextureLoader().load(portraitTexturePath);
             this.portraitTexture.wrapS = THREE.RepeatWrapping;
             this.portraitTexture.wrapT = THREE.RepeatWrapping;
