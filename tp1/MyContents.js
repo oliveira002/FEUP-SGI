@@ -22,9 +22,6 @@ import { MyTableCover } from './MyObjects/MyTableCover.js';
 import { MyPartyHat } from './MyObjects/MyPartyHat.js';
 import { MySpotlight } from './MyObjects/MySpotlight.js';
 import { MyFlower } from './MyObjects/MyFlower.js';
-import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
-import { FontLoader } from 'three/addons/loaders/FontLoader.js';
-import {TTFLoader} from 'three/addons/loaders/TTFLoader.js'
 
 import { TTFLoader } from 'three/addons/loaders/TTFLoader.js';
 import { Font } from 'three/addons/loaders/FontLoader.js';
