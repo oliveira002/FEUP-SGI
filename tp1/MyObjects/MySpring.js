@@ -21,7 +21,7 @@ class MySpring extends THREE.Object3D {
         this.coilsNumber = coilsNumber || 10
 
         this.spring = null
-        this.numberOfSamples = 2000
+        this.numberOfSamples = 200
         this.springTexturePath = "textures/spring.png"
 
         this.recompute()
