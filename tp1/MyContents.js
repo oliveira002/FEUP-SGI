@@ -471,19 +471,14 @@ class MyContents {
         }
 
         if(this.window === null){
-            this.windowWidth = 3
-            this.windowLength = this.floorSizeU-2
-            this.windowDepth = 0.1
-            this.windowTexturePath = "textures/landscape.png" 
-            this.horizontalWindowPieceWidth = this.windowWidth/40
-            this.horizontalWindowPieceLength = 119*this.windowLength/120
-            this.verticalWindowPieceWidth = this.windowLength/120
-            this.verticalWindowPieceLength = 39*this.windowWidth/40
-            this.window = new MyWindow(this, this.windowWidth, this.windowLength, this.windowDepth, this.windowTexturePath,
-            this.horizontalWindowPieceWidth, this.horizontalWindowPieceLength, this.verticalWindowPieceWidth, this.verticalWindowPieceLength, this.diffuseTvColor)
-            this.window.rotateY(Math.PI/2)
-            this.window.translateY(this.wallHeight/2);
-            this.window.translateZ(-this.floorSizeV/2+this.windowDepth/2+0.01)
+            this.windowWidth = 1.8
+            this.windowHeight = 1.5
+            this.windowDepth = 0.05
+            this.windowTexturePath = "textures/door.png" 
+            this.window = new MyWindow(this, this.windowWidth,this.windowHeight,this.windowDepth,this.windowTexturePath)
+            this.window.translateY(this.windowHeight / 2 + this.wallHeight / 3)
+            this.window.translateZ(this.floorSizeU/2-this.windowDepth/2)
+            this.window.translateX(-2)
             this.app.scene.add(this.window)
         }
 
