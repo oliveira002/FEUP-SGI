@@ -26,7 +26,7 @@ class MyWalls extends THREE.Object3D {
         this.floor_width = floor_width || 1;
         this.wallsTexturePath = wallsTexturePath
         this.diffuseWallColor = diffuseWallColor || "#FFFFFF"
-        this.specularWallColor = specularWallColor || "#777777"
+        this.specularWallColor = specularWallColor || "#000000"
         this.wallShininess = wallShininess || 0
 
         if(this.wallsTexturePath){
@@ -39,7 +39,7 @@ class MyWalls extends THREE.Object3D {
         }
 
         this.wallMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseWallColor, 
-            /*specular: this.specularWallColor, emissive: "#000000", shininess: this.wallShininess,*/ map: this.wallsTexture })
+            specular: this.specularWallColor, emissive: "#000000", shininess: this.wallShininess, map: this.wallsTexture })
 
         let wallX = new THREE.PlaneGeometry(this.floor_length, this.height)
         let wallZ = new THREE.PlaneGeometry(this.floor_width, this.height)

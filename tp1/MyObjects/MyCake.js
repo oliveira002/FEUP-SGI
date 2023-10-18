@@ -51,7 +51,7 @@ class MyCake extends THREE.Object3D {
         }
 
         this.cakeOutsideMaterial = new THREE.MeshPhongMaterial({ /*color: this.diffuseCakeColor, 
-            specular: this.specularCakeColor, emissive: "#000000", shininess: this.cakeShininess,*/ map: this.cakeOutsideTexture})
+            specular: this.specularCakeColor, emissive: "#000000", shininess: this.cakeShininess,*/ map: this.cakeOutsideTexture, bumpMap: this.cakeOutsideTexture, bumpScale: 0.05})
 
         this.cakeInsideMaterialLeft = new THREE.MeshPhongMaterial({ /*color: this.diffuseCakeColor, 
             specular: this.specularCakeColor, emissive: "#000000", shininess: this.cakeShininess,*/ map: this.cakeInsideTexture2})
