@@ -479,8 +479,8 @@ class MyContents {
         }
 
         if(this.window === null){
-            this.windowWidth = 1.8
-            this.windowHeight = 1.5
+            this.windowWidth = 3
+            this.windowHeight = 2.2
             this.windowDepth = 0.05
             this.windowTexturePath = "textures/door.png" 
             this.window = new MyWindow(this, this.windowWidth,this.windowHeight,this.windowDepth,this.windowTexturePath)
@@ -695,6 +695,13 @@ class MyContents {
 
         var cone = new MyPartyHat(this,0.5,1,"textures/partyhat.jpg")
         //this.app.scene.add(cone)
+
+        const doorLight = new THREE.PointLight(0x800000,12,0,1.7)
+        doorLight.position.set(0,5,-this.floorSizeV / 2 + 0.5)
+        const sphereSize = 1;
+        const doorLightHelper = new THREE.PointLightHelper( doorLight, sphereSize );
+        this.app.scene.add( doorLightHelper );
+        this.app.scene.add(doorLight)
 
         const spotLight = new THREE.SpotLight( 0xffffff, 700, 0, Math.PI / 4, 0.5, 2);
         var offset = new THREE.Vector3(0,0,0).subVectors(this.spotLightLookAt, this.spotLightPos).normalize()

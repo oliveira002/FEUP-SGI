@@ -70,7 +70,7 @@ class MyWindow extends THREE.Object3D {
         this.translateY(-0.05*this.height)
 
         let offsetX = 0.2
-        for(let i = 0; i < 5; i++) {
+        for(let i = 0; i < 9; i++) {
             this.barMesh = new THREE.Mesh(bar, this.frameMaterial)
             this.barMesh.translateY(-0.45*this.height)
             this.barMesh.translateX(this.width * 0.4 - offsetX)
