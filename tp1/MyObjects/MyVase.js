@@ -21,17 +21,13 @@ class MyVase extends THREE.Object3D {
         this.builder = new MyNurbsBuilder()
         this.front = null
         this.back = null
-        this.vaseTexturePath = ""
+        this.vaseTexturePath = "textures/vase.jpg"
+        this.vaseTexture = new THREE.TextureLoader().load(this.vaseTexturePath);
+        this.vaseTexture.wrapS = THREE.RepeatWrapping;
+        this.vaseTexture.wrapT = THREE.RepeatWrapping;
+        
 
-        this.material = new THREE.MeshPhysicalMaterial({
-            color:0xCCCCCC, 
-            side: THREE.DoubleSide, 
-            metalness: 0,  
-            roughness: 0.1, 
-            transmission: 1,
-            thickness: 0.1, 
-            reflectivity: 0.5,
-        });
+        this.material = new THREE.MeshPhysicalMaterial({map: this.vaseTexture, metalness: 0.2, roughness: 0.3, side: THREE.DoubleSide })
         this.samplesU = 200 
         this.samplesV = 200
 

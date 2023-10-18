@@ -22,10 +22,6 @@ import { MyTableCover } from './MyObjects/MyTableCover.js';
 import { MyPartyHat } from './MyObjects/MyPartyHat.js';
 import { MySpotlight } from './MyObjects/MySpotlight.js';
 import { MyFlower } from './MyObjects/MyFlower.js';
-import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
-import { FontLoader } from 'three/addons/loaders/FontLoader.js';
-import {TTFLoader} from 'three/addons/loaders/TTFLoader.js'
-
 import { TTFLoader } from 'three/addons/loaders/TTFLoader.js';
 import { Font } from 'three/addons/loaders/FontLoader.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
@@ -655,40 +651,35 @@ class MyContents {
             this.wallBlood.translateY(this.wallHeight / 3)
             this.wallBlood.translateZ(this.floorSizeU / 4)
             this.wallBlood.rotateY(Math.PI / 2)
-            this.app.scene.add(this.wallBlood)
-        }
 
+            const loader = new TTFLoader();
 
+            loader.load( 'fonts/blood.ttf', function ( json ) {
 
-        const loader = new TTFLoader();
+                let bloodFont = new Font( json );
+                let textGeo = new TextGeometry( "run away", {
+                    font: bloodFont,
+                    size: 1,
+                    height: 0.002,
+                    curveSegments: 4,
+                    bevelThickness: 2,
+                    bevelSize: 0.01,
+                    bevelEnabled: false
 
-        loader.load( 'fonts/blood.ttf', function ( json ) {
+                } );
 
-            let bloodFont = new Font( json );
-            let textGeo = new TextGeometry( "run away", {
-                font: bloodFont,
-                size: 1,
-                height: 0.002,
-                curveSegments: 4,
-                bevelThickness: 2,
-                bevelSize: 0.01,
-                bevelEnabled: false
+                let bloodMaterial = new THREE.MeshPhongMaterial( { color: 0x8b0000, flatShading: true } );
+                let bloodText = new THREE.Mesh( textGeo, bloodMaterial);
+                bloodText.translateX(-13 / 2 + 0.01)
+                bloodText.translateY(10 / 2)
+                bloodText.translateZ(18 / 4)
+                bloodText.rotateY(Math.PI / 2)
+                bloodText.rotateZ(-Math.PI / 12)
+                scene.add(bloodText)
 
             } );
-
-            let material = new THREE.MeshPhongMaterial( { color: 0x8b0000, flatShading: true } );
-            let textMesh1 = new THREE.Mesh( textGeo, material );
-
-            textMesh1.position.x = 0;
-            textMesh1.position.y = 0;
-            textMesh1.position.z = 0;
-
-            textMesh1.rotation.x = 0;
-            textMesh1.rotation.y = Math.PI * 2;
-
-            scene.add(textMesh1)
-
-        } );
+            this.app.scene.add(this.wallBlood)
+        }
 
         this.targetGeo = new THREE.PlaneGeometry(0.01, 0.01)
         this.targetMat = new THREE.MeshBasicMaterial({transparent:true})
