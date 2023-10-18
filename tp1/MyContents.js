@@ -599,6 +599,7 @@ class MyContents {
                 opacity: 0.9,
                 specular: 0x440000, 
                 emissive: 0x110000, 
+                alphaTest: 0.8,
               });
 
             this.blood = new THREE.Mesh(this.bloodGeometry,this.bloodMaterial)
@@ -650,7 +651,10 @@ class MyContents {
                 map: this.wallBloodTexture,
                 transparent: true,
                 opacity: 0.9,
+                alphaTest: 0.8,
               });
+
+
 
             this.wallBlood = new THREE.Mesh(this.wallBloodGeometry,this.wallBloodMaterial)
             this.wallBlood.translateX(-this.floorSizeU / 2 + 0.01)
@@ -705,7 +709,7 @@ class MyContents {
         this.app.scene.add( doorLightHelper );
         this.app.scene.add(doorLight)
 
-        const windowLight = new THREE.PointLight(0xffffffff,2,0,1.7)
+        const windowLight = new THREE.PointLight(0xffffffff,3,0,1.7)
         windowLight.position.set(this.floorSizeU / 2,this.windowHeight / 2 + this.wallHeight / 2.2 - 0.13,1.5)
         const windowLightHelper = new THREE.PointLightHelper( windowLight, sphereSize );
         this.app.scene.add(windowLightHelper);

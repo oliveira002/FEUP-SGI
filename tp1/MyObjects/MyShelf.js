@@ -58,11 +58,11 @@ class MyShelf extends THREE.Object3D {
         this.add(this.bottomCube)
 
         this.midCube = new THREE.Mesh(cube, materials)
-        this.midCube.translateY(this.shelfHeight * 0.331)
+        this.midCube.translateY(this.shelfHeight * 0.329)
         this.add(this.midCube)
 
         this.topCube = new THREE.Mesh(cube, materials)
-        this.topCube.translateY(this.shelfHeight * 0.66)
+        this.topCube.translateY(this.shelfHeight * 0.658)
         this.add(this.topCube)
 
         
