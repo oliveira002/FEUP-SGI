@@ -602,7 +602,7 @@ class MyContents {
                 opacity: 0.9,
                 specular: 0x440000, 
                 emissive: 0x110000, 
-                alphaTest: 0.8,
+                alphaTest: 0.5,
               });
 
             this.blood = new THREE.Mesh(this.bloodGeometry,this.bloodMaterial)
@@ -654,7 +654,7 @@ class MyContents {
                 map: this.wallBloodTexture,
                 transparent: true,
                 opacity: 0.9,
-                alphaTest: 0.8,
+                alphaTest: 0.5,
               });
 
 
