@@ -595,20 +595,22 @@ class MyContents {
             this.bloodTexture.wrapS = THREE.RepeatWrapping;
             this.bloodTexture.wrapT = THREE.RepeatWrapping;
 
-            this.bloodMaterial = new THREE.MeshPhongMaterial({
+            this.bloodMaterial = new THREE.MeshPhysicalMaterial({
                 map: this.bloodTexture,
                 transparent: true,
-                shininess: 80,
+                shininess: 0.3,
                 opacity: 0.9,
-                specular: 0x440000, 
-                emissive: 0x110000, 
+                specular: 0x8b0000, 
+                emissive: 0x480000, 
                 alphaTest: 0.5,
+                roughness: 0.9
               });
 
             this.blood = new THREE.Mesh(this.bloodGeometry,this.bloodMaterial)
             this.blood.rotateX(-Math.PI / 2)
             this.blood.translateZ(0.03)
             scene.add(this.blood)
+
         }
 
         if(this.vent === null) {
