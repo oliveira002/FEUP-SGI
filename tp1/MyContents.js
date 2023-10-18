@@ -687,22 +687,29 @@ class MyContents {
         this.target.position.set(2, 3.5, this.floorSizeV / 2 - this.tvDepth / 2 - 0.01)
         this.app.scene.add(this.target)
 
-
         this.spotLightPos = new THREE.Vector3(this.floorSizeU/2-0.5,this.ceilingHeight-.53,-this.floorSizeV/2+.3)
         this.spotLightLookAt = this.target.position
         this.spotLightObject = new MySpotlight(this, this.spotLightPos, this.spotLightLookAt)
         this.app.scene.add(this.spotLightObject)
 
-        var cone = new MyPartyHat(this,0.5,1,"textures/partyhat.jpg")
-        //this.app.scene.add(cone)
-
         const spotLight = new THREE.SpotLight( 0xffffff, 700, 0, Math.PI / 4, 0.5, 2);
         var offset = new THREE.Vector3(0,0,0).subVectors(this.spotLightLookAt, this.spotLightPos).normalize()
-        offset.multiplyScalar(2)
+        offset.multiplyScalar(-0.3)
         spotLight.position.set(...(this.spotLightPos.sub(offset)));
         spotLight.target = this.target
         spotLight.castShadow = true;
         this.app.scene.add(spotLight)
+
+        const pointLight = new THREE.PointLight(0xffffff, 15, 0.7, 3)
+        pointLight.position.set(...(this.spotLightPos.sub(offset)))
+        this.app.scene.add(pointLight)
+
+        const pointLightHelper = new THREE.PointLightHelper(pointLight, 0.7)
+        //this.app.scene.add(pointLightHelper)
+
+        const spotLightHelper = new THREE.SpotLightHelper(spotLight,"#FFFFFF")
+        //this.app.scene.add(spotLightHelper)
+
 
         if(this.hats === null) {
             this.hatsGroup = new THREE.Group()
