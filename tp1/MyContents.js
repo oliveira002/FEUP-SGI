@@ -25,6 +25,7 @@ import { MyFlower } from './MyObjects/MyFlower.js';
 import { TTFLoader } from 'three/addons/loaders/TTFLoader.js';
 import { Font } from 'three/addons/loaders/FontLoader.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+import { MyNewspaper } from './MyObjects/MyNewspaper.js';
 import { MyBoxStack } from './MyObjects/MyBoxStack.js';
 
 /**
@@ -63,7 +64,7 @@ class MyContents {
         this.caution = null
 
         // axis related attributes
-        this.axisEnabled = false
+        this.axisEnabled = true
 
         // box related attributes
         this.boxMesh = null
@@ -249,6 +250,8 @@ class MyContents {
         //
         this.wallBlood = null
 
+        // newspaper related attributes
+        this.newspaper = null
         //
         this.boxStacks = null
     }
@@ -815,6 +818,15 @@ class MyContents {
             this.flower.rotateX(Math.PI / 2)
             this.app.scene.add(this.flower)
         }
+
+        if(this.newspaper === null) {
+            this.newspaper = new MyNewspaper(this)
+            this.newspaper.translateY(this.tableHeight-0.8)
+            this.newspaper.translateX(this.floorSizeU / 2 - this.tableLength/2 - this.tableWallOffset - 0.15)
+            this.newspaper.translateZ(this.floorSizeV / 2 - this.tableWidth-0.3)
+            this.app.scene.add(this.newspaper)
+        }
+
 
         if(this.boxStacks === null) {
             this.boxStacks = new MyBoxStack(this,this.boxSize)
