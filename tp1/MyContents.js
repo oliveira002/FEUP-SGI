@@ -25,6 +25,7 @@ import { MyFlower } from './MyObjects/MyFlower.js';
 import { TTFLoader } from 'three/addons/loaders/TTFLoader.js';
 import { Font } from 'three/addons/loaders/FontLoader.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+import { MyBoxStack } from './MyObjects/MyBoxStack.js';
 
 /**
  *  This class contains the contents of our application
@@ -247,6 +248,9 @@ class MyContents {
 
         //
         this.wallBlood = null
+
+        //
+        this.boxStacks = null
     }
 
     /**
@@ -332,7 +336,8 @@ class MyContents {
         if (this.walls === null) {
             this.wallHeight = this.ceilingHeight
             this.wallsTexturePath = "textures/wall.png" 
-            this.walls = new MyWalls(this, this.wallHeight, this.floorSizeU, this.floorSizeV, this.wallsTexturePath)
+            this.wallsHoleTexturePath = "textures/wall_hole.png" 
+            this.walls = new MyWalls(this, this.wallHeight, this.floorSizeU, this.floorSizeV, this.wallsTexturePath,this.wallsHoleTexturePath)
             this.walls.translateY(this.wallHeight/2)
             this.app.scene.add(this.walls)
         }
@@ -479,14 +484,15 @@ class MyContents {
         }
 
         if(this.window === null){
-            this.windowWidth = 3
-            this.windowHeight = 2.2
-            this.windowDepth = 0.05
+            this.windowWidth = 3.45
+            this.windowHeight = 2.12
+            this.windowDepth = 2
             this.windowTexturePath = "textures/door.png" 
-            this.window = new MyWindow(this, this.windowWidth,this.windowHeight,this.windowDepth,this.windowTexturePath)
-            this.window.translateY(this.windowHeight / 2 + this.wallHeight / 3)
-            this.window.translateZ(this.floorSizeU/2-this.windowDepth/2)
-            this.window.translateX(-2)
+            this.viewTexturePath = "textures/prison.jpg" 
+            this.window = new MyWindow(this, this.windowWidth,this.windowHeight,this.windowDepth,this.windowTexturePath, this.viewTexturePath)
+            this.window.translateY(this.windowHeight / 2 + this.wallHeight / 2.2 - 0.13)
+            this.window.translateZ(this.floorSizeU/2 + this.windowDepth/2 - 0.01)
+            this.window.translateX(-1.5)
             this.app.scene.add(this.window)
         }
 
@@ -699,6 +705,12 @@ class MyContents {
         this.app.scene.add( doorLightHelper );
         this.app.scene.add(doorLight)
 
+        const windowLight = new THREE.PointLight(0xffffffff,2,0,1.7)
+        windowLight.position.set(this.floorSizeU / 2,this.windowHeight / 2 + this.wallHeight / 2.2 - 0.13,1.5)
+        const windowLightHelper = new THREE.PointLightHelper( windowLight, sphereSize );
+        this.app.scene.add(windowLightHelper);
+        this.app.scene.add(windowLight)
+
         const spotLight = new THREE.SpotLight( 0xffffff, 700, 0, Math.PI / 4, 0.5, 2);
         var offset = new THREE.Vector3(0,0,0).subVectors(this.spotLightLookAt, this.spotLightPos).normalize()
         offset.multiplyScalar(-0.3)
@@ -800,7 +812,12 @@ class MyContents {
             this.app.scene.add(this.flower)
         }
 
-
+        if(this.boxStacks === null) {
+            this.boxStacks = new MyBoxStack(this,this.boxSize)
+            this.boxStacks.translateZ(-this.floorSizeV / 2 + 0.46*this.boxSize)
+            this.boxStacks.translateX(this.floorSizeU / 2 - 1.5*this.boxSize)
+            this.app.scene.add(this.boxStacks)
+        }
     }
 
     
