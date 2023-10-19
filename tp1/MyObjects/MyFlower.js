@@ -28,7 +28,11 @@ class MyFlower extends THREE.Object3D {
             this.petalsTexture.wrapS = THREE.RepeatWrapping;
             this.petalsTexture.wrapT = THREE.RepeatWrapping;
 
-        this.petalMaterial = new THREE.MeshPhongMaterial({side: THREE.DoubleSide, map: this.petalsTexture})
+            this.petalMaterial = new THREE.MeshPhongMaterial({
+                side: THREE.DoubleSide,
+                color: "#8A2BE2",  
+                shininess: 50,   
+              });
         
         this.flowerMaterial = new THREE.MeshPhongMaterial({shininess: 10, side: THREE.DoubleSide, map: this.flowerTexture})
 
@@ -70,6 +74,11 @@ class MyFlower extends THREE.Object3D {
           this.scale.set(0.3,0.3,0.3)
           this.add(this.stalkMesh)
           this.add(this.flow)
+
+          this.children.forEach(element => {
+            element.castShadow = true
+            element.receiveShadow = true
+        });
     }
 }
 

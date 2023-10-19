@@ -33,6 +33,11 @@ class MyPlate extends THREE.Object3D {
         // plateMesh
         this.plateMesh = new THREE.Mesh(plate, this.plateMaterial)
         this.add( this.plateMesh );
+
+        this.children.forEach(element => {
+            //element.castShadow = true
+            element.receiveShadow = true
+        });
     }
 }
 

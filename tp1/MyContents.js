@@ -882,12 +882,24 @@ class MyContents {
         }
 
         if(this.flower === null) {
+            this.waterGeo = new THREE.CircleGeometry(0.2,32)
+            this.waterTexture = new THREE.TextureLoader().load("textures/water.png");
+            this.waterTexture.wrapS = THREE.RepeatWrapping;
+            this.waterTexture.wrapT = THREE.RepeatWrapping;
+            this.waterMaterial = new THREE.MeshPhongMaterial({shininess: 10, color: "#1E90FF", specular: "#1E90FF", side: THREE.DoubleSide, map: this.waterTexture})
+            this.water = new THREE.Mesh(this.waterGeo,this.waterMaterial)
+            this.water.translateX(this.furnitureLength/2-0.6)
+            this.water.translateY(this.furnitureHeight - 0.3)
+            this.water.translateZ(this.floorSizeV/2-this.furnitureDepth/2)
+            this.water.translateY(1.08)
+            this.water.rotateX(Math.PI / 2)
             this.flower = new MyFlower(this)
             this.flower.translateX(this.furnitureLength/2-0.6)
             this.flower.translateY(this.furnitureHeight)
             this.flower.translateZ(this.floorSizeV/2-this.furnitureDepth/2 - 0.2)
-            this.flower.translateY(1.2)
+            this.flower.translateY(1.08)
             this.flower.rotateX(Math.PI / 2)
+            this.app.scene.add(this.water)
             this.app.scene.add(this.flower)
         }
 

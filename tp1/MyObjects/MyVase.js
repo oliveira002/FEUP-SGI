@@ -32,6 +32,8 @@ class MyVase extends THREE.Object3D {
         this.samplesV = 200
 
         this.recompute()
+
+        
     }
 
     initVase(){
@@ -130,6 +132,11 @@ class MyVase extends THREE.Object3D {
         this.back.rotateY(Math.PI)
         this.add(this.back)
         this.meshes.push(this.back)
+
+        this.children.forEach(element => {
+            element.castShadow = true
+            element.receiveShadow = true
+        });
 
         this.scale.set(0.4, 0.4, 0.4)
     }
