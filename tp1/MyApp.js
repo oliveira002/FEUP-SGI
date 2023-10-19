@@ -40,7 +40,7 @@ class MyApp  {
         this.scene.background = new THREE.Color( 0x101010 );
 
         this.stats = new Stats()
-        this.stats.showPanel(1) // 0: fps, 1: ms, 2: mb, 3+: custom
+        this.stats.showPanel(0) // 0: fps, 1: ms, 2: mb, 3+: custom
         document.body.appendChild(this.stats.dom)
 
         this.initCameras();
@@ -227,7 +227,7 @@ class MyApp  {
         // render the scene
         this.renderer.render(this.scene, this.activeCamera);
         
-        
+
         // subsequent async calls to the render loop
         requestAnimationFrame( this.render.bind(this) );
 
