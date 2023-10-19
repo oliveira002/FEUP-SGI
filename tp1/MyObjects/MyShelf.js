@@ -67,6 +67,11 @@ class MyShelf extends THREE.Object3D {
 
         
         this.translateY(this.shelfHeight * 0.33 / 2 + 0.01)
+
+        this.children.forEach(element => {
+            element.castShadow = true
+            //element.receiveShadow = true
+        });
     }
 }
 

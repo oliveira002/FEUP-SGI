@@ -103,6 +103,11 @@ class MyPortrait extends THREE.Object3D {
         this.add(this.portraitInnerMesh)
 
         this.translateY(-this.portraitWidth/2);
+
+        this.children.forEach(element => {
+            element.castShadow = true
+            //element.receiveShadow = true
+        });
     }
 }
 

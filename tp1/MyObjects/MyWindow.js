@@ -89,6 +89,11 @@ class MyWindow extends THREE.Object3D {
         this.rotateY(Math.PI / 2)
         this.translateY(0.5*this.height)
 
+        this.children.forEach(element => {
+            element.castShadow = true
+            element.receiveShadow = true
+        });
+
     }
 }
 

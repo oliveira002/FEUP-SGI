@@ -47,7 +47,7 @@ class MyTable extends THREE.Object3D {
         this.tableMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseTableColor, 
             specular: this.specularTableColor, emissive: "#000000", shininess: this.tableShininess, map: this.tableTexture })
         
-        this.legMaterial = new THREE.MeshPhongMaterial({specular: 0xffffff, metalness: 0.2, map: this.legTexture })
+        this.legMaterial = new THREE.MeshPhongMaterial({specular: 0xffffff, map: this.legTexture })
 
         let tableTop = new THREE.BoxGeometry(this.tableLength, this.tableTopHeight, this.tableWidth)
         let leg = new THREE.CylinderGeometry(this.legRadius, this.legRadius, this.legHeight); 

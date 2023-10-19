@@ -92,7 +92,10 @@ class MyChair extends THREE.Object3D {
 
         this.translateY(-this.chairHeight/2);
 
-        
+        this.children.forEach(element => {
+            element.castShadow = true
+            element.receiveShadow = true
+        });
 
     }
 }

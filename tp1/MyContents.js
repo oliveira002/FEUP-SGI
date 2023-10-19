@@ -27,6 +27,7 @@ import { Font } from 'three/addons/loaders/FontLoader.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import { MyNewspaper } from './MyObjects/MyNewspaper.js';
 import { MyBoxStack } from './MyObjects/MyBoxStack.js';
+import { MyDoorLight } from './MyObjects/MyDoorLight.js';
 
 /**
  *  This class contains the contents of our application
@@ -256,6 +257,9 @@ class MyContents {
         this.newspaper = null
         //
         this.boxStacks = null
+
+        //
+        this.doorLight = null
     }
 
     /**
@@ -460,9 +464,7 @@ class MyContents {
             this.lamp.translateY(-this.lampHeight/2)
             this.lamp.translateY(this.ceilingHeight)
             this.lamp.translateX(this.floorSizeU / 2 - this.tableLength / 2 - this.tableWallOffset)
-            console.log(this.floorSizeU / 2 - this.tableLength / 2 - this.tableWallOffset)
             this.lamp.translateZ(this.floorSizeV / 2 - this.tableWidth / 2)
-            console.log(this.floorSizeV / 2 - this.tableWidth / 2)
             this.app.scene.add(this.lamp)
         }
 
@@ -555,14 +557,11 @@ class MyContents {
 
             const doorLight = new THREE.PointLight(0x800000,12,0,1.7)
             doorLight.position.set(0,5,-this.floorSizeV / 2 + 0.5)
-            const sphereSize = 1;
-            const doorLightHelper = new THREE.PointLightHelper( doorLight, sphereSize );
-            this.app.scene.add( doorLightHelper );
             this.app.scene.add(doorLight)
 
             const outsideSphere = new THREE.SphereGeometry(1, undefined, undefined, 0, Math.PI)
             const outsideTex = new THREE.TextureLoader().load("textures/corridor.png");
-            const material = new THREE.MeshPhysicalMaterial( { color: 0x333333, side: THREE.BackSide, map: outsideTex, shininess:0 } ); 
+            const material = new THREE.MeshPhysicalMaterial( { color: 0x333333, side: THREE.BackSide, map: outsideTex} ); 
             const sphere = new THREE.Mesh( outsideSphere, material );
             sphere.rotateY(Math.PI)
             sphere.position.set(0,3,-this.floorSizeV / 2)
@@ -570,7 +569,7 @@ class MyContents {
 
             const corridorLight = new THREE.PointLight(0xffffff,5,1,1)
             corridorLight.position.set(0,3,-this.floorSizeV / 2-0.4)
-            const corridorLightHelper = new THREE.PointLightHelper( corridorLight, sphereSize );
+            const corridorLightHelper = new THREE.PointLightHelper( corridorLight, 1 );
             //this.app.scene.add(corridorLightHelper);
             this.app.scene.add(corridorLight)
 
@@ -640,9 +639,7 @@ class MyContents {
             this.bloodMaterial = new THREE.MeshPhysicalMaterial({
                 map: this.bloodTexture,
                 transparent: true,
-                shininess: 0.3,
                 opacity: 0.9,
-                specular: 0x8b0000, 
                 emissive: 0x480000, 
                 alphaTest: 0.5,
                 roughness: 0.9
@@ -908,6 +905,12 @@ class MyContents {
             this.boxStacks.translateZ(-this.floorSizeV / 2 + 1*this.boxSize)
             this.boxStacks.translateX(this.floorSizeU / 2 - 2*this.boxSize)
             this.app.scene.add(this.boxStacks)
+        }
+
+        if(this.doorLight === null) {
+            this.doorLight = new MyDoorLight(this)
+            this.doorLight.position.set(0,5,-this.floorSizeV / 2)
+            this.app.scene.add(this.doorLight)
         }
     }
 
