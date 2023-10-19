@@ -512,12 +512,12 @@ class MyContents {
             this.window.translateX(-1.5)
             this.app.scene.add(this.window)
 
-            const windowLight = new THREE.PointLight(0xffffff,1,0.2,5)
-            windowLight.position.set(this.floorSizeU / 2 + 1.5,this.windowHeight / 2 + this.wallHeight / 2.2 - 0.13,1.5)
+            const windowLight = new THREE.PointLight(0xffffff,4,1.5,2)
+            windowLight.position.set(this.floorSizeU / 2 + 1.2,this.windowHeight / 2 + this.wallHeight / 2.2 -0.1,1.5)
             const sphereSize = 1;
             const windowLightHelper = new THREE.PointLightHelper( windowLight, sphereSize );
+            this.app.scene.add(windowLight)
             //this.app.scene.add(windowLightHelper);
-            //this.app.scene.add(windowLight)
 
         }
 
@@ -792,8 +792,8 @@ class MyContents {
             spotLight.target = this.target2
             spotLight.castShadow = true;
             spotLight.shadow.bias = 0.0001
-            spotLight.shadow.mapSize.width = 512
-            spotLight.shadow.mapSize.height = 512
+            spotLight.shadow.mapSize.width = 512*4
+            spotLight.shadow.mapSize.height = 512*4
             spotLight.shadow.camera.near = 5
             spotLight.shadow.camera.far  = 20
             this.app.scene.add(spotLight)
