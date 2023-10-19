@@ -31,4 +31,6 @@ Additional Objects:
 - Vent
 - Spotlight & Lamp
 
+<img src="scene.png">
+
  <a href="127.0.0.1:5500">Link to the scene</a>
