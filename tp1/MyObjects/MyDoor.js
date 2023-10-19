@@ -56,7 +56,6 @@ class MyDoor extends THREE.Object3D {
 
         this.top = new THREE.Mesh(top,this.doorMaterial)
 
-
         this.leftSide = new THREE.Mesh(side,this.doorMaterial)
         this.leftSide.translateY(-this.doorWidth * 0.175)
         this.leftSide.translateX(0.4*this.doorLength)
@@ -82,14 +81,12 @@ class MyDoor extends THREE.Object3D {
         this.plane = new THREE.Mesh(view,this.planeMaterial)
         this.plane.translateY(-this.doorWidth / 2)
 
-
-
         this.add(this.first,this.second,this.third)
         this.add(this.leftSide)
         this.add(this.rightSide)
         this.add(this.bottom)
         this.add(this.top)
-        this.add(this.plane)
+        //this.add(this.plane)
 
         this.translateY(-0.075*this.doorWidth)
         this.translateY(0.5*this.doorWidth)

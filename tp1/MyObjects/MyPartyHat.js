@@ -36,11 +36,16 @@ class MyPartyHat extends THREE.Object3D {
             specular: "#ffffff", map: this.hatTexture})
     
 
-        let cone = new THREE.ConeGeometry(this.radius,this.height,100)
+        let cone = new THREE.ConeGeometry(this.radius,this.height,200, 200)
 
         this.coneMesh = new THREE.Mesh(cone, this.materialNormal)
 
         this.add(this.coneMesh)
+
+        this.children.forEach(element => {
+            element.castShadow = true
+            //element.receiveShadow = true
+        });
     }
 }
 

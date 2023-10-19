@@ -64,6 +64,11 @@ class MyNewspaper extends THREE.Object3D {
         //this.newspaper.rotateZ(Math.PI)
         this.add(this.newspaper)
         this.meshes.push(this.newspaper)
+
+        this.children.forEach(element => {
+            element.castShadow = true
+            //element.receiveShadow = true
+        });
     }
 
     recompute() {

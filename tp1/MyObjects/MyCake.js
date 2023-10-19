@@ -76,7 +76,7 @@ class MyCake extends THREE.Object3D {
         this.rightInsideMesh = new THREE.Mesh(cake_inside, this.cakeInsideMaterialRight)
         this.rightInsideMesh.rotateY(-(Math.PI/2 + this.slicePosition))
         this.rightInsideMesh.translateX(this.radius/2)
-        this.add( this.rightInsideMesh )
+        this.add( this.rightInsideMesh ) 
         
     }
 }

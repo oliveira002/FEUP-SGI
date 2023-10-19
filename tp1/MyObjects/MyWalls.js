@@ -17,7 +17,7 @@ class MyWalls extends THREE.Object3D {
      * @param {number} specularWallColor the specular component of the wall's color. Default `#777777`
      * @param {number} wallShininess the shininess component of the wall's color. Default `30`
      */
-    constructor(app, height, floor_length, floor_width, wallsTexturePath,wallsHoleTexturePath, diffuseWallColor, specularWallColor, wallShininess) {
+    constructor(app, height, floor_length, floor_width, wallsTexturePath,wallsHoleTexturePath, wallsDoorTexturePath, diffuseWallColor, specularWallColor, wallShininess) {
         super();
         this.app = app;
         this.type = 'Group';
@@ -26,11 +26,20 @@ class MyWalls extends THREE.Object3D {
         this.floor_width = floor_width || 1;
         this.wallsTexturePath = wallsTexturePath
         this.wallsHoleTexturePath = wallsHoleTexturePath
+        this.wallsDoorTexturePath = wallsDoorTexturePath
         this.diffuseWallColor = diffuseWallColor || "#FFFFFF"
         this.specularWallColor = specularWallColor || "#000000"
         this.wallShininess = wallShininess || 0
 
 
+        if(this.wallsDoorTexturePath) {
+            this.wallsDoorTexture = new THREE.TextureLoader().load(this.wallsDoorTexturePath);
+            this.wallsDoorTexture.wrapS = THREE.MirroredRepeatWrapping ;
+            this.wallsDoorTexture.wrapT = THREE.ClampToEdgeWrapping;
+            let wallsTextureRepeatU = 1;
+            let wallsTextureRepeatV = 1;
+            this.wallsDoorTexture.repeat.set(wallsTextureRepeatU, wallsTextureRepeatV );
+        }
         if(this.wallsHoleTexturePath){
             this.wallsHoleTexture = new THREE.TextureLoader().load(this.wallsHoleTexturePath);
             this.wallsHoleTexture.wrapS = THREE.MirroredRepeatWrapping ;
@@ -54,6 +63,8 @@ class MyWalls extends THREE.Object3D {
         
         this.wallHoleMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseWallColor, 
                 specular: this.specularWallColor, emissive: "#000000", shininess: this.wallShininess, map: this.wallsHoleTexture, transparent: true })
+        this.wallDoorMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseWallColor, 
+            specular: this.specularWallColor, emissive: "#000000", shininess: this.wallShininess, map: this.wallsDoorTexture, transparent: true })
 
         let wallX = new THREE.PlaneGeometry(this.floor_length, this.height)
         let wallZ = new THREE.PlaneGeometry(this.floor_width, this.height)
@@ -66,7 +77,7 @@ class MyWalls extends THREE.Object3D {
         this.add( this.backWallMesh );
         
         // right wall
-        this.rightWallMesh = new THREE.Mesh(wallX, this.wallMaterial)
+        this.rightWallMesh = new THREE.Mesh(wallX, this.wallDoorMaterial)
         this.rightWallMesh.translateZ(-this.floor_width/2)
         this.rightWallMesh.translateY(this.height/2)
         this.add( this.rightWallMesh );
@@ -84,8 +95,11 @@ class MyWalls extends THREE.Object3D {
         this.frontWallMesh.translateY(this.height/2)
         this.frontWallMesh.rotateY(-Math.PI/2)
         this.add( this.frontWallMesh );
-
         this.translateY(-this.height/2)
+
+        this.children.forEach(element => {
+            element.receiveShadow = true
+        });
     }
 }
 

@@ -62,6 +62,8 @@ class MyContents {
         this.spring = null
         this.vase = null
         this.caution = null
+        this.spotLightObject = null
+        this.spotLightObject2 = null
 
         // axis related attributes
         this.axisEnabled = true
@@ -322,6 +324,10 @@ class MyContents {
             this.floorMirrorMesh.rotation.x = -Math.PI / 2;
             this.floorMirrorMesh.position.y = -0.01;
             this.app.scene.add(this.floorMirrorMesh)
+
+            this.floorMesh.receiveShadow = true
+            this.floorMesh.castShadow = true
+            this.floorMirrorMesh.receiveShadow = true
         }
 
         if(this.ceiling === null){
@@ -340,7 +346,8 @@ class MyContents {
             this.wallHeight = this.ceilingHeight
             this.wallsTexturePath = "textures/wall.png" 
             this.wallsHoleTexturePath = "textures/wall_hole.png" 
-            this.walls = new MyWalls(this, this.wallHeight, this.floorSizeU, this.floorSizeV, this.wallsTexturePath,this.wallsHoleTexturePath)
+            this.wallsDoorTexturePath = "textures/wall_door.png" 
+            this.walls = new MyWalls(this, this.wallHeight, this.floorSizeU, this.floorSizeV, this.wallsTexturePath,this.wallsHoleTexturePath,this.wallsDoorTexturePath)
             this.walls.translateY(this.wallHeight/2)
             this.app.scene.add(this.walls)
         }
@@ -349,8 +356,9 @@ class MyContents {
             this.tableWidth = 6
             this.tableLength = 2.5
             this.tableHeight = 1.5
-            this.tableTexturePath = "textures/rusty.jpg"
-            this.table = new MyTable(this, this.tableWidth, this.tableLength, this.tableHeight, undefined, undefined, this.tableTexturePath)
+            this.tableTexturePath = "textures/table.jpg"
+            this.tableLegTexturePath = "textures/table_leg.jpg"
+            this.table = new MyTable(this, this.tableWidth, this.tableLength, this.tableHeight, undefined, undefined, this.tableTexturePath, this.tableLegTexturePath)
             this.table.translateY(this.tableHeight/2)
             this.table.translateX(this.floorSizeU / 2 - this.tableLength / 2 - this.tableWallOffset)
             this.table.translateZ(this.floorSizeV / 2 - this.tableWidth / 2)
@@ -447,10 +455,14 @@ class MyContents {
 
         if(this.lamp === null){
             this.lampHeight = 2
-            this.isLampOn = false
+            this.isLampOn = true
             this.lamp = new MyLamp(this, this.isLampOn, undefined, this.lampHeight)
             this.lamp.translateY(-this.lampHeight/2)
             this.lamp.translateY(this.ceilingHeight)
+            this.lamp.translateX(this.floorSizeU / 2 - this.tableLength / 2 - this.tableWallOffset)
+            console.log(this.floorSizeU / 2 - this.tableLength / 2 - this.tableWallOffset)
+            this.lamp.translateZ(this.floorSizeV / 2 - this.tableWidth / 2)
+            console.log(this.floorSizeV / 2 - this.tableWidth / 2)
             this.app.scene.add(this.lamp)
         }
 
@@ -497,6 +509,14 @@ class MyContents {
             this.window.translateZ(this.floorSizeU/2 + this.windowDepth/2 - 0.01)
             this.window.translateX(-1.5)
             this.app.scene.add(this.window)
+
+            const windowLight = new THREE.PointLight(0xffffff,1,0.2,5)
+            windowLight.position.set(this.floorSizeU / 2 + 1.5,this.windowHeight / 2 + this.wallHeight / 2.2 - 0.13,1.5)
+            const sphereSize = 1;
+            const windowLightHelper = new THREE.PointLightHelper( windowLight, sphereSize );
+            //this.app.scene.add(windowLightHelper);
+            //this.app.scene.add(windowLight)
+
         }
 
         if(this.shelf === null) {
@@ -532,6 +552,28 @@ class MyContents {
             this.door.translateZ(-this.floorSizeV / 2 + this.doorDepth / 2)
             this.door.rotateY(Math.PI * 2)
             this.app.scene.add(this.door)
+
+            const doorLight = new THREE.PointLight(0x800000,12,0,1.7)
+            doorLight.position.set(0,5,-this.floorSizeV / 2 + 0.5)
+            const sphereSize = 1;
+            const doorLightHelper = new THREE.PointLightHelper( doorLight, sphereSize );
+            this.app.scene.add( doorLightHelper );
+            this.app.scene.add(doorLight)
+
+            const outsideSphere = new THREE.SphereGeometry(1, undefined, undefined, 0, Math.PI)
+            const outsideTex = new THREE.TextureLoader().load("textures/corridor.png");
+            const material = new THREE.MeshPhysicalMaterial( { color: 0x333333, side: THREE.BackSide, map: outsideTex, shininess:0 } ); 
+            const sphere = new THREE.Mesh( outsideSphere, material );
+            sphere.rotateY(Math.PI)
+            sphere.position.set(0,3,-this.floorSizeV / 2)
+            scene.add( sphere );
+
+            const corridorLight = new THREE.PointLight(0xffffff,5,1,1)
+            corridorLight.position.set(0,3,-this.floorSizeV / 2-0.4)
+            const corridorLightHelper = new THREE.PointLightHelper( corridorLight, sphereSize );
+            //this.app.scene.add(corridorLightHelper);
+            this.app.scene.add(corridorLight)
+
         }
 
         if(this.carpet === null) {
@@ -609,6 +651,8 @@ class MyContents {
             this.blood = new THREE.Mesh(this.bloodGeometry,this.bloodMaterial)
             this.blood.rotateX(-Math.PI / 2)
             this.blood.translateZ(0.03)
+
+            this.blood.receiveShadow = true
             scene.add(this.blood)
 
         }
@@ -696,48 +740,77 @@ class MyContents {
             this.app.scene.add(this.wallBlood)
         }
 
-        this.targetGeo = new THREE.PlaneGeometry(0.01, 0.01)
-        this.targetMat = new THREE.MeshBasicMaterial({transparent:true})
-        this.target = new THREE.Mesh(this.targetGeo, this.targetMat)
-        this.target.position.set(2, 3.5, this.floorSizeV / 2 - this.tvDepth / 2 - 0.01)
-        this.app.scene.add(this.target)
+        if(this.spotLightObject === null){
+            this.targetGeo = new THREE.PlaneGeometry(0.01, 0.01)
+            this.targetMat = new THREE.MeshBasicMaterial({transparent:true})
+            this.target = new THREE.Mesh(this.targetGeo, this.targetMat)
+            this.target.position.set(2, 3.5, this.floorSizeV / 2 - this.tvDepth / 2 - 0.01)
+            this.app.scene.add(this.target)
 
-        this.spotLightPos = new THREE.Vector3(this.floorSizeU/2-0.5,this.ceilingHeight-.53,-this.floorSizeV/2+.3)
-        this.spotLightLookAt = this.target.position
-        this.spotLightObject = new MySpotlight(this, this.spotLightPos, this.spotLightLookAt)
-        this.app.scene.add(this.spotLightObject)
+            this.spotLightPos = new THREE.Vector3(this.floorSizeU/2-0.5,this.ceilingHeight-.53,-this.floorSizeV/2+.3)
+            this.spotLightLookAt = this.target.position
+            this.spotLightObject = new MySpotlight(this, this.spotLightPos, this.spotLightLookAt)
+            this.app.scene.add(this.spotLightObject)
 
-        const doorLight = new THREE.PointLight(0x800000,12,0,1.7)
-        doorLight.position.set(0,5,-this.floorSizeV / 2 + 0.5)
-        const sphereSize = 1;
-        const doorLightHelper = new THREE.PointLightHelper( doorLight, sphereSize );
-        this.app.scene.add( doorLightHelper );
-        this.app.scene.add(doorLight)
+            const spotLight = new THREE.SpotLight( 0xffffff, 550, 0, Math.PI / 4, 0.5, 2);
+            var offset = new THREE.Vector3(0,0,0).subVectors(this.spotLightLookAt, this.spotLightPos).normalize()
+            offset.multiplyScalar(-0.3)
+            spotLight.position.set(...(this.spotLightPos.sub(offset)));
+            spotLight.target = this.target
+            spotLight.castShadow = true;
+            spotLight.shadow.bias = 0.0001
+            spotLight.shadow.mapSize.width = 512
+            spotLight.shadow.mapSize.height = 512
+            spotLight.shadow.camera.near = 5
+            spotLight.shadow.camera.far  = 20
+            this.app.scene.add(spotLight)
 
-        const windowLight = new THREE.PointLight(0xffffff,3,0,1.7)
-        windowLight.position.set(this.floorSizeU / 2 + 1.5,this.windowHeight / 2 + this.wallHeight / 2.2 - 0.13,1.5)
-        const windowLightHelper = new THREE.PointLightHelper( windowLight, sphereSize );
-        this.app.scene.add(windowLightHelper);
-        this.app.scene.add(windowLight)
+            const pointLight = new THREE.PointLight(0xffffff, 15, 0.7, 3)
+            pointLight.position.set(...(this.spotLightPos.sub(offset)))
+            this.app.scene.add(pointLight)
 
-        const spotLight = new THREE.SpotLight( 0xffffff, 700, 0, Math.PI / 4, 0.5, 2);
-        var offset = new THREE.Vector3(0,0,0).subVectors(this.spotLightLookAt, this.spotLightPos).normalize()
-        offset.multiplyScalar(-0.3)
-        spotLight.position.set(...(this.spotLightPos.sub(offset)));
-        spotLight.target = this.target
-        spotLight.castShadow = true;
-        this.app.scene.add(spotLight)
+            const pointLightHelper = new THREE.PointLightHelper(pointLight, 0.7)
+            //this.app.scene.add(pointLightHelper)
 
-        const pointLight = new THREE.PointLight(0xffffff, 15, 0.7, 3)
-        pointLight.position.set(...(this.spotLightPos.sub(offset)))
-        this.app.scene.add(pointLight)
+            const spotLightHelper = new THREE.SpotLightHelper(spotLight,"#FFFFFF")
+            //this.app.scene.add(spotLightHelper)
+        }
 
-        const pointLightHelper = new THREE.PointLightHelper(pointLight, 0.7)
-        //this.app.scene.add(pointLightHelper)
+        if(this.spotLightObject2 === null){
+            this.targetGeo2 = new THREE.PlaneGeometry(0.01, 0.01)
+            this.targetMat2 = new THREE.MeshBasicMaterial({transparent:true})
+            this.target2 = new THREE.Mesh(this.targetGeo2, this.targetMat2)
+            this.target2.position.set(-1, this.boxSize / 2, -this.floorSizeU / 3 - 1.24)
+            this.app.scene.add(this.target2)
 
-        const spotLightHelper = new THREE.SpotLightHelper(spotLight,"#FFFFFF")
-        //this.app.scene.add(spotLightHelper)
+            this.spotLightPos2 = new THREE.Vector3(-this.floorSizeU/2+0.5,this.ceilingHeight-.53,this.floorSizeV/2-.3)
+            this.spotLightLookAt2 = this.target2.position
+            this.spotLightObject2 = new MySpotlight(this, this.spotLightPos2, this.spotLightLookAt2)
+            this.app.scene.add(this.spotLightObject2)
 
+            const spotLight = new THREE.SpotLight( 0xffffff, 300, 0, Math.PI / 6, 0.5, 2.5);
+            var offset = new THREE.Vector3(0,0,0).subVectors(this.spotLightLookAt2, this.spotLightPos2).normalize()
+            offset.multiplyScalar(-0.3)
+            spotLight.position.set(...(this.spotLightPos2.sub(offset)));
+            spotLight.target = this.target2
+            spotLight.castShadow = true;
+            spotLight.shadow.bias = 0.0001
+            spotLight.shadow.mapSize.width = 512
+            spotLight.shadow.mapSize.height = 512
+            spotLight.shadow.camera.near = 5
+            spotLight.shadow.camera.far  = 20
+            this.app.scene.add(spotLight)
+
+            const pointLight = new THREE.PointLight(0xffffff, 15, 0.7, 3)
+            pointLight.position.set(...(this.spotLightPos2.sub(offset)))
+            this.app.scene.add(pointLight)
+
+            const pointLightHelper = new THREE.PointLightHelper(pointLight, 0.7)
+            //this.app.scene.add(pointLightHelper)
+
+            const spotLightHelper = new THREE.SpotLightHelper(spotLight,"#FFFFFF")
+            //this.app.scene.add(spotLightHelper)
+        }
 
         if(this.hats === null) {
             this.hatsGroup = new THREE.Group()
@@ -832,8 +905,8 @@ class MyContents {
 
         if(this.boxStacks === null) {
             this.boxStacks = new MyBoxStack(this,this.boxSize)
-            this.boxStacks.translateZ(-this.floorSizeV / 2 + 0.46*this.boxSize)
-            this.boxStacks.translateX(this.floorSizeU / 2 - 1.5*this.boxSize)
+            this.boxStacks.translateZ(-this.floorSizeV / 2 + 1*this.boxSize)
+            this.boxStacks.translateX(this.floorSizeU / 2 - 2*this.boxSize)
             this.app.scene.add(this.boxStacks)
         }
     }

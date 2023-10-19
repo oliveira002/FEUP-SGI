@@ -74,6 +74,11 @@ class MyTableCover extends THREE.Object3D {
         this.add(this.leftMesh,this.rightMesh)
         this.add(this.frontMesh, this.backMesh)
         this.add(this.topMesh)
+
+        this.children.forEach(element => {
+            //element.castShadow = true
+            element.receiveShadow = true
+        });
     }
 }
 
