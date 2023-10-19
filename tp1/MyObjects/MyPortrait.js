@@ -1,6 +1,10 @@
 import * as THREE from 'three';
 import { MyApp } from '../MyApp.js';
 
+
+/**
+ * This class contains a portrait representation
+ */
 class MyPortrait extends THREE.Object3D {
 
     /**
@@ -18,7 +22,7 @@ class MyPortrait extends THREE.Object3D {
      * @param {number} specularFrameColor the specular component of the portrait's color. Default `#777777`
      * @param {number} frameShininess the shininess component of the portrait's color. Default `10`
      */
-    constructor(app, portraitWidth, portraitLength, portraitDepth, portraitTexturePath, horizontalPieceWidth, horizontalPieceLength, 
+    constructor(app, portraitWidth, portraitLength, portraitDepth, portraitTexturePath, frameTexturePath, horizontalPieceWidth, horizontalPieceLength, 
                 verticalPieceWidth, verticalPieceLength, diffuseFrameColor, specularFrameColor, frameShininess) {
 
         super();
@@ -33,6 +37,7 @@ class MyPortrait extends THREE.Object3D {
         this.verticalPieceLength = verticalPieceLength || 9*this.portraitWidth/10
         this.portraitInnerWidth = this.portraitWidth-2*this.horizontalPieceWidth
         this.portraitInnerLength = this.portraitLength-2*this.verticalPieceWidth
+        this.frameTexturePath = frameTexturePath
         this.portraitTexturePath = portraitTexturePath
         this.portraitTexture = null
         this.diffuseFrameColor = diffuseFrameColor || "#331800"
@@ -40,13 +45,28 @@ class MyPortrait extends THREE.Object3D {
         this.frameShininess = frameShininess || 10
 
 
-        this.frameMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseFrameColor, 
-            specular: this.specularFrameColor, emissive: "#000000", shininess: this.frameShininess })
         
-        if(this.portraitTexturePath){
+        if(this.portraitTexturePath === "/textures/video.mp4") {
+            const video = document.getElementById('video');
+            video.play()
+            this.portraitTexture = new THREE.VideoTexture( video );
+        }
+
+        else if(this.portraitTexturePath) {
             this.portraitTexture = new THREE.TextureLoader().load(portraitTexturePath);
             this.portraitTexture.wrapS = THREE.RepeatWrapping;
             this.portraitTexture.wrapT = THREE.RepeatWrapping;
+        }
+
+        if(this.frameTexturePath) {
+            this.frameTexture = new THREE.TextureLoader().load(frameTexturePath);
+            this.frameTexture.wrapS = THREE.RepeatWrapping;
+            this.frameTexture.wrapT = THREE.RepeatWrapping;
+            this.frameMaterial = new THREE.MeshPhongMaterial({map: this.frameTexture})
+        }
+        else {
+            this.frameMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseFrameColor, 
+                specular: this.specularFrameColor, emissive: "#000000", shininess: this.frameShininess })
         }
 
         this.portraitInnerMaterial = new THREE.MeshPhongMaterial({ /*color: this.diffuseFrameColor, 
@@ -87,6 +107,11 @@ class MyPortrait extends THREE.Object3D {
         this.add(this.portraitInnerMesh)
 
         this.translateY(-this.portraitWidth/2);
+
+        this.children.forEach(element => {
+            element.castShadow = true
+            //element.receiveShadow = true
+        });
     }
 }
 

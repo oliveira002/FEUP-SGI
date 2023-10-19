@@ -2,7 +2,9 @@ import * as THREE from 'three';
 import { MyApp } from '../MyApp.js';
 
 
-
+/**
+ * This class contains a plate representation
+ */
 class MyPlate extends THREE.Object3D {
 
     /**
@@ -25,7 +27,7 @@ class MyPlate extends THREE.Object3D {
         this.plateShininess = plateShininess || 30
 
         this.plateMaterial = new THREE.MeshPhongMaterial({ color: this.diffusePlateColor, 
-            specular: this.specularPlateColor, emissive: "#000000", shininess: this.plateShininess })
+            specular: this.specularPlateColor, emissive: "#2F4F4F", shininess: this.plateShininess })
 
 
         let plate = new THREE.CylinderGeometry( this.radius, this.radius * 0.5, this.height, 32 ); 
@@ -33,6 +35,11 @@ class MyPlate extends THREE.Object3D {
         // plateMesh
         this.plateMesh = new THREE.Mesh(plate, this.plateMaterial)
         this.add( this.plateMesh );
+
+        this.children.forEach(element => {
+            //element.castShadow = true
+            element.receiveShadow = true
+        });
     }
 }
 

@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { MyApp } from '../MyApp.js';
 
 /**
- * This class contains walls representation for a square floor
+ * This class contains a cake representation
  */
 class MyCake extends THREE.Object3D {
 
@@ -51,7 +51,7 @@ class MyCake extends THREE.Object3D {
         }
 
         this.cakeOutsideMaterial = new THREE.MeshPhongMaterial({ /*color: this.diffuseCakeColor, 
-            specular: this.specularCakeColor, emissive: "#000000", shininess: this.cakeShininess,*/ map: this.cakeOutsideTexture})
+            specular: this.specularCakeColor, emissive: "#000000", shininess: this.cakeShininess,*/ map: this.cakeOutsideTexture, bumpMap: this.cakeOutsideTexture, bumpScale: 0.05})
 
         this.cakeInsideMaterialLeft = new THREE.MeshPhongMaterial({ /*color: this.diffuseCakeColor, 
             specular: this.specularCakeColor, emissive: "#000000", shininess: this.cakeShininess,*/ map: this.cakeInsideTexture2})
@@ -76,7 +76,12 @@ class MyCake extends THREE.Object3D {
         this.rightInsideMesh = new THREE.Mesh(cake_inside, this.cakeInsideMaterialRight)
         this.rightInsideMesh.rotateY(-(Math.PI/2 + this.slicePosition))
         this.rightInsideMesh.translateX(this.radius/2)
-        this.add( this.rightInsideMesh )
+        this.add( this.rightInsideMesh ) 
+
+        this.children.forEach(element => {
+            element.castShadow = true
+            //element.receiveShadow = true
+        });
         
     }
 }

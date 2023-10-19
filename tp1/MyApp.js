@@ -29,6 +29,24 @@ class MyApp  {
         this.gui = null
         this.axis = null
         this.contents == null
+
+        this.targets = {
+            "Perspective 1" : new THREE.Vector3(0,0,0),
+            "Perspective 2" : new THREE.Vector3(0,0,0),
+            "Floor, Caution Sign and Chairs" : new THREE.Vector3(0,0,0),
+            "Door" : new THREE.Vector3(-1.1860989316822785, 2.8180655833969417, -14.664858030534004),
+            "Shelf, Spring and Wall Blood" : new THREE.Vector3(-8.464771315289845, 2.1878308287979515, 3.981756360633992),
+            "Table, Cake and Newspaper": new THREE.Vector3(3.44042481765563, -1.1209493574340006, 7.688579947279951)
+        }
+
+        this.positions = {
+            "Perspective 1" : new THREE.Vector3(10,8,-14),
+            "Perspective 2" : new THREE.Vector3(11,13,13),
+            "Floor, Caution Sign and Chairs" : new THREE.Vector3(3.6,4.06,-1.7),
+            "Door" : new THREE.Vector3(0.926, 3, -7.26),
+            "Shelf, Spring and Wall Blood" : new THREE.Vector3(-1.0077017727173283, 4.309366138005711, 2.414504699597047),
+            "Table, Cake and Newspaper": new THREE.Vector3(6.342418398535429, 3.1822660496918282, 1.719840849580316)
+        }
     }
     /**
      * initializes the application
@@ -40,7 +58,7 @@ class MyApp  {
         this.scene.background = new THREE.Color( 0x101010 );
 
         this.stats = new Stats()
-        this.stats.showPanel(1) // 0: fps, 1: ms, 2: mb, 3+: custom
+        this.stats.showPanel(0) // 0: fps, 1: ms, 2: mb, 3+: custom
         document.body.appendChild(this.stats.dom)
 
         this.initCameras();
@@ -50,6 +68,11 @@ class MyApp  {
         this.renderer = new THREE.WebGLRenderer({antialias:true});
         this.renderer.setPixelRatio( window.devicePixelRatio );
         this.renderer.setClearColor("#000000");
+        this.renderer.shadowMap.enabled = true;
+        this.renderer.shadowMap.type = THREE.PCFSoftShadowMap ; // search for other alternatives
+        this.renderer.shadowMap.autoUpdate = false;
+        this.renderer.shadowMap.needsUpdate = true;
+
 
         // Configure renderer size
         this.renderer.setSize( window.innerWidth, window.innerHeight );
@@ -69,12 +92,29 @@ class MyApp  {
 
         // Create a basic perspective camera
         const perspective1 = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 )
-        perspective1.position.set(-10,10,-3)
+        perspective1.position.set(10,8,-14)
         this.cameras['Perspective 1'] = perspective1
 
         const perspective2 = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 )
         perspective2.position.set(11,13,13)
         this.cameras['Perspective 2'] = perspective2
+
+        const floor = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 )
+        floor.position.set(3.6,4.06,-1.7)
+        this.cameras['Floor, Caution Sign and Chairs'] = floor
+
+        const door = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 )
+        door.position.set(0.926, 3, -7.26)
+        this.cameras['Door'] = door
+
+        const spring = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 )
+        spring.position.set(-1.0077017727173283, 4.309366138005711, 2.414504699597047)
+        this.cameras['Shelf, Spring and Wall Blood'] = spring
+
+        const table = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 )
+        table.position.set(6.342418398535429, 3.1822660496918282, 1.719840849580316)
+        this.cameras['Table, Cake and Newspaper'] = table
+
 
         // defines the frustum size for the orthographic cameras
         const left = -this.frustumSize / 2 * aspect
@@ -164,7 +204,13 @@ class MyApp  {
             else {
                 this.controls.object = this.activeCamera
             }
+            this.updateCameraTargetAndPosition()
         }
+    }
+
+    updateCameraTargetAndPosition(){
+        this.controls.target = this.targets[this.activeCameraName]
+        this.activeCamera.position.set(...this.positions[this.activeCameraName])
     }
 
     /**
@@ -209,11 +255,13 @@ class MyApp  {
 
         // render the scene
         this.renderer.render(this.scene, this.activeCamera);
+        
 
         // subsequent async calls to the render loop
         requestAnimationFrame( this.render.bind(this) );
 
         this.lastCameraName = this.activeCameraName
+
         this.stats.end()
     }
 }

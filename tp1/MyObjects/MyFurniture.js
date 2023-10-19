@@ -3,7 +3,9 @@ import { MyApp } from '../MyApp.js';
 
 
 
-
+/**
+ * This class contains a furniture representaiton
+ */
 class MyFurniture extends THREE.Object3D {
 
     /**
@@ -92,6 +94,11 @@ class MyFurniture extends THREE.Object3D {
 
         this.translateY(-this.furnitureHeight * 0.5)
         this.scale.set(1,this.furnitureHeight,this.furnitureDepth)
+
+        this.children.forEach(element => {
+            element.castShadow = true
+            element.receiveShadow = true
+        });
     }
 }
 

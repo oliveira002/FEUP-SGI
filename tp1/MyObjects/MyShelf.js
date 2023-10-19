@@ -3,19 +3,21 @@ import { MyApp } from '../MyApp.js';
 
 
 
-
+/**
+ * This class contains a shelf representation
+ */
 class MyShelf extends THREE.Object3D {
 
     /**
      * 
-     * @param {MyApp} app the application object
-     * @param {boolean} furnitureHeight the height of the furniture piece relative to the Y axis.
-     * @param {number} furnitureDepth the depth of the furniture piece relative to the Z axis.
-     * @param {number} furLength the length of the furniture piece relative to the X axis. Default is `4`
-     * @param {string} furnitureTexturePath the path of the texture to be used on the furniture. Default `undefined`
-     * @param {number} diffuseFurnitureColor the diffuse component of the furniture's color. Default `#EADDCA`
-     * @param {number} specularFurnitureColor the specular component of the furniture's color. Default `#EADDCA`
-     * @param {number} furnitureShininess the shininess component of the furniture's color. Default `10`
+     * @param {MyApp} app 
+     * @param {number} shelfHeight shelf height
+     * @param {number} shelfDepth shelf depth
+     * @param {number} shelfLength shelf length
+     * @param {number} shelfTexturePath path to the shelf texture
+     * @param {string} diffuseShelfColor material diffuse component
+     * @param {string} specularShelfColor material specular component
+     * @param {string} shelfShininess material shininess 
      */
     constructor(app, shelfHeight, shelfDepth, shelfLength, shelfTexturePath, diffuseShelfColor, specularShelfColor, shelfShininess) {
         super();
@@ -38,8 +40,7 @@ class MyShelf extends THREE.Object3D {
             this.shelfTexture.wrapT = THREE.RepeatWrapping;
         }
 
-        this.shelfMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseShelfColor, 
-            specular: this.specularShelfColor,side: THREE.DoubleSide, emissive: "#000000", shininess: this.shelfShininess, map: this.shelfTexture })
+        this.shelfMaterial = new THREE.MeshPhysicalMaterial({map: this.shelfTexture, metalness: 0.2, roughness: 0.3, side: THREE.DoubleSide })
 
         var materials = [
             this.shelfMaterial, // Right face
@@ -47,7 +48,6 @@ class MyShelf extends THREE.Object3D {
             this.shelfMaterial, // Top face
             this.shelfMaterial, // Bottom face
             new THREE.MeshBasicMaterial({
-                color: 0x00ff00,
                 transparent: true,
                 opacity: 0
               }), 
@@ -60,15 +60,20 @@ class MyShelf extends THREE.Object3D {
         this.add(this.bottomCube)
 
         this.midCube = new THREE.Mesh(cube, materials)
-        this.midCube.translateY(this.shelfHeight * 0.33)
+        this.midCube.translateY(this.shelfHeight * 0.329)
         this.add(this.midCube)
 
         this.topCube = new THREE.Mesh(cube, materials)
-        this.topCube.translateY(this.shelfHeight * 0.66)
+        this.topCube.translateY(this.shelfHeight * 0.658)
         this.add(this.topCube)
 
         
         this.translateY(this.shelfHeight * 0.33 / 2 + 0.01)
+
+        this.children.forEach(element => {
+            element.castShadow = true
+            //element.receiveShadow = true
+        });
     }
 }
 
