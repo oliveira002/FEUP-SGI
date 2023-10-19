@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { MyApp } from '../MyApp.js';
 
 /**
- * This class contains walls representation for a square floor
+ * This class contain a candle representation
  */
 class MyCandle extends THREE.Object3D {
 

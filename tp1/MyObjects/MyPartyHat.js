@@ -3,20 +3,17 @@ import { MyApp } from '../MyApp.js';
 import { MyPortrait } from './MyPortrait.js';
 import { MyBulb } from './MyBulb.js';
 
-
+/**
+ * This class contains a party hat representation
+ */
 class MyPartyHat extends THREE.Object3D {
 
     /**
      * 
      * @param {MyApp} app 
-     * @param {number} doorWidth the width of the door
-     * @param {number} doorLength the length of the door
-     * @param {number} doorDepth the depth of the door
-     * @param {number} doorTexturePath path to the door texture
-     * @param {number} knobTexturePath path to the knob texture
-     * @param {number} diffuseDoorColor diffuse color, default is #EADDCA
-     * @param {number} specularDoorColor specular color, default is #EADDCA
-     * @param {number} doorShininess door chiniess, default is 10
+     * @param {number} radius radius of the hat
+     * @param {number} height height of the hat
+     * @param {string} hatTexturePath path to the hat texture
      */
     constructor(app, radius, height, hatTexturePath) {
         super();

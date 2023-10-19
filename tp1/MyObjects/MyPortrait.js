@@ -1,6 +1,10 @@
 import * as THREE from 'three';
 import { MyApp } from '../MyApp.js';
 
+
+/**
+ * This class contains a portrait representation
+ */
 class MyPortrait extends THREE.Object3D {
 
     /**

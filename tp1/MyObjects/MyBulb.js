@@ -3,7 +3,9 @@ import { MyApp } from '../MyApp.js';
 
 
 
-
+/**
+ * This class contains a bulb representation
+ */
 class MyBulb extends THREE.Object3D {
 
     /**

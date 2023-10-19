@@ -3,7 +3,9 @@ import { MyApp } from '../MyApp.js';
 
 
 
-
+/**
+ * This class contains a furniture representaiton
+ */
 class MyFurniture extends THREE.Object3D {
 
     /**

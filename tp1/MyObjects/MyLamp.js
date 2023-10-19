@@ -4,7 +4,9 @@ import { MyBulb } from './MyBulb.js';
 
 
 
-
+/**
+ * This class contains a lamp representation
+ */
 class MyLamp extends THREE.Object3D {
 
     /**

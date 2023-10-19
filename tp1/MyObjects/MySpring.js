@@ -9,6 +9,9 @@ class MySpring extends THREE.Object3D {
     /**
      * 
      * @param {MyApp} app 
+     * @param {number} radius spring radius
+     * @param {number} height spring height
+     * @param {number} coilsNumber spring amount of coils
      */
     constructor(app, radius, height, coilsNumber) {
 

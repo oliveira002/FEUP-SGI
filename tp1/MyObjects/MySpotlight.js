@@ -1,11 +1,17 @@
 import * as THREE from 'three';
 import { MyApp } from '../MyApp.js';
 
+
+/**
+ * This class contains a spotlight representation
+ */
 class MySpotlight extends THREE.Object3D {
 
     /**
      * 
-     * @param {MyApp} app the application object
+     * @param {MyApp} app 
+     * @param {Vector3} spotLightPos vector of the spotlight position
+     * @param {Vector3} spotLightLookAt vector of the spotlight direction 
      */
     constructor(app, spotLightPos, spotLightLookAt) {
         super();

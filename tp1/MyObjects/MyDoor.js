@@ -4,7 +4,9 @@ import { MyBulb } from './MyBulb.js';
 
 
 
-
+/**
+ * This class contains a door representation
+ */
 class MyDoor extends THREE.Object3D {
 
     /**
@@ -14,7 +16,6 @@ class MyDoor extends THREE.Object3D {
      * @param {number} doorLength the length of the door
      * @param {number} doorDepth the depth of the door
      * @param {number} doorTexturePath path to the door texture
-     * @param {number} knobTexturePath path to the knob texture
      * @param {number} diffuseDoorColor diffuse color, default is #EADDCA
      * @param {number} specularDoorColor specular color, default is #EADDCA
      * @param {number} doorShininess door chiniess, default is 10

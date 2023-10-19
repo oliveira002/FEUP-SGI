@@ -2,7 +2,9 @@ import * as THREE from 'three';
 import { MyApp } from '../MyApp.js';
 
 
-
+/**
+ * This class contains a table representation
+ */
 class MyTable extends THREE.Object3D {
 
     /**

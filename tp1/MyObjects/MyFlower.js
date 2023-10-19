@@ -2,7 +2,9 @@ import * as THREE from 'three';
 import { MyApp } from '../MyApp.js';
 
 
-
+/**
+ * This class contains a flower representation
+ */
 class MyFlower extends THREE.Object3D {
 
     /**

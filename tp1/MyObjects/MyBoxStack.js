@@ -2,17 +2,15 @@ import * as THREE from 'three';
 import { MyApp } from '../MyApp.js';
 
 
-
+/**
+ * This class contains a stack of boxes
+ */
 class MyBoxStack extends THREE.Object3D {
 
     /**
      * 
      * @param {MyApp} app the application object
-     * @param {number} maxRadius the radius of the top part of the plate. Default is `1`
-     * @param {number} height the height of the plate. Default is `radius/5`
-     * @param {number} diffusePlateColor the diffuse component of the plate's color. Default `#FFFFFF`
-     * @param {number} specularPlateColor the specular component of the plate's color. Default `#FFFFFF`
-     * @param {number} plateShininess the shininess component of the plate's color. Default `30` 
+     * @param {number} boxSize size of each crate
      */
     constructor(app, boxSize) {
         super();

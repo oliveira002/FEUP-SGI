@@ -3,20 +3,18 @@ import { MyApp } from '../MyApp.js';
 import { MyPortrait } from './MyPortrait.js';
 import { MyBulb } from './MyBulb.js';
 
-
+/**
+ * This class contains a table cover representation
+ */
 class MyTableCover extends THREE.Object3D {
 
     /**
      * 
      * @param {MyApp} app 
-     * @param {number} doorWidth the width of the door
-     * @param {number} doorLength the length of the door
-     * @param {number} doorDepth the depth of the door
-     * @param {number} doorTexturePath path to the door texture
-     * @param {number} knobTexturePath path to the knob texture
-     * @param {number} diffuseDoorColor diffuse color, default is #EADDCA
-     * @param {number} specularDoorColor specular color, default is #EADDCA
-     * @param {number} doorShininess door chiniess, default is 10
+     * @param {number} width width of the table cover
+     * @param {number} depth depth of the table cover
+     * @param {number} height height of the table cover
+     * @param {string} coverTexturePath path to the cover texture
      */
     constructor(app, width, depth, height, coverTexturePath) {
         super();

@@ -5,20 +5,18 @@ import { MyBulb } from './MyBulb.js';
 
 
 
-
+/**
+ * This class contains a caution sign representation
+ */
 class MyCaution extends THREE.Object3D {
 
     /**
      * 
      * @param {MyApp} app 
-     * @param {number} doorWidth the width of the door
-     * @param {number} doorLength the length of the door
-     * @param {number} doorDepth the depth of the door
-     * @param {number} doorTexturePath path to the door texture
-     * @param {number} knobTexturePath path to the knob texture
-     * @param {number} diffuseDoorColor diffuse color, default is #EADDCA
-     * @param {number} specularDoorColor specular color, default is #EADDCA
-     * @param {number} doorShininess door chiniess, default is 10
+     * @param {number} width 
+     * @param {number} depth 
+     * @param {number} height 
+     * @param {string} cautionTexturePath the path to the caution texture 
      */
     constructor(app, width, depth, height, cautionTexturePath) {
         super();

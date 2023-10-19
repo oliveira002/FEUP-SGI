@@ -2,7 +2,9 @@ import * as THREE from 'three';
 import { MyApp } from '../MyApp.js';
 
 
-
+/**
+ * This class contains a chair representation
+ */
 class MyChair extends THREE.Object3D {
 
     /**
@@ -13,7 +15,7 @@ class MyChair extends THREE.Object3D {
      * @param {number} chairHeight the height of the chair in relation to the Y axis. Default `1`
      * @param {number} chairTopHeight the height of the chair top in relation to the Y axis. Default `0.2`
      * @param {number} legRadius the radius of the chair's legs. Default `chairWidth/10`
-     * @param {string} tableTexturePath the path of the texture to be used on the chair. Default `undefined`
+     * @param {string} chairTexturePath the path of the texture to be used on the chair. Default `undefined`
      * @param {number} diffuseTableColor the diffuse component of the chair's color. Default `#F0E5D8`
      * @param {number} specularTableColor the specular component of the chair's color. Default `#FFFFFF`
      * @param {number} tableShininess the shininess component of the chair's color. Default `100`
