@@ -33,7 +33,7 @@ class MyTable extends THREE.Object3D {
         this.tableTexturePath = tableTexturePath
         this.tableLegTexturePath = tableLegTexturePath
         this.diffuseTableColor = diffuseTableColor || "#F0E5D8"
-        this.specularTableColor = specularTableColor || "#FFFFFF"
+        this.specularTableColor = specularTableColor || 0x111111
         this.tableShininess = tableShininess || 100
         
         if(this.tableTexturePath){
@@ -47,7 +47,7 @@ class MyTable extends THREE.Object3D {
         }
 
         this.tableMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseTableColor, 
-            specular: this.specularTableColor, emissive: "#000000", shininess: this.tableShininess, map: this.tableTexture })
+            specular: this.specularTableColor,  emissive: "#000000", shininess: this.tableShininess, map: this.tableTexture })
         
         this.legMaterial = new THREE.MeshPhongMaterial({specular: 0xffffff, map: this.legTexture })
 

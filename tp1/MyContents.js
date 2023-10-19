@@ -756,10 +756,10 @@ class MyContents {
             spotLight.target = this.target
             spotLight.castShadow = true;
             spotLight.shadow.bias = 0.0001
-            spotLight.shadow.mapSize.width = 512
-            spotLight.shadow.mapSize.height = 512
-            spotLight.shadow.camera.near = 5
-            spotLight.shadow.camera.far  = 20
+            spotLight.shadow.mapSize.width = 100
+            spotLight.shadow.mapSize.height = 100
+            spotLight.shadow.camera.near = 6.5
+            spotLight.shadow.camera.far  = 22
             this.app.scene.add(spotLight)
 
             const pointLight = new THREE.PointLight(0xffffff, 15, 0.7, 3)
@@ -769,8 +769,11 @@ class MyContents {
             const pointLightHelper = new THREE.PointLightHelper(pointLight, 0.7)
             //this.app.scene.add(pointLightHelper)
 
-            const spotLightHelper = new THREE.SpotLightHelper(spotLight,"#FFFFFF")
+            //const spotLightHelper = new THREE.SpotLightHelper(spotLight,"#FFFFFF")
             //this.app.scene.add(spotLightHelper)
+
+            const helper = new THREE.CameraHelper( spotLight.shadow.camera );
+            this.app.scene.add( helper )
         }
 
         if(this.spotLightObject2 === null){
@@ -792,10 +795,10 @@ class MyContents {
             spotLight.target = this.target2
             spotLight.castShadow = true;
             spotLight.shadow.bias = 0.0001
-            spotLight.shadow.mapSize.width = 512*4
-            spotLight.shadow.mapSize.height = 512*4
+            spotLight.shadow.mapSize.width = 512
+            spotLight.shadow.mapSize.height = 512
             spotLight.shadow.camera.near = 5
-            spotLight.shadow.camera.far  = 20
+            spotLight.shadow.camera.far  = 22.5
             this.app.scene.add(spotLight)
 
             const pointLight = new THREE.PointLight(0xffffff, 15, 0.7, 3)
@@ -805,8 +808,11 @@ class MyContents {
             const pointLightHelper = new THREE.PointLightHelper(pointLight, 0.7)
             //this.app.scene.add(pointLightHelper)
 
-            const spotLightHelper = new THREE.SpotLightHelper(spotLight,"#FFFFFF")
+            //const spotLightHelper = new THREE.SpotLightHelper(spotLight,"#FFFFFF")
             //this.app.scene.add(spotLightHelper)
+
+            const helper = new THREE.CameraHelper( spotLight.shadow.camera );
+            this.app.scene.add( helper )
         }
 
         if(this.hats === null) {
@@ -857,7 +863,7 @@ class MyContents {
                 this.hatsGroup.add(hat)
             }
 
-            this.hatsGroup.translateY(this.tableHeight + this.coverHeight + this.hatHeight / 2)
+            this.hatsGroup.translateY(this.tableHeight + this.coverHeight + this.hatHeight-0.15)
             this.hatsGroup.translateX(this.floorSizeU / 2 - this.tableLength / 2 - 1 + this.tableLength/4)
             this.hatsGroup.translateZ(this.floorSizeV / 2 - this.tableWidth / 2 + this.tableWidth / 4)
             this.app.scene.add(this.hatsGroup)
