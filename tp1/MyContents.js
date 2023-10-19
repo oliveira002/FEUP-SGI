@@ -67,7 +67,7 @@ class MyContents {
         this.spotLightObject2 = null
 
         // axis related attributes
-        this.axisEnabled = true
+        this.axisEnabled = false
 
         // box related attributes
         this.boxMesh = null
@@ -604,9 +604,9 @@ class MyContents {
         if(this.spring === null){
             this.springRadius = 0.06
             this.spring = new MySpring(this, this.springRadius, 0.5)
-            this.spring.translateX(1.2)
-            this.spring.translateY(this.springRadius+this.tableHeight)
-            this.spring.translateZ(-0.3)
+            this.spring.translateY(this.springRadius+0.01+this.shelfHeight * 0.33)
+            this.spring.translateZ(this.floorSizeV / 2 - this.shelfLength / 2 - 1)
+            this.spring.translateX(-this.floorSizeU / 2 + this.shelfDepth / 2 + this.ventDepth + 0.01)
             this.spring.rotateY(Math.PI/3)
             this.app.scene.add(this.spring)
         }
@@ -774,7 +774,7 @@ class MyContents {
             //this.app.scene.add(spotLightHelper)
 
             const helper = new THREE.CameraHelper( spotLight.shadow.camera );
-            this.app.scene.add( helper )
+            //this.app.scene.add( helper )
         }
 
         if(this.spotLightObject2 === null){
@@ -814,7 +814,7 @@ class MyContents {
             //this.app.scene.add(spotLightHelper)
 
             const helper = new THREE.CameraHelper( spotLight.shadow.camera );
-            this.app.scene.add( helper )
+            //this.app.scene.add( helper )
         }
 
         if(this.hats === null) {

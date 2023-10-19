@@ -96,7 +96,7 @@ class MyBulb extends THREE.Object3D {
             
             // add a point light helper for the previous point light -> if the light's position is updated, the helper's position isn'
             const lightHelper = new THREE.SpotLightHelper( spotLight)
-            this.add( lightHelper );
+            //this.add( lightHelper );
         }
 
         this.rotateX(Math.PI)

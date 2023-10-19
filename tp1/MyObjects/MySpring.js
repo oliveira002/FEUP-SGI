@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { MyApp } from '../MyApp.js';
+import { Line2 } from 'three/addons/lines/Line2.js';
 
 /**
  * This class contains spring representation
@@ -44,16 +45,22 @@ class MySpring extends THREE.Object3D {
 
         let curve = new THREE.CatmullRomCurve3(points)
         let sampledPoints = curve.getPoints(this.numberOfSamples);
-        
+    
         this.springCurveGeometry = new THREE.BufferGeometry().setFromPoints( sampledPoints )
+        this.springCurveGeometry = new THREE.TubeGeometry( curve, this.numberOfSamples, 0.007, this.numberOfSamples, false );
         if(this.springTexturePath){
             this.springTexture = new THREE.TextureLoader().load(this.springTexturePath);
             this.springTexture.wrapS = THREE.RepeatWrapping;
             this.springTexture.wrapT = THREE.RepeatWrapping;
         }
-        this.springLineMaterial = new THREE.LineBasicMaterial( { linewidth: 100, map: this.springTexture,  } )
-        this.spring = new THREE.Line( this.springCurveGeometry, this.springLineMaterial )
+        this.springLineMaterial = new THREE.LineBasicMaterial( { map: this.springTexture, side:THREE.DoubleSide } )
+        this.spring = new THREE.Mesh( this.springCurveGeometry, this.springLineMaterial )
         this.add(this.spring); 
+
+        this.children.forEach(element => {
+            element.castShadow = true
+            //element.receiveShadow = true
+        });
     }
 
     recompute() {
