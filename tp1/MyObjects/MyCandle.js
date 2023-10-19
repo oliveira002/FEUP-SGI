@@ -9,8 +9,8 @@ class MyCandle extends THREE.Object3D {
     /**
      * 
      * @param {MyApp} app the application object
-     * @param {number} radius the radius of the candle. Default is `0.05`
-     * @param {number} height the height of the candle. Default is `radius*5`
+     * @param {number} radius the radius of the candle. Default is `0.02`
+     * @param {number} height the height of the candle. Default is `radius*8`
      * @param {number} diffuseCandleColor the diffuse component of the candle body's color. Default `#fffcbb`
      * @param {number} specularCandleColor the specular component of the candle body's  color. Default `#777777`
      * @param {number} candleShininess the shininess component of the candle body's color. Default `30` 
@@ -24,9 +24,9 @@ class MyCandle extends THREE.Object3D {
         this.type = 'Group';
 
         // Radius setup
-        this.candleBodyRadius = radius || 0.05
-        this.flameRadius = this.candleBodyRadius*0.5
-        this.candleWickRadius = this.candleBodyRadius*0.05
+        this.candleBodyRadius = radius || 0.02
+        this.flameRadius = this.candleBodyRadius*0.8
+        this.candleWickRadius = this.candleBodyRadius*0.08
 
         // Height setup
         this.height = height || this.candleBodyRadius*5
@@ -35,7 +35,7 @@ class MyCandle extends THREE.Object3D {
         this.candleWickHeight = this.height/10
 
         // Candle body color setup
-        this.diffuseCandleColor = diffuseCandleColor || "#fffcbb"
+        this.diffuseCandleColor = diffuseCandleColor || "#89CFF0"
         this.specularCandleColor = specularCandleColor || "#777777"
         this.candleShininess = candleShininess || 30
 

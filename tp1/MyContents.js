@@ -755,11 +755,12 @@ class MyContents {
             spotLight.position.set(...(this.spotLightPos.sub(offset)));
             spotLight.target = this.target
             spotLight.castShadow = true;
-            spotLight.shadow.bias = 0.0001
-            spotLight.shadow.mapSize.width = 100
-            spotLight.shadow.mapSize.height = 100
-            spotLight.shadow.camera.near = 6.5
-            spotLight.shadow.camera.far  = 22
+            spotLight.shadow.bias = -0.0001
+            spotLight.shadow.normalBias = 0.1;
+            spotLight.shadow.mapSize.width = 512
+            spotLight.shadow.mapSize.height = 512
+            spotLight.shadow.camera.near = 6
+            spotLight.shadow.camera.far  = 25
             this.app.scene.add(spotLight)
 
             const pointLight = new THREE.PointLight(0xffffff, 15, 0.7, 3)
@@ -794,9 +795,10 @@ class MyContents {
             spotLight.position.set(...(this.spotLightPos2.sub(offset)));
             spotLight.target = this.target2
             spotLight.castShadow = true;
-            spotLight.shadow.bias = 0.0001
-            spotLight.shadow.mapSize.width = 512
-            spotLight.shadow.mapSize.height = 512
+            spotLight.shadow.bias = -0.0001
+            spotLight.shadow.normalBias = 0.1;
+            spotLight.shadow.mapSize.width = 512 * 4
+            spotLight.shadow.mapSize.height = 512 * 4
             spotLight.shadow.camera.near = 5
             spotLight.shadow.camera.far  = 22.5
             this.app.scene.add(spotLight)

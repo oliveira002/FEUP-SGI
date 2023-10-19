@@ -44,6 +44,11 @@ class MyBoxStack extends THREE.Object3D {
         this.box3.translateZ(this.boxSize / 3.5)
         this.box3.rotateY(Math.PI / 12)
         this.add(this.group)
+        
+        this.children.forEach(element => {
+            element.castShadow = true
+            //element.receiveShadow = true
+        });
     }
 }
 
