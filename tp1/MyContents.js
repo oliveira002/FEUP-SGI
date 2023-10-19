@@ -395,6 +395,10 @@ class MyContents {
             this.cakeGroup.add(this.cake,this.candle,this.plate)
             this.cakeGroup.translateX(this.floorSizeU / 2 - this.tableLength / 2 - this.tableWallOffset)
             this.cakeGroup.translateZ(this.floorSizeV / 2 - this.tableWidth / 2)
+
+            const candleLight = new THREE.PointLight(0x800000,0.05,0.35,7)
+            candleLight.position.set(this.floorSizeU / 2 - this.tableLength / 2 - this.tableWallOffset,(this.tableHeight+this.plateHeight+this.cakeHeight+this.candleHeight/2+this.coverHeight) + 0.08,this.floorSizeV / 2 - this.tableWidth / 2)
+            this.app.scene.add(candleLight)
             this.app.scene.add(this.cakeGroup)
         }
 
