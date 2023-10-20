@@ -36,7 +36,13 @@ class MyApp  {
             "Floor, Caution Sign and Chairs" : new THREE.Vector3(0,0,0),
             "Door" : new THREE.Vector3(-1.1860989316822785, 2.8180655833969417, -14.664858030534004),
             "Shelf, Spring and Wall Blood" : new THREE.Vector3(-8.464771315289845, 2.1878308287979515, 3.981756360633992),
-            "Table, Cake and Newspaper": new THREE.Vector3(3.44042481765563, -1.1209493574340006, 7.688579947279951)
+            "Table, Cake and Newspaper": new THREE.Vector3(3.44042481765563, -1.1209493574340006, 7.688579947279951),
+            'Left' : new THREE.Vector3(0,0,0),
+            'Right' : new THREE.Vector3(0,0,0),
+            'Top' : new THREE.Vector3(0,0,0),
+            'Bottom' : new THREE.Vector3(0,0,0),
+            'Front' : new THREE.Vector3(0,0,0),
+            'Back' : new THREE.Vector3(0,0,0),
         }
 
         this.positions = {
@@ -45,7 +51,13 @@ class MyApp  {
             "Floor, Caution Sign and Chairs" : new THREE.Vector3(3.6,4.06,-1.7),
             "Door" : new THREE.Vector3(0.926, 3, -7.26),
             "Shelf, Spring and Wall Blood" : new THREE.Vector3(-1.0077017727173283, 4.309366138005711, 2.414504699597047),
-            "Table, Cake and Newspaper": new THREE.Vector3(6.342418398535429, 3.1822660496918282, 1.719840849580316)
+            "Table, Cake and Newspaper": new THREE.Vector3(6.342418398535429, 3.1822660496918282, 1.719840849580316),
+            'Left' : new THREE.Vector3(-this.frustumSize /4,0,0),
+            'Right' : new THREE.Vector3(this.frustumSize /4,0,0) ,
+            'Top' : new THREE.Vector3(0, this.frustumSize /4, 0) ,
+            'Bottom' : new THREE.Vector3(0, -this.frustumSize /4, 0) ,
+            'Front' : new THREE.Vector3(0,0, this.frustumSize /4) ,
+            'Back' : new THREE.Vector3(0,0, -this.frustumSize /4) ,
         }
     }
     /**
