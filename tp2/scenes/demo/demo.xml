@@ -183,12 +183,6 @@
                     angle="10.0" 
                 /> 
 
-                <directionallight id="light5" enabled="true" 
-                    color="1.0 1.0 1.0 1" 
-                    intensity="1.0"
-                    castshadow="true"
-                    position="2 2 4" 
-                /> 
             </children> 
         </node>
 		
@@ -369,6 +363,13 @@
 				<noderef id="leg2" />
 				<noderef id="leg3" />
 				<noderef id="leg4" />
+
+                <directionallight id="light5" enabled="true" 
+                    color="1.0 1.0 1.0 1" 
+                    intensity="1.0"
+                    castshadow="true"
+                    position="2 2 4" 
+                /> 
             </children> 
         </node>
 		
