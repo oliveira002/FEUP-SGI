@@ -17,9 +17,7 @@ class MyContents  {
         this.axis = null
         this.fog = null
         this.lights = []
-        this.cameras = []
         
-
         // materials
         this.materialMap = {}
         this.defaultMat = new THREE.MeshBasicMaterial({color: "#FFFFFF"})
@@ -33,7 +31,7 @@ class MyContents  {
         this.groupi = new THREE.Group()
         
         this.reader = new MyFileReader(app, this, this.onSceneLoaded);
-		this.reader.open("scenes/demo/demo.xml");		
+		this.reader.open("scenes/demo/demo.xml");
     }
 
     /**
