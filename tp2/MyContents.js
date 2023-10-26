@@ -30,6 +30,7 @@ class MyContents  {
         // objects and primitives
         this.visitedNodes = new Set()
         this.group = []
+        this.groupi = new THREE.Group()
         
         this.reader = new MyFileReader(app, this, this.onSceneLoaded);
 		this.reader.open("scenes/demo/demo.xml");		
@@ -105,7 +106,6 @@ class MyContents  {
                         break;
                 }
                 
-                camera.name = cameraObj.id
                 camera.position.set(...cameraObj.location)
                 this.app.controls.target = new THREE.Vector3(...cameraObj.target)
 
@@ -197,8 +197,8 @@ class MyContents  {
         // to see the data structure for each item
         console.log(data)
         let root = data.nodes.scene
-        this.iterateNodes(root,this.group)
-        console.log(this.group)
+        this.iterateNodes(root,this.groupi)
+        console.log(this.groupi)
 
         this.output(data.options)
         //console.log("textures:")
@@ -250,19 +250,37 @@ class MyContents  {
 
         children.forEach(neighbor => {
             if(neighbor.type === "spotlight" || neighbor.type === "pointlight" || neighbor.type === "directionallight") {
-                let cur = [neighbor]
-                group.push(cur)
+                //let cur = [neighbor]
+                let cur = new THREE.Group()
+                //group.add()
                 return
             }
-            if(neighbor.type === "primitive") {
-                let cur = [neighbor]
-                group.push(cur)
+            if(neighbor.type === "primitive" && neighbor.subtype === "rectangle") {
+                let mesh = this.dealWithPrimitive(neighbor)
+                group.add(mesh)
+                //console.log(group)
                 return
             }
-            let cur = [neighbor.id]
+            
+            let cur = new THREE.Group()
             this.iterateNodes(neighbor,cur)
-            group.push(cur)
+            group.add(cur)
+
         });
+    }
+
+    dealWithPrimitive(node) {
+        if(node.subtype === "rectangle") {
+            let metrics = node.representations[0]
+            console.log(metrics)
+            let width = metrics.xy1[0] - metrics.xy2[0]
+            let height = metrics.xy1[1] - metrics.xy2[1]
+            let prim = new THREE.PlaneGeometry(width,height,metrics.parts_x,metrics.parts_y)
+            let mat = new THREE.MeshPhongMaterial({ color: "#FFFFFF", 
+                specular: "#FFFFFF",  emissive: "#FFFFFF"})
+            let mesh = new THREE.Mesh(prim, mat)
+            return mesh
+        }
     }
 
     update() {
