@@ -239,7 +239,6 @@ class MyContents  {
 
     iterateNodes(node, parentGroup) {
         if(node.type === "spotlight" || node.type === "pointlight" || node.type === "directionallight") {
-            this.dealWithLights(node)
             return
         }
 
