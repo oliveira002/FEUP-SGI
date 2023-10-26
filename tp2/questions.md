@@ -1,0 +1,4 @@
+- Definição de globais (sombras)
+- Material.texlength_s e material.texlength_t
+- É preciso ver quais descriptors estão presentes ou podemos assumir sempre que todos estão presentes?
+- ^ Caso estejam, para quê a definição de "required" e o default value? Se não aparece, não colocamos, se aparece, colocamos, o default nunca é usado
