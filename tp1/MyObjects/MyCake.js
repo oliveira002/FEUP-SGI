@@ -78,6 +78,8 @@ class MyCake extends THREE.Object3D {
         this.rightInsideMesh.translateX(this.radius/2)
         this.add( this.rightInsideMesh ) 
 
+
+
         this.children.forEach(element => {
             element.castShadow = true
             //element.receiveShadow = true

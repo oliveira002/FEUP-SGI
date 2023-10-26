@@ -193,10 +193,11 @@ class MyContents  {
        
         // refer to descriptors in class MySceneData.js
         // to see the data structure for each item
-        console.log(data)
         let root = data.nodes.scene
+  
         this.iterateNodes(root,this.groupi)
-        console.log(this.groupi)
+        this.app.scene.add(this.groupi);
+        console.log(root)
 
         this.output(data.options)
         //console.log("textures:")
@@ -236,8 +237,13 @@ class MyContents  {
         }
     }
 
-    iterateNodes(node, group) {
-        if(node.type === "spotlight" || node.type === "pointlight" || node.type === "directionallight" || node.type === "primitive") {
+    iterateNodes(node, parentGroup) {
+        if(node.type === "spotlight" || node.type === "pointlight" || node.type === "directionallight") {
+            this.dealWithLights(node)
+            return
+        }
+
+        if(node.type === "primitive") {
             return
         }
 
@@ -247,29 +253,26 @@ class MyContents  {
         let children = node.children
 
         children.forEach(neighbor => {
-            if(neighbor.type === "spotlight" || neighbor.type === "pointlight" || neighbor.type === "directionallight") {
-                //let cur = [neighbor]
-                let cur = new THREE.Group()
-                //group.add()
-                return
-            }
-            if(neighbor.type === "primitive") {
-                let mesh = this.dealWithPrimitive(neighbor)
-                group.add(mesh)
-                //console.log(group)
-                return
-            }
-            
-            let cur = new THREE.Group()
-            this.iterateNodes(neighbor,cur)
-            group.add(cur)
-            this.app.scene.add(group)
+            let cur = new THREE.Group();
 
+            if (neighbor.type === "spotlight" || neighbor.type === "pointlight" || neighbor.type === "directionallight") {
+                this.dealWithLights(neighbor);
+
+            } else if (neighbor.type === "primitive" && neighbor.subtype != "nurbs") {
+                let mesh = this.dealWithPrimitive(neighbor);
+                cur.add(mesh);
+
+            } else {
+                this.iterateNodes(neighbor, cur);
+            }
+    
+            parentGroup.add(cur);
         });
+        this.dealWithTransformations(node.transformations, parentGroup);
     }
 
     dealWithPrimitive(node) {
-        let mat = new THREE.MeshPhongMaterial({ color: "#FFFFFF", specular: "#FFFFFF",  emissive: "#FFFFFF"})
+        let mat = new THREE.MeshPhongMaterial({ color: "#FFFFFF", specular: "#FFFFFF",  emissive: "#FFFFFF", side: THREE.DoubleSide})
         switch(node.subtype) {
             case "rectangle": {
                 // metrics
@@ -284,7 +287,6 @@ class MyContents  {
             }
             
             case "triangle":{
-                console.log(node)
                 return
             }
             case "cylinder":{
@@ -301,14 +303,13 @@ class MyContents  {
 
                 let prim = new THREE.CylinderGeometry(top,base,height,slices,stacks,capsClosed,thetaStart,thetaLength)
                 let mesh = new THREE.Mesh(prim, mat)
+
                 return mesh
             }
             case "sphere": {
-                console.log(node)
                 return
             }
             case "nurbs": {
-                console.log(node)
                 return
             }
             case "box": {
@@ -329,6 +330,58 @@ class MyContents  {
             }
         }
     }
+
+    dealWithLights(node) {
+        switch (node.type) {
+            case "pointlight": {
+                
+                return;
+            }
+            case "pointlight": {
+
+                return;
+            }
+            case "directionallight": {
+
+                return;
+            }
+            default:
+                return;
+        }
+    }
+
+    degrees_to_radians(degrees){
+        var pi = Math.PI;
+        return degrees * (pi/180);
+    }
+
+    dealWithTransformations(transformations,group) {
+        var pi = Math.PI;
+        transformations.forEach(operation => {
+           switch(operation.type) {
+                case "T": {
+                    group.translateX(operation.translate[0])
+                    group.translateY(operation.translate[1])
+                    group.translateZ(operation.translate[2])
+                    break;
+                }
+
+                case "R": {
+                    group.rotateX(operation.rotation[0] * (pi/180))
+                    group.rotateY(operation.rotation[1] * (pi/180))
+                    group.rotateZ(operation.rotation[2] * (pi/180))
+                    break;
+                }
+
+                case "S": {
+                    group.scale.set(operation.scale[0],operation.scale[1],operation.scale[2])
+                    break;
+                }
+           }
+        });
+    }
+
+
 
     update() {
         
