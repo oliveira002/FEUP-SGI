@@ -194,10 +194,11 @@ class MyContents  {
         // refer to descriptors in class MySceneData.js
         // to see the data structure for each item
         let root = data.nodes.scene
-  
-        this.iterateNodes(root,this.groupi)
+        
+        this.iterateNodes(root,this.groupi,["def"])
         this.app.scene.add(this.groupi);
         console.log(root)
+  
 
         this.output(data.options)
         //console.log("textures:")
@@ -237,7 +238,7 @@ class MyContents  {
         }
     }
 
-    iterateNodes(node, parentGroup) {
+    iterateNodes(node, parentGroup, defaultMaterial) {
         if(node.type === "spotlight" || node.type === "pointlight" || node.type === "directionallight") {
             return
         }
@@ -251,27 +252,38 @@ class MyContents  {
 
         let children = node.children
 
-        children.forEach(neighbor => {
+        children.forEach(child => {
             let cur = new THREE.Group();
 
-            if (neighbor.type === "spotlight" || neighbor.type === "pointlight" || neighbor.type === "directionallight") {
-                this.dealWithLights(neighbor);
 
-            } else if (neighbor.type === "primitive" && neighbor.subtype != "nurbs") {
-                let mesh = this.dealWithPrimitive(neighbor);
+            if (child.type === "spotlight" || child.type === "pointlight" || child.type === "directionallight") {
+                // Handle lights
+                this.dealWithLights(child);
+            } else if (child.type === "primitive" && child.subtype != "nurbs") {
+                // Handle primitives
+                let mesh = this.dealWithPrimitive(child, node.materialIds);
                 cur.add(mesh);
-
-            } else {
-                this.iterateNodes(neighbor, cur);
+            } 
+            else if(child.type === "primitive" && child.subtype == "nurbs") {
+                return
+            }
+            else {
+                if(child.materialIds.length === 0) {
+                    child.materialIds = (node.materialIds.length === 0) ? defaultMaterial : node.materialIds
+                }
+                // Recursively iterate for non-light and non-primitive nodes
+                this.iterateNodes(child, cur, defaultMaterial);
             }
     
             parentGroup.add(cur);
         });
+    
         this.dealWithTransformations(node.transformations, parentGroup);
     }
 
-    dealWithPrimitive(node) {
-        let mat = new THREE.MeshPhongMaterial({ color: "#FFFFFF", specular: "#FFFFFF",  emissive: "#FFFFFF", side: THREE.DoubleSide})
+    dealWithPrimitive(node, material) {
+        let mat = this.materialMap[material[0]]
+        mat = new THREE.MeshPhongMaterial({ color: "#FFFFFF", specular: "#FFFFFF",  emissive: "#FFFFFF", side: THREE.DoubleSide})
         switch(node.subtype) {
             case "rectangle": {
                 // metrics
