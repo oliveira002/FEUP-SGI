@@ -105,6 +105,7 @@ class MyContents  {
                         break;
                 }
                 
+                camera.name = cameraObj.id
                 camera.position.set(...cameraObj.location)
                 this.app.controls.target = new THREE.Vector3(...cameraObj.target)
 
