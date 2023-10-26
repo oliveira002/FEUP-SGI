@@ -242,7 +242,7 @@ class MyContents  {
         }
 
         this.visitedNodes.add(node.id)
-        console.log("Visited:", node.id)
+        //console.log("Visited:", node.id)
 
         let children = node.children
 
@@ -253,7 +253,7 @@ class MyContents  {
                 //group.add()
                 return
             }
-            if(neighbor.type === "primitive" && neighbor.subtype === "rectangle") {
+            if(neighbor.type === "primitive") {
                 let mesh = this.dealWithPrimitive(neighbor)
                 group.add(mesh)
                 //console.log(group)
@@ -263,21 +263,70 @@ class MyContents  {
             let cur = new THREE.Group()
             this.iterateNodes(neighbor,cur)
             group.add(cur)
+            this.app.scene.add(group)
 
         });
     }
 
     dealWithPrimitive(node) {
-        if(node.subtype === "rectangle") {
-            let metrics = node.representations[0]
-            console.log(metrics)
-            let width = metrics.xy1[0] - metrics.xy2[0]
-            let height = metrics.xy1[1] - metrics.xy2[1]
-            let prim = new THREE.PlaneGeometry(width,height,metrics.parts_x,metrics.parts_y)
-            let mat = new THREE.MeshPhongMaterial({ color: "#FFFFFF", 
-                specular: "#FFFFFF",  emissive: "#FFFFFF"})
-            let mesh = new THREE.Mesh(prim, mat)
-            return mesh
+        let mat = new THREE.MeshPhongMaterial({ color: "#FFFFFF", specular: "#FFFFFF",  emissive: "#FFFFFF"})
+        switch(node.subtype) {
+            case "rectangle": {
+                // metrics
+                let metrics = node.representations[0]
+                let width = metrics.xy1[0] - metrics.xy2[0]
+                let height = metrics.xy1[1] - metrics.xy2[1]
+
+                let prim = new THREE.PlaneGeometry(width,height,metrics.parts_x,metrics.parts_y)
+                let mesh = new THREE.Mesh(prim, mat)
+
+                return mesh
+            }
+            
+            case "triangle":{
+                console.log(node)
+                return
+            }
+            case "cylinder":{
+                // metrics
+                let metrics = node.representations[0]
+                let base = metrics.base
+                let top = metrics.top
+                let height = metrics.height
+                let stacks = metrics.stacks
+                let slices = metrics.slices
+                let thetaLength = metrics.thetalength
+                let thetaStart = metrics.thetastart
+                let capsClosed = metrics.capsclosed
+
+                let prim = new THREE.CylinderGeometry(top,base,height,slices,stacks,capsClosed,thetaStart,thetaLength)
+                let mesh = new THREE.Mesh(prim, mat)
+                return mesh
+            }
+            case "sphere": {
+                console.log(node)
+                return
+            }
+            case "nurbs": {
+                console.log(node)
+                return
+            }
+            case "box": {
+                // metrics
+                let metrics = node.representations[0]
+                let width = metrics.xyz1[0] - metrics.xyz2[0]
+                let height = metrics.xyz1[1] - metrics.xyz2[1]
+                let depth = metrics.xyz1[2] - metrics.xyz2[2]
+
+                let widthSeg = metrics.parts_x
+                let heightSeg = metrics.parts_y
+                let depthSeg = metrics.parts_z
+
+                let prim = new THREE.BoxGeometry(width,height,depth,widthSeg,heightSeg,depthSeg)
+                let mesh = new THREE.Mesh(prim, mat)
+
+                return mesh
+            }
         }
     }
 
