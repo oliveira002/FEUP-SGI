@@ -29,6 +29,14 @@ class MyGuiInterface  {
      * Initialize the gui interface
      */
     init() {
+
+        // check if there are cameras
+        console.log(this.app.cameras)
+        if(Array.isArray(this.app.cameras) && Object.keys(this.app.cameras).length){
+            const cameraFolder = this.datgui.addFolder('Camera')
+            cameraFolder.add(this.app, 'activeCameraName', Object.keys(this.app.cameras)).name("Active camera");
+            cameraFolder.open()
+        }
     }
 }
 
