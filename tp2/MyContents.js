@@ -26,8 +26,8 @@ class MyContents  {
         this.textureMap = {}
 
         // objects and primitives
-        this.visitedNodes = []
-        this.primitives = []
+        this.visitedNodes = new Set()
+        this.group = []
         
         this.reader = new MyFileReader(app, this, this.onSceneLoaded);
 		this.reader.open("scenes/demo/demo.xml");
@@ -195,9 +195,8 @@ class MyContents  {
         // to see the data structure for each item
         console.log(data)
         let root = data.nodes.scene
-        //this.iterateNodes(root, "default", [])
-        console.log(this.primitives)
-        console.log(this.lights)
+        this.iterateNodes(root,this.group)
+        console.log(this.group)
 
         this.output(data.options)
         //console.log("textures:")
@@ -237,41 +236,30 @@ class MyContents  {
         }
     }
 
-    iterateNodes(node, materialID, transformations) {
-
-        if(node.children[0].type === "primitive") {
-            node.material = materialID
-            this.primitives.push({node,transformations})
+    iterateNodes(node, group) {
+        if(node.type === "spotlight" || node.type === "pointlight" || node.type === "directionallight" || node.type === "primitive") {
             return
         }
 
-        if(node.type === "spotlight" || node.type === "pointlight" || node.type === "directionallight") {
-            this.lights.push(node)
-            return
-        }
-        
-        let curMaterial = node.materialIds[0]
-        let curTransformation = node.transformations
-        
-        if(!curTransformation) {
-            curTransformation = []
-        }
-
-        let res = transformations.concat(curTransformation)
-
-        if(!curMaterial) {
-            curMaterial = materialID
-        }
-
-        this.visitedNodes.push(node.id)
-        //console.log("Visited:", node.id)
+        this.visitedNodes.add(node.id)
+        console.log("Visited:", node.id)
 
         let children = node.children
 
         children.forEach(neighbor => {
-            if(!this.visitedNodes.includes(neighbor.id)) {
-                this.iterateNodes(neighbor,curMaterial,res)
+            if(neighbor.type === "spotlight" || neighbor.type === "pointlight" || neighbor.type === "directionallight") {
+                let cur = [neighbor]
+                group.push(cur)
+                return
             }
+            if(neighbor.type === "primitive") {
+                let cur = [neighbor]
+                group.push(cur)
+                return
+            }
+            let cur = [neighbor.id]
+            this.iterateNodes(neighbor,cur)
+            group.push(cur)
         });
     }
 
