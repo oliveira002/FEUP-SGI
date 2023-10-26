@@ -146,12 +146,12 @@ class MyContents  {
             (key) => {
                 let textureObj = textures[key]
                 let texture = new THREE.TextureLoader().load(textureObj.filepath)
-                texture.anisotropy = textureObj.anisotropy
                 texture.name = textureObj.id
-                texture.isVideo = textureObj.isVideo
-                texture.magFilter = textureObj.magFilter
-                texture.minFilter = textureObj.minFilter
-                texture.generateMipmaps = textureObj.mipmaps
+                texture.isVideo = textureObj.isVideo ?? descriptors.find(descriptor => descriptor.name === "isVideo").default
+                texture.magFilter = textureObj.magFilter ?? THREE.LinearFilter
+                texture.minFilter = textureObj.minFilter ?? THREE.LinearMipmapLinearFilter
+                texture.generateMipmaps = textureObj.mipmaps ?? descriptors.find(descriptor => descriptor.name === "mipmaps").default
+                texture.anisotropy = textureObj.anisotropy ?? descriptors.find(descriptor => descriptor.name === "anisotropy").default
                 this.textureMap[textureObj.id] = texture
                 //console.log(texture)
             }
@@ -168,19 +168,19 @@ class MyContents  {
             (key) => {
                 let materialObj = materials[key]
                 let material = new THREE.MeshPhongMaterial({
-                    //bumpMap: this.textureMap[materialObj.bump_ref],
-                    bumpScale: materialObj.bump_scale,
-                    color: materialObj.color.getHex(),
-                    emissive: materialObj.emissive.getHex(),
                     name: materialObj.id,
-                    flatShading: materialObj.shading !== "smooth",
-                    shininess: materialObj.shininess,
+                    color: materialObj.color.getHex(),
                     specular: materialObj.specular.getHex(),
+                    emissive: materialObj.emissive.getHex(),
+                    shininess: materialObj.shininess,
+                    wireframe: materialObj.wireframe ?? descriptors.find(descriptor => descriptor.name === "wireframe").default,
+                    flatShading: materialObj.shading ?? descriptors.find(descriptor => descriptor.name === "shading").default === "flat",
+                    map: this.textureMap[materialObj.textureref] ?? bump_redescriptors.find(descriptor => descriptor.name === "textureref").default,
                     //texlength_s
                     //texlength_t
-                    map: this.textureMap[materialObj.textureref],
                     side: materialObj.twosided ? THREE.DoubleSide : THREE.FrontSide,
-                    wireframe: materialObj.wireframe
+                    //bumpMap: this.textureMap[materialObj.bump_ref] ?? descriptors.find(descriptor => descriptor.name === "bump_ref").default,
+                    bumpScale: materialObj.bump_scale ?? descriptors.find(descriptor => descriptor.name === "bump_scale").default,
                     
                 })
                 this.materialMap[materialObj.id] = material
