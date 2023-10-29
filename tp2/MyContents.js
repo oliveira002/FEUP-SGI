@@ -52,6 +52,8 @@ class MyContents  {
      */
     onSceneLoaded(data) {
         console.info("scene data loaded " + data + ". visit MySceneData javascript class to check contents for each data item.")
+        console.log(data)
+        
         this.initGlobals(data)
         this.initTextures(data)
         this.intiMaterials(data)
@@ -131,7 +133,7 @@ class MyContents  {
         let descriptors = data.descriptors["globals"]
 
         let options = data.options
-        this.app.scene.add( new THREE.AmbientLight( options["ambient"].getHex() ) )
+        this.app.scene.add( new THREE.AmbientLight( options["ambient"].getHexString() ) )
         this.app.scene.background = options["background"]
 
     }
@@ -283,7 +285,7 @@ class MyContents  {
 
     dealWithPrimitive(node, material) {
         let mat = this.materialMap[material[0]]
-        mat = new THREE.MeshPhongMaterial({ color: "#FFFFFF", specular: "#FFFFFF",  emissive: "#FFFFFF", side: THREE.DoubleSide})
+        //mat = new THREE.MeshPhongMaterial({ color: "#FFFFFF", specular: "#FFFFFF",  emissive: "#FFFFFF", side: THREE.DoubleSide})
         switch(node.subtype) {
             case "rectangle": {
                 // metrics

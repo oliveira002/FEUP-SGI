@@ -1,5 +1,5 @@
-- Definição de globais (sombras)
-- Material.texlength_s e material.texlength_t
-- É preciso ver quais descriptors estão presentes ou podemos assumir sempre que todos estão presentes?
-- ^ Caso estejam, para quê a definição de "required" e o default value? Se não aparece, não colocamos, se aparece, colocamos, o default nunca é usado
-- É dito que os materiais podem receber um shading com 3 valores (none, flat, smooth), mas o mais parecido parece ser a propriedade booleana "flatShading". o que significaria "none" em shading?
+Things we can't do with the current state of the XML parser:
+- random textures from a given set of textures (party hats)
+- TextGeometry
+- Physical Material tuning (metalness, roughness, ...)
+- Use of addons like the Reflector addon
