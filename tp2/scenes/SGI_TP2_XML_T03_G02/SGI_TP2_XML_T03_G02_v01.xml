@@ -196,6 +196,18 @@
                 <noderef id="presenceLight" />
                 -->
 
+                <spotlight id="light1" enabled="true" 
+                    color="1.0 1.0 1.0 1" 
+                    intensity="550"
+                    distance="0"
+                    decay="2.0"
+                    castshadow="true"
+                    position="5.87 9.28 -8.14" 
+                    target="2 3.5 8.98"
+                    penumbra="0.5"
+                    angle="45" 
+                />
+
             </children> 
         </node>
 

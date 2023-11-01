@@ -763,7 +763,7 @@ class MyContents {
             const pointLightHelper = new THREE.PointLightHelper(pointLight, 0.7)
             //this.app.scene.add(pointLightHelper)
 
-            //const spotLightHelper = new THREE.SpotLightHelper(spotLight,"#FFFFFF")
+            const spotLightHelper = new THREE.SpotLightHelper(spotLight,"#FFFFFF")
             //this.app.scene.add(spotLightHelper)
 
             const helper = new THREE.CameraHelper( spotLight.shadow.camera );

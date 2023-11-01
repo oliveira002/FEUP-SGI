@@ -346,12 +346,30 @@ class MyContents  {
     }
 
     dealWithLights(node) {
+
+        console.log("BOASSSS")
+        console.log(node)
+
         switch (node.type) {
             case "pointlight": {
                 
                 return;
             }
-            case "pointlight": {
+            case "spotlight": {
+                let light = new THREE.SpotLight( 0xffffff, 550, 0, Math.PI / 4, 0.5, 2);
+
+                let targetGeo = new THREE.PlaneGeometry(0.01, 0.01)
+                let targetMat = new THREE.MeshBasicMaterial({transparent:true})
+                let target = new THREE.Mesh(targetGeo, targetMat)
+                target.position.set(...(node.target))
+
+                light.position.set(...(node.position));
+                light.target = target
+                this.lights[node.name] = light
+                this.app.scene.add(light)
+                
+                const spotLightHelper = new THREE.SpotLightHelper(light,"#FFFFFF")
+                this.app.scene.add(spotLightHelper)
 
                 return;
             }

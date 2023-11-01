@@ -1,14 +1,14 @@
-Things we can't do with the current state of the XML parser:
-- random textures from a given set of textures (party hats)
-- TextGeometry
-- definir material type no <material />
-- Physical Material tuning (metalness, roughness, ...)
-- Use of addons like the Reflector addon
-- opacity, 
-
 - fog é dado como optional, mas não pode ser omitido
-- como dizer que se quer MirroredRepeatWrapping em vez de RepeatWrapping
+- como dizer que se quer MirroredRepeatWrapping em vez de RepeatWrapping?
 - tudo tem valores default, porque não definir tudo por omissão em vez de estarmos sempre a colocar "color", "specular", ...
-- o que é o 4º valor no color, specular e emissive?
+- o que é o 4º valor no color, specular e emissive? opacidade? o que significa opacidade no specular? qual prevalece?
 - definição de vars para não usar numeros mágicos
-- algebra na definição de variaveis
+- algebra na definição de variaveis, tipo ` length = width *2 `
+- como dizemos que objetos é que recebem/emitem shadows?
+- como fazer shadow tuning (shadow.bias, shadow.normalBias, camera near, camera far, mapSize ...) no XML?
+- não dá para passar um array de texturas e um metodo para selecionar uma delas, ex: random
+- não há suporte para coisas nativas do 3js como TextGeometry
+- não há especificação de que material type se quer, Physical, Basic, Phong, Lambert, ...
+- Não dá para dar tune aos parametros do Physical material, como a metalness, roughness, ...
+- Não é permitido o uso de addons como o Reflector
+- rectangle e box são definidos por pontos diametralmente opostos, em vez de serem por dimensões, o que leva a translações implicitas, porque o 3js desenha tudo no centro
