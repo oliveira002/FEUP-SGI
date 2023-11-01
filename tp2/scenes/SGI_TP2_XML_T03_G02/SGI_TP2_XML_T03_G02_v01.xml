@@ -125,7 +125,7 @@
             texlength_s="6.5"
             texlength_t="9"
             bump_ref="ceilingTex"
-            bump_scale="0.1" />
+            bump_scale="0.05" />
 
         <material id="tableTopApp"
             emissive="0.0 0.0 0.0 1" 

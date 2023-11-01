@@ -17,6 +17,10 @@ class MyContents  {
         this.axis = null
         this.fog = null
         this.lights = []
+        this.threeConstants = {
+            "LinearMipmapLinearFilter": THREE.LinearMipmapLinearFilter,
+            "LinearFilter": THREE.LinearFilter
+        }
         
         // materials
         this.materialMap = {}
@@ -133,7 +137,7 @@ class MyContents  {
         let descriptors = data.descriptors["globals"]
 
         let options = data.options
-        this.app.scene.add( new THREE.AmbientLight( options["ambient"].getHexString() ) )
+        this.app.scene.add( new THREE.AmbientLight( options["ambient"].getHex(THREE.LinearSRGBColorSpace)) )
         this.app.scene.background = options["background"]
 
     }
@@ -149,8 +153,8 @@ class MyContents  {
                 let texture = new THREE.TextureLoader().load(textureObj.filepath)
                 texture.name = textureObj.id
                 texture.isVideo = textureObj.isVideo ?? descriptors.find(descriptor => descriptor.name === "isVideo").default
-                texture.magFilter = textureObj.magFilter ?? THREE.LinearFilter
-                texture.minFilter = textureObj.minFilter ?? THREE.LinearMipmapLinearFilter
+                texture.magFilter = this.threeConstants[textureObj.magFilter]
+                texture.minFilter = this.threeConstants[textureObj.minFilter] 
                 texture.generateMipmaps = textureObj.mipmaps ?? descriptors.find(descriptor => descriptor.name === "mipmaps").default
                 texture.anisotropy = textureObj.anisotropy ?? descriptors.find(descriptor => descriptor.name === "anisotropy").default
                 texture.wrapS = THREE.RepeatWrapping
@@ -296,6 +300,8 @@ class MyContents  {
 
                 let prim = new THREE.PlaneGeometry(width,height,metrics.parts_x,metrics.parts_y)
                 let mesh = new THREE.Mesh(prim, mat)
+                mesh.receiveShadow = true
+                mesh.castShadow = true
 
                 return mesh
             }
@@ -317,6 +323,8 @@ class MyContents  {
 
                 let prim = new THREE.CylinderGeometry(top,base,height,slices,stacks,capsClosed,thetaStart,thetaLength)
                 let mesh = new THREE.Mesh(prim, mat)
+                mesh.receiveShadow = true
+                mesh.castShadow = true
 
                 return mesh
             }
@@ -339,6 +347,8 @@ class MyContents  {
 
                 let prim = new THREE.BoxGeometry(width,height,depth,widthSeg,heightSeg,depthSeg)
                 let mesh = new THREE.Mesh(prim, mat)
+                mesh.receiveShadow = true
+                mesh.castShadow = true
 
                 return mesh
             }
@@ -356,7 +366,14 @@ class MyContents  {
                 return;
             }
             case "spotlight": {
-                let light = new THREE.SpotLight( 0xffffff, 550, 0, Math.PI / 4, 0.5, 2);
+                let light = new THREE.SpotLight( 
+                    node.color.getHex(THREE.LinearSRGBColorSpace), 
+                    node.intensity, 
+                    node.distance, 
+                    this.degrees_to_radians(node.angle), 
+                    node.penumbra, 
+                    node.decay
+                );
 
                 let targetGeo = new THREE.PlaneGeometry(0.01, 0.01)
                 let targetMat = new THREE.MeshBasicMaterial({transparent:true})
@@ -365,6 +382,7 @@ class MyContents  {
 
                 light.position.set(...(node.position));
                 light.target = target
+                light.castShadow = node.castShadow
                 this.lights[node.name] = light
                 this.app.scene.add(light)
                 
