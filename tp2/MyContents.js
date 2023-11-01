@@ -31,7 +31,7 @@ class MyContents  {
         this.groupi = new THREE.Group()
         
         this.reader = new MyFileReader(app, this, this.onSceneLoaded);
-		this.reader.open("scenes/demo/demo.xml");
+		this.reader.open("scenes/SGI_TP2_XML_T03_G02/SGI_TP2_XML_T03_G02_v01.xml");
     }
 
     /**
@@ -153,6 +153,8 @@ class MyContents  {
                 texture.minFilter = textureObj.minFilter ?? THREE.LinearMipmapLinearFilter
                 texture.generateMipmaps = textureObj.mipmaps ?? descriptors.find(descriptor => descriptor.name === "mipmaps").default
                 texture.anisotropy = textureObj.anisotropy ?? descriptors.find(descriptor => descriptor.name === "anisotropy").default
+                texture.wrapS = THREE.RepeatWrapping
+                texture.wrapT = THREE.RepeatWrapping
                 this.textureMap[textureObj.id] = texture
                 //console.log(texture)
             }
@@ -168,6 +170,7 @@ class MyContents  {
         Object.keys(materials).forEach(
             (key) => {
                 let materialObj = materials[key]
+                let texture = this.textureMap[materialObj.textureref]
                 let material = new THREE.MeshPhongMaterial({
                     name: materialObj.id,
                     color: materialObj.color.getHex(),
@@ -176,11 +179,9 @@ class MyContents  {
                     shininess: materialObj.shininess,
                     wireframe: materialObj.wireframe ?? descriptors.find(descriptor => descriptor.name === "wireframe").default,
                     flatShading: materialObj.shading ?? descriptors.find(descriptor => descriptor.name === "shading").default === "flat",
-                    map: this.textureMap[materialObj.textureref] ?? bump_redescriptors.find(descriptor => descriptor.name === "textureref").default,
-                    //texlength_s
-                    //texlength_t
+                    map: texture ?? descriptors.find(descriptor => descriptor.name === "textureref").default,
                     side: materialObj.twosided ? THREE.DoubleSide : THREE.FrontSide,
-                    //bumpMap: this.textureMap[materialObj.bump_ref] ?? descriptors.find(descriptor => descriptor.name === "bump_ref").default,
+                    bumpMap: this.textureMap[materialObj.bump_ref] ?? descriptors.find(descriptor => descriptor.name === "bump_ref").default,
                     bumpScale: materialObj.bump_scale ?? descriptors.find(descriptor => descriptor.name === "bump_scale").default,
                     
                 })

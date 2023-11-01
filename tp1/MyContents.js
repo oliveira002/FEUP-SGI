@@ -67,7 +67,7 @@ class MyContents {
         this.spotLightObject2 = null
 
         // axis related attributes
-        this.axisEnabled = false
+        this.axisEnabled = true
 
         // box related attributes
         this.boxMesh = null
@@ -97,8 +97,13 @@ class MyContents {
         this.diffuseCeilingColor = "#FFFFFF"
         this.specularCeilingColor = "#FFFFFF"
         this.ceilingShininess = 0
+        this.ceilingTexture = new THREE.TextureLoader().load('textures/ceiling.jpg');
+        this.ceilingTexture.repeat.set(2, 2)
+        this.ceilingTexture.wrapS = THREE.RepeatWrapping
+        this.ceilingTexture.wrapT = THREE.MirroredRepeatWrapping
         this.ceilingMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseCeilingColor, 
-            specular: this.specularCeilingColor, emissive: "#000000", shininess: this.ceilingShininess })
+            specular: this.specularCeilingColor, emissive: "#000000", shininess: this.ceilingShininess, map: this.ceilingTexture, 
+            bumpMap: this.ceilingTexture, bumpScale: 0.1 })
 
         // wall related attributes
         this.wallHeight = null
@@ -488,7 +493,7 @@ class MyContents {
             this.tvWidth = 2
             this.tvLength = 4
             this.tvDepth = 0.02
-            this.tvTexturePath = "/textures/video.mp4"
+            this.tvTexturePath = "/textures/tv.mp4"
             this.horizontalTvPieceWidth = this.tvWidth/40
             this.horizontalTvPieceLength = 39*this.tvLength/40
             this.verticalTvPieceWidth = this.tvLength/40
@@ -552,8 +557,7 @@ class MyContents {
             this.doorLength = 2
             this.doorDepth = 0.05
             this.doorTexturePath = "textures/door.png"
-            this.viewTexturePath = "textures/view.jpg"
-            this.door = new MyDoor(this,this.doorWidth,this.doorLength,this.doorDepth, this.doorTexturePath, this.viewTexturePath)
+            this.door = new MyDoor(this,this.doorWidth,this.doorLength,this.doorDepth, this.doorTexturePath)
             this.door.translateY(this.doorWidth / 2)
             this.door.translateZ(-this.floorSizeV / 2 + this.doorDepth / 2)
             this.door.rotateY(Math.PI * 2)
@@ -577,21 +581,6 @@ class MyContents {
             //this.app.scene.add(corridorLightHelper);
             this.app.scene.add(corridorLight)
 
-        }
-
-        if(this.carpet === null) {
-            this.carpetGeometry = new THREE.PlaneGeometry(this.tableLength * 2.2,this.tableWidth * 2.2)
-            this.carpetTexturePath = "textures/carpet.png"
-
-            this.carpetTexture = new THREE.TextureLoader().load(this.carpetTexturePath);
-            this.carpetTexture.wrapS = THREE.RepeatWrapping;
-            this.carpetTexture.wrapT = THREE.RepeatWrapping;
-
-            this.carpetMaterial = new THREE.MeshPhongMaterial({map : this.carpetTexture})
-            this.carpetMesh = new THREE.Mesh(this.carpetGeometry,this.carpetMaterial)
-            this.carpetMesh.rotateX(-Math.PI / 2)
-            this.carpetMesh.translateZ(0.01)
-            //this.app.scene.add(this.carpetMesh)
         }
 
         if(this.beetleCarFrame === null){
