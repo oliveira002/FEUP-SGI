@@ -35,6 +35,7 @@ class MyContents  {
         this.groupi = new THREE.Group()
         
         this.reader = new MyFileReader(app, this, this.onSceneLoaded);
+        //this.reader.open("scenes/demo/demo.xml");
 		this.reader.open("scenes/SGI_TP2_XML_T03_G02/SGI_TP2_XML_T03_G02_v01.xml");
     }
 
@@ -72,8 +73,7 @@ class MyContents  {
 
         this.fog = new THREE.Fog(data.fog.color.getHex(), data.fog.near, data.fog.far)
 
-        this.initCameras(data)
-        this.initLights(data)
+        //this.initCameras(data)
         this.initOptions(data)
 
     }
@@ -124,14 +124,6 @@ class MyContents  {
         )
     }
 
-    initLights(data){
-
-        let spotDescriptors = data.descriptors["spotlight"]
-        let pointDescriptors = data.descriptors["pointlight"]
-        let dirDescriptors = data.descriptors["directionallight"]
-
-    }
-
     initOptions(data){
 
         let descriptors = data.descriptors["globals"]
@@ -152,11 +144,11 @@ class MyContents  {
                 let textureObj = textures[key]
                 let texture = new THREE.TextureLoader().load(textureObj.filepath)
                 texture.name = textureObj.id
-                texture.isVideo = textureObj.isVideo ?? descriptors.find(descriptor => descriptor.name === "isVideo").default
+                texture.isVideo = textureObj.isVideo //?? descriptors.find(descriptor => descriptor.name === "isVideo").default
                 texture.magFilter = this.threeConstants[textureObj.magFilter]
                 texture.minFilter = this.threeConstants[textureObj.minFilter] 
-                texture.generateMipmaps = textureObj.mipmaps ?? descriptors.find(descriptor => descriptor.name === "mipmaps").default
-                texture.anisotropy = textureObj.anisotropy ?? descriptors.find(descriptor => descriptor.name === "anisotropy").default
+                texture.generateMipmaps = textureObj.mipmaps //?? descriptors.find(descriptor => descriptor.name === "mipmaps").default
+                texture.anisotropy = textureObj.anisotropy //?? descriptors.find(descriptor => descriptor.name === "anisotropy").default
                 texture.wrapS = THREE.RepeatWrapping
                 texture.wrapT = THREE.RepeatWrapping
                 this.textureMap[textureObj.id] = texture
@@ -181,12 +173,12 @@ class MyContents  {
                     specular: materialObj.specular.getHex(),
                     emissive: materialObj.emissive.getHex(),
                     shininess: materialObj.shininess,
-                    wireframe: materialObj.wireframe ?? descriptors.find(descriptor => descriptor.name === "wireframe").default,
-                    flatShading: materialObj.shading ?? descriptors.find(descriptor => descriptor.name === "shading").default === "flat",
-                    map: texture ?? descriptors.find(descriptor => descriptor.name === "textureref").default,
-                    side: materialObj.twosided ? THREE.DoubleSide : THREE.FrontSide,
-                    bumpMap: this.textureMap[materialObj.bump_ref] ?? descriptors.find(descriptor => descriptor.name === "bump_ref").default,
-                    bumpScale: materialObj.bump_scale ?? descriptors.find(descriptor => descriptor.name === "bump_scale").default,
+                    wireframe: materialObj.wireframe, //?? descriptors.find(descriptor => descriptor.name === "wireframe").default,
+                    flatShading: materialObj.shading, //?? descriptors.find(descriptor => descriptor.name === "shading").default === "flat",
+                    map: texture, //?? descriptors.find(descriptor => descriptor.name === "textureref").default,
+                    side: materialObj.twosided, //? THREE.DoubleSide : THREE.FrontSide,
+                    bumpMap: this.textureMap[materialObj.bumpref], //?? descriptors.find(descriptor => descriptor.name === "bump_ref").default,
+                    bumpScale: materialObj.bumpscale, //?? descriptors.find(descriptor => descriptor.name === "bump_scale").default,
                     
                 })
                 this.materialMap[materialObj.id] = material
@@ -203,6 +195,7 @@ class MyContents  {
         let root = data.nodes.scene
         
         this.iterateNodes(root,this.groupi,["def"])
+        console.log(this.lights)
         this.app.scene.add(this.groupi);
         console.log(root)
   
@@ -274,6 +267,9 @@ class MyContents  {
             else if(child.type === "primitive" && child.subtype == "nurbs") {
                 return
             }
+            else if(child.type === "lod") {
+                return
+            }
             else {
                 if(child.materialIds.length === 0) {
                     child.materialIds = (node.materialIds.length === 0) ? defaultMaterial : node.materialIds
@@ -295,13 +291,32 @@ class MyContents  {
             case "rectangle": {
                 // metrics
                 let metrics = node.representations[0]
-                let width = metrics.xy1[0] - metrics.xy2[0]
-                let height = metrics.xy1[1] - metrics.xy2[1]
+                let width = Math.abs(metrics.xy1[0] - metrics.xy2[0])
+                let height = Math.abs(metrics.xy1[1] - metrics.xy2[1])
+
+                let center = [metrics.xy1[0] + width/2, metrics.xy1[1] + height/2]
+                let deltaX = center[0]
+                let deltaY = center[1]
+
+
+                console.log(
+                    "xy1: ", metrics.xy1[0], metrics.xy1[1],
+                    "\nxy2: ", metrics.xy2[0], metrics.xy2[1],
+                    "\nwidth: ", width,
+                    "\nheight: ", height,
+                    "\ncenter: ", center[0], center[1],
+                    "\ndeltaX: ", deltaX,
+                    "\ndeltaY: ", deltaY
+                )
+
 
                 let prim = new THREE.PlaneGeometry(width,height,metrics.parts_x,metrics.parts_y)
                 let mesh = new THREE.Mesh(prim, mat)
                 mesh.receiveShadow = true
                 mesh.castShadow = true
+                
+                mesh.translateX(deltaX)
+                mesh.translateY(deltaY)
 
                 return mesh
             }
@@ -337,9 +352,14 @@ class MyContents  {
             case "box": {
                 // metrics
                 let metrics = node.representations[0]
-                let width = metrics.xyz1[0] - metrics.xyz2[0]
-                let height = metrics.xyz1[1] - metrics.xyz2[1]
-                let depth = metrics.xyz1[2] - metrics.xyz2[2]
+                let width = Math.abs(metrics.xyz1[0] - metrics.xyz2[0])
+                let height = Math.abs(metrics.xyz1[1] - metrics.xyz2[1])
+                let depth = Math.abs(metrics.xyz1[2] - metrics.xyz2[2])
+
+                let center = [metrics.xyz1[0] + width/2, metrics.xyz1[1] + height/2, metrics.xyz1[2] + depth/2]
+                let deltaX = center[0]
+                let deltaY = center[1]
+                let deltaZ = center[2]
 
                 let widthSeg = metrics.parts_x
                 let heightSeg = metrics.parts_y
@@ -350,6 +370,10 @@ class MyContents  {
                 mesh.receiveShadow = true
                 mesh.castShadow = true
 
+                mesh.translateX(deltaX)
+                mesh.translateY(deltaY)
+                mesh.translateZ(deltaZ)
+
                 return mesh
             }
         }
@@ -357,12 +381,30 @@ class MyContents  {
 
     dealWithLights(node) {
 
-        console.log("BOASSSS")
-        console.log(node)
-
         switch (node.type) {
             case "pointlight": {
+                const light = new THREE.PointLight(
+                    node.color.getHex(THREE.LinearSRGBColorSpace), 
+                    node.intensity, 
+                    node.distance, 
+                    node.decay
+                );
+                light.name = node.id
                 
+                light.position.set(...(node.position));
+                light.castShadow = node.castshadow
+                light.shadow.camera.far = node.shadowfar
+                light.shadow.mapSize.width = node.shadowmapsize
+                light.shadow.mapSize.height = node.shadowmapsize
+                this.lights[node.id] = light
+            
+                const lightHelper = new THREE.PointLightHelper(light,"#FFFFFF")
+                
+                if(node.enabled){
+                    this.app.scene.add(light)
+                    this.app.scene.add(lightHelper)
+                }
+
                 return;
             }
             case "spotlight": {
@@ -374,24 +416,60 @@ class MyContents  {
                     node.penumbra, 
                     node.decay
                 );
+                light.name = node.id
 
-                let targetGeo = new THREE.PlaneGeometry(0.01, 0.01)
+                let targetGeo = new THREE.PlaneGeometry(0.001, 0.001)
                 let targetMat = new THREE.MeshBasicMaterial({transparent:true})
                 let target = new THREE.Mesh(targetGeo, targetMat)
                 target.position.set(...(node.target))
+                light.target = target
 
                 light.position.set(...(node.position));
-                light.target = target
-                light.castShadow = node.castShadow
-                this.lights[node.name] = light
-                this.app.scene.add(light)
+                light.castShadow = node.castshadow
+                light.shadow.camera.far = node.shadowfar
+                light.shadow.mapSize.width = node.shadowmapsize
+                light.shadow.mapSize.height = node.shadowmapsize
+                this.lights[node.id] = light
                 
-                const spotLightHelper = new THREE.SpotLightHelper(light,"#FFFFFF")
-                this.app.scene.add(spotLightHelper)
+                const lightHelper = new THREE.SpotLightHelper(light,"#FFFFFF")
+                
+                if(node.enabled){
+                    this.app.scene.add(light)
+                    this.app.scene.add(lightHelper)
+                }
 
                 return;
             }
             case "directionallight": {
+                let light = new THREE.DirectionalLight( 
+                    node.color.getHex(THREE.LinearSRGBColorSpace), 
+                    node.intensity
+                );
+                light.name = node.id
+
+                /*let targetGeo = new THREE.PlaneGeometry(0.01, 0.01)
+                let targetMat = new THREE.MeshBasicMaterial({transparent:true})
+                let target = new THREE.Mesh(targetGeo, targetMat)
+                target.position.set(...(node.target))
+                light.target = target*/
+
+                light.position.set(...(node.position));
+                light.castShadow = node.castshadow
+                light.shadow.camera.left = node.shadowleft
+                light.shadow.camera.right = node.shadowright
+                light.shadow.camera.bottom = node.shadowbottom
+                light.shadow.camera.top = node.shadowtop
+                light.shadow.camera.far = node.shadowfar
+                light.shadow.mapSize.width = node.shadowmapsize
+                light.shadow.mapSize.height = node.shadowmapsize
+                this.lights[node.id] = light
+                
+                const lightHelper = new THREE.DirectionalLightHelper(light,"#FFFFFF")
+                
+                if(node.enabled){
+                    this.app.scene.add(light)
+                    this.app.scene.add(lightHelper)
+                }
 
                 return;
             }

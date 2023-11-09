@@ -7,6 +7,8 @@
 
     <fog color="0 0 0 0" near="0.0" far="0" />
 
+    <skybox size="100 100 100" center="0 0 0" emissive="1.0 1.0 1.0 1.0" intensity="1.0" up="./textures/pine.jpg" down="./textures/pine.jpg" left="./textures/pine.jpg" right="./textures/pine.jpg" front="./textures/pine.jpg" back="./textures/pine.jpg"/>
+
     <cameras initial="Cam 1" > 
         <perspective id="Cam 1" 
             angle="75" 
@@ -85,7 +87,14 @@
     </textures> 
 
     <materials> 
-			
+		
+        <!-- Default values for required attributes: 
+        emissive="0.0 0.0 0.0 1" 
+        color="1.0 1.0 1.0 1.0" 
+        specular="0.07 0.07 0.07 0" 
+        shininess="30"
+        -->
+
 		<material id="wallDefApp" 
             emissive="0.0 0.0 0.0 1" 
 			color="1.0 1.0 1.0 1.0" 
@@ -124,8 +133,8 @@
             textureref="ceilingTex"
             texlength_s="6.5"
             texlength_t="9"
-            bump_ref="ceilingTex"
-            bump_scale="0.05" />
+            bumpref="ceilingTex"
+            bumpscale="0.05" />
 
         <material id="tableTopApp"
             emissive="0.0 0.0 0.0 1" 
@@ -141,6 +150,13 @@
             specular="1 1 1 0" 
             shininess="30" 
             textureref="tableLegTex"/>
+
+        <material id="tableCoverApp"
+            emissive="0.0 0.0 0.0 1" 
+			color="1.0 1.0 1.0 1.0" 
+            specular="1 1 1 0" 
+            shininess="30" 
+            textureref="tableCoverTex"/>
 			
     </materials> 
 
@@ -148,10 +164,10 @@
 		
 		<node id="scene"> 
             <children>
-                <noderef id="backWall" /> <!-- wallDefApp -->
-				<noderef id="rightWall" /> <!-- wallDoorApp -->
-                <noderef id="leftWall" /> <!-- wallDefApp -->
-                <noderef id="frontWall" /> <!-- wallWindowApp -->
+                <noderef id="backWall" /> 
+				<noderef id="rightWall" />
+                <noderef id="leftWall" /> 
+                <noderef id="frontWall" />
 
 				<noderef id="floor" />
                 <noderef id="ceiling" />  
@@ -214,14 +230,14 @@
         <node id="backWall">
             <transforms>
 				<translate value3="-6.5 5 0" />
-				<rotate value3="180 90 0.0" />
+				<rotate value3="0 90 0.0" />
             </transforms> 
 
 			<materialref id="wallDefApp" />
 			
             <children>             
                 <primitive>
-                    <rectangle xy1="0 0" xy2="18 10" />
+                    <rectangle xy1="-9 -5" xy2="9 5" />
                 </primitive>
             </children> 
         </node>
@@ -229,14 +245,14 @@
         <node id="rightWall">
             <transforms>
 				<translate value3="0 5 -9" />
-                <rotate value3="0 0 180" />
+                <rotate value3="0 0 0" />
             </transforms> 
 
 			<materialref id="wallDoorApp" />
 			
             <children>             
                 <primitive>
-                    <rectangle xy1="0 0" xy2="13 10" />
+                    <rectangle xy1="-6.5 -5" xy2="6.5 5" />
                 </primitive>
             </children> 
         </node>
@@ -244,14 +260,14 @@
         <node id="leftWall">
             <transforms>
 				<translate value3="0 5 9" />
-				<rotate value3="0 180 180" />
+				<rotate value3="0 180 0" />
             </transforms> 
 
 			<materialref id="wallDefApp" />
 			
             <children>             
                 <primitive>
-                    <rectangle xy1="0 0" xy2="13 10" />
+                    <rectangle xy1="-6.5 -5" xy2="6.5 5" />
                 </primitive>
             </children> 
         </node>
@@ -259,14 +275,14 @@
         <node id="frontWall">
             <transforms>
 				<translate value3="6.5 5 0" />
-				<rotate value3="180 -90 0.0" />
+				<rotate value3="0 -90 0.0" />
             </transforms> 
 
 			<materialref id="wallWindowApp" />
 			
             <children>             
                 <primitive>
-                    <rectangle xy1="0 0" xy2="18 10" />
+                    <rectangle xy1="-9 -5" xy2="9 5" />
                 </primitive>
             </children> 
         </node>
@@ -280,7 +296,7 @@
 			
             <children>             
                 <primitive>
-                    <rectangle xy1="0 0" xy2="13 18" />
+                    <rectangle xy1="-6.5 -9" xy2="6.5 9" />
                 </primitive>
             </children> 
         </node>
@@ -295,7 +311,7 @@
 			
             <children>             
                 <primitive>
-                    <rectangle xy1="0 0" xy2="13 18" />
+                    <rectangle xy1="-6.5 -9" xy2="6.5 9" />
                 </primitive>
             </children> 
         </node>
@@ -307,8 +323,8 @@
 		
             <children>             
                 <noderef id="table" />
-				<!--<noderef id="tableCover" />
-				<noderef id="partyHats" />
+				<noderef id="tableCover" />
+				<!--<noderef id="partyHats" />
 				<noderef id="cakeGroup" />
 				<noderef id="newspaper" />-->
             </children> 
@@ -333,7 +349,7 @@
 
             <children>             	
                 <primitive>
-                    <box xyz1="0 0 0" xyz2="2.5 0.2 6" />
+                    <box xyz1="-1.25 -0.1 -3" xyz2="1.25 0.1 3" />
                 </primitive>
             </children>
         </node>
@@ -386,6 +402,92 @@
                     <cylinder base="0.086" top="0.086" height="1.3" slices="32" stacks="1" capsclose="true" />
                 </primitive>
             </children> 
+        </node>
+
+        <node id="tableCover">
+            <materialref id="tableCoverApp" />
+
+            <children>             	
+                <noderef id="topTableCover"/>
+                <noderef id="rightTableCover"/>
+                <noderef id="leftTableCover"/>
+                <noderef id="frontTableCover"/>
+                <noderef id="backTableCover"/>
+            </children> 
+        </node>
+
+        <node id="topTableCover">
+			<transforms>
+				<translate value3="0 0 0" />
+            </transforms> 
+
+            <children>             
+                <noderef id="XZTableCover" />
+            </children> 
+        </node>
+
+        <node id="rightTableCover">
+			<transforms>
+				<translate value3="0 0 0" />
+            </transforms> 
+
+            <children>             
+                <noderef id="XYTableCover" />
+            </children> 
+        </node>
+
+        <node id="leftTableCover">
+			<transforms>
+				<translate value3="0 0 0" />
+            </transforms> 
+
+            <children>             
+                <noderef id="XYTableCover" />
+            </children> 
+        </node>
+
+        <node id="frontTableCover">
+			<transforms>
+				<translate value3="0 0 0" />
+            </transforms> 
+
+            <children>             
+                <noderef id="YZTableCover" />
+            </children> 
+        </node>
+
+        <node id="backTableCover">
+			<transforms>
+				<translate value3="0 0 0" />
+            </transforms> 
+
+            <children>             
+                <noderef id="YZTableCover" />
+            </children> 
+        </node>
+
+        <node id="XZTableCover">
+            <children>
+                <primitive>
+                    <box xyz1="0 0 0" xyz2="0 0 0" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="XYTableCover">
+            <children>
+                <primitive>
+                    <box xyz1="0 0 0" xyz2="0 0 0" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="YZTableCover">
+            <children>
+                <primitive>
+                    <box xyz1="0 0 0" xyz2="0 0 0" />
+                </primitive>
+            </children>
         </node>
 
     </graph> 

@@ -12,3 +12,5 @@
 - Não dá para dar tune aos parametros do Physical material, como a metalness, roughness, ...
 - Não é permitido o uso de addons como o Reflector
 - rectangle e box são definidos por pontos diametralmente opostos, em vez de serem por dimensões, o que leva a translações implicitas, porque o 3js desenha tudo no centro
+- default do thetalength no 3js é PI, mas no scene data aparece como 2*PI
+- material.shading é um enum mas no 3js é apenas um boolean.
