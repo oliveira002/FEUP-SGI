@@ -157,6 +157,14 @@
             specular="1 1 1 0" 
             shininess="30" 
             textureref="tableCoverTex"/>
+        
+        <material id="shelfApp"
+            emissive="0.0 0.0 0.0 1" 
+			color="0.918 0.867 0.792 1.0" 
+            specular="0.918 0.867 0.792 1.0" 
+            shininess="10" 
+            twosided="true"
+            textureref="furnitureTex"/>
 			
     </materials> 
 
@@ -187,9 +195,11 @@
                 <noderef id="tv" />
 
                 <noderef id="window" />
-
+                
                 <noderef id="shelf1" /> <!- spring ->
+                -->
                 <noderef id="shelf2" />
+                <!--
 
                 <noderef id="beetleCar" />
 
@@ -329,6 +339,87 @@
 				<noderef id="newspaper" />-->
             </children> 
         </node>
+
+        <node id="shelf2">
+
+            <materialref id="shelfApp" />
+
+            <transforms>
+                <translate value3= "-1.8 -2.29 0" />
+            </transforms> 
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="3.6 4.6" />
+                </primitive>
+                <noderef id="shelfpiece"/>
+                <noderef id="shelfpiece1"/>
+                <noderef id="shelfpiece2"/>
+                <noderef id="shelfpiece3"/>
+                <noderef id="latshelfpiece"/>
+                <noderef id="latshelfpiece1"/>
+            </children>
+        </node>
+        <translate value3="0 " />
+
+        <node id="shelfpiece1">
+            <transforms>
+                <translate value3= "0 4.6 0" />
+            </transforms> 
+            <children>
+                <noderef id="shelfpiece"/>
+            </children>
+        </node>
+
+        <node id="shelfpiece2">
+            <transforms>
+				 <translate value3= "0 1.53 0" />
+            </transforms> 
+            <children>
+                <noderef id="shelfpiece"/>
+            </children>
+        </node>
+
+        <node id="shelfpiece3">
+            <transforms>
+				<translate value3= "0 3.06 0" />
+            </transforms> 
+            <children>
+                <noderef id="shelfpiece"/>
+            </children>
+        </node>
+
+        <node id="latshelfpiece1">
+            <transforms>
+				<translate value3= "3.6 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="latshelfpiece"/>
+            </children>
+        </node>
+
+        <node id="latshelfpiece">
+            <transforms>
+				<rotate value3="0 90 0" />
+            </transforms> 
+            <children>
+                <primitive>
+                    <rectangle xy1="-0.8 0" xy2="0 4.6" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="shelfpiece">
+            <transforms>
+				<rotate value3="90 0 0" />
+            </transforms> 
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="3.6 0.8" />
+                </primitive>
+            </children>
+        </node>
+
+        
 
         <node id="table">
             <children>             

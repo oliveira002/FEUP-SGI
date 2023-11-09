@@ -299,17 +299,6 @@ class MyContents  {
                 let deltaY = center[1]
 
 
-                console.log(
-                    "xy1: ", metrics.xy1[0], metrics.xy1[1],
-                    "\nxy2: ", metrics.xy2[0], metrics.xy2[1],
-                    "\nwidth: ", width,
-                    "\nheight: ", height,
-                    "\ncenter: ", center[0], center[1],
-                    "\ndeltaX: ", deltaX,
-                    "\ndeltaY: ", deltaY
-                )
-
-
                 let prim = new THREE.PlaneGeometry(width,height,metrics.parts_x,metrics.parts_y)
                 let mesh = new THREE.Mesh(prim, mat)
                 mesh.receiveShadow = true
