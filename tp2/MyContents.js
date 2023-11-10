@@ -176,7 +176,7 @@ class MyContents  {
                     wireframe: materialObj.wireframe, //?? descriptors.find(descriptor => descriptor.name === "wireframe").default,
                     flatShading: materialObj.shading, //?? descriptors.find(descriptor => descriptor.name === "shading").default === "flat",
                     map: texture, //?? descriptors.find(descriptor => descriptor.name === "textureref").default,
-                    side: materialObj.twosided, //? THREE.DoubleSide : THREE.FrontSide,
+                    side: materialObj.twosided ? THREE.DoubleSide : THREE.FrontSide,
                     bumpMap: this.textureMap[materialObj.bumpref], //?? descriptors.find(descriptor => descriptor.name === "bump_ref").default,
                     bumpScale: materialObj.bumpscale, //?? descriptors.find(descriptor => descriptor.name === "bump_scale").default,
                     
@@ -297,17 +297,6 @@ class MyContents  {
                 let center = [metrics.xy1[0] + width/2, metrics.xy1[1] + height/2]
                 let deltaX = center[0]
                 let deltaY = center[1]
-
-
-                console.log(
-                    "xy1: ", metrics.xy1[0], metrics.xy1[1],
-                    "\nxy2: ", metrics.xy2[0], metrics.xy2[1],
-                    "\nwidth: ", width,
-                    "\nheight: ", height,
-                    "\ncenter: ", center[0], center[1],
-                    "\ndeltaX: ", deltaX,
-                    "\ndeltaY: ", deltaY
-                )
 
 
                 let prim = new THREE.PlaneGeometry(width,height,metrics.parts_x,metrics.parts_y)
