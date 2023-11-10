@@ -405,6 +405,10 @@
         </node>
 
         <node id="tableCover">
+            <transforms>
+				<translate value3="0 1.5 0" />
+            </transforms>
+
             <materialref id="tableCoverApp" />
 
             <children>             	
@@ -417,9 +421,9 @@
         </node>
 
         <node id="topTableCover">
-			<transforms>
-				<translate value3="0 0 0" />
-            </transforms> 
+            <transforms>
+				<translate value3="0 0.0415 0" />
+            </transforms>
 
             <children>             
                 <noderef id="XZTableCover" />
@@ -428,17 +432,27 @@
 
         <node id="rightTableCover">
 			<transforms>
-				<translate value3="0 0 0" />
+				<translate value3="1.29 -0.13 0" />
             </transforms> 
 
             <children>             
-                <noderef id="XYTableCover" />
+                <noderef id="YZTableCover" />
             </children> 
         </node>
 
         <node id="leftTableCover">
 			<transforms>
-				<translate value3="0 0 0" />
+				<translate value3="-1.29 -0.13 0" />
+            </transforms> 
+
+            <children>             
+                <noderef id="YZTableCover" />
+            </children> 
+        </node>
+
+        <node id="frontTableCover">
+			<transforms>
+				<translate value3="0 -0.13 -3.0415" />
             </transforms> 
 
             <children>             
@@ -446,38 +460,20 @@
             </children> 
         </node>
 
-        <node id="frontTableCover">
-			<transforms>
-				<translate value3="0 0 0" />
-            </transforms> 
-
-            <children>             
-                <noderef id="YZTableCover" />
-            </children> 
-        </node>
-
         <node id="backTableCover">
 			<transforms>
-				<translate value3="0 0 0" />
+				<translate value3="0 -0.13 3.0415" />
             </transforms> 
 
             <children>             
-                <noderef id="YZTableCover" />
+                <noderef id="XYTableCover" />
             </children> 
         </node>
 
         <node id="XZTableCover">
             <children>
                 <primitive>
-                    <box xyz1="0 0 0" xyz2="0 0 0" />
-                </primitive>
-            </children>
-        </node>
-
-        <node id="XYTableCover">
-            <children>
-                <primitive>
-                    <box xyz1="0 0 0" xyz2="0 0 0" />
+                    <box xyz1="-1.332 -0.0415 -3.083" xyz2="1.332 0.0415 3.083" />
                 </primitive>
             </children>
         </node>
@@ -485,7 +481,15 @@
         <node id="YZTableCover">
             <children>
                 <primitive>
-                    <box xyz1="0 0 0" xyz2="0 0 0" />
+                    <box xyz1="-0.0415 -0.13 -3" xyz2="0.0415 0.13 3" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="XYTableCover">
+            <children>
+                <primitive>
+                    <box xyz1="-1.3318 -0.13 -0.0415" xyz2="1.3318 0.13 0.0415" />
                 </primitive>
             </children>
         </node>
