@@ -176,7 +176,7 @@ class MyContents  {
                     wireframe: materialObj.wireframe, //?? descriptors.find(descriptor => descriptor.name === "wireframe").default,
                     flatShading: materialObj.shading, //?? descriptors.find(descriptor => descriptor.name === "shading").default === "flat",
                     map: texture, //?? descriptors.find(descriptor => descriptor.name === "textureref").default,
-                    side: materialObj.twosided, //? THREE.DoubleSide : THREE.FrontSide,
+                    side: materialObj.twosided ? THREE.DoubleSide : THREE.FrontSide,
                     bumpMap: this.textureMap[materialObj.bumpref], //?? descriptors.find(descriptor => descriptor.name === "bump_ref").default,
                     bumpScale: materialObj.bumpscale, //?? descriptors.find(descriptor => descriptor.name === "bump_scale").default,
                     

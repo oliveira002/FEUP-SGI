@@ -165,6 +165,13 @@
             shininess="10" 
             twosided="true"
             textureref="furnitureTex"/>
+        
+        <material id="boxApp"
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 1.0" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            textureref="boxTex"/>
 			
     </materials> 
 
@@ -196,8 +203,9 @@
 
                 <noderef id="window" />
                 
-                <noderef id="shelf1" /> <!- spring ->
                 -->
+                <noderef id="shelf1" /> 
+                
                 <noderef id="shelf2" />
                 <!--
 
@@ -215,10 +223,12 @@
 
                 <noderef id="spotlightObject1" />
                 <noderef id="spotlightObject2" />
+                -->
 
                 <noderef id="box" />
                 <noderef id="boxStack" />
 
+                <!--
                 <noderef id="presenceLight" />
                 -->
 
@@ -311,6 +321,71 @@
             </children> 
         </node>
 
+        <node id="box">
+			<materialref id="boxApp" />
+            <transforms>
+                <translate value3 = "-0.2 0.6 -6.2"/>
+                <rotate value3 = "0 -18 0"/>
+            </transforms>
+            <children>             
+                <noderef id="box1" />
+            </children> 
+        </node>
+
+        <node id="boxStack">
+			<materialref id="boxApp" />
+            <transforms>
+                <translate value3 = "4.1 0.6 -7.8"/>
+            </transforms>
+            <children>             
+                <noderef id="box2" />
+                <noderef id="box3" />
+                <noderef id="box4" />
+            </children> 
+        </node>
+
+        <node id="box1">
+			<materialref id="boxApp" />
+            <children>             
+                <primitive>
+                    <box xyz1="-0.6 -0.6 -0.6" xyz2="0.6 0.6 0.6" />
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="box2">
+			<materialref id="boxApp" />
+            <children>             
+                <primitive>
+                    <box xyz1="-0.6 -0.6 -0.6" xyz2="0.6 0.6 0.6" />
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="box3">
+			<materialref id="boxApp" />
+            <transforms>
+                <translate value3 = "1.2 0 0.923"/>
+            </transforms>
+            <children>             
+                <primitive>
+                    <box xyz1="-0.6 -0.6 -0.6" xyz2="0.6 0.6 0.6" />
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="box4">
+			<materialref id="boxApp" />
+            <transforms>
+                <translate value3 = "1 1.2 0.34"/>
+            </transforms>
+            <children>             
+                <primitive>
+                    <box xyz1="-0.6 -0.6 -0.6" xyz2="0.6 0.6 0.6" />
+                </primitive>
+            </children> 
+        </node>
+
         <node id="ceiling">
             <transforms>
                 <translate value3="0 10 0" />
@@ -340,13 +415,36 @@
             </children> 
         </node>
 
+        <node id="shelf1">
+
+            <materialref id="shelfApp" />
+
+            <transforms>
+                <scale value3= "1 0.8 1"/>
+                <translate value3= "1.8 0 -8.3" />
+                <rotate value3 = "60 172 0"/>
+            </transforms>
+
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="3.6 4.6" />
+                </primitive>
+                <noderef id="shelfpiece"/>
+                <noderef id="shelfpiece1"/>
+                <noderef id="shelfpiece2"/>
+                <noderef id="shelfpiece3"/>
+                <noderef id="latshelfpiece"/>
+                <noderef id="latshelfpiece1"/>
+            </children>
+        </node>
+
         <node id="shelf2">
 
             <materialref id="shelfApp" />
 
             <transforms>
                 <rotate value3 = "0 90 0"/>
-                <translate value3= "-7.7 0 -6.48" />
+                <translate value3= "-7.7 0.02 -6.48" />
             </transforms> 
             <children>
                 <primitive>
