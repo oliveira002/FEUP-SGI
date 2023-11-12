@@ -71,7 +71,8 @@ class MyContents  {
 
     initGlobals(data){
 
-        this.fog = new THREE.Fog(data.fog.color.getHex(), data.fog.near, data.fog.far)
+        if(data.fog!==null)
+            this.fog = new THREE.Fog(data.fog.color.getHex(), data.fog.near, data.fog.far)
 
         //this.initCameras(data)
         this.initOptions(data)
@@ -130,7 +131,7 @@ class MyContents  {
 
         let options = data.options
         this.app.scene.add( new THREE.AmbientLight( options["ambient"].getHex(THREE.LinearSRGBColorSpace)) )
-        this.app.scene.background = options["background"]
+        this.app.scene.background = new THREE.Color(options["background"].getHex(THREE.LinearSRGBColorSpace))
 
     }
 
