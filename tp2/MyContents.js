@@ -366,6 +366,25 @@ class MyContents  {
 
                 return mesh
             }
+            case "sphere": {
+                let metrics = node.representations[0]
+
+                let prim = new THREE.SphereGeometry(
+                    metrics.radius,
+                    metrics.slices,
+                    metrics.stacks,
+                    metrics.phistart,
+                    metrics.philength,
+                    metrica.thetastart,
+                    metrics.thetalength
+                )
+                
+                let mesh = new THREE.Mesh(prim, mat)
+                mesh.receiveShadow = true
+                mesh.castShadow = true
+
+                return mesh
+            }
         }
     }
 

@@ -83,6 +83,8 @@
         <texture id="wallWindowTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/wall_hole.png" />
         <texture id="wallTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/wall.png" />
         <texture id="waterTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/water.png" />
+        <texture id="stoneBlock" filepath="scenes/SGI_TP2_XML_T03_G02/textures/stoneblock.jpg" />
+        <texture id="darkerStoneBlock" filepath="scenes/SGI_TP2_XML_T03_G02/textures/blackstoneblock.jpg" />
     </textures> 
 
     <materials> 
@@ -122,7 +124,7 @@
 			color="1.0 1.0 1.0 1.0" 
             specular="0.07 0.07 0.07 0" 
             shininess="30" 
-            textureref="floorTex" />
+            textureref="waterTex" />
 
         <material id="ceilingApp" 
             emissive="0.0 0.0 0.0 1" 
@@ -171,6 +173,20 @@
             specular="0.07 0.07 0.07 0" 
             shininess="30"
             textureref="boxTex"/>
+        
+        <material id="stoneBlock"
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 1.0" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            textureref="stoneBlock"/>
+        
+        <material id="darkerStoneBlock"
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 1.0" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            textureref="darkerStoneBlock"/>
 			
     </materials> 
 
@@ -178,16 +194,12 @@
 		
 		<node id="scene"> 
             <children>
-                <noderef id="backWall" /> 
-				<noderef id="rightWall" />
-                <noderef id="leftWall" /> 
-                <noderef id="frontWall" />
 
 				<noderef id="floor" />
-                <noderef id="ceiling" />  
 
-				<noderef id="tableGroup" /> <!-- plate, cake, candle, newspaper, table cover, hats -->
-                
+
+				<!--<noderef id="pillar" /> --> <!-- plate, cake, candle, newspaper, table cover, hats -->
+                <noderef id="dock" />
                 <!--
                 <noderef id="chair1" />
                 <noderef id="chair2" />
@@ -203,8 +215,6 @@
                 <noderef id="window" />
                 
                 -->
-                <noderef id="shelf1" /> 
-                <noderef id="shelf2" />
                 <!--
 
                 <noderef id="beetleCar" />
@@ -222,9 +232,6 @@
                 <noderef id="spotlightObject1" />
                 <noderef id="spotlightObject2" />
                 -->
-
-                <noderef id="box" />
-                <noderef id="boxStack" />
 
                 <!--
                 <noderef id="presenceLight" />
@@ -245,66 +252,6 @@
             </children> 
         </node>
 
-        <node id="backWall">
-            <transforms>
-				<translate value3="-6.5 5 0" />
-				<rotate value3="0 90 0.0" />
-            </transforms> 
-
-			<materialref id="wallDefApp" />
-			
-            <children>             
-                <primitive>
-                    <rectangle xy1="-9 -5" xy2="9 5" />
-                </primitive>
-            </children> 
-        </node>
-    
-        <node id="rightWall">
-            <transforms>
-				<translate value3="0 5 -9" />
-                <rotate value3="0 0 0" />
-            </transforms> 
-
-			<materialref id="wallDoorApp" />
-			
-            <children>             
-                <primitive>
-                    <rectangle xy1="-6.5 -5" xy2="6.5 5" />
-                </primitive>
-            </children> 
-        </node>
-
-        <node id="leftWall">
-            <transforms>
-				<translate value3="0 5 9" />
-				<rotate value3="0 180 0" />
-            </transforms> 
-
-			<materialref id="wallDefApp" />
-			
-            <children>             
-                <primitive>
-                    <rectangle xy1="-6.5 -5" xy2="6.5 5" />
-                </primitive>
-            </children> 
-        </node>
-
-        <node id="frontWall">
-            <transforms>
-				<translate value3="6.5 5 0" />
-				<rotate value3="0 -90 0.0" />
-            </transforms> 
-
-			<materialref id="wallWindowApp" />
-			
-            <children>             
-                <primitive>
-                    <rectangle xy1="-9 -5" xy2="9 5" />
-                </primitive>
-            </children> 
-        </node>
-		
         <node id="floor">
             <transforms>
 				<rotate value3="-90 0 0" />
@@ -314,373 +261,222 @@
 			
             <children>             
                 <primitive>
-                    <rectangle xy1="-6.5 -9" xy2="6.5 9" />
+                    <rectangle xy1="-32.5 -36" xy2="32.5 36" />
                 </primitive>
             </children> 
         </node>
 
-        <node id="box">
-			<materialref id="boxApp" />
-            <transforms>
-                <translate value3 = "-0.2 0.6 -6.2"/>
-                <rotate value3 = "0 -18 0"/>
-            </transforms>
+        <node id="dock">
+            <materialref id="darkerStoneBlock"/>
             <children>             
-                <noderef id="box1" />
+                <noderef id="plank"/>
+                <noderef id="plank1"/>
+                <noderef id="plank2"/>
+                <noderef id="plank3"/>
+                <noderef id="plank4"/>
+                <noderef id="plank5"/>
+                <noderef id="plankSup"/>
             </children> 
         </node>
 
-        <node id="boxStack">
-			<materialref id="boxApp" />
+        <node id="plankSup">
+            
             <transforms>
-                <translate value3 = "4.1 0.6 -7.8"/>
-            </transforms>
+                <translate value3="-0.8 -0.4 0" />
+            </transforms> 
+            <children>    
+                <primitive>         
+                    <cylinder base="0.1" top="0.1" height="0.8" slices="32" stacks="32" />
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="plank">
+            <transforms>
+                <rotate value3="0 -1 0" />
+            </transforms> 
+            <children>    
+                <primitive>         
+                    <box xyz1="-1.2 0 -0.35" xyz2="1.2 0.25 0.35"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="plank1">
+            <transforms>
+				<translate value3="0 0 -0.85" />
+                <rotate value3="0 3 0" />
+            </transforms> 
+            <children>    
+                <primitive>         
+                    <box xyz1="-1.2 0 -0.35" xyz2="1.2 0.25 0.35"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="plank2">
+            <transforms>
+				<translate value3="0 0 -1.7" />
+                <rotate value3="0 -1 0" />
+            </transforms> 
+            <children>    
+                <primitive>         
+                    <box xyz1="-1.2 0 -0.35" xyz2="1.2 0.25 0.35"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="plank3">
+            <transforms>
+				<translate value3="0 0 -2.56" />
+                <rotate value3="0 3 0" />
+            </transforms> 
+            <children>    
+                <primitive>         
+                    <box xyz1="-1.2 0 -0.35" xyz2="1.2 0.25 0.35"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="plank4">
+            <transforms>
+				<translate value3="0 0 -3.4" />
+                <rotate value3="0 -2 0" />
+            </transforms> 
+            <children>    
+                <primitive>         
+                    <box xyz1="-1.2 0 -0.35" xyz2="1.2 0.25 0.35"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="plank5">
+            <transforms>
+				<translate value3="0 0 -4.3" />
+                <rotate value3="0 3 0" />
+            </transforms> 
+            <children>    
+                <primitive>         
+                    <box xyz1="-1.2 0 -0.35" xyz2="1.2 0.25 0.35"/>
+                </primitive>
+            </children> 
+        </node>
+
+
+        <node id="pillar">
+            <materialref id="stoneBlock" />
             <children>             
-                <noderef id="box2" />
-                <noderef id="box3" />
-                <noderef id="box4" />
+                <noderef id="bottomPiece" />
+                <noderef id="bottomPiece1" />
+                <noderef id="smallerBottomPiece"/>
+                <noderef id="midPiece"/>
+                <noderef id="midPiece1"/>
+                <noderef id="midPiece2"/>
+                <noderef id="bottomPiece2" />
+                <noderef id="smallerBottomPiece2"/>
+                <noderef id="topPiece"/>
             </children> 
         </node>
 
-        <node id="box1">
-			<materialref id="boxApp" />
-            <children>             
-                <primitive>
-                    <box xyz1="-0.6 -0.6 -0.6" xyz2="0.6 0.6 0.6" />
-                </primitive>
-            </children> 
-        </node>
 
-        <node id="box2">
-			<materialref id="boxApp" />
-            <children>             
-                <primitive>
-                    <box xyz1="-0.6 -0.6 -0.6" xyz2="0.6 0.6 0.6" />
-                </primitive>
-            </children> 
-        </node>
-
-        <node id="box3">
-			<materialref id="boxApp" />
+        <node id="topPiece">
+            <materialref id="darkerStoneBlock"/>
             <transforms>
-                <translate value3 = "1.2 0 0.923"/>
-            </transforms>
-            <children>             
-                <primitive>
-                    <box xyz1="-0.6 -0.6 -0.6" xyz2="0.6 0.6 0.6" />
-                </primitive>
-            </children> 
-        </node>
-
-        <node id="box4">
-			<materialref id="boxApp" />
-            <transforms>
-                <translate value3 = "1 1.2 0.34"/>
-            </transforms>
-            <children>             
-                <primitive>
-                    <box xyz1="-0.6 -0.6 -0.6" xyz2="0.6 0.6 0.6" />
-                </primitive>
-            </children> 
-        </node>
-
-        <node id="ceiling">
-            <transforms>
-                <translate value3="0 10 0" />
-				<rotate value3="90 0 0" />
+				<translate value3="0 3.5 0" />
             </transforms> 
-
-			<materialref id="ceilingApp" />
-			
-            <children>             
-                <primitive>
-                    <rectangle xy1="-6.5 -9" xy2="6.5 9" />
-                </primitive>
-            </children> 
-        </node>
-    
-        <node id="tableGroup">
-			<transforms>
-                <translate value3="4,45 0 5.7" /> 
-            </transforms> 
-		
-            <children>             
-                <noderef id="table" />
-				<noderef id="tableCover" />
-				<!--<noderef id="partyHats" />
-				<noderef id="cakeGroup" />
-				<noderef id="newspaper" />-->
-            </children> 
-        </node>
-
-        <node id="shelf1">
-
-            <materialref id="shelfApp" />
-
-            <transforms>
-                <scale value3= "1 0.8 1"/>
-                <translate value3= "1.8 0 -8.3" />
-                <rotate value3 = "60 172 0"/>
-            </transforms>
-
-            <children>
-                <primitive>
-                    <rectangle xy1="0 0" xy2="3.6 4.6" />
-                </primitive>
-                <noderef id="shelfpiece"/>
-                <noderef id="shelfpiece1"/>
-                <noderef id="shelfpiece2"/>
-                <noderef id="shelfpiece3"/>
-                <noderef id="latshelfpiece"/>
-                <noderef id="latshelfpiece1"/>
-            </children>
-        </node>
-
-        <node id="shelf2">
-
-            <materialref id="shelfApp" />
-
-            <transforms>
-                <rotate value3 = "0 90 0"/>
-                <translate value3= "-7.7 0.02 -6.48" />
-            </transforms> 
-            <children>
-                <primitive>
-                    <rectangle xy1="0 0" xy2="3.6 4.6" />
-                </primitive>
-                <noderef id="shelfpiece"/>
-                <noderef id="shelfpiece1"/>
-                <noderef id="shelfpiece2"/>
-                <noderef id="shelfpiece3"/>
-                <noderef id="latshelfpiece"/>
-                <noderef id="latshelfpiece1"/>
-            </children>
-        </node>
-        <translate value3="0 " />
-
-        <node id="shelfpiece1">
-            <transforms>
-                <translate value3= "0 4.6 0" />
-            </transforms> 
-            <children>
-                <noderef id="shelfpiece"/>
-            </children>
-        </node>
-
-        <node id="shelfpiece2">
-            <transforms>
-				 <translate value3= "0 1.53 0" />
-            </transforms> 
-            <children>
-                <noderef id="shelfpiece"/>
-            </children>
-        </node>
-
-        <node id="shelfpiece3">
-            <transforms>
-				<translate value3= "0 3.06 0" />
-            </transforms> 
-            <children>
-                <noderef id="shelfpiece"/>
-            </children>
-        </node>
-
-        <node id="latshelfpiece1">
-            <transforms>
-				<translate value3= "3.6 0 0" />
-            </transforms> 
-            <children>
-                <noderef id="latshelfpiece"/>
-            </children>
-        </node>
-
-        <node id="latshelfpiece">
-            <transforms>
-				<rotate value3="0 90 0" />
-            </transforms> 
-            <children>
-                <primitive>
-                    <rectangle xy1="-0.8 0" xy2="0 4.6" />
-                </primitive>
-            </children>
-        </node>
-
-        <node id="shelfpiece">
-            <transforms>
-				<rotate value3="90 0 0" />
-            </transforms> 
-            <children>
-                <primitive>
-                    <rectangle xy1="0 0" xy2="3.6 0.8" />
-                </primitive>
-            </children>
-        </node>
-
-        
-
-        <node id="table">
-            <children>             
-                <noderef id="tableTop" />
-				<noderef id="leg1" />
-				<noderef id="leg2" />
-				<noderef id="leg3" />
-				<noderef id="leg4" />
-            </children> 
-        </node>
-
-        <node id="tableTop">
-			<transforms>
-				<translate value3="0 1.4 0" />
-            </transforms> 
-
-            <materialref id="tableTopApp" />
-
             <children>             	
                 <primitive>
-                    <box xyz1="-1.25 -0.1 -3" xyz2="1.25 0.1 3" />
+                    <box xyz1="-0.7 0 -0.7" xyz2="0.7 0.25 0.7" />
                 </primitive>
             </children>
         </node>
-		
-		<node id="leg1">
-			<transforms>
-				<translate value3="1.164 0.65 2.914" />
-            </transforms> 
 
-            <children>             
-                <noderef id="leg" />
-            </children> 
-        </node>
-		
-		<node id="leg2">
-			<transforms>
-				<translate value3="1.164 0.65 -2.914" />
-            </transforms> 
-
-            <children>             
-                <noderef id="leg" />
-            </children> 
-        </node>
-		
-		<node id="leg3">
-			<transforms>
-				<translate value3="-1.164 0.65 2.914" />
-            </transforms> 
-
-            <children>             
-                <noderef id="leg" />
-            </children> 
-        </node>
-		
-		<node id="leg4">
-			<transforms>
-				<translate value3="-1.164 0.65 -2.914" />
-            </transforms> 
-
-            <children>             
-                <noderef id="leg" />
-            </children> 
-        </node>
-		
-        <node id="leg">
-            <materialref id="tableLegApp" />
-
+        <node id="bottomPiece">
+            <materialref id="darkerStoneBlock"/>
             <children>             	
                 <primitive>
-                    <cylinder base="0.086" top="0.086" height="1.3" slices="32" stacks="1" capsclose="true" />
+                    <box xyz1="-0.6 0 -0.6" xyz2="0.6 0.25 0.6" />
                 </primitive>
-            </children> 
+            </children>
         </node>
 
-        <node id="tableCover">
+        <node id="bottomPiece1">
+         <materialref id="darkerStoneBlock"/>
             <transforms>
-				<translate value3="0 1.5 0" />
-            </transforms>
-
-            <materialref id="tableCoverApp" />
-
+				<translate value3="0 0.65 0" />
+            </transforms> 
             <children>             	
-                <noderef id="topTableCover"/>
-                <noderef id="rightTableCover"/>
-                <noderef id="leftTableCover"/>
-                <noderef id="frontTableCover"/>
-                <noderef id="backTableCover"/>
-            </children> 
+                <primitive>
+                    <box xyz1="-0.6 0 -0.6" xyz2="0.6 0.25 0.6" />
+                </primitive>
+            </children>
         </node>
 
-        <node id="topTableCover">
+        <node id="bottomPiece2">
+         <materialref id="darkerStoneBlock"/>
             <transforms>
-				<translate value3="0 0.0415 0" />
-            </transforms>
-
-            <children>             
-                <noderef id="XZTableCover" />
-            </children> 
-        </node>
-
-        <node id="rightTableCover">
-			<transforms>
-				<translate value3="1.29 -0.13 0" />
+				<translate value3="0 2.85 0" />
             </transforms> 
-
-            <children>             
-                <noderef id="YZTableCover" />
-            </children> 
-        </node>
-
-        <node id="leftTableCover">
-			<transforms>
-				<translate value3="-1.29 -0.13 0" />
-            </transforms> 
-
-            <children>             
-                <noderef id="YZTableCover" />
-            </children> 
-        </node>
-
-        <node id="frontTableCover">
-			<transforms>
-				<translate value3="0 -0.13 -3.0415" />
-            </transforms> 
-
-            <children>             
-                <noderef id="XYTableCover" />
-            </children> 
-        </node>
-
-        <node id="backTableCover">
-			<transforms>
-				<translate value3="0 -0.13 3.0415" />
-            </transforms> 
-
-            <children>             
-                <noderef id="XYTableCover" />
-            </children> 
-        </node>
-
-        <node id="XZTableCover">
-            <children>
+            <children>             	
                 <primitive>
-                    <box xyz1="-1.332 -0.0415 -3.083" xyz2="1.332 0.0415 3.083" />
+                    <box xyz1="-0.6 0 -0.6" xyz2="0.6 0.25 0.6" />
                 </primitive>
             </children>
         </node>
 
-        <node id="YZTableCover">
-            <children>
+        <node id="smallerBottomPiece">
+            <transforms>
+				<translate value3="0 0.25 0" />
+            </transforms> 
+            <children>             	
                 <primitive>
-                    <box xyz1="-0.0415 -0.13 -3" xyz2="0.0415 0.13 3" />
+                    <box xyz1="-0.35 0 -0.35" xyz2="0.35 0.4 0.35" />
                 </primitive>
             </children>
         </node>
 
-        <node id="XYTableCover">
-            <children>
+        <node id="smallerBottomPiece2">
+            <transforms>
+				<translate value3="0 3.10 0" />
+            </transforms> 
+            <children>             	
                 <primitive>
-                    <box xyz1="-1.3318 -0.13 -0.0415" xyz2="1.3318 0.13 0.0415" />
+                    <box xyz1="-0.45 0 -0.45" xyz2="0.45 0.4 0.45" />
                 </primitive>
             </children>
         </node>
 
+        <node id="midPiece">
+            <transforms>
+				<translate value3="0 0.90 0" />
+            </transforms> 
+            <children>             	
+                <primitive>
+                    <box xyz1="-0.42 0 -0.42" xyz2="0.42 0.65 0.42" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="midPiece1">
+            <transforms>
+				<translate value3="0 1.55 0" />
+            </transforms> 
+            <children>             	
+                <primitive>
+                    <box xyz1="-0.42 0 -0.42" xyz2="0.42 0.65 0.42" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="midPiece2">
+            <transforms>
+				<translate value3="0 2.2 0" />
+            </transforms> 
+            <children>             	
+                <primitive>
+                    <box xyz1="-0.42 0 -0.42" xyz2="0.42 0.65 0.42" />
+                </primitive>
+            </children>
+        </node>
     </graph> 
 </yaf> 
