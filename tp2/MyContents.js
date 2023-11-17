@@ -324,9 +324,9 @@ class MyContents  {
                 let slices = metrics.slices
                 let thetaLength = metrics.thetalength
                 let thetaStart = metrics.thetastart
-                let capsClosed = metrics.capsclosed
+                let capsClosed = metrics.capsclose
 
-                let prim = new THREE.CylinderGeometry(top,base,height,slices,stacks,capsClosed,thetaStart,thetaLength)
+                let prim = new THREE.CylinderGeometry(top,base,height,slices,stacks,!capsClosed,thetaStart,thetaLength)
                 let mesh = new THREE.Mesh(prim, mat)
                 mesh.receiveShadow = true
                 mesh.castShadow = true

@@ -54,6 +54,8 @@
         <texture id="darkerStoneBlockTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/blackstoneblock.jpg" />
         <texture id="woodTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/wood.jpg" />
         <texture id="sandTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/sand.jpg" />
+        <texture id="leafTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/leaf.png" />
+        <texture id="roofTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/roof.jpg" />
     </textures> 
 
     <materials> 
@@ -95,7 +97,16 @@
             color="1.0 1.0 1.0 1.0" 
             specular="0.07 0.07 0.07 0" 
             shininess="30"
+            twosided="true"
             textureref="woodTex"/>
+
+        <material id="roofApp"
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 1.0" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            twosided="true"
+            textureref="roofTex"/>
 
         <material id="sandApp" 
             emissive="0.0 0.0 0.0 1" 
@@ -105,6 +116,13 @@
             textureref="sandTex"
             bumpref="sandTex"
             bumpscale="1" />
+
+            <material id="leafApp" 
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 1.0" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            textureref="leafTex" />
 			
     </materials> 
 
@@ -119,6 +137,9 @@
                 <noderef id="dock" />
                 <noderef id="pillar" /> 
                 <noderef id="pillar2" />
+                <noderef id="palmTree" />
+                <noderef id="house" />
+                
                 <!--<nodered id="boat" /> -->
 
                 <spotlight id="light1" enabled="true" 
@@ -161,6 +182,533 @@
                 <primitive>
                     <sphere radius="150" slices="20" stacks="32" thetalength="0.34906585"/>
                 </primitive>
+            </children> 
+        </node>
+
+        <node id="palmTree">
+            <transforms>
+                <translate value3="-25 5.5 0" />
+            </transforms>
+            <materialref id="woodApp" />
+            <children>             
+               <noderef id="trunk"/>
+               <noderef id="trunk1"/>
+               <noderef id="trunk2"/>
+               <noderef id="trunk3"/>
+               <noderef id="trunk4"/>
+               <noderef id="trunk5"/>
+            </children> 
+        </node>
+
+        <node id="house">
+            <transforms>
+                <translate value3="6 2 -4" />
+                <scale value3= "0.5 0.5 0.5" />
+                <rotate value3 = "0 -90 0"/>
+            </transforms>
+            <materialref id="woodApp" />
+            <children>             
+                <noderef id="housePillar"/>
+                <noderef id="housePillar1"/>
+                <noderef id="housePillar2"/>
+                <noderef id="housePillar3"/>
+                <noderef id="housePillar4"/>
+                <noderef id="housePillar5"/>
+                <noderef id="housePillar6"/>
+                <noderef id="housePillar7"/>
+                <noderef id="housePillar8"/>
+                <noderef id="housePillar9"/>
+                <noderef id="housePillar10"/>
+                <noderef id="housePillar11"/>
+                <noderef id="housePillar12"/>
+                <noderef id="housePillar13"/>
+                <noderef id="housePillar14"/>
+                <noderef id="housePillar15"/>
+                <noderef id="housePillar16"/>
+                <noderef id="housePillar17"/>
+                <noderef id="housePillar18"/>
+                <noderef id="housePillar19"/>
+                <noderef id="housePillar20"/>
+                <noderef id="houseFloor"/>
+                <noderef id="backHouse"/>
+                <noderef id="roof1"/>
+                <noderef id="roof2"/>
+                <noderef id="houseCeil"/>
+                <noderef id="stairs"/>
+            </children> 
+        </node>
+
+
+        <node id="stairs">
+
+            <materialref id="woodApp" />
+            <children>             
+               <noderef id="plankStairs"/>
+               <noderef id="plankStairs1"/>
+               <noderef id="plankStairs2"/>
+               <noderef id="plankStairsSup"/>
+               <noderef id="plankStairsSup2"/>
+               <noderef id="plankStairsSup3"/>
+            </children> 
+        </node>
+
+        <node id="plankStairs">
+        
+            <transforms>
+                <translate value3="39.52 14 9" />
+				<rotate value3="0 90 0" />
+            </transforms> 
+            <children>    
+                <primitive>         
+                    <box xyz1="-3.2 0 -1.55" xyz2="3.2 0.4 1.55"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="plankStairsSup">
+            <transforms>
+                <translate value3="37.6 14 9" />
+				<rotate value3="0 0 0" />
+            </transforms> 
+            <children>    
+                <primitive>         
+                    <box xyz1="0 0 -3.2" xyz2="0.4 2.4 3.2"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="plankStairsSup2">
+            <transforms>
+                <translate value3="41.05 12 9" />
+				<rotate value3="0 0 0" />
+            </transforms> 
+            <children>    
+                <primitive>         
+                    <box xyz1="0 0 -3.2" xyz2="0.4 2.4 3.2"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="plankStairsSup3">
+            <transforms>
+                <translate value3="44.55 10 9" />
+				<rotate value3="0 0 0" />
+            </transforms> 
+            <children>    
+                <primitive>         
+                    <box xyz1="0 0 -3.2" xyz2="0.4 2.4 3.2"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="plankStairs1">
+            <transforms>
+                <translate value3="43 12 9" />
+				<rotate value3="0 90 0" />
+            </transforms> 
+            <children>    
+                <primitive>         
+                    <box xyz1="-3.2 0 -1.55" xyz2="3.2 0.4 1.55"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="plankStairs2">
+            <transforms>
+                <translate value3="46.45 10 9" />
+				<rotate value3="0 90 0" />
+            </transforms> 
+            <children>    
+                <primitive>         
+                    <box xyz1="-3.2 0 -1.55" xyz2="3.2 0.4 1.55"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="houseFloor">
+            <materialref id="woodApp" />
+            <children>             
+                <primitive>
+                    <box xyz1="-0.5 16 -0.6" xyz2="38 17 26.6"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="roof1">
+            <materialref id="roofApp" />
+            <transforms>
+                <translate value3="0 34 1.5" />
+                <rotate value3="45 0 0" />
+            </transforms>
+
+            <children>             
+                <primitive>
+                    <box xyz1="-0.5 17 -0.6" xyz2="36 18 21.6"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="roof2">
+            <materialref id="roofApp" />
+            <transforms>
+                <translate value3="0 34 24.8" />
+                <rotate value3="-45 0 0" />
+                <scale value3 = "1 1 -1" />
+            </transforms>
+            <children>             
+                <primitive>
+                    <box xyz1="-0.5 17 -0.6" xyz2="36 18 21.6"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="backHouse">
+            <materialref id="woodApp" />
+            <children>             
+                <primitive>
+                    <box xyz1="-0.5 17 -0.6" xyz2="24.5 34 26.6"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="housePillar">
+            <transforms>
+                <translate value3="2 12 2" />
+            </transforms>
+            <materialref id="woodApp" />
+            <children>             
+                <primitive>
+                    <box xyz1="-0.5 0 -0.6" xyz2="0.5 4 0.6"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="housePillar1">
+            <transforms>
+                <translate value3="2 12 22" />
+            </transforms>
+            <materialref id="woodApp" />
+            <children>             
+                <primitive>
+                    <box xyz1="-0.5 0 -0.6" xyz2="0.5 4 0.6"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="housePillar2">
+            <transforms>
+                <translate value3="34.5 12 24" />
+            </transforms>
+            <materialref id="woodApp" />
+            <children>             
+                <primitive>
+                    <box xyz1="-0.5 0 -0.6" xyz2="0.5 4 0.6"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="housePillar3">
+            <transforms>
+                <translate value3="34.5 12 2" />
+            </transforms>
+            <materialref id="woodApp" />
+            <children>             
+                <primitive>
+                    <box xyz1="-0.5 0 -0.6" xyz2="0.5 4 0.6"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="housePillar4">
+            <transforms>
+                <translate value3="34.5 16 2" />
+            </transforms>
+            <materialref id="woodApp" />
+            <children>             
+                <primitive>
+                     <box xyz1="-0.35 0 -0.35" xyz2="0.35 18.1 0.35"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="housePillar5">
+            <transforms>
+                <translate value3="34.5 16 24" />
+            </transforms>
+            <materialref id="woodApp" />
+            <children>             
+                <primitive>
+                     <box xyz1="-0.35 0 -0.35" xyz2="0.35 18.1 0.35"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="housePillar6">
+            <transforms>
+                <translate value3="34.5 22 24"/>
+                <rotate value3="0 0 90"/>
+            </transforms>
+            <materialref id="woodApp" />
+            <children>             
+                <primitive>
+                    <box xyz1="-0.35 0 -0.35" xyz2="0.35 18.1 0.35"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="housePillar7">
+            <transforms>
+                <translate value3="34.5 22 2"/>
+                <rotate value3="0 0 90"/>
+            </transforms>
+            <materialref id="woodApp" />
+            <children>             
+                <primitive>
+                    <box xyz1="-0.35 0 -0.35" xyz2="0.35 18.1 0.35"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="housePillar8">
+            <transforms>
+                <translate value3="26.5 16 24" />
+            </transforms>
+            <materialref id="woodApp" />
+            <children>             
+                <primitive>
+                    <box xyz1="-0.35 0 -0.35" xyz2="0.35 5.7 0.35"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="housePillar9">
+            <transforms>
+                <translate value3="31.8 16 24" />
+            </transforms>
+            <materialref id="woodApp" />
+            <children>             
+                <primitive>
+                    <box xyz1="-0.35 0 -0.35" xyz2="0.35 5.7 0.35"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="housePillar10">
+            <transforms>
+                <translate value3="29.2 16 24" />
+            </transforms>
+            <materialref id="woodApp" />
+            <children>             
+                <primitive>
+                    <box xyz1="-0.35 0 -0.35" xyz2="0.35 5.7 0.35"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="housePillar11">
+            <transforms>
+                <translate value3="26.5 16 2" />
+            </transforms>
+            <materialref id="woodApp" />
+            <children>             
+                <primitive>
+                    <box xyz1="-0.35 0 -0.35" xyz2="0.35 5.7 0.35"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="housePillar12">
+            <transforms>
+                <translate value3="31.8 16 2" />
+            </transforms>
+            <materialref id="woodApp" />
+            <children>             
+                <primitive>
+                    <box xyz1="-0.35 0 -0.35" xyz2="0.35 5.7 0.35"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="housePillar13">
+            <transforms>
+                <translate value3="29.2 16 2" />
+            </transforms>
+            <materialref id="woodApp" />
+            <children>             
+                <primitive>
+                    <box xyz1="-0.35 0 -0.35" xyz2="0.35 5.7 0.35"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="housePillar15">
+            <transforms>
+                <translate value3="34.5 16 18" />
+            </transforms>
+            <materialref id="woodApp" />
+            <children>             
+                <primitive>
+                    <box xyz1="-0.35 0 -0.35" xyz2="0.35 5.7 0.35"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="housePillar14">
+            <transforms>
+                <translate value3="34.5 16 21" />
+            </transforms>
+            <materialref id="woodApp" />
+            <children>             
+                <primitive>
+                    <box xyz1="-0.35 0 -0.35" xyz2="0.35 5.7 0.35"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="housePillar16">
+            <transforms>
+                <translate value3="34.5 16 15.4" />
+            </transforms>
+            <materialref id="woodApp" />
+            <children>             
+                <primitive>
+                    <box xyz1="-0.35 0 -0.35" xyz2="0.35 5.7 0.35"/>
+                </primitive>
+            </children> 
+        </node>
+        
+        <node id="housePillar17">
+            <transforms>
+                <translate value3="34.5 16 12.8" />
+            </transforms>
+            <materialref id="woodApp" />
+            <children>             
+                <primitive>
+                    <box xyz1="-0.35 0 -0.35" xyz2="0.35 18.1 0.35"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="housePillar18">
+            <transforms>
+                <translate value3="34.5 22 13" />
+                <rotate value3= "90 0 0"/>
+            </transforms>
+            <materialref id="woodApp" />
+            <children>             
+                <primitive>
+                    <box xyz1="-0.35 0 -0.35" xyz2="0.35 10.7 0.35"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="housePillar19">
+            <transforms>
+                <translate value3="34.5 16 4.8" />
+            </transforms>
+            <materialref id="woodApp" />
+            <children>             
+                <primitive>
+                    <box xyz1="-0.35 0 -0.35" xyz2="0.35 7 0.35"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="housePillar20">
+            <transforms>
+                <translate value3="34.5 22 2.4" />
+                <rotate value3= "90 0 0"/>
+            </transforms>
+            <materialref id="woodApp" />
+            <children>             
+                <primitive>
+                    <box xyz1="-0.35 0 -0.35" xyz2="0.35 2.26 0.35"/>
+                </primitive>
+            </children> 
+        </node>
+
+
+        <node id="houseCeil">
+            <transforms>
+                <translate value3="26 34.1 4.6" />
+                <rotate value3="90 0 0" />
+            </transforms>
+            <materialref id="woodApp" />
+            <children>             
+                <primitive>
+                    <rectangle xy1="-9 -4" xy2="9 21.2" />
+                </primitive>
+            </children> 
+        </node>
+
+
+
+        <node id="trunk">
+            <transforms>
+                <translate value3="0 2.5 0" />
+            </transforms>
+            <children>             
+               <primitive>
+                    <cylinder base="2.5" top="2.5" height="5" slices="32" stacks="32" capsclose="true" />
+               </primitive>
+            </children> 
+        </node>
+
+        <node id="trunk1">
+            <transforms>
+                <translate value3="0 7.25 0" />
+            </transforms>
+            <children>             
+               <primitive>
+                    <cylinder base="2.2" top="2.2" height="4.5" slices="32" stacks="32" capsclose="true"/>
+               </primitive>
+            </children> 
+        </node>
+
+        <node id="trunk2">
+            <transforms>
+                <translate value3="0 11.5 0" />
+            </transforms>
+            <children>             
+               <primitive>
+                    <cylinder base="1.8" top="1.8" height="4" slices="32" stacks="32" capsclose="true" />
+               </primitive>
+            </children> 
+        </node>
+
+        <node id="trunk3">
+            <transforms>
+                <translate value3="0 15.1 0" />
+            </transforms>
+            <children>             
+               <primitive>
+                    <cylinder base="1.4" top="1.4" height="3.2" slices="32" stacks="32" capsclose="true"/>
+               </primitive>
+            </children> 
+        </node>
+
+        <node id="trunk4">
+            <transforms>
+                
+                <translate value3="0 17.5 0.15" />
+                <rotate value3="20 0 0" />
+            </transforms>
+            <children>             
+               <primitive>
+                    <cylinder base="1.1" top="1.1" height="2.7" slices="32" stacks="32" capsclose="true" />
+               </primitive>
+            </children> 
+        </node>
+
+        <node id="trunk5">
+            <transforms>
+                <translate value3="0 19.5 1.1" />
+                <rotate value3="45 0 0" />
+            </transforms>
+            <children>             
+               <primitive>
+                    <cylinder base="0.6" top="0.6" height="2.4" slices="32" stacks="32" capsclose="true"/>
+               </primitive>
             </children> 
         </node>
 
