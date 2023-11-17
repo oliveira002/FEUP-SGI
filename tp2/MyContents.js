@@ -96,7 +96,7 @@ class MyContents  {
             this.skyBoxGeometry = new THREE.BoxGeometry(skyboxInfo.size[0],skyboxInfo.size[1],skyboxInfo.size[2])
             this.skyBoxMesh = new THREE.Mesh(this.skyBoxGeometry,materials)
             this.skyBoxMesh.position.set(skyboxInfo.center[0],skyboxInfo.center[1] - 0.01,skyboxInfo.center[2])
-            this.app.scene.add(this.skyBoxMesh)
+            //this.app.scene.add(this.skyBoxMesh)
         }
         //this.initCameras(data)
         this.initOptions(data)
