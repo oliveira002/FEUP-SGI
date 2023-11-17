@@ -61,7 +61,7 @@ class MyContents  {
         
         this.initGlobals(data)
         this.initTextures(data)
-        this.intiMaterials(data)
+        this.initMaterials(data)
         this.onAfterSceneLoadedAndBeforeRender(data);
     }
 
@@ -159,7 +159,7 @@ class MyContents  {
         
     }
 
-    intiMaterials(data){
+    initMaterials(data){
 
         let descriptors = data.descriptors["material"]
 
@@ -175,7 +175,7 @@ class MyContents  {
                     emissive: materialObj.emissive.getHex(),
                     shininess: materialObj.shininess,
                     wireframe: materialObj.wireframe, //?? descriptors.find(descriptor => descriptor.name === "wireframe").default,
-                    flatShading: materialObj.shading, //?? descriptors.find(descriptor => descriptor.name === "shading").default === "flat",
+                    flatShading: materialObj.shading === "flat",
                     map: texture, //?? descriptors.find(descriptor => descriptor.name === "textureref").default,
                     side: materialObj.twosided ? THREE.DoubleSide : THREE.FrontSide,
                     bumpMap: this.textureMap[materialObj.bumpref], //?? descriptors.find(descriptor => descriptor.name === "bump_ref").default,
@@ -379,25 +379,6 @@ class MyContents  {
                 mesh.translateX(deltaX)
                 mesh.translateY(deltaY)
                 mesh.translateZ(deltaZ)
-
-                return mesh
-            }
-            case "sphere": {
-                let metrics = node.representations[0]
-
-                let prim = new THREE.SphereGeometry(
-                    metrics.radius,
-                    metrics.slices,
-                    metrics.stacks,
-                    metrics.phistart,
-                    metrics.philength,
-                    metrica.thetastart,
-                    metrics.thetalength
-                )
-                
-                let mesh = new THREE.Mesh(prim, mat)
-                mesh.receiveShadow = true
-                mesh.castShadow = true
 
                 return mesh
             }

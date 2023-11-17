@@ -27,6 +27,8 @@ The following list is comprised of several issues or improvements to the current
     - Solution suggestion: Change the definition of the mentioned shapes to take into consideration 3 floating point values as their dimensions, and, if an object is meant to be somewhere, put that logic in the `<transforms>` block, and not in the primitive itself.
 - Cylinder open ends: In THREE.js there's the possibility to have open-ended cylinders, which is taken into consideration by the cylinder primitive descriptors, but there's a problem with the very same descriptors: the meaning of the respective variable, `capsclose`, is reversed, which only introduces confusion
     - Solution suggestion: Change `capsclose` with default value `false` (meaning that the cylinder is NOT capped) to `openended` with default value `false` (meaning that the cylinder IS capped) to keep the descriptor uniform with the THREE.js default behavior.
+- **More primitives: THREE.js has many more primitives that can and should be supported. Primitives like the CircleGeometry, Dodeca, Icosa, Octa and TetrahedromGeometries, TorusGeometry and TubeGeometry help give life to some more complex scenes that are otherwise impossible to achieve, as most of these shapes can't be replicated with manipulation of the already implemented ones.**
+    - **Solution suggestion: Similar to how the cylinder, rectangle, triangle and so on are implemented, implement some or all the other THREE.js primitives.**
 
 ### Lights
 - Directional light missing attributes: The directional light descriptors is missing the target attribute, making it always point towards the center of the world.
@@ -58,3 +60,5 @@ The following list is comprised of several issues or improvements to the current
 - Joana Santos, up202006279, SGI T05G05
 - Mafalda Costa, up202006417, SGI T05G04
 
+### Changelog:
+- Added "More primitives", "Angle values scale"
