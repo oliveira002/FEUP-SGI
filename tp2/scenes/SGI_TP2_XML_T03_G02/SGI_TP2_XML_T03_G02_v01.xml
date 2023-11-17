@@ -83,9 +83,9 @@
         <texture id="wallWindowTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/wall_hole.png" />
         <texture id="wallTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/wall.png" />
         <texture id="waterTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/water.png" />
-        <texture id="stoneBlock" filepath="scenes/SGI_TP2_XML_T03_G02/textures/stoneblock.jpg" />
-        <texture id="darkerStoneBlock" filepath="scenes/SGI_TP2_XML_T03_G02/textures/blackstoneblock.jpg" />
-        <texture id="wood" filepath="scenes/SGI_TP2_XML_T03_G02/textures/wood.jpg" />
+        <texture id="stoneBlockTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/stoneblock.jpg" />
+        <texture id="darkerStoneBlockTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/blackstoneblock.jpg" />
+        <texture id="woodText" filepath="scenes/SGI_TP2_XML_T03_G02/textures/wood.jpg" />
     </textures> 
 
     <materials> 
@@ -175,28 +175,28 @@
             shininess="30"
             textureref="boxTex"/>
         
-        <material id="stoneBlock"
+        <material id="stoneBlockApp"
             emissive="0.0 0.0 0.0 1" 
             color="1.0 1.0 1.0 1.0" 
             specular="0.07 0.07 0.07 0" 
             shininess="30"
-            textureref="stoneBlock"
+            textureref="stoneBlockTex"
             bumpref="stoneBlock"
             bumpscale="0.003" />
         
-        <material id="darkerStoneBlock"
+        <material id="darkerStoneBlockApp"
             emissive="0.0 0.0 0.0 1" 
             color="1.0 1.0 1.0 1.0" 
             specular="0.07 0.07 0.07 0" 
             shininess="30"
-            textureref="darkerStoneBlock"/>
+            textureref="darkerStoneBlockTex"/>
         
-        <material id="wood"
+        <material id="woodApp"
             emissive="0.0 0.0 0.0 1" 
             color="1.0 1.0 1.0 1.0" 
             specular="0.07 0.07 0.07 0" 
             shininess="30"
-            textureref="wood"/>
+            textureref="woodTex"/>
 			
     </materials> 
 
@@ -283,7 +283,7 @@
                 <translate value3="0 0.8 0" />
                 <rotate value3= "0 7 0"/> 
             </transforms> 
-            <materialref id="wood"/>
+            <materialref id="woodApp"/>
             <children>             
                 <noderef id="plank"/>
                 <noderef id="plank1"/>
@@ -484,7 +484,7 @@
 				<translate value3="2.5 0 0" />
                 <rotate value3= "0 12 0"/>
             </transforms> 
-            <materialref id="stoneBlock" />
+            <materialref id="stoneBlockApp" />
             <children>             
                 <noderef id="bottomPiece" />
                 <noderef id="bottomPiece1" />
@@ -503,7 +503,7 @@
 				<translate value3="-2.5 0 0" />
                 <rotate value3= "0 -12 0"/>
             </transforms> 
-            <materialref id="stoneBlock" />
+            <materialref id="stoneBlockApp" />
             <children>             
                 <noderef id="bottomPiece" />
                 <noderef id="bottomPiece1" />
@@ -519,7 +519,7 @@
 
 
         <node id="topPiece">
-            <materialref id="darkerStoneBlock"/>
+            <materialref id="darkerStoneBlockApp"/>
             <transforms>
 				<translate value3="0 3.5 0" />
             </transforms> 
@@ -531,7 +531,7 @@
         </node>
 
         <node id="bottomPiece">
-            <materialref id="darkerStoneBlock"/>
+            <materialref id="darkerStoneBlockApp"/>
             <children>             	
                 <primitive>
                     <box xyz1="-0.6 0 -0.6" xyz2="0.6 0.25 0.6" />
@@ -540,7 +540,7 @@
         </node>
 
         <node id="bottomPiece1">
-         <materialref id="darkerStoneBlock"/>
+         <materialref id="darkerStoneBlockApp"/>
             <transforms>
 				<translate value3="0 0.65 0" />
             </transforms> 
@@ -552,7 +552,7 @@
         </node>
 
         <node id="bottomPiece2">
-         <materialref id="darkerStoneBlock"/>
+         <materialref id="darkerStoneBlockApp"/>
             <transforms>
 				<translate value3="0 2.85 0" />
             </transforms> 
