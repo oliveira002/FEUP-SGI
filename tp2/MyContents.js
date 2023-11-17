@@ -57,7 +57,6 @@ class MyContents  {
      */
     onSceneLoaded(data) {
         console.info("scene data loaded " + data + ". visit MySceneData javascript class to check contents for each data item.")
-        console.log(data)
         
         this.initGlobals(data)
         this.initTextures(data)
@@ -74,6 +73,31 @@ class MyContents  {
         if(data.fog!==null)
             this.fog = new THREE.Fog(data.fog.color.getHex(), data.fog.near, data.fog.far)
 
+        if(data.skyboxes !== null) {
+            let skyboxInfo = data.skyboxes.default
+            let upTex = new THREE.TextureLoader().load(skyboxInfo.up); 
+            let downTex = new THREE.TextureLoader().load(skyboxInfo.down); 
+            let leftTex = new THREE.TextureLoader().load(skyboxInfo.left); 
+            let rightTex = new THREE.TextureLoader().load(skyboxInfo.right); 
+            let frontTex = new THREE.TextureLoader().load(skyboxInfo.front); 
+            let backTex = new THREE.TextureLoader().load(skyboxInfo.back); 
+            
+            console.log(upTex)
+
+            let materials = [
+                new THREE.MeshPhongMaterial(({/*emissive: skyboxInfo.emissive,*/ map: rightTex, side: THREE.BackSide})),
+                new THREE.MeshPhongMaterial(({/*emissive: skyboxInfo.emissive,*/ map: leftTex, side: THREE.BackSide})),
+                new THREE.MeshPhongMaterial(({/*emissive: skyboxInfo.emissive,*/ map: upTex, side: THREE.BackSide})),
+                new THREE.MeshPhongMaterial(({/*emissive: skyboxInfo.emissive,*/ map: downTex, side: THREE.BackSide})),
+                new THREE.MeshPhongMaterial(({/*emissive: skyboxInfo.emissive,*/ map: frontTex, side: THREE.BackSide})),
+                new THREE.MeshPhongMaterial(({/*emissive: skyboxInfo.emissive,*/ map: backTex, side: THREE.BackSide}))
+            ]
+
+            this.skyBoxGeometry = new THREE.BoxGeometry(skyboxInfo.size[0],skyboxInfo.size[1],skyboxInfo.size[2])
+            this.skyBoxMesh = new THREE.Mesh(this.skyBoxGeometry,materials)
+            this.skyBoxMesh.position.set(skyboxInfo.center[0],skyboxInfo.center[1] - 0.01,skyboxInfo.center[2])
+            this.app.scene.add(this.skyBoxMesh)
+        }
         //this.initCameras(data)
         this.initOptions(data)
 
