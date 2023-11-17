@@ -21,30 +21,6 @@
             far="1000" 
             location="11 13 13" 
             target="0 0 0" />
-        <perspective id="Floor, Caution Sign and Chairs" 
-            angle="75" 
-            near="0.1" 
-            far="1000" 
-            location="3.6 4.06 -1.7" 
-            target="0 0 0" />
-        <perspective id="Door" 
-            angle="75" 
-            near="0.1" 
-            far="1000" 
-            location="0.93 3 -7.26" 
-            target="-1.19, 2.82, -14.66" />
-        <perspective id="Shelf, Spring and Wall Blood" 
-            angle="75" 
-            near="0.1" 
-            far="1000" 
-            location="-1.01, 4.31, 2.41" 
-            target="-8.46, 2.19, 3.98" />
-        <perspective id="Table, Cake and Newspaper" 
-            angle="75" 
-            near="0.1" 
-            far="1000" 
-            location="6.34, 3.18, 1.72" 
-            target="3.44, -1.12, 7.69" />  
     </cameras> 
 
     <!-- bloco de texturas. Este bloco tem de existir mas pode estar vazio, se nao forem usadas texturas --> 
@@ -55,6 +31,7 @@
         <texture id="woodTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/wood.jpg" />
         <texture id="sandTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/sand.jpg" />
         <texture id="boatTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/boat.jpg" />
+        <texture id="rockTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/rock.jpg" />
     </textures> 
 
     <materials> 
@@ -113,6 +90,14 @@
             textureref="boatTex"
             twosided="true" />
 			
+        <material id="rockApp"
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 1.0" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            textureref="rockTex"
+            shading="flat"/>
+
     </materials> 
 
     <graph rootid="scene"> 
@@ -127,6 +112,7 @@
                 <noderef id="pillar" /> 
                 <noderef id="pillar2" />
                 <noderef id="boat" />
+                <noderef id="rockFormation" />
 
                 <spotlight id="light1" enabled="true" 
                     color="1.0 1.0 1.0 1" 
@@ -332,10 +318,7 @@
                 <primitive>         
                     <box xyz1="-1.2 0 -0.35" xyz2="1.2 0.25 0.35"/>
                 </primitive>
-            </children> <transforms>
-				<translate value3="2.5 0 0" />
-                <rotate value3= "0 12 0"/>
-            </transforms> 
+            </children> 
         </node>
 
         <node id="plank4">
@@ -514,7 +497,7 @@
 
         <node id="boat">
             <transforms>
-				<translate value3="-30 0.01 55" />
+				<translate value3="-30 0.02 55" />
             </transforms> 
             <materialref id="boatApp"/>
             <children>
@@ -686,6 +669,55 @@
                         stacks="8"
                         capsclose="true" />
                 </primitive>               
+            </children>
+        </node>
+
+        <node id="rockFormation">
+            <transforms>
+				<translate value3="60 -2 60" />
+                <rotate value3="0 -30 0" />
+            </transforms>
+            <materialref id="rockApp"/>
+            <children>
+                <noderef id="rockSmall"/>
+                <noderef id="rockBig"/>  
+            </children>
+        </node>
+
+        <node id="rockSmall">
+            <transforms>
+				<scale value3="0.6 0.7 0.8" />
+            </transforms>
+            <children>
+                <primitive>
+                    <sphere radius="10" 
+                        slices="13" 
+                        stacks="7" 
+                        phistart="0"
+                        philength="6.283185307179586"
+                        thetastart="0"
+                        thetalength="3.141592653589793"  
+                    />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="rockBig">
+            <transforms>
+                <translate value3="3 0 -11" />
+				<scale value3="1 2 1" />
+            </transforms>
+            <children>
+                <primitive>
+                    <sphere radius="10" 
+                        slices="13" 
+                        stacks="7" 
+                        phistart="0"
+                        philength="6.283185307179586"
+                        thetastart="0"
+                        thetalength="1.57079632679"  
+                    />
+                </primitive>
             </children>
         </node>
 
