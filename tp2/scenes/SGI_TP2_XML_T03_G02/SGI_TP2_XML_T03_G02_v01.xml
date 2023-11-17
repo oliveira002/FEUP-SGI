@@ -118,7 +118,8 @@
 
                 <noderef id="dock" />
                 <noderef id="pillar" /> 
-                <noderef id="pillar2" /> 
+                <noderef id="pillar2" />
+                <!--<nodered id="boat" /> -->
 
                 <spotlight id="light1" enabled="true" 
                     color="1.0 1.0 1.0 1" 
@@ -369,8 +370,9 @@
 
         <node id="pillar">
             <transforms>
-				<translate value3="2.5 0 0" />
+				<translate value3="3 2 43" />
                 <rotate value3= "0 12 0"/>
+                <scale value3="3 3 3"/>
             </transforms> 
             <materialref id="stoneBlockApp" />
             <children>             
@@ -388,8 +390,9 @@
 
         <node id="pillar2">
             <transforms>
-				<translate value3="-2.5 0 0" />
-                <rotate value3= "0 -12 0"/>
+				<translate value3="-17 2.2 40" />
+                <rotate value3= "7.5 -12 7.5"/>
+                <scale value3="3 3 3"/>
             </transforms> 
             <materialref id="stoneBlockApp" />
             <children>             
@@ -505,5 +508,7 @@
                 </primitive>
             </children>
         </node>
+
+
     </graph> 
 </yaf> 
