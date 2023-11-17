@@ -85,6 +85,7 @@
         <texture id="waterTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/water.png" />
         <texture id="stoneBlock" filepath="scenes/SGI_TP2_XML_T03_G02/textures/stoneblock.jpg" />
         <texture id="darkerStoneBlock" filepath="scenes/SGI_TP2_XML_T03_G02/textures/blackstoneblock.jpg" />
+        <texture id="wood" filepath="scenes/SGI_TP2_XML_T03_G02/textures/wood.jpg" />
     </textures> 
 
     <materials> 
@@ -179,7 +180,9 @@
             color="1.0 1.0 1.0 1.0" 
             specular="0.07 0.07 0.07 0" 
             shininess="30"
-            textureref="stoneBlock"/>
+            textureref="stoneBlock"
+            bumpref="stoneBlock"
+            bumpscale="0.003" />
         
         <material id="darkerStoneBlock"
             emissive="0.0 0.0 0.0 1" 
@@ -187,6 +190,13 @@
             specular="0.07 0.07 0.07 0" 
             shininess="30"
             textureref="darkerStoneBlock"/>
+        
+        <material id="wood"
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 1.0" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            textureref="wood"/>
 			
     </materials> 
 
@@ -200,6 +210,8 @@
 
 				<!--<noderef id="pillar" /> --> <!-- plate, cake, candle, newspaper, table cover, hats -->
                 <noderef id="dock" />
+                <noderef id="pillar" /> 
+                <noderef id="pillar2" /> 
                 <!--
                 <noderef id="chair1" />
                 <noderef id="chair2" />
@@ -267,7 +279,11 @@
         </node>
 
         <node id="dock">
-            <materialref id="darkerStoneBlock"/>
+            <transforms>
+                <translate value3="0 0.8 0" />
+                <rotate value3= "0 7 0"/> 
+            </transforms> 
+            <materialref id="wood"/>
             <children>             
                 <noderef id="plank"/>
                 <noderef id="plank1"/>
@@ -275,12 +291,19 @@
                 <noderef id="plank3"/>
                 <noderef id="plank4"/>
                 <noderef id="plank5"/>
+                <noderef id="plank6"/>
                 <noderef id="plankSup"/>
+                <noderef id="plankSup1"/>
+                <noderef id="plankSup2"/>
+                <noderef id="plankSup3"/>
+                <noderef id="plankSup4"/>
+                <noderef id="plankSup5"/>
+                <noderef id="plankSup6"/>
+                <noderef id="plankSup7"/>
             </children> 
         </node>
 
-        <node id="plankSup">
-            
+        <node id="plankSup">     
             <transforms>
                 <translate value3="-0.8 -0.4 0" />
             </transforms> 
@@ -290,6 +313,84 @@
                 </primitive>
             </children> 
         </node>
+
+        <node id="plankSup1">     
+            <transforms>
+                <translate value3="-0.8 -0.4 -1.7" />
+            </transforms> 
+            <children>    
+                <primitive>         
+                    <cylinder base="0.1" top="0.1" height="0.8" slices="32" stacks="32" />
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="plankSup2">     
+            <transforms>
+                <translate value3="-0.8 -0.4 -3.4" />
+            </transforms> 
+            <children>    
+                <primitive>         
+                    <cylinder base="0.1" top="0.1" height="0.8" slices="32" stacks="32" />
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="plankSup3">     
+            <transforms>
+                <translate value3="-0.8 -0.4 -5.1" />
+            </transforms> 
+            <children>    
+                <primitive>         
+                    <cylinder base="0.1" top="0.1" height="0.8" slices="32" stacks="32" />
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="plankSup4">     
+            <transforms>
+                <translate value3="0.8 -0.4 0" />
+            </transforms> 
+            <children>    
+                <primitive>         
+                    <cylinder base="0.1" top="0.1" height="0.8" slices="32" stacks="32" />
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="plankSup5">     
+            <transforms>
+                <translate value3="0.8 -0.4 -1.7" />
+            </transforms> 
+            <children>    
+                <primitive>         
+                    <cylinder base="0.1" top="0.1" height="0.8" slices="32" stacks="32" />
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="plankSup6">     
+            <transforms>
+                <translate value3="0.8 -0.4 -3.4" />
+            </transforms> 
+            <children>    
+                <primitive>         
+                    <cylinder base="0.1" top="0.1" height="0.8" slices="32" stacks="32" />
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="plankSup7">     
+            <transforms>
+                <translate value3="0.8 -0.4 -5.1" />
+            </transforms> 
+            <children>    
+                <primitive>         
+                    <cylinder base="0.1" top="0.1" height="0.8" slices="32" stacks="32" />
+                </primitive>
+            </children> 
+        </node>
+
 
         <node id="plank">
             <transforms>
@@ -335,7 +436,10 @@
                 <primitive>         
                     <box xyz1="-1.2 0 -0.35" xyz2="1.2 0.25 0.35"/>
                 </primitive>
-            </children> 
+            </children> <transforms>
+				<translate value3="2.5 0 0" />
+                <rotate value3= "0 12 0"/>
+            </transforms> 
         </node>
 
         <node id="plank4">
@@ -362,8 +466,43 @@
             </children> 
         </node>
 
+        <node id="plank6">
+            <transforms>
+				<translate value3="0 0 -5.1" />
+                <rotate value3="0 3 0" />
+            </transforms> 
+            <children>    
+                <primitive>         
+                    <box xyz1="-1.2 0 -0.35" xyz2="1.2 0.25 0.35"/>
+                </primitive>
+            </children> 
+        </node>
+
 
         <node id="pillar">
+            <transforms>
+				<translate value3="2.5 0 0" />
+                <rotate value3= "0 12 0"/>
+            </transforms> 
+            <materialref id="stoneBlock" />
+            <children>             
+                <noderef id="bottomPiece" />
+                <noderef id="bottomPiece1" />
+                <noderef id="smallerBottomPiece"/>
+                <noderef id="midPiece"/>
+                <noderef id="midPiece1"/>
+                <noderef id="midPiece2"/>
+                <noderef id="bottomPiece2" />
+                <noderef id="smallerBottomPiece2"/>
+                <noderef id="topPiece"/>
+            </children> 
+        </node>
+
+        <node id="pillar2">
+            <transforms>
+				<translate value3="-2.5 0 0" />
+                <rotate value3= "0 -12 0"/>
+            </transforms> 
             <materialref id="stoneBlock" />
             <children>             
                 <noderef id="bottomPiece" />
