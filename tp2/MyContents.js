@@ -324,9 +324,9 @@ class MyContents  {
                 let slices = metrics.slices
                 let thetaLength = metrics.thetalength
                 let thetaStart = metrics.thetastart
-                let capsClosed = metrics.capsclosed
+                let capsClosed = metrics.capsclose
 
-                let prim = new THREE.CylinderGeometry(top,base,height,slices,stacks,capsClosed,thetaStart,thetaLength)
+                let prim = new THREE.CylinderGeometry(top,base,height,slices,stacks,!capsClosed,thetaStart,thetaLength)
                 let mesh = new THREE.Mesh(prim, mat)
                 mesh.receiveShadow = true
                 mesh.castShadow = true
@@ -379,25 +379,6 @@ class MyContents  {
                 mesh.translateX(deltaX)
                 mesh.translateY(deltaY)
                 mesh.translateZ(deltaZ)
-
-                return mesh
-            }
-            case "sphere": {
-                let metrics = node.representations[0]
-
-                let prim = new THREE.SphereGeometry(
-                    metrics.radius,
-                    metrics.slices,
-                    metrics.stacks,
-                    metrics.phistart,
-                    metrics.philength,
-                    metrica.thetastart,
-                    metrics.thetalength
-                )
-                
-                let mesh = new THREE.Mesh(prim, mat)
-                mesh.receiveShadow = true
-                mesh.castShadow = true
 
                 return mesh
             }

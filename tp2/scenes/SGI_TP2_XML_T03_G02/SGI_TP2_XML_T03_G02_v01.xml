@@ -51,9 +51,10 @@
     <textures>        
         <texture id="waterTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/water.png" />
         <texture id="stoneBlockTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/stoneblock.jpg" />
-        <texture id="darkerStoneBlockTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/blackstoneblock.jpg" />
+        <texture id="dockTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/dock.jpg" />
         <texture id="woodTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/wood.jpg" />
         <texture id="sandTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/sand.jpg" />
+        <texture id="boatTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/boat.jpg" />
     </textures> 
 
     <materials> 
@@ -80,15 +81,13 @@
             specular="0.07 0.07 0.07 0" 
             shininess="30"
             textureref="stoneBlockTex"/>
-        
-        <material id="darkerStoneBlockApp"
+
+        <material id="dockApp"
             emissive="0.0 0.0 0.0 1" 
             color="1.0 1.0 1.0 1.0" 
             specular="0.07 0.07 0.07 0" 
             shininess="30"
-            textureref="stoneBlockTex"
-            bumpref="stoneBlockTex"
-            bumpscale="0.003" />
+            textureref="dockTex"/>
         
         <material id="woodApp"
             emissive="0.0 0.0 0.0 1" 
@@ -105,6 +104,14 @@
             textureref="sandTex"
             bumpref="sandTex"
             bumpscale="1" />
+
+        <material id="boatApp" 
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 1.0" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            textureref="boatTex"
+            twosided="true" />
 			
     </materials> 
 
@@ -119,7 +126,7 @@
                 <noderef id="dock" />
                 <noderef id="pillar" /> 
                 <noderef id="pillar2" />
-                <!--<nodered id="boat" /> -->
+                <noderef id="boat" />
 
                 <spotlight id="light1" enabled="true" 
                     color="1.0 1.0 1.0 1" 
@@ -171,7 +178,7 @@
                 <scale value3="5 5 5"/> 
             </transforms>
 
-            <materialref id="woodApp"/>
+            <materialref id="dockApp"/>
 
             <children>             
                 <noderef id="plank"/>
@@ -410,7 +417,6 @@
 
 
         <node id="topPiece">
-            <materialref id="darkerStoneBlockApp"/>
             <transforms>
 				<translate value3="0 3.5 0" />
             </transforms> 
@@ -422,7 +428,6 @@
         </node>
 
         <node id="bottomPiece">
-            <materialref id="darkerStoneBlockApp"/>
             <children>             	
                 <primitive>
                     <box xyz1="-0.6 0 -0.6" xyz2="0.6 0.25 0.6" />
@@ -431,7 +436,6 @@
         </node>
 
         <node id="bottomPiece1">
-         <materialref id="darkerStoneBlockApp"/>
             <transforms>
 				<translate value3="0 0.65 0" />
             </transforms> 
@@ -443,7 +447,6 @@
         </node>
 
         <node id="bottomPiece2">
-         <materialref id="darkerStoneBlockApp"/>
             <transforms>
 				<translate value3="0 2.85 0" />
             </transforms> 
@@ -509,6 +512,182 @@
             </children>
         </node>
 
+        <node id="boat">
+            <transforms>
+				<translate value3="-30 0.01 55" />
+            </transforms> 
+            <materialref id="boatApp"/>
+            <children>
+                <noderef id="boatStem" />             	
+                <noderef id="frontRight" />
+                <noderef id="frontLeft" />
+                <noderef id="right" />
+                <noderef id="left" />
+                <noderef id="backRight" />
+                <noderef id="backLeft" />
+                <noderef id="bottom" />
+                <noderef id="top" />
+                <noderef id="flag" />
+                <noderef id="rightPaddle" />
+                <noderef id="leftPaddle" />
+            </children>
+        </node>
+
+        <node id="boatStem">
+            <transforms>
+				<translate value3="0 0 -3.18" />
+                <rotate value3="0 -45 0" />
+            </transforms>
+            <children>
+                <primitive>
+                    <box xyz1="-0.5 0 -0.5" xyz2="0.5 4 0.5" />
+                </primitive>
+            </children> 
+        </node>    
+
+        <node id="frontRight">
+            <transforms>
+				<translate value3="3.18 0 0" />
+                <rotate value3="0 -45 0" />
+            </transforms>
+            <children>
+                <primitive>
+                    <box xyz1="-4 0 -0.5" xyz2="4 4 0.5" />
+                </primitive>
+            </children>  
+        </node>
+
+        <node id="frontLeft">
+            <transforms>
+				<translate value3="-3.18 0 0" />
+                <rotate value3="0 45 0" />
+            </transforms> 
+            <children>
+                <primitive>
+                    <box xyz1="-4 0 -0.5" xyz2="4 4 0.5" />
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="right">
+            <transforms>
+				<translate value3="5.85 0 9.5" />
+                <rotate value3="0 -90 0" />
+            </transforms> 
+            <children>
+                <primitive>
+                    <box xyz1="-7 0 -0.5" xyz2="7 4 0.5" />
+                </primitive>
+            </children>
+        </node>
+        
+        
+        <node id="left">
+            <transforms>
+				<translate value3="-5.85 0 9.5" />
+                <rotate value3="0 -90 0" />
+            </transforms> 
+            <children>
+                <primitive>
+                    <box xyz1="-7 0 -0.5" xyz2="7 4 0.5" />
+                </primitive>
+            </children>
+        </node>
+        
+        
+        <node id="backRight"> 
+            <transforms>
+				<translate value3="2.635 0 18.06" />
+                <rotate value3="0 30 0" />
+            </transforms>
+            <children>
+                <primitive>
+                    <box xyz1="-3.35 0 -0.5" xyz2="4 4 0.5" />
+                </primitive>
+            </children>
+        </node>
+        
+        
+        <node id="backLeft"> 
+            <transforms>
+				<translate value3="-2.635 0 18.06" />
+                <rotate value3="0 -30 0" />
+            </transforms>
+            <children>
+                <primitive>
+                    <box xyz1="-4 0 -0.5" xyz2="3.35 4 0.5" />
+                </primitive>
+            </children>
+        </node>
+        
+        
+        <node id="bottom">
+            <transforms>
+				<translate value3="0 0 8.5" />
+                <rotate value3="-90 0 0" />
+            </transforms> 
+            <children>
+                <primitive>
+                    <rectangle xy1="-5.5 -8" xy2="5.5 6" />
+                </primitive>
+            </children>
+        </node>
+        
+        
+        <node id="top"> 
+            <transforms>
+				<translate value3="0 4.001 0" />
+                <rotate value3="0 0 0" />
+            </transforms> 
+            <children>
+                <primitive>
+                    <box xyz1="-5.4 -0.5 2.8" xyz2="5.4 0 6" />
+                </primitive>
+            </children>
+        </node>
+        
+        
+        <node id="flag"> 
+            <children>
+                
+            </children>
+        </node>
+        
+        
+        <node id="rightPaddle"> 
+            <transforms>
+				<translate value3="8.68 2 9" />
+                <rotate value3="0 0 45" />
+            </transforms> 
+            <children>
+                <primitive>
+                    <cylinder base="0.2"
+                        top="0.2"
+                        height="10"
+                        slices="32"
+                        stacks="8"
+                        capsclose="true" />
+                </primitive>               
+            </children>
+        </node>
+        
+        
+        <node id="leftPaddle">
+            <transforms>
+				<translate value3="-8.68 2 9" />
+                <rotate value3="0 0 -45" />
+            </transforms> 
+            <children>
+                <primitive>
+                    <cylinder base="0.2"
+                        top="0.2"
+                        height="10"
+                        slices="32"
+                        stacks="8"
+                        capsclose="true" />
+                </primitive>               
+            </children>
+        </node>
 
     </graph> 
 </yaf> 
