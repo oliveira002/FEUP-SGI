@@ -49,6 +49,8 @@ The following list is comprised of several issues or improvements to the current
     - Solution suggestion: Not the greatest but go through the entire list of THREE.js functionalities, pick the best/most interesting ones, and add them as primitives (maybe)
 - Unsupported addons: All of the addons are sadly, unsupported. Addons like the Reflector are very useful to add depth to a scene.
     - Solution suggestion: unfortunately, we couldn't find a good solution for this issue. It seems that addon integration would have to be on a case-by-case basis. This just highlights one of the flaws this type of project has, and consideration to change it in the future years should be made, as it limits the creative expression of the students, making this "just another project", instead of a fun learning experience like TP1
+- **Angle values scale: The angles' scale is not explicitly defined to be either degrees or radians. Professor Augusto Sousa said they were in radians, but the demo is in degrees so, which one is it?**
+    - **Solution suggestion: define a scale. Degrees is an easier scale to use when variables aren't supported. Have the students be responsible for the  parsing of the values. This means that default values for thetalength or philength need to be changed.**
 
 
 #### Compiled by

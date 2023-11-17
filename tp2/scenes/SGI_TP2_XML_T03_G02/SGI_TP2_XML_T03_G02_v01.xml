@@ -3,7 +3,7 @@
 
 	<!-- Credits of the original file go to Group 2, class 3 of course MEIC-SGI school year 2023/2024, FEUP, University of Porto -->
 	
-    <globals background="0.06 0.06 0.06 1" ambient="0.333 0.333 0.333 1" /> 
+    <globals background="0.06 0.06 0.06 1" ambient="1 1 1 1" /> 
 
 
     <skybox size="100 100 100" center="0 0 0" emissive="1.0 1.0 1.0 1.0" intensity="1.0" up="./textures/pine.jpg" down="./textures/pine.jpg" left="./textures/pine.jpg" right="./textures/pine.jpg" front="./textures/pine.jpg" back="./textures/pine.jpg"/>
@@ -49,144 +49,50 @@
 
     <!-- bloco de texturas. Este bloco tem de existir mas pode estar vazio, se nao forem usadas texturas --> 
     <textures>        
-        <texture id="bloodPoolTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/blood.png" />
-		<texture id="boxTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/box.jpg" />
-		<texture id="cakeInsideTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/cake_inside.jpg" />
-		<texture id="cakeOutsideTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/cake_outside.jpeg" />
-		<texture id="cautionSignTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/caution.jpg" />
-        <texture id="ceilingTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/ceiling.jpg" />
-		<texture id="corridorTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/corridor.png" />
-		<texture id="tableCoverTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/cover.jpg" />
-		<texture id="doorTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/door.png" />
-		<texture id="floorTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/floor.jpg" />
-        <texture id="flowerCenterTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/flower.jpg" />
-        <texture id="furnitureTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/furniture.jpg" />
-        <texture id="furnitureHandleTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/handle.jpg" />
-        <texture id="bloodyHandsTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/help.png" />
-        <texture id="newspaperTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/newspaper.jpg" />
-        <texture id="woodenFrameTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/oldwood.jpg" />
-        <texture id="partyHat1Tex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/partyhat.jpg" />
-        <texture id="partyHat2Tex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/partyhat2.jpg" />
-        <texture id="partyHat3Tex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/partyhat3.jpg" />
-        <texture id="partyHat4Tex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/partyhat4.jpg" />
-        <texture id="flowerPetalTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/petals.jpg" />
-        <texture id="poster1Tex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/poster1.jpg" />
-        <texture id="poster2Tex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/poster2.jpg" />
-        <texture id="outsideWindowTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/prison.jpg" />
-        <texture id="springTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/spring.png" />
-        <texture id="tableLegTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/table_leg.jpg" />
-        <texture id="tableTopTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/table.jpg" />
-        <texture id="vaseTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/vase.jpg" />
-        <texture id="ventTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/vent.png" />
-        <texture id="tvVideoTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/tv.mp4" />
-        <texture id="wallDoorTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/wall_door.png" />
-        <texture id="wallWindowTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/wall_hole.png" />
-        <texture id="wallTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/wall.png" />
         <texture id="waterTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/water.png" />
-        <texture id="stoneBlock" filepath="scenes/SGI_TP2_XML_T03_G02/textures/stoneblock.jpg" />
-        <texture id="darkerStoneBlock" filepath="scenes/SGI_TP2_XML_T03_G02/textures/blackstoneblock.jpg" />
+        <texture id="stoneBlockTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/stoneblock.jpg" />
+        <texture id="darkerStoneBlockTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/blackstoneblock.jpg" />
+        <texture id="sandTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/sand.jpg" />
     </textures> 
 
     <materials> 
 		
-        <!-- Default values for required attributes: 
-        emissive="0.0 0.0 0.0 1" 
-        color="1.0 1.0 1.0 1.0" 
-        specular="0.07 0.07 0.07 0" 
-        shininess="30"
+        <!-- Default values for required attributes:
+        <material id="" 
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 1.0" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            textureref="" />
         -->
 
-		<material id="wallDefApp" 
-            emissive="0.0 0.0 0.0 1" 
-			color="1.0 1.0 1.0 1.0" 
-            specular="0 0 0 0" 
-            shininess="0" 
-            textureref="wallTex" />
-
-        <material id="wallDoorApp" 
-            emissive="0.0 0.0 0.0 1" 
-			color="1.0 1.0 1.0 1.0" 
-            specular="0 0 0 0" 
-            shininess="0"
-            textureref="wallDoorTex" />
-        
-        <material id="wallWindowApp" 
-            emissive="0.0 0.0 0.0 1" 
-			color="1.0 1.0 1.0 1.0" 
-            specular="0 0 0 0" 
-            shininess="0" 
-            textureref="wallWindowTex" />
-
-        <!-- Missing: transparent = true
-                      opacity = 0.9 -->
-        <material id="floorApp" 
+        <material id="waterApp" 
             emissive="0.0 0.0 0.0 1" 
 			color="1.0 1.0 1.0 1.0" 
             specular="0.07 0.07 0.07 0" 
             shininess="30" 
             textureref="waterTex" />
 
-        <material id="ceilingApp" 
-            emissive="0.0 0.0 0.0 1" 
-			color="1.0 1.0 1.0 1.0" 
-            specular="1.0 1.0 1.0 0" 
-            shininess="0" 
-            textureref="ceilingTex"
-            texlength_s="6.5"
-            texlength_t="9"
-            bumpref="ceilingTex"
-            bumpscale="0.05" />
-
-        <material id="tableTopApp"
-            emissive="0.0 0.0 0.0 1" 
-			color="0.94, 0.90, 0.85 1.0" 
-            specular="0.07 0.07 0.07 0" 
-            shininess="100" 
-            textureref="tableTopTex"
-            twosided="true" />
-
-        <material id="tableLegApp"
-            emissive="0.0 0.0 0.0 1" 
-			color="1.0 1.0 1.0 1.0" 
-            specular="1 1 1 0" 
-            shininess="30" 
-            textureref="tableLegTex"/>
-
-        <material id="tableCoverApp"
-            emissive="0.0 0.0 0.0 1" 
-			color="1.0 1.0 1.0 1.0" 
-            specular="1 1 1 0" 
-            shininess="30" 
-            textureref="tableCoverTex"/>
-        
-        <material id="shelfApp"
-            emissive="0.0 0.0 0.0 1" 
-			color="0.918 0.867 0.792 1.0" 
-            specular="0.918 0.867 0.792 1.0" 
-            shininess="10" 
-            twosided="true"
-            textureref="furnitureTex"/>
-        
-        <material id="boxApp"
+        <material id="stoneBlockApp"
             emissive="0.0 0.0 0.0 1" 
             color="1.0 1.0 1.0 1.0" 
             specular="0.07 0.07 0.07 0" 
             shininess="30"
-            textureref="boxTex"/>
+            textureref="stoneBlockTex"/>
         
-        <material id="stoneBlock"
+        <material id="darkerStoneBlockApp"
             emissive="0.0 0.0 0.0 1" 
             color="1.0 1.0 1.0 1.0" 
             specular="0.07 0.07 0.07 0" 
             shininess="30"
-            textureref="stoneBlock"/>
+            textureref="darkerStoneBlockTex"/>
         
-        <material id="darkerStoneBlock"
+        <material id="sandApp" 
             emissive="0.0 0.0 0.0 1" 
             color="1.0 1.0 1.0 1.0" 
             specular="0.07 0.07 0.07 0" 
             shininess="30"
-            textureref="darkerStoneBlock"/>
+            textureref="sandTex" />
 			
     </materials> 
 
@@ -195,47 +101,12 @@
 		<node id="scene"> 
             <children>
 
-				<noderef id="floor" />
+				<noderef id="ocean" />
+                <noderef id="island" />
 
 
 				<!--<noderef id="pillar" /> --> <!-- plate, cake, candle, newspaper, table cover, hats -->
                 <noderef id="dock" />
-                <!--
-                <noderef id="chair1" />
-                <noderef id="chair2" />
-                <noderef id="chair3" />
-
-                <noderef id="portrait1" />
-                <noderef id="portrait2" />
-
-                <noderef id="furniture" />
-
-                <noderef id="tv" />
-
-                <noderef id="window" />
-                
-                -->
-                <!--
-
-                <noderef id="beetleCar" />
-
-                <noderef id="flowerVase" /> <!- Vase, flower ->
-
-                <noderef id="cautionSign" />
-
-                <noderef id="bloodPool" />
-
-                <noderef id="wallBlood" />
-
-                <noderef id="vent" />
-
-                <noderef id="spotlightObject1" />
-                <noderef id="spotlightObject2" />
-                -->
-
-                <!--
-                <noderef id="presenceLight" />
-                -->
 
                 <spotlight id="light1" enabled="true" 
                     color="1.0 1.0 1.0 1" 
@@ -252,16 +123,25 @@
             </children> 
         </node>
 
-        <node id="floor">
+        <node id="ocean">
             <transforms>
 				<rotate value3="-90 0 0" />
             </transforms> 
 
-			<materialref id="floorApp" />
+			<materialref id="waterApp" />
 			
             <children>             
                 <primitive>
-                    <rectangle xy1="-32.5 -36" xy2="32.5 36" />
+                    <rectangle xy1="-100 -100" xy2="100 100" />
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="island">
+            <materialref id="sandApp" />
+            <children>             
+                <primitive>
+                    <sphere radius="40" slices="20" stacks="32" thetalength="10"/>
                 </primitive>
             </children> 
         </node>

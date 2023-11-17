@@ -342,10 +342,10 @@ class MyContents  {
                     metrics.stacks,
                     metrics.phistart,
                     metrics.philength,
-                    metrica.thetastart,
+                    metrics.thetastart,
                     metrics.thetalength
                 )
-                
+
                 let mesh = new THREE.Mesh(prim, mat)
                 mesh.receiveShadow = true
                 mesh.castShadow = true
