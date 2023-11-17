@@ -102,7 +102,9 @@
             color="1.0 1.0 1.0 1.0" 
             specular="0.07 0.07 0.07 0" 
             shininess="30"
-            textureref="sandTex" />
+            textureref="sandTex"
+            bumpref="sandTex"
+            bumpscale="1" />
 			
     </materials> 
 
@@ -114,22 +116,20 @@
 				<noderef id="ocean" />
                 <noderef id="island" />
 
-
-				<!--<noderef id="pillar" /> --> <!-- plate, cake, candle, newspaper, table cover, hats -->
                 <noderef id="dock" />
                 <noderef id="pillar" /> 
                 <noderef id="pillar2" /> 
 
                 <spotlight id="light1" enabled="true" 
                     color="1.0 1.0 1.0 1" 
-                    intensity="550"
+                    intensity="200"
                     distance="0"
-                    decay="2.0"
+                    decay="1"
                     castshadow="true"
-                    position="5.87 9.28 -8.14" 
-                    target="2 3.5 8.98"
+                    position="0 100 0" 
+                    target="0 0 0"
                     penumbra="0.5"
-                    angle="45" 
+                    angle="89" 
                 />
 
             </children> 
@@ -144,24 +144,30 @@
 			
             <children>             
                 <primitive>
-                    <rectangle xy1="-100 -100" xy2="100 100" />
+                    <rectangle xy1="-120 -120" xy2="120 120" />
                 </primitive>
             </children> 
         </node>
 
         <node id="island">
+            <transforms>
+				<translate value3="0 -141 0" />
+            </transforms> 
+
             <materialref id="sandApp" />
+
             <children>             
                 <primitive>
-                    <sphere radius="40" slices="20" stacks="32" thetalength="10"/>
+                    <sphere radius="150" slices="20" stacks="32" thetalength="0.34906585"/>
                 </primitive>
             </children> 
         </node>
 
         <node id="dock">
             <transforms>
-                <translate value3="0 0.8 0" />
-                <rotate value3= "0 7 0"/> 
+                <translate value3="-10 2 68" />
+                <rotate value3="0 -7 0"/>
+                <scale value3="5 5 5"/> 
             </transforms>
 
             <materialref id="woodApp"/>
