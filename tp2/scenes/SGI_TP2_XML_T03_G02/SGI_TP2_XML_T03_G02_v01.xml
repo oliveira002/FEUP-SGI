@@ -36,6 +36,8 @@
         <texture id="roofTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/roof.jpg" />
         <texture id="boatTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/boat.jpg" />
         <texture id="rockTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/rock.jpg" />
+        <texture id="skyTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/sky.jpg" />
+        <texture id="crackedTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/cracked.jpg" />
     </textures> 
 
     <materials> 
@@ -70,17 +72,71 @@
             shininess="30"
             textureref="darkStoneBlockTex"/>
 
+        <material id="skyApp"
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 1.0" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            twosided="true"
+            textureref="skyTex"/>
+        
+        <material id="crackedApp"
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 1.0" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            twosided="true"
+            textureref="crackedTex"/>
+
     </materials> 
 
     <graph rootid="scene"> 	
 		<node id="scene"> 
             <children>
                 <!--<noderef id="pillar" /> -->
+                <noderef id="sky"/>
                 <noderef id="floor"/>
                 <noderef id="frontPillars"/>
                 <noderef id="backPillars"/>
                 <noderef id="grid1"/>
                 <noderef id="grid2"/>
+                <noderef id="grid3"/>
+                <noderef id="grid4"/>
+                <noderef id="houseFloor"/>
+                <noderef id="houseFloor2"/>
+            </children> 
+        </node>
+
+        <!--<node id="sky">
+            <materialref id="skyApp" />
+            <transforms>
+				<translate value3="0 -25 0" />
+            </transforms> 
+            <children>             
+                <primitive>
+                    <sphere radius="60" slices="64" stacks="64" thetalength="1.2" />
+                </primitive>
+            </children> 
+        </node>-->
+
+        <node id="houseFloor">
+            <materialref id="crackedApp"/>
+            <children>             
+                <primitive>
+                    <box xyz1="-10 0 -8" xyz2="10 0.7 8" />
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="houseFloor2">
+            <materialref id="crackedApp"/>
+            <transforms>
+				<translate value3="0 0.7 0" />
+            </transforms> 
+            <children>             
+                <primitive>
+                    <box xyz1="-8 0 -6" xyz2="8 0.5 6" />
+                </primitive>
             </children> 
         </node>
 
@@ -93,7 +149,7 @@
 			
             <children>             
                 <primitive>
-                    <rectangle xy1="-35 -35" xy2="35 35" />
+                    <rectangle xy1="-37 -37" xy2="45 37" />
                 </primitive>
             </children> 
         </node>
@@ -139,6 +195,30 @@
         <node id="grid2">
             <transforms>
                 <translate value3="32.5 0 -23.5" />
+            </transforms>
+            <materialref id="darkStoneBlockApp" />
+            <children>             
+                <noderef id="grid"/>
+                <noderef id="smallerGrid1"/>
+                <noderef id="gridRows1"/>
+            </children> 
+        </node>
+
+        <node id="grid3">
+            <transforms>
+                <translate value3="-32.5 0 -23.5" />
+            </transforms>
+            <materialref id="darkStoneBlockApp" />
+            <children>             
+                <noderef id="grid"/>
+                <noderef id="smallerGrid1"/>
+                <noderef id="gridRows1"/>
+            </children> 
+        </node>
+
+        <node id="grid4">
+            <transforms>
+                <translate value3="-32.5 0 16" />
             </transforms>
             <materialref id="darkStoneBlockApp" />
             <children>             
