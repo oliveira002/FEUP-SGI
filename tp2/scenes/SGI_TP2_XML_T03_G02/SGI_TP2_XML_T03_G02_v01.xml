@@ -293,7 +293,7 @@
                         distance="1000"
                         decay="2.0"
                         castshadow="false"
-                        position="8 12 46" 
+                        position="0 12 0" 
                 />
                 <noderef id= "lamp"/>
             </children>
@@ -311,7 +311,7 @@
                         distance="1000"
                         decay="2.0"
                         castshadow="false"
-                        position="-8 12 46" 
+                        position="0 12 0" 
                 />
                 <noderef id= "lamp"/>
             </children>
