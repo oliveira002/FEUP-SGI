@@ -160,7 +160,7 @@
                 <noderef id="leftTrees"/>
                 <noderef id="rightTrees"/>
                 <noderef id="treeRow"/>
-                <!--<noderef id="fountain"/>-->
+                <noderef id="fountain"/>
                 <noderef id="lamp1"/>
                 <noderef id="lamp2"/>
             </children> 
