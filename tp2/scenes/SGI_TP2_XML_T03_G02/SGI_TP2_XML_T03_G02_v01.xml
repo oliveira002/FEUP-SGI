@@ -3,7 +3,7 @@
 
 	<!-- Credits of the original file go to Group 2, class 3 of course MEIC-SGI school year 2023/2024, FEUP, University of Porto -->
 	
-    <globals background="0.06 0.06 0.06 1" ambient="0.2 0.2 0.2 1" /> 
+    <globals background="0.06 0.06 0.06 1" ambient="0.1 0.1 0.1 1" /> 
 
     <fog color="0.3 0.3 0.3 1.0" near="0.0" far="250.0" />
     <skybox size="140 140 140" center="0 70 0" emissive="0.01 0.01 0.01 1" intensity="1.0" up="scenes/SGI_TP2_XML_T03_G02/textures/up.jpg" down="scenes/SGI_TP2_XML_T03_G02/textures/up.jpg" left="scenes/SGI_TP2_XML_T03_G02/textures/front.jpg" right="scenes/SGI_TP2_XML_T03_G02/textures/right.jpg" front="scenes/SGI_TP2_XML_T03_G02/textures/left.jpg" back="scenes/SGI_TP2_XML_T03_G02/textures/back.jpg"/>
@@ -42,6 +42,7 @@
         <texture id="fountainTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/fountain.jpg"/>
         <texture id="postTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/post.jpg"/>
         <texture id="postLampTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/post2.png"/>
+        <texture id="pumpkinTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/pumpkin.png"/>
     </textures> 
 
     <materials> 
@@ -144,6 +145,14 @@
             texlength_t="1"
             textureref="postTex"/>
         
+        <material id="pumpkinApp"
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 0.99" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            twosided="true"
+            textureref="pumpkinTex"/>
+        
 
     </materials> 
 
@@ -163,6 +172,8 @@
                 <noderef id="fountain"/>
                 <noderef id="lamp1"/>
                 <noderef id="lamp2"/>
+                <noderef id="pumpkin1"/>
+                <noderef id="pumpkin2"/>
             </children> 
         </node>
 
@@ -176,29 +187,7 @@
                     <sphere radius="60" slices="64" stacks="64" thetalength="1.2" />
                 </primitive>
             </children> 
-        </node>
-
-        <node id="houseFloor">
-            <materialref id="crackedApp"/>
-            <children>             
-                <primitive>
-                    <box xyz1="-10 0 -8" xyz2="10 0.7 8" />
-                </primitive>
-            </children> 
-        </node>
-
-        <node id="houseFloor2">
-            <materialref id="crackedApp"/>
-            <transforms>
-				<translate value3="0 0.7 0" />
-            </transforms> 
-            <children>             
-                <primitive>
-                    <box xyz1="-8 0 -6" xyz2="8 0.5 6" />
-                </primitive>
-            </children> 
-        </node>-->
-
+        </node> -->
         <node id="floor">
             <transforms>
 				<rotate value3="-90 0 0" />
@@ -213,7 +202,54 @@
             </children> 
         </node>
 
+        <node id="pumpkin1">
+            <transforms>
+                <scale value3= "1 1 1.1"/>
+                <translate value3= "5 1.2 45"/>
+                <rotate value3= "0 -120 0"/>
+            </transforms>
+            <materialref id="pumpkinApp" />
+            <children>
+                <pointlight id="light1" enabled="true" 
+                        color="1 0.4 0.3 1" 
+                        intensity="2.0"
+                        distance="1000"
+                        decay="2.0"
+                        castshadow="false"
+                        position="0 1 0" 
+                />
+                <primitive>
+                    <sphere radius="1.2" slices="7" stacks="7" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="pumpkin2">
+            <transforms>
+                <scale value3= "1 1 1.1"/>
+                <translate value3= "-5 1.2 45"/>
+                <rotate value3= "0 -60 0"/>
+            </transforms>
+            <materialref id="pumpkinApp" />
+            <children>
+                <pointlight id="light1" enabled="true" 
+                        color="1 0.4 0.3 1" 
+                        intensity="2.0"
+                        distance="1000"
+                        decay="2.0"
+                        castshadow="false"
+                        position="0 1 0" 
+                />
+                <primitive>
+                    <sphere radius="1.2" slices="7" stacks="7" />
+                </primitive>
+            </children>
+        </node>
+
         <node id="fountain">
+            <transforms>
+                <translate value3= "0.7 0 0"/>
+            </transforms>
             <materialref id="fountainApp" />
             <children>
                 <noderef id="bottomFountain"/>
@@ -251,6 +287,14 @@
             </transforms>
             <materialref id="postApp" />
             <children>
+                 <pointlight id="light2" enabled="true" 
+                        color="1 1 0 1"  
+                        intensity="5.0"
+                        distance="1000"
+                        decay="2.0"
+                        castshadow="false"
+                        position="8 12 46" 
+                />
                 <noderef id= "lamp"/>
             </children>
         </node>
@@ -261,6 +305,14 @@
             </transforms>
             <materialref id="postApp" />
             <children>
+                <pointlight id="light3" enabled="true" 
+                        color="1 1 0 1" 
+                        intensity="5.0"
+                        distance="1000"
+                        decay="2.0"
+                        castshadow="false"
+                        position="-8 12 46" 
+                />
                 <noderef id= "lamp"/>
             </children>
         </node>
@@ -1051,7 +1103,7 @@
             <transforms>
                 <translate value3 = "7.5 0 0"/> 
             </transforms>
-            <materialref id="stoneBlockApp" />
+            
             <children>             
                 <noderef id="gridComponent"/>
             </children> 
@@ -1061,7 +1113,6 @@
             <transforms>
                 <translate value3 = "15 0 0"/> 
             </transforms>
-            <materialref id="stoneBlockApp" />
             <children>             
                 <noderef id="gridComponent"/>
             </children> 
@@ -1079,6 +1130,7 @@
         </node>
 
         <node id="gridRow">
+            <materialref id="darkStoneBlockApp"/>
             <transforms>
                 <translate value3 = "3.6 2.1 0"/> 
                 <rotate value3 = "0 0 90"/> 
@@ -1204,7 +1256,7 @@
 
         <node id="pillar">
             <transforms>
-                <scale value3= "1 0.9 1"/>
+                <scale value3= "1.2 1.2 1.2"/>
                 <translate value3= "0 0.675 0"/>
             </transforms>
             <materialref id="darkStoneBlockApp" />

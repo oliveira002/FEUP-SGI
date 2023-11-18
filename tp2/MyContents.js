@@ -289,7 +289,8 @@ class MyContents  {
 
             if (child.type === "spotlight" || child.type === "pointlight" || child.type === "directionallight") {
                 // Handle lights
-                this.dealWithLights(child);
+                let light =this.dealWithLights(child);
+                cur.add(light)
             } else if (child.type === "primitive" && child.subtype != "nurbs") {
                 // Handle primitives
                 let mesh = this.dealWithPrimitive(child, node.materialIds);
@@ -402,7 +403,7 @@ class MyContents  {
                 let depthSeg = metrics.parts_z
 
                 let prim = new THREE.BoxGeometry(width,height,depth,widthSeg,heightSeg,depthSeg)
-                let texture = mat.map
+                //let texture = mat.map
                 //texture.wrapS = THREE.RepeatWrapping;
                 //texture.wrapT = THREE.RepeatWrapping;
                 //texture.repeat.set(7,1)
@@ -432,20 +433,22 @@ class MyContents  {
                 light.name = node.id
                 
                 light.position.set(...(node.position));
+                
                 light.castShadow = node.castshadow
                 light.shadow.camera.far = node.shadowfar
                 light.shadow.mapSize.width = node.shadowmapsize
                 light.shadow.mapSize.height = node.shadowmapsize
                 this.lights[node.id] = light
             
-                const lightHelper = new THREE.PointLightHelper(light,"#FFFFFF")
+                const lightHelper = new THREE.PointLightHelper(light,1,"#FFFFFF")
                 
+                /*
                 if(node.enabled){
                     this.app.scene.add(light)
                     this.app.scene.add(lightHelper)
-                }
+                }*/
 
-                return;
+                return light;
             }
             case "spotlight": {
                 let light = new THREE.SpotLight( 
@@ -473,12 +476,13 @@ class MyContents  {
                 
                 const lightHelper = new THREE.SpotLightHelper(light,"#FFFFFF")
                 
+                /*
                 if(node.enabled){
                     this.app.scene.add(light)
                     this.app.scene.add(lightHelper)
-                }
+                }*/
 
-                return;
+                return light;
             }
             case "directionallight": {
                 let light = new THREE.DirectionalLight( 
@@ -506,12 +510,13 @@ class MyContents  {
                 
                 const lightHelper = new THREE.DirectionalLightHelper(light,"#FFFFFF")
                 
+                /*
                 if(node.enabled){
                     this.app.scene.add(light)
                     this.app.scene.add(lightHelper)
-                }
+                }*/
 
-                return;
+                return light;
             }
             default:
                 return;
