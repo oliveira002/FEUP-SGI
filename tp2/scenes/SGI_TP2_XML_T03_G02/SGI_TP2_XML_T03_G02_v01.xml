@@ -119,6 +119,7 @@
                 <noderef id="leftWall"/>
                 <noderef id="leftTrees"/>
                 <noderef id="rightTrees"/>
+                <noderef id="treeRow"/>
             </children> 
         </node>
 
@@ -196,6 +197,127 @@
             </children>
         </node>
 
+        <node id="treeRow">
+            <transforms>
+				<translate value3="0 0 -60" />
+            </transforms> 
+            <children>
+                <noderef id="oldTree1"/>
+                <noderef id="oldTree2"/>
+                <noderef id="oldTree3"/>
+                <noderef id="oldTree4"/>
+                <noderef id="oldTree5"/>
+            </children>
+        </node>
+
+        <node id="oldTree">
+            <materialref id="leafApp" />
+			<transforms>
+                <translate value3="0 0 0" />
+            </transforms> 
+            <children>             
+				<noderef id="trunk" />
+				<noderef id="treeSeg1" />
+				<noderef id="treeSeg2" />
+				<noderef id="treeSeg3" />
+            </children> 
+        </node>
+
+        <node id="oldTree1">
+
+			<transforms>
+                <scale value3 = "1.8 1.8 1.8"/>
+                <translate value3="0 0 3" />
+            </transforms> 
+            <children>             
+				<noderef id="oldTree"/>
+            </children> 
+        </node>
+
+        <node id="oldTree2">
+            <materialref id="leafApp" />
+			<transforms>
+                <scale value3 = "2 2 2"/>
+                <translate value3="12 0 -2" />
+            </transforms> 
+            <children>             
+				<noderef id="oldTree"/>
+            </children> 
+        </node>
+
+        <node id="oldTree3">
+            <materialref id="leafApp" />
+			<transforms>
+                <scale value3 = "1.5 1.5 1.5"/>
+                <translate value3="22 0 2" />
+            </transforms> 
+            <children>             
+				<noderef id="oldTree"/>
+            </children> 
+        </node>
+
+        <node id="oldTree4">
+            <materialref id="leafApp" />
+			<transforms>
+                <scale value3 = "2.1 2.1 2.1"/>
+                <translate value3="-12 0 1.5" />
+            </transforms> 
+            <children>             
+				<noderef id="oldTree"/>
+            </children> 
+        </node>
+
+        <node id="oldTree5">
+            <materialref id="leafApp" />
+			<transforms>
+                <scale value3 = "1.8 1.8 1.8"/>
+                <translate value3="-24 0 -1" />
+            </transforms> 
+            <children>             
+				<noderef id="oldTree"/>
+            </children> 
+        </node>
+
+
+
+        <node id="treeSeg1">
+			<transforms>
+				<translate value3="0 2.7 0" />
+            </transforms> 
+						
+            <children>             
+                <primitive>
+                    <cylinder base="2" top="1" height="1.9" slices="7" stacks="7" capsclose="true"  />
+                </primitive>
+            </children> 
+        </node>
+		
+		<node id="treeSeg2">
+			<transforms>
+				<translate value3="0 4.6 0" />
+            </transforms> 
+			
+			
+            <children>
+                <primitive >
+                    <cylinder base="1.5" top="0.75" height="2" slices="7" stacks="7" capsclose="true"  />
+                </primitive>
+            </children> 
+        </node>
+		
+		<node id="treeSeg3">
+			<transforms>
+				<translate value3="0 6.6 0" />
+            </transforms> 
+			
+            <children>             
+                <primitive>
+                    <cylinder base="0.9" top="0" height="2" slices="7" stacks="7" capsclose="true"  />
+                </primitive>
+
+            </children> 
+        </node>
+
         <node id="tree"> 
             <materialref id="leafApp" />
             <transforms>
@@ -214,7 +336,7 @@
         <node id="tree1"> 
             <transforms>
                 <scale value3="2 2 2" />
-				<translate value3="-55 0 -35" />
+				<translate value3="-58 0 -35" />
             </transforms> 
             <children>        
                 <noderef id="tree"/>
@@ -224,7 +346,7 @@
         <node id="tree2"> 
             <transforms>
                 <scale value3="1.8 1.8 1.8" />
-				<translate value3="-55 0 -17" />
+				<translate value3="-52 0 -17" />
             </transforms> 
             <children>        
                 <noderef id="tree"/>
@@ -234,7 +356,7 @@
         <node id="tree3"> 
             <transforms>
                 <scale value3="2.2 2.2 2.2" />
-				<translate value3="-55 0 2" />
+				<translate value3="-51 0 2" />
             </transforms> 
             <children>        
                 <noderef id="tree"/>
@@ -254,7 +376,7 @@
         <node id="tree5"> 
             <transforms>
                 <scale value3="1.9 1.9 1.9" />
-				<translate value3="-55 0 32" />
+				<translate value3="-52 0 32" />
             </transforms> 
             <children>        
                 <noderef id="tree"/>
