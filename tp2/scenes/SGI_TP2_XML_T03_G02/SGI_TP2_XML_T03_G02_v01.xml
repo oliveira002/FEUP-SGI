@@ -32,12 +32,13 @@
         <texture id="dockTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/dock.jpg" />
         <texture id="woodTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/wood.jpg" />
         <texture id="sandTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/sand.jpg" />
-        <texture id="leafTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/leaf.png" />
         <texture id="roofTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/roof.jpg" />
         <texture id="boatTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/boat.jpg" />
         <texture id="rockTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/rock.jpg" />
         <texture id="skyTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/sky.jpg" />
         <texture id="crackedTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/cracked.jpg" />
+        <texture id="leafTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/leaf.jpg" />
+        <texture id="trunkTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/trunk.jpg" />
     </textures> 
 
     <materials> 
@@ -88,6 +89,22 @@
             twosided="true"
             textureref="crackedTex"/>
 
+        <material id="trunkApp"
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 1.0" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            twosided="true"
+            textureref="trunkTex"/>
+        
+        <material id="leafApp"
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 1.0" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            twosided="true"
+            textureref="leafTex"/>
+
     </materials> 
 
     <graph rootid="scene"> 	
@@ -100,6 +117,8 @@
                 <noderef id="houseFloor2"/>
                 <noderef id="rightWall"/>
                 <noderef id="leftWall"/>
+                <noderef id="leftTrees"/>
+                <noderef id="rightTrees"/>
             </children> 
         </node>
 
@@ -147,6 +166,188 @@
                 <primitive>
                     <rectangle xy1="-70 -70" xy2="70 70" />
                 </primitive>
+            </children> 
+        </node>
+
+        <node id="leftTrees">
+            <children>
+                <noderef id="tree1"/>
+                <noderef id="tree2"/>
+                <noderef id="tree3"/>
+                <noderef id="tree4"/>
+                <noderef id="tree5"/>
+                <noderef id="tree6"/>
+                <noderef id="tree7"/>
+            </children>
+        </node>
+
+         <node id="rightTrees">
+            <transforms>
+				<scale value3="-1 1 1" />
+            </transforms> 
+            <children>
+                <noderef id="tree1"/>
+                <noderef id="tree2"/>
+                <noderef id="tree3"/>
+                <noderef id="tree4"/>
+                <noderef id="tree5"/>
+                <noderef id="tree6"/>
+                <noderef id="tree7"/>
+            </children>
+        </node>
+
+        <node id="tree"> 
+            <materialref id="leafApp" />
+            <transforms>
+				<translate value3="0 0 0" />
+            </transforms> 
+            <children>        
+                <noderef id="trunk"/>
+                <noderef id="leaf1"/>     
+                <noderef id="leaf2"/> 
+                <noderef id="leaf3"/> 
+                <noderef id="leaf4"/> 
+                <noderef id="leaf5"/> 
+            </children> 
+        </node>
+
+        <node id="tree1"> 
+            <transforms>
+                <scale value3="2 2 2" />
+				<translate value3="-55 0 -35" />
+            </transforms> 
+            <children>        
+                <noderef id="tree"/>
+            </children> 
+        </node>
+
+        <node id="tree2"> 
+            <transforms>
+                <scale value3="1.8 1.8 1.8" />
+				<translate value3="-55 0 -17" />
+            </transforms> 
+            <children>        
+                <noderef id="tree"/>
+            </children> 
+        </node>
+
+        <node id="tree3"> 
+            <transforms>
+                <scale value3="2.2 2.2 2.2" />
+				<translate value3="-55 0 2" />
+            </transforms> 
+            <children>        
+                <noderef id="tree"/>
+            </children> 
+        </node>
+
+        <node id="tree4"> 
+            <transforms>
+                <scale value3="1.5 1.5 1.5" />
+				<translate value3="-55 0 18" />
+            </transforms> 
+            <children>        
+                <noderef id="tree"/>
+            </children> 
+        </node>
+
+        <node id="tree5"> 
+            <transforms>
+                <scale value3="1.9 1.9 1.9" />
+				<translate value3="-55 0 32" />
+            </transforms> 
+            <children>        
+                <noderef id="tree"/>
+            </children> 
+        </node>
+
+        <node id="tree6"> 
+            <transforms>
+                <scale value3="1.6 1.6 1.6" />
+				<translate value3="-40 0 42" />
+            </transforms> 
+            <children>        
+                <noderef id="tree"/>
+            </children> 
+        </node>
+
+        <node id="tree7"> 
+            <transforms>
+                <scale value3="1.6 1.6 1.6" />
+				<translate value3="-37 0 -44" />
+            </transforms> 
+            <children>        
+                <noderef id="tree"/>
+            </children> 
+        </node>
+
+        <node id="trunk"> 
+            <transforms>
+				<translate value3="0 2.5 0" />
+            </transforms> 
+			<materialref id="trunkApp" />
+            <children>             
+                <primitive>
+                    <cylinder base="0.3" top="0.3" height="5" slices="7" stacks="7" capsclose="true" />
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="leaf"> 
+            <transforms>
+				<translate value3="0 2 0" />
+            </transforms> 
+            <children>             
+                <primitive>
+                    <sphere radius="2" slices="8" stacks="8"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="leaf1"> 
+            <transforms>
+				<translate value3="2 3 0" />
+            </transforms> 
+            <children>             
+                <noderef id="leaf"/>
+            </children> 
+        </node>
+
+        <node id="leaf2"> 
+            <transforms>
+				<translate value3="0 3 2" />
+            </transforms> 
+            <children>             
+                <noderef id="leaf"/>
+            </children> 
+        </node>
+
+        <node id="leaf3"> 
+            <transforms>
+				<translate value3="-2 3 0" />
+            </transforms> 
+            <children>             
+                <noderef id="leaf"/>
+            </children> 
+        </node>
+
+        <node id="leaf4"> 
+            <transforms>
+				<translate value3="0 3 -2" />
+            </transforms> 
+			<materialref id="floorApp" />
+            <children>             
+                <noderef id="leaf"/>
+            </children> 
+        </node>
+
+        <node id="leaf5"> 
+            <transforms>
+				<translate value3="0 5 0" />
+            </transforms> 
+			<materialref id="floorApp" />
+            <children>             
+                <noderef id="leaf"/>
             </children> 
         </node>
 
