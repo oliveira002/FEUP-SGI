@@ -612,7 +612,7 @@
 			<materialref id="trunkApp" />
             <children>             
                 <primitive>
-                    <cylinder base="0.3" top="0.3" height="5" slices="7" stacks="7" capsclose="true" />
+                    <cylinder base="0.5" top="0.5" height="5" slices="7" stacks="7" capsclose="true" />
                 </primitive>
             </children> 
         </node>
