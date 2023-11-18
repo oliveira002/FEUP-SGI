@@ -5,8 +5,8 @@
 	
     <globals background="0.06 0.06 0.06 1" ambient="1 1 1 1" /> 
 
-
-    <skybox size="70 70 70" center="0 35 0" emissive="1.0 1.0 1.0 1.0" intensity="1.0" up="scenes/SGI_TP2_XML_T03_G02/textures/up.jpg" down="scenes/SGI_TP2_XML_T03_G02/textures/up.jpg" left="scenes/SGI_TP2_XML_T03_G02/textures/front.jpg" right="scenes/SGI_TP2_XML_T03_G02/textures/right.jpg" front="scenes/SGI_TP2_XML_T03_G02/textures/left.jpg" back="scenes/SGI_TP2_XML_T03_G02/textures/back.jpg"/>
+    <fog color="0.3 0.3 0.3 1.0" near="0.0" far="190.0" />
+    <skybox size="140 140 140" center="0 70 0" emissive="0.01 0.01 0.01 1" intensity="1.0" up="scenes/SGI_TP2_XML_T03_G02/textures/up.jpg" down="scenes/SGI_TP2_XML_T03_G02/textures/up.jpg" left="scenes/SGI_TP2_XML_T03_G02/textures/front.jpg" right="scenes/SGI_TP2_XML_T03_G02/textures/right.jpg" front="scenes/SGI_TP2_XML_T03_G02/textures/left.jpg" back="scenes/SGI_TP2_XML_T03_G02/textures/back.jpg"/>
 
     <cameras initial="Cam 1" > 
         <perspective id="Cam 1" 
@@ -38,7 +38,8 @@
         <texture id="skyTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/sky.jpg" />
         <texture id="crackedTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/cracked.jpg" />
         <texture id="leafTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/leaf.jpg" />
-        <texture id="trunkTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/trunk.jpg" />
+        <texture id="trunkTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/trunk.jpg"/>
+        <texture id="fountainTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/fountain.jpg"/>
     </textures> 
 
     <materials> 
@@ -104,6 +105,22 @@
             shininess="30"
             twosided="true"
             textureref="leafTex"/>
+        
+        <material id="waterApp"
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 1.0" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            twosided="true"
+            textureref="waterTex"/>
+        
+        <material id="fountainApp"
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 1.0" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            twosided="true"
+            textureref="fountainTex"/>
 
     </materials> 
 
@@ -120,6 +137,7 @@
                 <noderef id="leftTrees"/>
                 <noderef id="rightTrees"/>
                 <noderef id="treeRow"/>
+                <noderef id="fountain"/>
             </children> 
         </node>
 
@@ -166,6 +184,163 @@
             <children>             
                 <primitive>
                     <rectangle xy1="-70 -70" xy2="70 70" />
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="fountain">
+            <materialref id="fountainApp" />
+            <children>
+                <noderef id="bottomFountain"/>
+                <noderef id="fountainBottomPiece1"/>
+                <noderef id="fountainBottomPiece2"/>
+                <noderef id="fountainBottomPiece3"/>
+                <noderef id="fountainBottomPiece4"/>
+                <noderef id="midFountain"/>
+                <noderef id="topFountain"/>
+                <noderef id="topSphere"/>
+                <noderef id="waterBottom"/>
+                <noderef id="waterMid"/>
+                <noderef id="waterTop"/>
+            </children>
+        </node>
+
+        <node id="waterBottom">
+            <transforms>
+				<rotate value3="-90 0 0" />
+                <translate value3="0 0 1" />
+            </transforms> 
+
+			<materialref id="waterApp" />
+			
+            <children>             
+                <primitive>
+                    <rectangle xy1="-6.88 -6.88" xy2="6.9 6.88" />
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="waterMid">
+            <transforms>
+				<rotate value3="-90 0 0" />
+                <translate value3="0 0 6" />
+            </transforms> 
+
+			<materialref id="waterApp" />
+			
+            <children>             
+                <primitive>
+                    <rectangle xy1="-2.88 -2.88" xy2="2.9 2.88" />
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="waterTop">
+            <transforms>
+				<rotate value3="-90 0 0" />
+                <translate value3="0 0 8.3" />
+            </transforms> 
+
+			<materialref id="waterApp" />
+			
+            <children>             
+                <primitive>
+                    <rectangle xy1="-1.38 -1.38" xy2="1.38 1.38" />
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="bottomFountain">
+			<transforms>
+				<translate value3="0 1 0" />
+            </transforms> 
+						
+            <children>             
+                <primitive>
+                    <cylinder base="7" top="7" height="1.6" slices="32" stacks="32"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="fountainBottomPiece1">
+			<transforms>
+				<translate value3="0 1.5 0" />
+            </transforms> 
+						
+            <children>             
+                <primitive>
+                    <cylinder base="1.8" top="0.8" height="3" slices="32" stacks="32" capsclose="true"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="fountainBottomPiece2">
+			<transforms>
+				<translate value3="0 3.8 0" />
+            </transforms> 
+            <children>             
+                <primitive>
+                    <cylinder base="0.8" top="0.5" height="4" slices="32" stacks="32" capsclose="true"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="fountainBottomPiece3">
+			<transforms>
+				<translate value3="0 6.8 0" />
+            </transforms> 
+            <children>             
+                <primitive>
+                    <cylinder base="0.45" top="0.3" height="2.5" slices="32" stacks="32" capsclose="true"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="fountainBottomPiece4">
+			<transforms>
+				<translate value3="0 8.4 0" />
+            </transforms> 
+            <children>             
+                <primitive>
+                    <cylinder base="0.27" top="0.2" height="1.2" slices="32" stacks="32" capsclose="true"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="midFountain">
+			<transforms>
+				<translate value3="0 6 0" />
+            </transforms> 
+						
+            <children>             
+                <primitive>
+                    <cylinder base="3" top="3" height="1.1" slices="32" stacks="32"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="topFountain">
+
+			<transforms>
+				<translate value3="0 8.3 0" />
+            </transforms> 
+						
+            <children>             
+                <primitive>
+                    <cylinder base="1.5" top="1.5" height="0.8" slices="32" stacks="32"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="topSphere">
+
+			<transforms>
+				<translate value3="0 9.5 0" />
+            </transforms> 
+						
+            <children>             
+                <primitive>
+                    <sphere radius="0.5" slices="32" stacks="32" />
                 </primitive>
             </children> 
         </node>

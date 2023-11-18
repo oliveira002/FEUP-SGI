@@ -72,6 +72,7 @@ class MyContents  {
 
         if(data.fog!==null)
             this.fog = new THREE.Fog(data.fog.color.getHex(), data.fog.near, data.fog.far)
+            this.app.scene.fog = this.fog
 
         if(data.skyboxes !== null) {
             let skyboxInfo = data.skyboxes.default
@@ -85,18 +86,18 @@ class MyContents  {
             console.log(upTex)
 
             let materials = [
-                new THREE.MeshPhongMaterial(({/*emissive: skyboxInfo.emissive,*/ map: rightTex, side: THREE.BackSide})),
-                new THREE.MeshPhongMaterial(({/*emissive: skyboxInfo.emissive,*/ map: leftTex, side: THREE.BackSide})),
-                new THREE.MeshPhongMaterial(({/*emissive: skyboxInfo.emissive,*/ map: upTex, side: THREE.BackSide})),
-                new THREE.MeshPhongMaterial(({/*emissive: skyboxInfo.emissive,*/ map: downTex, side: THREE.BackSide})),
-                new THREE.MeshPhongMaterial(({/*emissive: skyboxInfo.emissive,*/ map: frontTex, side: THREE.BackSide})),
-                new THREE.MeshPhongMaterial(({/*emissive: skyboxInfo.emissive,*/ map: backTex, side: THREE.BackSide}))
+                new THREE.MeshPhongMaterial(({emissive: skyboxInfo.emissive,map: rightTex, side: THREE.BackSide})),
+                new THREE.MeshPhongMaterial(({emissive: skyboxInfo.emissive, map: leftTex, side: THREE.BackSide})),
+                new THREE.MeshPhongMaterial(({emissive: skyboxInfo.emissive, map: upTex, side: THREE.BackSide})),
+                new THREE.MeshPhongMaterial(({emissive: skyboxInfo.emissive, map: downTex, side: THREE.BackSide})),
+                new THREE.MeshPhongMaterial(({emissive: skyboxInfo.emissive, map: frontTex, side: THREE.BackSide})),
+                new THREE.MeshPhongMaterial(({emissive: skyboxInfo.emissive, map: backTex, side: THREE.BackSide}))
             ]
 
             this.skyBoxGeometry = new THREE.BoxGeometry(skyboxInfo.size[0],skyboxInfo.size[1],skyboxInfo.size[2])
             this.skyBoxMesh = new THREE.Mesh(this.skyBoxGeometry,materials)
             this.skyBoxMesh.position.set(skyboxInfo.center[0],skyboxInfo.center[1] - 0.01,skyboxInfo.center[2])
-            //this.app.scene.add(this.skyBoxMesh)
+            this.app.scene.add(this.skyBoxMesh)
         }
         //this.initCameras(data)
         this.initOptions(data)
@@ -192,10 +193,14 @@ class MyContents  {
             (key) => {
                 let materialObj = materials[key]
                 let texture = this.textureMap[materialObj.textureref]
+                console.log(materialObj)
                 let material = new THREE.MeshPhongMaterial({
                     name: materialObj.id,
                     color: materialObj.color.getHex(),
                     specular: materialObj.specular.getHex(),
+                    transparent: true,
+                    alphaTest: 0.5,
+                    opacity: materialObj.color.a,
                     emissive: materialObj.emissive.getHex(),
                     shininess: materialObj.shininess,
                     wireframe: materialObj.wireframe, //?? descriptors.find(descriptor => descriptor.name === "wireframe").default,
