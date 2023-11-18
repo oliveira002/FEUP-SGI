@@ -96,14 +96,10 @@
                 <!--<noderef id="pillar" /> -->
                 <noderef id="sky"/>
                 <noderef id="floor"/>
-                <noderef id="frontPillars"/>
-                <noderef id="backPillars"/>
-                <noderef id="grid1"/>
-                <noderef id="grid2"/>
-                <noderef id="grid3"/>
-                <noderef id="grid4"/>
                 <noderef id="houseFloor"/>
                 <noderef id="houseFloor2"/>
+                <noderef id="rightWall"/>
+                <noderef id="leftWall"/>
             </children> 
         </node>
 
@@ -117,7 +113,7 @@
                     <sphere radius="60" slices="64" stacks="64" thetalength="1.2" />
                 </primitive>
             </children> 
-        </node>-->
+        </node>
 
         <node id="houseFloor">
             <materialref id="crackedApp"/>
@@ -138,7 +134,7 @@
                     <box xyz1="-8 0 -6" xyz2="8 0.5 6" />
                 </primitive>
             </children> 
-        </node>
+        </node>-->
 
         <node id="floor">
             <transforms>
@@ -149,143 +145,294 @@
 			
             <children>             
                 <primitive>
-                    <rectangle xy1="-37 -37" xy2="45 37" />
+                    <rectangle xy1="-70 -70" xy2="70 70" />
                 </primitive>
             </children> 
         </node>
 
-        <node id="grid">
+        <node id="rightWall">
             <transforms>
-                <translate value3="0 0 -6" />
-            </transforms>
-            <materialref id="darkStoneBlockApp" />
+				<translate value3="13 0 40" />
+            </transforms> 
+            <children>      
+                <noderef id="pillar1"/>   
+                <noderef id="gateConnection"/>      
+                <noderef id="twoGrids"/>
+                <noderef id="twoGridsRot1"/>
+                <noderef id="twoGrids1"/>
+                <noderef id="twoGrids2"/>
+                <noderef id="twoGrids3"/>
+                <noderef id="twoGrids4"/>
+                <noderef id="twoGridsRot2"/>
+                <noderef id="twoGridsRot3"/>
+                <noderef id="twoGridsRot4"/>
+                <noderef id="twoGridsRot5"/>
+                <noderef id="twoGridsRot6"/>
+            </children> 
+        </node>
+
+        <node id="leftWall">
+            <transforms>
+				<translate value3="-13 0 40" />
+                <scale value3="-1 1 1" />
+            </transforms> 
             <children>             
+                <noderef id="pillar1"/>  
+                <noderef id="gateConnection"/>  
+                <noderef id="twoGrids"/>
+                <noderef id="twoGridsRot1"/>
+                <noderef id="twoGrids1"/>
+                <noderef id="twoGrids2"/>
+                <noderef id="twoGrids3"/>
+                <noderef id="twoGrids4"/>
+                <noderef id="twoGridsRot2"/>
+                <noderef id="twoGridsRot3"/>
+                <noderef id="twoGridsRot4"/>
+                <noderef id="twoGridsRot5"/>
+                <noderef id="twoGridsRot6"/>
+            </children> 
+        </node>
+
+         <node id="gateConnection">
+            <transforms>
+                <translate value3 = "-3 1 0"/> 
+            </transforms>
+            <materialref id="crackedApp" />
+            <children>             
+                <primitive>
+                    <box xyz1="-2.65 -1.6 -0.85" xyz2="2.2 1.6 0.8" />
+                </primitive>
+            </children> 
+        </node>
+        <node id="twoGridsRot">
+            <transforms>
+                <rotate value3 = "0 90 0"/> 
+                <translate value3 = "0 0 0"/> 
+            </transforms>
+            <materialref id="stoneBlockApp" />
+            <children>             
+                <noderef id="gridComponent1"/>
+                <noderef id="gridComponent2"/>
+            </children> 
+        </node>
+
+        <node id="twoGridsRot1">
+            <transforms>
+                <translate value3 = "15 0 0"/> 
+            </transforms>
+            <materialref id="stoneBlockApp" />
+            <children>             
+                <noderef id="twoGridsRot"/>
+            </children> 
+        </node>
+
+        <node id="twoGridsRot2">
+            <transforms>
+                <translate value3 = "30 0 -15"/> 
+            </transforms>
+            <materialref id="stoneBlockApp" />
+            <children>             
+                <noderef id="twoGridsRot"/>
+            </children> 
+        </node>
+
+        <node id="twoGridsRot3">
+            <transforms>
+                <translate value3 = "30 0 -30"/> 
+            </transforms>
+            <materialref id="stoneBlockApp" />
+            <children>             
+                <noderef id="twoGridsRot"/>
+            </children> 
+        </node>
+
+        <node id="twoGridsRot4">
+            <transforms>
+                <translate value3 = "30 0 -45"/> 
+            </transforms>
+            <materialref id="stoneBlockApp" />
+            <children>             
+                <noderef id="twoGridsRot"/>
+            </children> 
+        </node>
+
+        <node id="twoGridsRot5">
+            <transforms>
+                <translate value3 = "30 0 -60"/> 
+            </transforms>
+            <materialref id="stoneBlockApp" />
+            <children>             
+                <noderef id="twoGridsRot"/>
+            </children> 
+        </node>
+
+        <node id="twoGridsRot6">
+            <transforms>
+                <translate value3 = "15 0 -75"/> 
+            </transforms>
+            <materialref id="stoneBlockApp" />
+            <children>             
+                <noderef id="twoGridsRot"/>
+            </children> 
+        </node>
+
+        <node id="twoGrids">
+            <transforms>
+                <translate value3 = "0 0 0"/> 
+            </transforms>
+            <materialref id="stoneBlockApp" />
+            <children>             
+                <noderef id="gridComponent1"/>
+                <noderef id="gridComponent2"/>
+            </children> 
+        </node>
+
+        <node id="twoGrids1">
+            <transforms>
+                <translate value3 = "30 0 -75"/> 
+                <rotate value3 = "0 180 0"/> 
+            </transforms>
+            <materialref id="stoneBlockApp" />
+            <children>             
+                <noderef id="twoGrids"/>
+            </children> 
+        </node>
+
+        <node id="twoGrids2">
+            <transforms>
+                <translate value3 = "15 0 -15"/> 
+            </transforms>
+            <materialref id="stoneBlockApp" />
+            <children>             
+                <noderef id="twoGrids"/>
+            </children> 
+        </node>
+
+        <node id="twoGrids3">
+            <transforms>
+                <translate value3 = "15 0 -90"/> 
+                <rotate value3 = "0 180 0"/> 
+            </transforms>
+            <materialref id="stoneBlockApp" />
+            <children>             
+                <noderef id="twoGrids"/>
+            </children> 
+        </node>
+
+        <node id="twoGrids4">
+            <transforms>
+                <translate value3 = "0 0 -90"/> 
+                <rotate value3 = "0 180 0"/> 
+            </transforms>
+            <materialref id="stoneBlockApp" />
+            <children>             
+                <noderef id="twoGrids"/>
+            </children> 
+        </node>
+
+        <node id="twoGridsRef">
+            <transforms>
+                <translate value3 = "0 0 0"/> 
+                <rotate value3 = "0 90 0"/> 
+            </transforms>
+            <materialref id="stoneBlockApp" />
+            <children>             
+                <noderef id="twoGrids"/>
+            </children> 
+        </node>
+
+        <node id="threeGrids">
+            <transforms>
+                <translate value3 = "0 0 0"/> 
+            </transforms>
+            <materialref id="stoneBlockApp" />
+            <children>             
+                <noderef id="gridComponent1"/>
+                <noderef id="gridComponent2"/>
+                <noderef id="gridComponent3"/>
+            </children> 
+        </node>
+
+        <node id="threeGridsRef">
+            <transforms>
+                <translate value3 = "0 0 0"/> 
+                <rotate value3 = "0 180 0"/> 
+            </transforms>
+            <materialref id="stoneBlockApp" />
+            <children>             
+                <noderef id="threeGrids"/>
+            </children> 
+        </node>
+
+        <node id="gridComponent">
+            <materialref id="stoneBlockApp" />
+            <children>             
+                <noderef id="smallPillar"/>
+                <noderef id="gridBottomSupport"/>
                 <noderef id="gridColumn"/>
                 <noderef id="gridColumn1"/>
                 <noderef id="gridColumn2"/>
-                <noderef id="gridColumn3"/>
-                <noderef id="gridColumn4"/>
+                <noderef id= "gridRow"/>
             </children> 
         </node>
 
-        <node id="smallerGrid">
+        <node id="gridComponent1">
             <transforms>
-                <translate value3="0 0 -3" />
+                <translate value3 = "0 0 0"/> 
             </transforms>
-            <materialref id="darkStoneBlockApp" />
+            <materialref id="stoneBlockApp" />
             <children>             
-                <noderef id="gridColumn"/>
-                <noderef id="gridColumn1"/>
-                <noderef id="gridColumn2"/>
+                <noderef id="gridComponent"/>
             </children> 
         </node>
 
-        <node id="grid1">
+        <node id="gridComponent2">
             <transforms>
-                <translate value3="32.5 0 16" />
+                <translate value3 = "7.5 0 0"/> 
             </transforms>
-            <materialref id="darkStoneBlockApp" />
+            <materialref id="stoneBlockApp" />
             <children>             
-                <noderef id="grid"/>
-                <noderef id="smallerGrid1"/>
-                <noderef id="gridRows1"/>
+                <noderef id="gridComponent"/>
             </children> 
         </node>
 
-        <node id="grid2">
+        <node id="gridComponent3">
             <transforms>
-                <translate value3="32.5 0 -23.5" />
+                <translate value3 = "15 0 0"/> 
             </transforms>
-            <materialref id="darkStoneBlockApp" />
+            <materialref id="stoneBlockApp" />
             <children>             
-                <noderef id="grid"/>
-                <noderef id="smallerGrid1"/>
-                <noderef id="gridRows1"/>
+                <noderef id="gridComponent"/>
             </children> 
         </node>
 
-        <node id="grid3">
+        <node id="gridBottomSupport">
             <transforms>
-                <translate value3="-32.5 0 -23.5" />
+                <translate value3 = "3.15 0.4 0"/> 
             </transforms>
-            <materialref id="darkStoneBlockApp" />
             <children>             
-                <noderef id="grid"/>
-                <noderef id="smallerGrid1"/>
-                <noderef id="gridRows1"/>
-            </children> 
-        </node>
-
-        <node id="grid4">
-            <transforms>
-                <translate value3="-32.5 0 16" />
-            </transforms>
-            <materialref id="darkStoneBlockApp" />
-            <children>             
-                <noderef id="grid"/>
-                <noderef id="smallerGrid1"/>
-                <noderef id="gridRows1"/>
-            </children> 
-        </node>
-
-        <node id="smallerGrid1">
-            <transforms>
-                <translate value3="0 0 11.5" />
-            </transforms>
-            <materialref id="darkStoneBlockApp" />
-            <children>             
-                <noderef id="smallerGrid"/>
-            </children> 
-        </node>
-
-        <node id="gridRows1">
-            <transforms>
-                <translate value3="0 0 -2" />
-            </transforms>
-            <materialref id="darkStoneBlockApp" />
-            <children>             
-                <noderef id="gridRow"/>
-                <noderef id="gridRow1"/>
-            </children> 
-        </node>
-
-        <node id="gridRows">
-            <transforms>
-                <translate value3="0 0 0" />
-            </transforms>
-            <materialref id="darkStoneBlockApp" />
-            <children>             
-                <noderef id="gridRow"/>
-                <noderef id="gridRow1"/>
+                <primitive>
+                    <box xyz1="-2 -0.4 -0.85" xyz2="3.2 0.4 0.8" />
+                </primitive>
             </children> 
         </node>
 
         <node id="gridRow">
             <transforms>
-                <translate value3 = "0 3.35 6"/> 
-                <rotate value3 = "90 0 0"/> 
+                <translate value3 = "3.6 2.1 0"/> 
+                <rotate value3 = "0 0 90"/> 
             </transforms>
             <children>             
                 <primitive>
-                    <cylinder base="0.1" top="0.1" height="25" slices="32" stacks="32" capsclose="true" />
-                </primitive>
-            </children> 
-        </node>
-
-        <node id="gridRow1">
-            <transforms>
-                <translate value3 = "0 1.7 6"/> 
-                <rotate value3 = "90 0 0"/> 
-            </transforms>
-            <children>             
-                <primitive>
-                    <cylinder base="0.1" top="0.1" height="25" slices="32" stacks="32" capsclose="true" />
+                    <cylinder base="0.1" top="0.1" height="6.1" slices="32" stacks="32" capsclose="true" />
                 </primitive>
             </children> 
         </node>
 
         <node id="gridColumn">
             <transforms>
+                <translate value3="2 0.8 0" />
+                <scale value3="1 0.9 1" />
             </transforms>
             <children>             
                 <noderef id="gridColumnBase"/>
@@ -296,8 +443,8 @@
 
         <node id="gridColumn1">
             <transforms>
-                <translate value3="0 0 3" />
-                <scale value3="1 1.4 1" />
+                <translate value3="3.5 0.8 0" />
+                <scale value3="1 1 1" />
             </transforms>
             <children>             
                 <noderef id="gridColumnBase"/>
@@ -308,8 +455,8 @@
 
         <node id="gridColumn2">
             <transforms>
-                <translate value3="0 0 6" />
-                <scale value3="1 1.14 1" />
+                <translate value3="5 0.8 0" />
+                <scale value3="1 0.89 1" />
             </transforms>
             <children>             
                 <noderef id="gridColumnBase"/>
@@ -343,20 +490,20 @@
         </node>
         <node id="gridColumnBase">
             <transforms>
-                <translate value3="0 1.8 0" />
+                <translate value3="0 1.5 0" />
             </transforms>
 
             <materialref id="darkStoneBlockApp" />
             <children> 
                 <primitive>
-                    <cylinder base="0.1" top="0.1" height="3.6" slices="32" stacks="32" capsclose="true" />
+                    <cylinder base="0.1" top="0.1" height="3" slices="32" stacks="32" capsclose="true" />
                 </primitive>
             </children> 
         </node>
 
         <node id="gridColumnTop">
             <transforms>
-                <translate value3="0 4.03 0" />
+                <translate value3="0 3.43 0" />
             </transforms>
 
             <materialref id="darkStoneBlockApp" />
@@ -369,7 +516,7 @@
 
         <node id="gridColumnTopSup">
             <transforms>
-                <translate value3="0 3.64 0" />
+                <translate value3="0 3.04 0" />
             </transforms>
 
             <materialref id="darkStoneBlockApp" />
@@ -380,32 +527,21 @@
             </children> 
         </node>
 
-        
-        <node id="frontPillars">
-            <transforms>
-                <translate value3= "32.6 0 0"/>
-            </transforms>
-            <children>         
-                <noderef id="smallPillar1"/>    
-                <noderef id="smallPillar2"/>    
-                <noderef id="smallPillar3"/>    
-                <noderef id="smallPillar4"/>    
-            </children> 
-        </node>
-
-        <node id="backPillars">
-            <transforms>
-                <translate value3= "-32.6 0 0"/>
-            </transforms>
-            <children>         
-                <noderef id="smallPillar1"/>    
-                <noderef id="smallPillar2"/>    
-                <noderef id="smallPillar3"/>    
-                <noderef id="smallPillar4"/>    
-            </children> 
-        </node>
-
         <node id="smallPillar">
+            <transforms>
+                <scale value3= "1 0.9 1"/>
+                <translate value3= "0 0.675 0"/>
+            </transforms>
+            <materialref id="darkStoneBlockApp" />
+            <children>             
+                <noderef id="bottomPiece11"/>
+                <noderef id="bottomPiece8"/>
+                <noderef id="bottomPiece9"/>
+                <noderef id="bottomPiece10"/>
+            </children> 
+        </node>
+
+        <node id="pillar">
             <transforms>
                 <scale value3= "1 0.9 1"/>
                 <translate value3= "0 0.675 0"/>
@@ -422,39 +558,13 @@
             </children> 
         </node>
 
-        <node id="smallPillar1">
+        <node id="pillar1">
             <transforms>
-                <translate value3= "0 0 32.6"/>
+                <translate value3= "-6.5 0 0"/>
             </transforms>
-            <children>         
-                <noderef id="smallPillar"/>    
-            </children> 
-        </node>
-
-        <node id="smallPillar3">
-            <transforms>
-                <translate value3= "0 0 7"/>
-            </transforms>
-            <children>         
-                <noderef id="smallPillar"/>    
-            </children> 
-        </node>
-
-        <node id="smallPillar2">
-            <transforms>
-                <translate value3= "0 0 -32.6"/>
-            </transforms>
-            <children>         
-                <noderef id="smallPillar"/>    
-            </children> 
-        </node>
-
-        <node id="smallPillar4">
-            <transforms>
-                <translate value3= "0 0 -7"/>
-            </transforms>
-            <children>         
-                <noderef id="smallPillar"/>    
+            <materialref id="darkStoneBlockApp" />
+            <children>             
+                <noderef id="pillar"/>
             </children> 
         </node>
 
@@ -470,6 +580,18 @@
             </children> 
         </node>
 
+        <node id="bottomPiece11">
+            <transforms>
+                <rotate value3="0 45 0"/>
+            </transforms>
+            <materialref id="stoneBlockApp" />
+            <children>             
+                <primitive>
+                    <cylinder base="1.8" top="1.5" height="1.5" slices="4" stacks="1" capsclose="true" />
+                </primitive>
+            </children> 
+        </node>
+
         <!-- 0.75 + 0.8 + metade -->
         <node id="bottomPiece2">
             <transforms>
@@ -478,6 +600,42 @@
             <children>             
                 <primitive>
                     <box xyz1="-0.8 -0.4 -0.85" xyz2="0.85 0.4 0.8" />
+                </primitive>
+            </children> 
+        </node>
+
+        <!-- 0.75 + 1 + metade -->
+        <node id="bottomPiece8">
+            <transforms>
+                <translate value3="0 2.25 0"/>
+            </transforms>
+            <children>             
+                <primitive>
+                    <box xyz1="-0.8 -0.5 -0.85" xyz2="0.85 0.5 0.8" />
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="bottomPiece9">
+            <transforms>
+                <translate value3="0 1.25 0"/>
+            </transforms>
+            <children>             
+                <primitive>
+                    <box xyz1="-0.8 -0.5 -0.85" xyz2="0.85 0.5 0.8" />
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="bottomPiece10">
+            <transforms>
+                <translate value3="0 3.25 0"/>
+                <rotate value3="0 45 0"/>
+            </transforms>
+            <materialref id="stoneBlockApp" />
+            <children>             
+                <primitive>
+                     <cylinder base="1.4" top="1.6" height="1" slices="4" stacks="1" capsclose="true" />
                 </primitive>
             </children> 
         </node>
