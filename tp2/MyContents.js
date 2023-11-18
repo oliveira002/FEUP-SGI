@@ -82,8 +82,6 @@ class MyContents  {
             let rightTex = new THREE.TextureLoader().load(skyboxInfo.right); 
             let frontTex = new THREE.TextureLoader().load(skyboxInfo.front); 
             let backTex = new THREE.TextureLoader().load(skyboxInfo.back); 
-            
-            console.log(upTex)
 
             let materials = [
                 new THREE.MeshPhongMaterial(({emissive: skyboxInfo.emissive,map: rightTex, side: THREE.BackSide})),
@@ -193,7 +191,6 @@ class MyContents  {
             (key) => {
                 let materialObj = materials[key]
                 let texture = this.textureMap[materialObj.textureref]
-                console.log(materialObj)
                 let material = new THREE.MeshPhongMaterial({
                     name: materialObj.id,
                     color: materialObj.color.getHex(),
@@ -227,7 +224,7 @@ class MyContents  {
         this.iterateNodes(root,this.groupi,["def"])
         console.log(this.lights)
         this.app.scene.add(this.groupi);
-        console.log(root)
+        console.log(data)
   
 
         this.output(data.options)

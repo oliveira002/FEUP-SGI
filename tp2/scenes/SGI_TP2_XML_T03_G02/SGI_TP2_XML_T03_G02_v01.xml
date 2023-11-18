@@ -5,7 +5,7 @@
 	
     <globals background="0.06 0.06 0.06 1" ambient="1 1 1 1" /> 
 
-    <fog color="0.3 0.3 0.3 1.0" near="0.0" far="190.0" />
+    <fog color="0.3 0.3 0.3 1.0" near="0.0" far="250.0" />
     <skybox size="140 140 140" center="0 70 0" emissive="0.01 0.01 0.01 1" intensity="1.0" up="scenes/SGI_TP2_XML_T03_G02/textures/up.jpg" down="scenes/SGI_TP2_XML_T03_G02/textures/up.jpg" left="scenes/SGI_TP2_XML_T03_G02/textures/front.jpg" right="scenes/SGI_TP2_XML_T03_G02/textures/right.jpg" front="scenes/SGI_TP2_XML_T03_G02/textures/left.jpg" back="scenes/SGI_TP2_XML_T03_G02/textures/back.jpg"/>
 
     <cameras initial="Cam 1" > 
@@ -202,50 +202,77 @@
                 <noderef id="waterBottom"/>
                 <noderef id="waterMid"/>
                 <noderef id="waterTop"/>
+                <noderef id="coverMid"/>
+                <noderef id="coverTop"/>
             </children>
         </node>
 
         <node id="waterBottom">
             <transforms>
-				<rotate value3="-90 0 0" />
-                <translate value3="0 0 1" />
+                <translate value3="0 1 0" />
             </transforms> 
 
 			<materialref id="waterApp" />
 			
             <children>             
                 <primitive>
-                    <rectangle xy1="-6.88 -6.88" xy2="6.9 6.88" />
+                    <cylinder base="6.9" top="6.9" height="0.2" slices="32" stacks="32" capsclose="true"/>
                 </primitive>
             </children> 
         </node>
 
         <node id="waterMid">
             <transforms>
-				<rotate value3="-90 0 0" />
-                <translate value3="0 0 6" />
+                <translate value3="0 6 0" />
             </transforms> 
 
 			<materialref id="waterApp" />
 			
             <children>             
                 <primitive>
-                    <rectangle xy1="-2.88 -2.88" xy2="2.9 2.88" />
+                    <cylinder base="2.88" top="2.88" height="0.2" slices="32" stacks="32" capsclose="true"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="coverMid">
+            <transforms>
+                <translate value3="0 5.6 0" />
+            </transforms> 
+
+			<materialref id="fountainApp" />
+			
+            <children>             
+                <primitive>
+                    <cylinder base="3" top="3" height="0.2" slices="32" stacks="32" capsclose="true"/>
                 </primitive>
             </children> 
         </node>
 
         <node id="waterTop">
             <transforms>
-				<rotate value3="-90 0 0" />
-                <translate value3="0 0 8.3" />
+                <translate value3="0 8.3 0" />
             </transforms> 
 
 			<materialref id="waterApp" />
 			
             <children>             
                 <primitive>
-                    <rectangle xy1="-1.38 -1.38" xy2="1.38 1.38" />
+                    <cylinder base="1.38" top="1.38" height="0.2" slices="32" stacks="32" capsclose="true"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="coverTop">
+            <transforms>
+                <translate value3="0 7.8 0" />
+            </transforms> 
+
+			<materialref id="fountainApp" />
+			
+            <children>             
+                <primitive>
+                    <cylinder base="1.5" top="1.5" height="0.2" slices="32" stacks="32" capsclose="true"/>
                 </primitive>
             </children> 
         </node>
