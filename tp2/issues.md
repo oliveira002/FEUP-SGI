@@ -17,6 +17,8 @@ The following list is comprised of several issues or improvements to the current
     - Solution suggestion: Currently within Three.js, there are 3 different wrapping modes (`RepeatWrapping`, `ClampToEdgeWrapping`, and `MirroredRepeatWrapping`). Thus, to solve this, one could add two `item` attributes, wrapS and wrapT with the following descriptor `type: "item", required: false, choices: ["repeat", "clamp", "mirrored"], default: "clamp"`
 - Texture rotation: THREE.js allows for texture rotation, which might be useful in some cases where the developer doesn't want to have multiple files for what is essentially the same texture but flipped.
     - Solution suggestion: Add a `rotation` descriptor that takes in a rotation angle as a value
+- **Texlength t and s: The way the attributes texlength_t and texlength_s are defined makes little sense when compared to how THREE.js works. In THREE.js a dev tells the texture how many times it repeats along the geometry. Why should we have to calculate this repeat value, that depends on many things, instead of just receiving a repeat value and using that?**
+     - **Solution suggestion: Change the two attributes to repeat_s and repeat_t that represent the repetition factor instead**
 
 ### Objects and primitives
 - Shadow receiving and casting: Currently the XML doesn't support defining which objects should receive or cast shadows. Not the best example, but walls have no need to cast shadows, reducing the cost of the shadow calculation algorithm, even if by a tiny amount.
@@ -61,4 +63,4 @@ The following list is comprised of several issues or improvements to the current
 - Mafalda Costa, up202006417, SGI T05G04
 
 ### Changelog:
-- Added "More primitives", "Angle values scale"
+- Added "More primitives", "Angle values scale", "Texlength t and s"

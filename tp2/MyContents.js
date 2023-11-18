@@ -191,11 +191,14 @@ class MyContents  {
             (key) => {
                 let materialObj = materials[key]
                 let texture = this.textureMap[materialObj.textureref]
+                texture.wrapS = THREE.RepeatWrapping;
+                texture.wrapT = THREE.RepeatWrapping;
+                texture.repeat.set(materialObj.texlength_s, materialObj.texlength_t)
                 let material = new THREE.MeshPhongMaterial({
                     name: materialObj.id,
                     color: materialObj.color.getHex(),
                     specular: materialObj.specular.getHex(),
-                    transparent: true,
+                    transparent: materialObj.color.a < 1,
                     alphaTest: 0.5,
                     opacity: materialObj.color.a,
                     emissive: materialObj.emissive.getHex(),
@@ -208,6 +211,7 @@ class MyContents  {
                     bumpScale: materialObj.bumpscale, //?? descriptors.find(descriptor => descriptor.name === "bump_scale").default,
                     
                 })
+                
                 this.materialMap[materialObj.id] = material
                 //console.log(material)
             }
@@ -398,6 +402,10 @@ class MyContents  {
                 let depthSeg = metrics.parts_z
 
                 let prim = new THREE.BoxGeometry(width,height,depth,widthSeg,heightSeg,depthSeg)
+                let texture = mat.map
+                //texture.wrapS = THREE.RepeatWrapping;
+                //texture.wrapT = THREE.RepeatWrapping;
+                //texture.repeat.set(7,1)
                 let mesh = new THREE.Mesh(prim, mat)
                 mesh.receiveShadow = true
                 mesh.castShadow = true

@@ -3,7 +3,7 @@
 
 	<!-- Credits of the original file go to Group 2, class 3 of course MEIC-SGI school year 2023/2024, FEUP, University of Porto -->
 	
-    <globals background="0.06 0.06 0.06 1" ambient="1 1 1 1" /> 
+    <globals background="0.06 0.06 0.06 1" ambient="0.2 0.2 0.2 1" /> 
 
     <fog color="0.3 0.3 0.3 1.0" near="0.0" far="250.0" />
     <skybox size="140 140 140" center="0 70 0" emissive="0.01 0.01 0.01 1" intensity="1.0" up="scenes/SGI_TP2_XML_T03_G02/textures/up.jpg" down="scenes/SGI_TP2_XML_T03_G02/textures/up.jpg" left="scenes/SGI_TP2_XML_T03_G02/textures/front.jpg" right="scenes/SGI_TP2_XML_T03_G02/textures/right.jpg" front="scenes/SGI_TP2_XML_T03_G02/textures/left.jpg" back="scenes/SGI_TP2_XML_T03_G02/textures/back.jpg"/>
@@ -40,6 +40,8 @@
         <texture id="leafTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/leaf.jpg" />
         <texture id="trunkTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/trunk.jpg"/>
         <texture id="fountainTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/fountain.jpg"/>
+        <texture id="postTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/post.jpg"/>
+        <texture id="postLampTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/post2.png"/>
     </textures> 
 
     <materials> 
@@ -121,6 +123,27 @@
             shininess="30"
             twosided="true"
             textureref="fountainTex"/>
+        
+        <material id="postLampApp"
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 1.0" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            twosided="true"
+            texlength_s="7"
+            texlength_t="1"
+            textureref="postLampTex"/>
+
+        <material id="postApp"
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 1.0" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            twosided="true"
+            texlength_s="7"
+            texlength_t="1"
+            textureref="postTex"/>
+        
 
     </materials> 
 
@@ -137,7 +160,9 @@
                 <noderef id="leftTrees"/>
                 <noderef id="rightTrees"/>
                 <noderef id="treeRow"/>
-                <noderef id="fountain"/>
+                <!--<noderef id="fountain"/>-->
+                <noderef id="lamp1"/>
+                <noderef id="lamp2"/>
             </children> 
         </node>
 
@@ -204,6 +229,117 @@
                 <noderef id="waterTop"/>
                 <noderef id="coverMid"/>
                 <noderef id="coverTop"/>
+            </children>
+        </node>
+
+        <node id="lamp">
+            <materialref id="postApp" />
+            <children>
+                <noderef id= "lampBottom"/>
+                <noderef id= "lampBottom2"/>
+                <noderef id= "lampMid"/>
+                <noderef id= "lampTop1"/>
+                <noderef id= "lampTop2"/>
+                <noderef id= "lampTop3"/>
+                <noderef id= "lampTop4"/>
+            </children>
+        </node>
+
+        <node id="lamp1">
+            <transforms>
+                <translate value3="8 0 46"/>
+            </transforms>
+            <materialref id="postApp" />
+            <children>
+                <noderef id= "lamp"/>
+            </children>
+        </node>
+
+        <node id="lamp2">
+            <transforms>
+                <translate value3="-8 0 46"/>
+            </transforms>
+            <materialref id="postApp" />
+            <children>
+                <noderef id= "lamp"/>
+            </children>
+        </node>
+
+        <node id= "lampBottom">
+            <transforms>
+                <translate value3="0 0.5 0"/>
+            </transforms>
+            <children>
+                <primitive>
+                    <cylinder base="0.7" top="0.4" height="1" slices="6" stacks="1" capsclose="true"/>
+                </primitive>
+            </children>
+        </node>
+
+        <node id= "lampBottom2">
+            <transforms>
+                <translate value3="0 2 0"/>
+            </transforms>
+            <children>
+                <primitive>
+                    <cylinder base="0.4" top="0.3" height="2" slices="6" stacks="1" capsclose="true"/>
+                </primitive>
+            </children>
+        </node>
+
+        <node id= "lampMid">
+            <transforms>
+                <translate value3="0 7 0"/>
+            </transforms>
+            <children>
+                <primitive>
+                    <cylinder base="0.2" top="0.2" height="8" slices="16" stacks="16" capsclose="true"/>
+                </primitive>
+            </children>
+        </node>
+
+        <node id= "lampTop1">
+            <materialref id="postLampApp" />
+            <transforms>
+                <translate value3="0 12 0"/>
+            </transforms>
+            <children>
+                <primitive>
+                    <cylinder base="0.6" top="1.4" height="2" slices="7" stacks="7" capsclose="true"/>
+                </primitive>
+            </children>
+        </node>
+
+        <node id= "lampTop4">
+            <transforms>
+                <translate value3="0 11 0"/>
+            </transforms>
+            <children>
+                <primitive>
+                    <cylinder base="0.6" top="0.6" height="0.1" slices="7" stacks="7" capsclose="true"/>
+                </primitive>
+            </children>
+        </node>
+
+        <node id= "lampTop3">
+            <transforms>
+                <translate value3="0 12.95 0"/>
+            </transforms>
+            <children>
+                <primitive>
+                    <cylinder base="1.4" top="1.4" height="0.1" slices="7" stacks="7" capsclose="true"/>
+                </primitive>
+            </children>
+        </node>
+
+        <node id= "lampTop2">
+            <transforms>
+                <translate value3="0 13.2 0"/>
+            </transforms>
+            <children>
+                <primitive>
+                    <cylinder base="0.8" top="0.7" height="0.4" slices="7" stacks="7" capsclose="true"/>
+                </primitive>
             </children>
         </node>
 
