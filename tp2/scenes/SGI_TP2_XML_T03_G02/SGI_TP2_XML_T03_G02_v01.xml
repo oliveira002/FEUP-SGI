@@ -29,12 +29,6 @@
         <texture id="stoneBlockTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/stoneblock.jpg" />
         <texture id="darkStoneBlockTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/darkstone.jpg" />
         <texture id="floorTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/floor.jpg" />
-        <texture id="dockTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/dock.jpg" />
-        <texture id="woodTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/wood.jpg" />
-        <texture id="sandTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/sand.jpg" />
-        <texture id="roofTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/roof.jpg" />
-        <texture id="boatTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/boat.jpg" />
-        <texture id="rockTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/rock.jpg" />
         <texture id="skyTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/sky.jpg" />
         <texture id="crackedTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/cracked.jpg" />
         <texture id="leafTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/leaf.jpg" />
