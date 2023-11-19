@@ -253,6 +253,24 @@
             </children> 
         </node>
 
+        <node id="test">
+            <transforms>
+				<translate value3="0 20 0" />
+            </transforms> 
+
+			<materialref id="skyApp" />
+
+            <children>
+                <primitive>
+                    <polygon radius="10"
+                        stacks="1"
+                        slices="5"
+                        color_c="0 0 0 1"
+                        color_p="0 0 0 1" />
+                </primitive>
+            </children>
+        </node>
+
         <!--<node id="sky">
             <materialref id="skyApp" />
             <transforms>
