@@ -37,6 +37,9 @@
         <texture id="postTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/post.jpg"/>
         <texture id="postLampTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/post2.png"/>
         <texture id="pumpkinTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/pumpkin.png"/>
+        <texture id="tombWordsTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/words.png"/>
+        <texture id="ripTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/rip.png"/>
+        <texture id="dirtTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/dirt.jpg"/>
     </textures> 
 
     <materials> 
@@ -151,6 +154,32 @@
             bumpref="pumpkinTex"
             bumpscale="0.2" />
         
+        <material id="tombWordsApp"
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 1" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            twosided="true"
+            textureref="tombWordsTex"/>
+        
+        <material id="ripApp"
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 0.99" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            twosided="true"
+            textureref="ripTex"/>
+
+         <material id="dirtApp"
+         emissive="0.0 0.0 0.0 1" 
+         color="1.0 1.0 1.0 1" 
+         specular="0.07 0.07 0.07 0" 
+         shininess="30"
+         twosided="true"
+         textureref="dirtTex"
+         bumpref="dirtTex"
+         bumpscale="0.2" />
+        
 
     </materials> 
 
@@ -172,6 +201,7 @@
                 <noderef id="lamp2"/>
                 <noderef id="pumpkin1"/>
                 <noderef id="pumpkin2"/>
+                <!--<noderef id="tombstoneCurve"/>-->
             </children> 
         </node>
 
@@ -198,6 +228,116 @@
                     <rectangle xy1="-70 -70" xy2="70 70" />
                 </primitive>
             </children> 
+        </node>
+
+
+        <node id="tombstoneCurve">
+            <materialref id="stoneBlockApp" />
+            <transforms>
+                <scale value3= "0.4 0.4 0.4"/>
+            </transforms>
+            <children>
+                <noderef id="dirt"/>
+                <noderef id="ripWords"/>
+                <noderef id="tombstoneCurveBottomSupport"/>
+                <noderef id="tombstoneCurveBottom"/>
+                <noderef id="tombstoneCurveTop"/>
+            </children>
+        </node>
+
+        <node id="dirt">
+            <materialref id="dirtApp" />
+            <transforms>
+                <translate value3="0 -0.7 9.26"/>
+                <rotate value3="0 90 0"/>
+				<scale value3="5.3 1.6 3" />
+            </transforms> 
+             <children>
+                <primitive>
+                    <sphere radius="1.2" slices="12" stacks="7" thetalength="1.57075"/>
+                </primitive>
+            </children>
+        </node>
+
+        <node id="ripWords">
+         <materialref id="ripApp" />
+            <transforms>
+                <translate value3="0 1.8 0.26"/>
+				<rotate value3="0 0 0" />
+            </transforms> 
+            <children>             
+                <primitive>
+                    <rectangle xy1="-1.55 -0.5" xy2="1.55 4.8" />
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="tombstoneCurveTop">
+            <transforms>
+                <rotate value3="0 90 90" />
+                <translate value3="5 0 0" />
+            </transforms>
+            <children>
+                <primitive>
+                    <cylinder base="2" top="2" height="0.5" slices="12" stacks="1" thetalength="3.1415" capsclose="true"/>
+                </primitive>
+            </children>
+        </node>
+
+        <node id="tombstoneCurveBottom">
+            <transforms>
+            </transforms>
+            <children>
+                <primitive>
+                    <box xyz1="-2 1 -0.25" xyz2="2 5 0.25"/>
+                </primitive>
+            </children>
+        </node>
+
+        <node id="tombstoneCurveBottomSupport">
+            <transforms>
+                <translate value3="0 0.5 0" />
+            </transforms>
+            <children>
+                <primitive>
+                    <cylinder base="3.5" top="2.4" height="1" slices="12" stacks="1" capsclose="true"/>
+                </primitive>
+            </children>
+        </node>
+
+
+        <node id="tombstoneWords">
+         <materialref id="tombWordsApp" />
+            <transforms>
+                <translate value3="0 1.51 6"/>
+				<rotate value3="-90 0 0" />
+            </transforms> 
+            <children>             
+                <primitive>
+                    <rectangle xy1="-1.55 -0.5" xy2="1.55 4.8" />
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="tombstonePlain">
+            <materialref id="stoneBlockApp" />
+            <transforms>
+            </transforms>
+            <children>
+                <noderef id="tombstoneWords"/>
+                <primitive>
+                    <box xyz1="-2 0 -0.5" xyz2="2 0.5 7" />
+                </primitive>
+                <primitive>
+                    <box xyz1="-1.55 0.5 -0.5" xyz2="1.55 1.5 6.5" />
+                </primitive>
+                <primitive>
+                    <box xyz1="-0.2 1.5 0.8" xyz2="0.2 4.5 1.1" />
+                </primitive>
+                <primitive>
+                    <box xyz1="-1 3.5 0.8" xyz2="1 3.9 1.1" />
+                </primitive>
+            </children>
         </node>
 
         <node id="pumpkin1">
