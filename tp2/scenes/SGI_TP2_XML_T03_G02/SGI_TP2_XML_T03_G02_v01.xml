@@ -4,9 +4,9 @@
 	<!-- Credits of the original file go to Group 2, class 3 of course MEIC-SGI school year 2023/2024, FEUP, University of Porto -->
 	
     <globals background="0.06 0.06 0.06 1" ambient="0.5 1 1 1" /> 
-
+    
     <fog color="0.3 0.3 0.3 1.0" near="0.0" far="250.0" />
-    <skybox size="140 140 140" center="0 70 0" emissive="0.01 0.01 0.01 1" intensity="1.0" up="scenes/SGI_TP2_XML_T03_G02/textures/up.jpg" down="scenes/SGI_TP2_XML_T03_G02/textures/up.jpg" left="scenes/SGI_TP2_XML_T03_G02/textures/front.jpg" right="scenes/SGI_TP2_XML_T03_G02/textures/right.jpg" front="scenes/SGI_TP2_XML_T03_G02/textures/left.jpg" back="scenes/SGI_TP2_XML_T03_G02/textures/back.jpg"/>
+    <skybox size="140 140 140" center="0 70 0" emissive="0.01 0.01 0.01 1" intensity="1.0" up="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" down="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" left="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" right="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" front="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" back="scenes/SGI_TP2_XML_T03_G02/textures/stars.png"/>
 
     <cameras initial="Cam 1" > 
         <perspective id="Cam 1" 
@@ -37,6 +37,11 @@
         <texture id="postTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/post.jpg"/>
         <texture id="postLampTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/post2.png"/>
         <texture id="pumpkinTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/pumpkin.png"/>
+        <texture id="tombWordsTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/words.png"/>
+        <texture id="ripTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/rip.png"/>
+        <texture id="dirtTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/dirt.jpg"/>
+        <texture id="waxTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/wax.png"/>
+        <texture id="candleTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/candle.jpg"/>
     </textures> 
 
     <materials> 
@@ -123,7 +128,7 @@
         
         <material id="postLampApp"
             emissive="0.0 0.0 0.0 1" 
-            color="1.0 1.0 1.0 1.0" 
+            color="1.0 1.0 1.0 0.99" 
             specular="0.07 0.07 0.07 0" 
             shininess="30"
             twosided="true"
@@ -151,6 +156,47 @@
             bumpref="pumpkinTex"
             bumpscale="0.2" />
         
+        <material id="tombWordsApp"
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 1" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            twosided="true"
+            textureref="tombWordsTex"/>
+        
+        <material id="ripApp"
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 0.99" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            twosided="true"
+            textureref="ripTex"/>
+
+         <material id="dirtApp"
+         emissive="0.0 0.0 0.0 1" 
+         color="1.0 1.0 1.0 1" 
+         specular="0.07 0.07 0.07 0" 
+         shininess="30"
+         twosided="true"
+         textureref="dirtTex"
+         bumpref="dirtTex"
+         bumpscale="0.2" />
+        
+        <material id="waxApp"
+         emissive="0.0 0.0 0.0 1" 
+         color="1.0 1.0 1.0 0.99" 
+         specular="0.07 0.07 0.07 0" 
+         shininess="30"
+         twosided="true"
+         textureref="waxTex"/>
+        
+        <material id="candleApp"
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 1" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            twosided="true"
+            textureref="candleTex"/>
 
     </materials> 
 
@@ -172,6 +218,16 @@
                 <noderef id="lamp2"/>
                 <noderef id="pumpkin1"/>
                 <noderef id="pumpkin2"/>
+                <noderef id="candle1"/>
+                <noderef id="candle2"/>
+                <noderef id="candle3"/>
+                
+                <noderef id="candle4"/>
+                <!--<noderef id="tombstoneCurve"/>-->
+                <noderef id="rightTombs"/>
+                <noderef id="tombstonePlain3"/>
+                <noderef id="leftTombs"/>
+                <noderef id="tombstonePlain5"/>
 
                 <noderef id="test" />
             </children> 
@@ -220,6 +276,302 @@
             </children> 
         </node>
 
+        <node id= "rightTombs">
+            <transforms>
+				<scale value3="1 1 1" />
+            </transforms>
+            <children>
+                <noderef id="tombstonePlain1"/>
+                <noderef id="tombstonePlain2"/>
+                <noderef id="tombstonePlain4"/>
+                <noderef id="tombstoneCurve2"/>
+            </children>
+        </node>
+
+        <node id= "leftTombs">
+            <transforms>
+				<scale value3="-1 1 -1" />
+                <translate value3="0 0 -12" />
+            </transforms>
+            <children>
+                <noderef id="rightTombs"/>
+            </children>
+        </node>
+
+        <node id="tombstonePlain1">
+            <transforms>
+				<translate value3="35 0 18" />
+                <rotate value3="0 -94 0" />
+            </transforms>
+            <children>    
+                <noderef id="tombstonePlain"/>       
+            </children> 
+        </node>
+
+        <node id="tombstonePlain2">
+            <transforms>
+				<translate value3="35 0 8" />
+                <rotate value3="0 -88 0" />
+            </transforms>
+            <children>    
+                <noderef id="tombstonePlain"/>       
+            </children> 
+        </node>
+
+        <node id="tombstonePlain3">
+            <transforms>
+				<translate value3="35 0 -10" />
+                <rotate value3="0 -90 0" />
+            </transforms>
+            <children>    
+                <noderef id="tombstonePlain"/>       
+            </children> 
+        </node>
+
+        <node id="tombstonePlain4">
+            <transforms>
+				<translate value3="35 0 -25" />
+                <rotate value3="0 -93 0" />
+            </transforms>
+            <children>    
+                <noderef id="tombstonePlain"/>       
+            </children> 
+        </node>
+
+        <node id="tombstonePlain5">
+            <transforms>
+				<translate value3="-35 0 -10" />
+                <rotate value3="0 -94 0" />
+                <scale value3= "-1 1 -1"/>
+            </transforms>
+            <children>    
+                <noderef id="tombstonePlain"/>       
+            </children> 
+        </node>
+
+        <node id="tombstoneCurve1">
+            <transforms>
+				<translate value3="-35 0 16" />
+                <rotate value3="0 92 0" />
+            </transforms>
+            <children>    
+                <noderef id="tombstoneCurve"/>       
+            </children> 
+        </node>
+
+        <node id="tombstoneCurve2">
+            <transforms>
+				<translate value3="35 0 -18" />
+                <rotate value3="0 -88 0" />
+            </transforms>
+            <children>    
+                <noderef id="tombstoneCurve"/>       
+            </children> 
+        </node>
+
+        <node id="candle1">
+            <transforms>
+				<translate value3="10 0 10" />
+            </transforms> 
+            <children>    
+                <noderef id="candleC"/>       
+            </children> 
+        </node>
+
+        <node id="candle2">
+            <transforms>
+				<translate value3="-10 0 10" />
+            </transforms> 
+            <children>    
+                <noderef id="candleC"/>       
+            </children> 
+        </node>
+
+        <node id="candle3">
+            <transforms>
+				<translate value3="10 0 -10" />
+            </transforms> 
+            <children>    
+                <noderef id="candleC"/>       
+            </children> 
+        </node>
+
+        <node id="candle4">
+            <transforms>
+				<translate value3="-10 0 -10" />
+            </transforms> 
+            <children>    
+                <noderef id="candleC"/>       
+            </children> 
+        </node>
+
+        <node id= "candleC">
+            <transforms>
+				<translate value3="0 0 0" />
+            </transforms> 
+            <children>    
+                <noderef id="wax"/>       
+                <noderef id="candle"/>
+                <noderef id="candleTop"/>
+                <pointlight id="light4" enabled="true" 
+                        color="1 0.4 0.3 1" 
+                        intensity="2.0"
+                        distance="10"
+                        decay="2.0"
+                        castshadow="false"
+                        position="0 2.1 0" 
+                />       
+            </children> 
+        </node>
+
+        <node id= "candleTop">
+            <materialref id="candleApp" />
+            <transforms>
+				<translate value3="0 1.1 0" />
+            </transforms> 
+            <children>    
+                <primitive>
+                    <cylinder base="0.05" top="0" height="0.2" slices="15" stacks="1" capsclose="true"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="candle">
+            <transforms>
+				<translate value3="0 0.5 0" />
+            </transforms> 
+            <materialref id="candleApp" />
+            <children>        
+                <primitive>
+                    <cylinder base="0.25" top="0.25" height="1" slices="14" stacks="1" capsclose="true"/>
+                </primitive>
+            </children> 
+        </node>
+        
+        <node id="wax">
+            <transforms>
+                <translate value3="0 0.01 0"/>
+				<rotate value3="-90 0 0" />
+            </transforms> 
+
+			<materialref id="waxApp" />
+			
+            <children>             
+                <primitive>
+                    <rectangle xy1="-0.7 -0.7" xy2="0.7 0.7" />
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="tombstoneCurve">
+            <materialref id="stoneBlockApp" />
+            <transforms>
+                <scale value3= "0.4 0.4 0.4"/>
+            </transforms>
+            <children>
+                <noderef id="dirt"/>
+                <noderef id="ripWords"/>
+                <noderef id="tombstoneCurveBottomSupport"/>
+                <noderef id="tombstoneCurveBottom"/>
+                <noderef id="tombstoneCurveTop"/>
+            </children>
+        </node>
+
+        <node id="dirt">
+            <materialref id="dirtApp" />
+            <transforms>
+                <translate value3="0 -0.7 9.26"/>
+                <rotate value3="0 90 0"/>
+				<scale value3="5.3 1.6 3" />
+            </transforms> 
+             <children>
+                <primitive>
+                    <sphere radius="1.2" slices="12" stacks="7" thetalength="1.57075"/>
+                </primitive>
+            </children>
+        </node>
+
+        <node id="ripWords">
+         <materialref id="ripApp" />
+            <transforms>
+                <translate value3="0 1.8 0.26"/>
+				<rotate value3="0 0 0" />
+            </transforms> 
+            <children>             
+                <primitive>
+                    <rectangle xy1="-1.55 -0.5" xy2="1.55 4.8" />
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="tombstoneCurveTop">
+            <transforms>
+                <rotate value3="0 90 90" />
+                <translate value3="5 0 0" />
+            </transforms>
+            <children>
+                <primitive>
+                    <cylinder base="2" top="2" height="0.5" slices="12" stacks="1" thetalength="3.1415" capsclose="true"/>
+                </primitive>
+            </children>
+        </node>
+
+        <node id="tombstoneCurveBottom">
+            <transforms>
+            </transforms>
+            <children>
+                <primitive>
+                    <box xyz1="-2 1 -0.25" xyz2="2 5 0.25"/>
+                </primitive>
+            </children>
+        </node>
+
+        <node id="tombstoneCurveBottomSupport">
+            <transforms>
+                <translate value3="0 0.5 0" />
+            </transforms>
+            <children>
+                <primitive>
+                    <cylinder base="3.5" top="2.4" height="1" slices="12" stacks="1" capsclose="true"/>
+                </primitive>
+            </children>
+        </node>
+
+
+        <node id="tombstoneWords">
+         <materialref id="tombWordsApp" />
+            <transforms>
+                <translate value3="0 1.51 6"/>
+				<rotate value3="-90 0 0" />
+            </transforms> 
+            <children>             
+                <primitive>
+                    <rectangle xy1="-1.55 -0.5" xy2="1.55 4.8" />
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="tombstonePlain">
+            <materialref id="stoneBlockApp" />
+            <transforms>
+            </transforms>
+            <children>
+                <noderef id="tombstoneWords"/>
+                <primitive>
+                    <box xyz1="-2 0 -0.5" xyz2="2 0.5 7" />
+                </primitive>
+                <primitive>
+                    <box xyz1="-1.55 0.5 -0.5" xyz2="1.55 1.5 6.5" />
+                </primitive>
+                <primitive>
+                    <box xyz1="-0.2 1.5 0.8" xyz2="0.2 4.5 1.1" />
+                </primitive>
+                <primitive>
+                    <box xyz1="-1 3.5 0.8" xyz2="1 3.9 1.1" />
+                </primitive>
+            </children>
+        </node>
+
         <node id="pumpkin1">
             <transforms>
                 <scale value3= "1 1 1.1"/>
@@ -230,7 +582,7 @@
             <children>
                 <pointlight id="light1" enabled="true" 
                         color="1 0.4 0.3 1" 
-                        intensity="2.0"
+                        intensity="4.0"
                         distance="1000"
                         decay="2.0"
                         castshadow="false"
@@ -252,7 +604,7 @@
             <children>
                 <pointlight id="light1" enabled="true" 
                         color="1 0.4 0.3 1" 
-                        intensity="2.0"
+                        intensity="4.0"
                         distance="1000"
                         decay="2.0"
                         castshadow="false"
@@ -307,7 +659,7 @@
             <children>
                  <pointlight id="light2" enabled="true" 
                         color="1 1 0 1"  
-                        intensity="5.0"
+                        intensity="15.0"
                         distance="1000"
                         decay="2.0"
                         castshadow="false"
@@ -325,7 +677,7 @@
             <children>
                 <pointlight id="light3" enabled="true" 
                         color="1 1 0 1" 
-                        intensity="5.0"
+                        intensity="15.0"
                         distance="1000"
                         decay="2.0"
                         castshadow="false"
