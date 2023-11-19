@@ -224,6 +224,8 @@ class MyContents  {
         // refer to descriptors in class MySceneData.js
         // to see the data structure for each item
         let root = data.nodes.scene
+
+        console.log(data)
         
         this.iterateNodes(root,this.groupi,["def"])
         console.log(this.lights)
@@ -343,7 +345,32 @@ class MyContents  {
             }
             
             case "triangle":{
-                return
+
+                let metrics = node.representations[0]
+
+                const geometry = new THREE.BufferGeometry();
+
+                console.log(node)
+
+                const vertices = new Float32Array(
+                    [...metrics.xyz1,
+                    ...metrics.xyz2,
+                    ...metrics.xyz3]
+                );
+
+                const indices = [
+                    0, 1, 2,
+                    2, 1, 0,
+                ];
+
+                geometry.setIndex( indices );
+                geometry.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
+                
+                const mesh = new THREE.Mesh( geometry, mat );
+                mesh.receiveShadow = true
+                mesh.castShadow = true
+
+                return mesh
             }
             case "cylinder":{
                 // metrics
@@ -416,6 +443,9 @@ class MyContents  {
                 mesh.translateZ(deltaZ)
 
                 return mesh
+            }
+            case "polygon":{
+                return
             }
         }
     }

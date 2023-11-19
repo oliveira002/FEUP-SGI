@@ -3,7 +3,7 @@
 
 	<!-- Credits of the original file go to Group 2, class 3 of course MEIC-SGI school year 2023/2024, FEUP, University of Porto -->
 	
-    <globals background="0.06 0.06 0.06 1" ambient="0.1 0.1 0.1 1" /> 
+    <globals background="0.06 0.06 0.06 1" ambient="1 1 1 1" /> 
 
     <fog color="0.3 0.3 0.3 1.0" near="0.0" far="250.0" />
     <skybox size="140 140 140" center="0 70 0" emissive="0.01 0.01 0.01 1" intensity="1.0" up="scenes/SGI_TP2_XML_T03_G02/textures/up.jpg" down="scenes/SGI_TP2_XML_T03_G02/textures/up.jpg" left="scenes/SGI_TP2_XML_T03_G02/textures/front.jpg" right="scenes/SGI_TP2_XML_T03_G02/textures/right.jpg" front="scenes/SGI_TP2_XML_T03_G02/textures/left.jpg" back="scenes/SGI_TP2_XML_T03_G02/textures/back.jpg"/>
