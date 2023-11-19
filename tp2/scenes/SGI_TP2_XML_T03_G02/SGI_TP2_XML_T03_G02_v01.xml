@@ -61,7 +61,9 @@
 			color="1.0 1.0 1.0 1.0" 
             specular="0.07 0.07 0.07 0" 
             shininess="30" 
-            textureref="floorTex" />
+            textureref="floorTex"
+            bumpref="floorTex"
+            bumpscale="2" />
 
         <material id="stoneBlockApp"
             emissive="0.0 0.0 0.0 1" 
@@ -151,7 +153,9 @@
             specular="0.07 0.07 0.07 0" 
             shininess="30"
             twosided="true"
-            textureref="pumpkinTex"/>
+            textureref="pumpkinTex"
+            bumpref="pumpkinTex"
+            bumpscale="0.2" />
         
 
     </materials> 
