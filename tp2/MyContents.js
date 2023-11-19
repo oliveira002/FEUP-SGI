@@ -445,7 +445,64 @@ class MyContents  {
                 return mesh
             }
             case "polygon":{
-                return
+
+                let metrics = node.representations[0]
+                let stacks = metrics.stacks
+                let slices = metrics.slices
+                let radius = metrics.radius
+                
+                const geometry = new THREE.BufferGeometry();
+
+                const vertices = [];
+                const indices = [];
+
+                function addVertex(radius, angle) {
+                    const x = radius * Math.cos(angle);
+                    const y = radius * Math.sin(angle);
+                    vertices.push(x, y, 0);
+                }
+
+                function getAngle(slice){
+                    return (slice / slices) * Math.PI * 2
+                }
+
+                function getRadius(stack){
+                    return (stack/stacks) * radius
+                }
+
+                let index = 0
+                for(let stack = 0; stack < stacks; stack++){
+                    for (let slice = 0; slice < slices; slice++){
+
+                        if(stack == 0){
+                            addVertex(0, getAngle(slice))
+                            addVertex(getRadius(1), getAngle(slice))
+                            addVertex(getRadius(1), getAngle(slice+1))
+                            indices.push(index++, index++, index++)
+                        }
+                        else{
+                            addVertex(getRadius(stack), getAngle(slice))
+                            addVertex(getRadius(stack+1), getAngle(slice))
+                            addVertex(getRadius(stack+1), getAngle(slice+1))
+                            indices.push(index++, index++, index++)
+                            addVertex(getRadius(stack), getAngle(slice))
+                            addVertex(getRadius(stack+1), getAngle(slice+1))
+                            addVertex(getRadius(stack), getAngle(slice+1))
+                            indices.push(index++, index++, index++)
+                        }
+                    }
+                }
+
+                // Convert the arrays into typed arrays
+                const verticesArray = new Float32Array(vertices);
+                const indicesArray = new Uint32Array(indices);
+
+                // Set the vertices and indices to the geometry
+                geometry.setAttribute('position', new THREE.BufferAttribute(verticesArray, 3));
+                geometry.setIndex(new THREE.BufferAttribute(indicesArray, 1));
+ 
+                const mesh = new THREE.Mesh(geometry, mat);
+                return mesh
             }
         }
     }
