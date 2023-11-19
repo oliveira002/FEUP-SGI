@@ -3,7 +3,7 @@
 
 	<!-- Credits of the original file go to Group 2, class 3 of course MEIC-SGI school year 2023/2024, FEUP, University of Porto -->
 	
-    <globals background="0.06 0.06 0.06 1" ambient="0.15 0.15 0.15 1" /> 
+    <globals background="0.06 0.06 0.06 1" ambient="0.25 0.25 0.25 1" /> 
 
     <fog color="0.3 0.3 0.3 1.0" near="0.0" far="250.0" />
     <skybox size="140 160 140" center="0 0 0" emissive="0.01 0.01 0.01 1" intensity="1.0" up="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" down="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" left="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" right="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" front="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" back="scenes/SGI_TP2_XML_T03_G02/textures/stars.png"/>
@@ -251,24 +251,6 @@
                 <noderef id="helmet"/>
                 <noderef id="shovelFull"/>
             </children> 
-        </node>
-
-        <node id="test">
-            <transforms>
-				<translate value3="0 20 0" />
-            </transforms> 
-
-			<materialref id="skyApp" />
-
-            <children>
-                <primitive>
-                    <polygon radius="10"
-                        stacks="1"
-                        slices="5"
-                        color_c="0 0 0 1"
-                        color_p="0 0 0 1" />
-                </primitive>
-            </children>
         </node>
 
         <!--<node id="sky">
@@ -1346,7 +1328,6 @@
             <transforms>
 				<translate value3="0 3 -2" />
             </transforms> 
-			<materialref id="floorApp" />
             <children>             
                 <noderef id="leaf"/>
             </children> 
@@ -1356,7 +1337,6 @@
             <transforms>
 				<translate value3="0 5 0" />
             </transforms> 
-			<materialref id="floorApp" />
             <children>             
                 <noderef id="leaf"/>
             </children> 

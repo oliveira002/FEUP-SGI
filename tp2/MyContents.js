@@ -273,6 +273,8 @@ class MyContents  {
     }
 
     iterateNodes(node, parentGroup, defaultMaterial) {
+        defaultMaterial = node.materialIds.length  > 0 ? node.materialIds : defaultMaterial
+
         if(node.type === "spotlight" || node.type === "pointlight" || node.type === "directionallight") {
             return
         }
@@ -296,7 +298,8 @@ class MyContents  {
                 cur.add(light)
             } else if (child.type === "primitive" && child.subtype != "nurbs") {
                 // Handle primitives
-                let mesh = this.dealWithPrimitive(child, node.materialIds);
+                console.log(defaultMaterial)
+                let mesh = this.dealWithPrimitive(child, defaultMaterial);
                 cur.add(mesh);
             } 
             else if(child.type === "primitive" && child.subtype == "nurbs") {
@@ -306,9 +309,12 @@ class MyContents  {
                 return
             }
             else {
+                
+                /*
                 if(child.materialIds.length === 0) {
+                    console.log(child)
                     child.materialIds = (node.materialIds.length === 0) ? defaultMaterial : node.materialIds
-                }
+                }*/
                 // Recursively iterate for non-light and non-primitive nodes
                 this.iterateNodes(child, cur, defaultMaterial);
             }
