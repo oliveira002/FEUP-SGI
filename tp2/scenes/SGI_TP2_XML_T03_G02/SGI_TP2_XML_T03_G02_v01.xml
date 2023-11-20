@@ -3,7 +3,7 @@
 
 	<!-- Credits of the original file go to Group 2, class 3 of course MEIC-SGI school year 2023/2024, FEUP, University of Porto -->
 	
-    <globals background="0.06 0.06 0.06 1" ambient="0.12 0.12 0.12 1" /> 
+    <globals background="0.06 0.06 0.06 1" ambient="1 1 1 1" /> 
 
     <!--<fog color="0.3 0.3 0.3 1.0" near="0.0" far="250.0" />-->
     <skybox size="140 160 140" center="0 0 0" emissive="0.01 0.01 0.01 1" intensity="1.0"
@@ -54,6 +54,7 @@
         <texture id="crackedHTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/cracked2.jpg"/>
         <texture id="crossTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/cross.png"/>
         <texture id="restTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/rip2.png"/>
+        <texture id="vase1Tex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/vase1.jpg"/>
     </textures> 
 
     <materials> 
@@ -185,22 +186,22 @@
             textureref="ripTex"/>
 
          <material id="dirtApp"
-         emissive="0.0 0.0 0.0 1" 
-         color="1.0 1.0 1.0 1" 
-         specular="0.07 0.07 0.07 0" 
-         shininess="30"
-         twosided="true"
-         textureref="dirtTex"
-         bumpref="dirtTex"
-         bumpscale="0.2" />
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 1" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            twosided="true"
+            textureref="dirtTex"
+            bumpref="dirtTex"
+            bumpscale="0.2" />
         
         <material id="waxApp"
-         emissive="0.0 0.0 0.0 1" 
-         color="1.0 1.0 1.0 0.99" 
-         specular="0.07 0.07 0.07 0" 
-         shininess="30"
-         twosided="true"
-         textureref="waxTex"/>
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 0.99" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            twosided="true"
+            textureref="waxTex"/>
         
         <material id="candleApp"
             emissive="0.0 0.0 0.0 1" 
@@ -259,6 +260,14 @@
             textureref="restTex"/>
 
 
+        <material id="vase1App" 
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 1.0" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            textureref="vase1Tex"
+            twosided="true" />
+
     </materials> 
 
     <graph rootid="scene"> 	
@@ -309,8 +318,6 @@
                 <!--<noderef id="pillar" /> -->
                 <noderef id="sky"/>
                 <noderef id="floor"/>
-                <noderef id="houseFloor"/>
-                <noderef id="houseFloor2"/>
                 <noderef id="rightWall"/>
                 <noderef id="leftWall"/>
                 <noderef id="leftTrees"/>
@@ -338,11 +345,80 @@
                 <noderef id="tombCurve1"/>
                 <noderef id="tombCurve2"/>
                 <noderef id="smallH"/>
+                <noderef id="vase1" />
             </children> 
         </node>
 
+        <node id="vase1">
+            <transforms>
+                <translate value3="30 0 11"/>
+                <scale value3="0.4 0.7 0.5"/>
+            </transforms>
 
-        
+            <materialref id="vase1App" />
+
+            <children>
+                <noderef id="vase1Left" />
+                <noderef id="vase1Right" />
+            </children>
+        </node>
+
+        <node id="vase1Left">
+            <transforms>
+                <rotate value3="0 180 0"/>
+            </transforms>
+
+            <children>
+                <noderef id="vase1Half" />
+            </children>
+        </node>
+
+        <node id="vase1Right">
+
+            <children>
+                <noderef id="vase1Half" />
+            </children>
+        </node>
+
+        <node id="vase1Half">
+ 
+            <materialref id="vase1App" />
+
+            <children>
+                <primitive>
+                    <nurbs degree_u="6" degree_v="3" parts_u="32" parts_v="32" distance="0.0">
+                        <controlpoint xx="0" yy="0" zz="0" />
+                        <controlpoint xx="0" yy="0" zz="0" />
+                        <controlpoint xx="0" yy="0" zz="0" />
+                        <controlpoint xx="0" yy="0" zz="0" />
+                        <controlpoint xx="0.4" yy="0" zz="0" />
+                        <controlpoint xx="0.4" yy="0" zz="0.37777777777777777" />
+                        <controlpoint xx="-0.4" yy="0" zz="0.37777777777777777" />
+                        <controlpoint xx="-0.4" yy="0" zz="0" />
+                        <controlpoint xx="0.4425" yy="0.1" zz="0" />
+                        <controlpoint xx="0.4425" yy="0.1" zz="0.4425" />
+                        <controlpoint xx="-0.4425" yy="0.1" zz="0.4425" />
+                        <controlpoint xx="-0.4425" yy="0.1" zz="0" />
+                        <controlpoint xx="0.7625" yy="0.85" zz="0" />
+                        <controlpoint xx="0.7625" yy="0.85" zz="0.7625" />
+                        <controlpoint xx="-0.7625" yy="0.85" zz="0.7625" />
+                        <controlpoint xx="-0.7625" yy="0.85" zz="0" />
+                        <controlpoint xx="0.53" yy="1.7" zz="0" />
+                        <controlpoint xx="0.53" yy="1.7" zz="0.53" />
+                        <controlpoint xx="-0.53" yy="1.7" zz="0.53" />
+                        <controlpoint xx="-0.53" yy="1.7" zz="0" />
+                        <controlpoint xx="0.4325" yy="1.95" zz="0" />
+                        <controlpoint xx="0.4325" yy="1.95" zz="0.4325" />
+                        <controlpoint xx="-0.4325" yy="1.95" zz="0.4325" />
+                        <controlpoint xx="-0.4325" yy="1.95" zz="0" />
+                        <controlpoint xx="0.525" yy="2.25" zz="0" />
+                        <controlpoint xx="0.525" yy="2.25" zz="0.525" />
+                        <controlpoint xx="-0.525" yy="2.25" zz="0.525" />
+                        <controlpoint xx="-0.525" yy="2.25" zz="0" />
+                    </nurbs>
+                </primitive>
+            </children>
+        </node>
 
         <!--<node id="sky">
             <materialref id="skyApp" />

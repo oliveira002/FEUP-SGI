@@ -55,7 +55,7 @@ class MyContents  {
         this.textureMap = []
 
         // Objects and Primitives
-        
+
 
         this.reader = new MyFileReader(app, this, this.onSceneLoaded);
 		//this.reader.open("scenes/demo/demo.xml");
@@ -378,6 +378,7 @@ class MyContents  {
         return group
     }
 
+    // Creates a light object
     dealWithLight(node){
 
         let light = null
@@ -435,6 +436,7 @@ class MyContents  {
 
     }
 
+    // Creates a primitive object
     dealWithPrimitive(node, materialID, castShadows, receiveShadows){
 
         let primitiveFuncMap = {
