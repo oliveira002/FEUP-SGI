@@ -3,7 +3,7 @@
 
 	<!-- Credits of the original file go to Group 2, class 3 of course MEIC-SGI school year 2023/2024, FEUP, University of Porto -->
 	
-    <globals background="0.06 0.06 0.06 1" ambient="1 1 1 1" /> 
+    <globals background="0.06 0.06 0.06 1" ambient="0.12 0.12 0.12 1" /> 
 
     <!--<fog color="0.3 0.3 0.3 1.0" near="0.0" far="250.0" />-->
     <skybox size="140 160 140" center="0 0 0" emissive="0.01 0.01 0.01 1" intensity="1.0"
@@ -50,6 +50,10 @@
         <texture id="skullTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/skull.png"/>
         <texture id="candleTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/candle.jpg"/>
         <texture id="helmetTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/helmet.jpg"/>
+        <texture id="whiteTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/white.jpg"/>
+        <texture id="crackedHTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/cracked2.jpg"/>
+        <texture id="crossTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/cross.png"/>
+        <texture id="restTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/rip2.png"/>
     </textures> 
 
     <materials> 
@@ -216,11 +220,44 @@
         
         <material id="helmetApp"
             emissive="0.0 0.0 0.0 1" 
-            color="1.0 1.0 1.0 0.99" 
+            color="1.0 1.0 1.0 1" 
             specular="0.07 0.07 0.07 0" 
             shininess="30"
             twosided="true"
             textureref="helmetTex"/>
+        
+        <material id="whiteApp"
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 1" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            twosided="true"
+            textureref="whiteTex"/>
+        
+        <material id="crackedHApp"
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 1" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            twosided="true"
+            textureref="crackedHTex"/>
+        
+        <material id="crossApp"
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 0.99" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            twosided="true"
+            textureref="crossTex"/>
+        
+        <material id="restApp"
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 1" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            twosided="true"
+            textureref="restTex"/>
+
 
     </materials> 
 
@@ -287,9 +324,8 @@
                 <noderef id="candle1"/>
                 <noderef id="candle2"/>
                 <noderef id="candle3"/>
-                
                 <noderef id="candle4"/>
-                <!--<noderef id="tombstoneCurve"/>-->
+                <noderef id="candle5"/>
                 <noderef id="rightTombs"/>
                 <noderef id="tombstonePlain3"/>
                 <noderef id="leftTombs"/>
@@ -298,8 +334,15 @@
                 <noderef id="skull"/>
                 <noderef id="helmet"/>
                 <noderef id="shovelFull"/>
+                <noderef id="cross1"/>
+                <noderef id="tombCurve1"/>
+                <noderef id="tombCurve2"/>
+                <noderef id="smallH"/>
             </children> 
         </node>
+
+
+        
 
         <!--<node id="sky">
             <materialref id="skyApp" />
@@ -325,6 +368,217 @@
                     <rectangle xy1="-70 -70" xy2="70 70" />
                 </primitive>
             </children> 
+        </node>
+
+        <node id="smallH">
+            <materialref id="crackedHApp" />
+            <transforms>
+                <translate value3= "24 0 35"/>
+                <rotate value3="0 -90 0"/>   
+            </transforms>
+            <children>
+                <noderef id="bottomH"/>
+                <noderef id="cylH1"/>
+                <noderef id="cylH2"/>
+                <noderef id="cylH3"/>
+                <noderef id="cylH4"/>
+                <noderef id="topSupH"/>
+                <noderef id="topH"/>
+                <noderef id="crossPlane"/>
+            </children>
+        </node>
+        
+        <node id="crossPlane">
+            <materialref id="crossApp" />
+            <transforms>
+                <translate value3= "-0.03 8.3 2.01"/>
+                <rotate value3="0 0 0"/>   
+                <scale value3="1.4 1 1"/>
+            </transforms>
+            <children>
+                <primitive>
+                    <rectangle xy1="-0.6 -0.6" xy2="0.6 0.6"/>
+                </primitive>
+            </children>
+        </node>
+
+        <node id="topH">
+            <transforms>
+                <translate value3= "0 8.2 0"/>
+                <rotate value3="-90 0 0"/>   
+                <scale value3="1 1 0.7"/>   
+            </transforms>
+            <children>
+                <primitive>
+                    <cylinder base="2" top="2" height="4" slices="3" stacks="1" capsclose="true"/>
+                </primitive>
+            </children>
+        </node>
+
+        <node id="topSupH">
+            <transforms>
+                <translate value3= "0 7 0"/>
+                <rotate value3="0 45 0"/>   
+            </transforms>
+            <children>
+                <primitive>
+                    <cylinder base="2.8" top="2.6" height="0.5" slices="4" stacks="1" capsclose="true"/>
+                </primitive>
+            </children>
+        </node>
+
+        <node id="bottomH">
+            <transforms>
+                <translate value3= "0 1 0"/>
+                <rotate value3="0 45 0"/>   
+            </transforms>
+            <children>
+                <primitive>
+                    <cylinder base="3" top="2.4" height="2" slices="4" stacks="1" capsclose="true"/>
+                </primitive>
+            </children>
+        </node>
+        
+
+        <node id="cylH1">
+            <transforms>
+                <translate value3= "0.8 1 0.8"/>
+                <rotate value3="0 0 0"/>   
+            </transforms>
+            <children>
+                <noderef id="cylH"/>
+            </children>
+        </node>
+
+        <node id="cylH2">
+            <transforms>
+                <translate value3= "0.8 1 -0.8"/>
+                <rotate value3="0 0 0"/>   
+            </transforms>
+            <children>
+                <noderef id="cylH"/>
+            </children>
+        </node>
+
+        <node id="cylH3">
+            <transforms>
+                <translate value3= "-0.8 1 0.8"/>
+                <rotate value3="0 0 0"/>   
+            </transforms>
+            <children>
+                <noderef id="cylH"/>
+            </children>
+        </node>
+
+        <node id="cylH4">
+            <transforms>
+                <translate value3= "-0.8 1 -0.8"/>
+                <rotate value3="0 0 0"/>   
+            </transforms>
+            <children>
+                <noderef id="cylH"/>
+            </children>
+        </node>
+
+        <node id="cylH">
+            <materialref id="whiteApp"/>
+            <transforms>
+                <translate value3= "0 3.25 0"/>
+                <rotate value3="0 45 0"/>   
+            </transforms>
+            <children>
+                <primitive>
+                    <cylinder base="0.3" top="0.3" height="6.5" slices="32" stacks="32" capsclose="true"/>
+                </primitive>
+            </children>
+        </node>
+
+        <node id="tombCurve1">
+            <materialref id="stoneBlockApp" />
+            <transforms>
+                <translate value3= "8 0 25"/>
+                <rotate value3="0 -10 0"/>   
+                <scale value3= "1.12 1.12 1.12"/>
+            </transforms>
+            <children>
+                <noderef id="tombCurve"/>
+            </children>
+        </node>
+
+        <node id="tombCurve2">
+            <materialref id="stoneBlockApp" />
+            <transforms>
+                <translate value3= "16 0 25"/>
+                <rotate value3="0 25 0"/>   
+                <scale value3= "1.3 1.3 1.3"/>
+            </transforms>
+            <children>
+                <noderef id="tombCurve"/>
+            </children>
+        </node>
+
+        <node id="tombCurve">
+            <materialref id="stoneBlockApp" />
+            <transforms>
+                <scale value3= "0.4 0.4 0.4"/>
+            </transforms>
+            <children>
+                <noderef id="tombCurveSup"/>
+                <noderef id="tombstoneCurveBottom"/>
+                <noderef id="tombstoneCurveTop"/>
+            </children>
+        </node>
+
+        <node id="tombCurveSup">
+            <transforms>
+                <scale value3= "4 1 1.5"/>
+                <translate value3= "0 0.5 0"/>
+            </transforms>
+            <children>
+                <primitive>
+                    <cylinder base="0.8" top="0.6" height="1" slices="4" stacks="1" capsclose="true"/>
+                </primitive>
+            </children>
+        </node>
+
+        <node id="cross1">
+            <transforms> 
+                <translate value3="12 0 25"/>    
+                <rotate value3="0 -30 0"/>   
+            </transforms>
+            
+            <children>
+                <noderef id="cross"/>
+            </children>
+        </node>
+
+        <node id="cross">
+            <materialref id="stoneBlockApp"/>
+            <transforms>     
+            </transforms>
+            
+            <children>
+                <noderef id="crossSup"/>
+                <primitive>
+                    <box xyz1="-0.2 0.5 -0.2" xyz2="0.2 2.9 0.2" />
+                </primitive>
+                <primitive>
+                    <box xyz1="-0.8 1.9 -0.2" xyz2="0.8 2.3 0.2" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="crossSup">
+            <transforms>     
+                <rotate value3="0 45 0"/>   
+                <translate value3="0 0.25 0"/>   
+            </transforms>
+            
+            <children>
+                <primitive>
+                    <cylinder base="0.8" top="0.6" height="0.5" slices="4" stacks="1" capsclose="true"/>
+                </primitive>
+            </children>
         </node>
 
         <node id = "shovelFull">
@@ -560,6 +814,16 @@
         <node id="candle4">
             <transforms>
 				<translate value3="-10 0 -10" />
+            </transforms> 
+            <children>    
+                <noderef id="candleC"/>       
+            </children> 
+        </node>
+
+        <node id="candle5">
+            <transforms>
+				<translate value3="10.5 0 27" />
+                <scale value3="0.7 0.7 0.7" />
             </transforms> 
             <children>    
                 <noderef id="candleC"/>       
