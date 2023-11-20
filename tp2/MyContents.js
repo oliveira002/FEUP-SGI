@@ -94,6 +94,7 @@ class MyContents  {
         this.initTextures(data)
         this.initMaterials(data)
         this.initSceneGraph(data)
+        this.initHelpers()
     }
 
     // Initializes all the global scene objects
@@ -692,6 +693,10 @@ class MyContents  {
                     break;
            }
         });
+    }
+
+    initHelpers(){
+        console.log(this.lights)
     }
 
     degToRad(degrees){
