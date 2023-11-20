@@ -267,7 +267,7 @@
 
 		<node id="scene"> 
             <children>
-                <noderef id="test" />
+                <!--<noderef id="test" />-->
 
                 <!--<noderef id="pillar" /> -->
                 <noderef id="sky"/>
