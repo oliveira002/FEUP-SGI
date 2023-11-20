@@ -450,11 +450,18 @@ class MyContents  {
                 let stacks = metrics.stacks
                 let slices = metrics.slices
                 let radius = metrics.radius
+                let centerColor = new THREE.Color(metrics.color_c)
+                let outerColor = new THREE.Color(metrics.color_p)
+                let centerOpacity = metrics.color_c.a
+                let outerOpacity = metrics.color_p.a
+                let opacityDelta = outerOpacity-centerOpacity
                 
                 const geometry = new THREE.BufferGeometry();
 
                 const vertices = [];
                 const indices = [];
+                const normals = [];
+                const colors = [];
 
                 function addVertex(radius, angle) {
                     const x = radius * Math.cos(angle);
@@ -474,32 +481,53 @@ class MyContents  {
                 for(let stack = 0; stack < stacks; stack++){
                     for (let slice = 0; slice < slices; slice++){
 
+                        const i = stack / stacks;
+                        const vertexColor = new THREE.Color().lerpColors(centerColor, outerColor, i);
+                        const vertexOpacity = i * opacityDelta
+
                         if(stack == 0){
                             addVertex(0, getAngle(slice))
                             addVertex(getRadius(1), getAngle(slice))
                             addVertex(getRadius(1), getAngle(slice+1))
                             indices.push(index++, index++, index++)
+                            colors.push(...vertexColor, vertexOpacity, ...vertexColor, vertexOpacity, ...vertexColor, vertexOpacity)
                         }
                         else{
                             addVertex(getRadius(stack), getAngle(slice))
                             addVertex(getRadius(stack+1), getAngle(slice))
                             addVertex(getRadius(stack+1), getAngle(slice+1))
                             indices.push(index++, index++, index++)
+                            colors.push(...vertexColor, vertexOpacity, ...vertexColor, vertexOpacity, ...vertexColor, vertexOpacity)
                             addVertex(getRadius(stack), getAngle(slice))
                             addVertex(getRadius(stack+1), getAngle(slice+1))
                             addVertex(getRadius(stack), getAngle(slice+1))
                             indices.push(index++, index++, index++)
+                            colors.push(...vertexColor, vertexOpacity, ...vertexColor, vertexOpacity, ...vertexColor, vertexOpacity)
                         }
+
                     }
                 }
 
                 // Convert the arrays into typed arrays
                 const verticesArray = new Float32Array(vertices);
                 const indicesArray = new Uint32Array(indices);
+                const normalsArray = new Uint32Array(normals);
+                const colorsArray = new Float32Array(colors);
 
                 // Set the vertices and indices to the geometry
                 geometry.setAttribute('position', new THREE.BufferAttribute(verticesArray, 3));
                 geometry.setIndex(new THREE.BufferAttribute(indicesArray, 1));
+                geometry.setAttribute('color', new THREE.BufferAttribute(colorsArray, 4));
+
+                geometry.computeVertexNormals()
+                geometry.computeBoundingSphere()
+                geometry.computeBoundingBox()
+
+                mat = new THREE.MeshBasicMaterial({
+                    vertexColors: true,
+                    side: THREE.DoubleSide,
+                    transparent: true
+                });
  
                 const mesh = new THREE.Mesh(geometry, mat);
                 return mesh
