@@ -22,8 +22,6 @@ The following list is comprised of several issues or improvements to the current
     - Solution suggestion: Add a `rotation` descriptor that takes in a rotation angle as a value
 
 ### Objects and primitives
-- Shadow receiving and casting: Currently the XML doesn't support defining which objects should receive or cast shadows. Not the best example, but walls have no need to cast shadows, reducing the cost of the shadow calculation algorithm, even if by a tiny amount.
-    - Solution suggestion: I see two ways of doing this. Either add a per primitive boolean `castshadow` and `receiveshadow` descriptor or allow for the same flow as the materials (if the parent allows for shadow casting or shadow receiving, so should the descendants unless otherwise explicitly said)
 - Shadow parameter tuning: Along the shadow receiving and casting, it's sometimes (very much) needed to tune the parameters of shadows emitted by light sources. These parameters include bias, normalBias, camera near, camera far, mapSize width and mapSize height. Their definition can be the difference between having horrible shadow acne or Peter panning or having a nice smooth scene.
     - Solution suggestion: `shadowfar` and `shadowmapsize` are already descriptors of each light, so, it's only natural to add the rest of the parameters. Not that it might be important, but having only `shadowmapsize` implies that mapSize width and mapSize height have the same value. Also, since a lot of descriptors would end up being repeated, some sort of inheritance between XML elements could be beneficial, but that can and should be done by the students when creating the lights.
 - Rectangle and box primitive shape definition: One of the most common points of confusion is the fact that the rectangle and box geometries were defined using diametrically opposite points. While it would make sense in some technologies, in THREE.js these geometries are defined based on their dimensions relative to the three axes and are always drawn on the center. The problem here lies with the possibility of the definition of the shapes at any point in space, which adds a level of implicit complexity because the students now have to calculate the geometric center of the shape and translate it.
@@ -32,6 +30,8 @@ The following list is comprised of several issues or improvements to the current
     - Solution suggestion: Change `capsclose` with default value `false` (meaning that the cylinder is NOT capped) to `openended` with default value `false` (meaning that the cylinder IS capped) to keep the descriptor uniform with the THREE.js default behavior.
 - **More primitives: THREE.js has many more primitives that can and should be supported. Primitives like the CircleGeometry, Dodeca, Icosa, Octa and TetrahedromGeometries, TorusGeometry and TubeGeometry help give life to some more complex scenes that are otherwise impossible to achieve, as most of these shapes can't be replicated with manipulation of the already implemented ones.**
     - **Solution suggestion: Similar to how the cylinder, rectangle, triangle and so on are implemented, implement some or all the other THREE.js primitives.**
+- **NURBS control points weights: There's no weights for each point in the controlpoints primitive**
+    - **Solution suggestion: Add a weight to each entry in the controlpoints**
 
 ### Lights
 - Directional light missing attributes: The directional light descriptors is missing the target attribute, making it always point towards the center of the world.
@@ -64,4 +64,5 @@ The following list is comprised of several issues or improvements to the current
 - Mafalda Costa, up202006417, SGI T05G04
 
 ### Changelog:
-- Added "More primitives", "Angle values scale", "Texlength t and s"
+- Added "More primitives", "Angle values scale", "Texlength t and s", "NURBS control points weights"
+- Removed "Shadow receiving and casting"
