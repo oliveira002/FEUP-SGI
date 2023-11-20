@@ -6,7 +6,13 @@
     <globals background="0.06 0.06 0.06 1" ambient="1 1 1 1" /> 
 
     <fog color="0.3 0.3 0.3 1.0" near="0.0" far="250.0" />
-    <skybox size="140 160 140" center="0 0 0" emissive="0.01 0.01 0.01 1" intensity="1.0" up="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" down="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" left="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" right="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" front="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" back="scenes/SGI_TP2_XML_T03_G02/textures/stars.png"/>
+    <skybox size="140 160 140" center="0 0 0" emissive="0.01 0.01 0.01 1" intensity="1.0"
+        up="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" 
+        down="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" 
+        left="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" 
+        right="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" 
+        front="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" 
+        back="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" />
 
     <cameras initial="Cam 1" > 
         <perspective id="Cam 1" 
@@ -25,10 +31,19 @@
 
     <!-- bloco de texturas. Este bloco tem de existir mas pode estar vazio, se nao forem usadas texturas --> 
     <textures>        
-        <texture id="waterTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/water.png" />
+        <texture id="waterTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/water.mp4" isVideo="true"/>
         <texture id="stoneBlockTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/stoneblock.jpg" />
         <texture id="darkStoneBlockTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/darkstone.jpg" />
-        <texture id="floorTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/floor.png" />
+        <texture id="floorTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/floor.png"
+                 mipmaps="true"
+                 mipmap0="scenes/SGI_TP2_XML_T03_G02/textures/sky.jpg"
+                 mipmap1="scenes/SGI_TP2_XML_T03_G02/textures/cracked.jpg"
+                 mipmap2="scenes/SGI_TP2_XML_T03_G02/textures/leaf.jpg"
+                 mipmap3="scenes/SGI_TP2_XML_T03_G02/textures/trunk.jpg"
+                 mipmap4="scenes/SGI_TP2_XML_T03_G02/textures/fountain.jpg"
+                 mipmap5="scenes/SGI_TP2_XML_T03_G02/textures/post.jpg"
+                 mipmap6="scenes/SGI_TP2_XML_T03_G02/textures/pumpkin.jpg"
+                 mipmap7="scenes/SGI_TP2_XML_T03_G02/textures/words.jpg"/>
         <texture id="skyTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/sky.jpg" />
         <texture id="crackedTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/cracked.jpg" />
         <texture id="leafTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/leaf.jpg" />
@@ -219,6 +234,46 @@
     </materials> 
 
     <graph rootid="scene"> 	
+
+        <lod id="lodDemo">
+            <noderef id="testDist20" mindist="20"/>
+            <noderef id="testDist40" mindist="40"/>
+            <noderef id="testDist100" mindist="100"/>
+        </lod>
+
+        <node id="testDist20">
+            <children>
+                <primitive>
+                    <polygon radius="10" slices="9" stacks="10" color_c="0 0 0 0" color_p="1 1 1 1"/>
+                </primitive>
+            </children>
+        </node>
+
+        <node id="testDist40">
+            <children>
+                <primitive>
+                    <polygon radius="10" slices="6" stacks="10" color_c="0 0 1 0" color_p="1 1 1 1"/>
+                </primitive>
+            </children>
+        </node>
+
+        <node id="testDist100">
+            <children>
+                <primitive>
+                    <polygon radius="10" slices="3" stacks="10" color_c="0 1 1 0" color_p="1 1 1 1"/>
+                </primitive>
+            </children>
+        </node>
+
+        <node id="test">
+            <transforms>
+                <translate value3="0 15 0" />
+            </transforms>
+            <children>
+                <lodref id="lodDemo"/>
+            </children>
+        </node>
+
 		<node id="scene"> 
             <children>
                 <noderef id="test" />
@@ -253,30 +308,6 @@
                 <noderef id="helmet"/>
                 <noderef id="shovelFull"/>
             </children> 
-        </node>
-
-        <node id="test">
-            <transforms>
-                <translate value3="0 15 0" />
-            </transforms>
-            <children>
-                <primitive>
-                    <nurbs degree_u="3" degree_v="2" parts_u="16" parts_v="16" distance="0.0">
-                        <controlpoint xx="0" yy="-1.5" zz="-1" />
-                        <controlpoint xx="0" yy="0" zz="-1" />
-                        <controlpoint xx="0" yy="1.5" zz="-1" />
-                        <controlpoint xx="0" yy="-1.5" zz="0.0" />
-                        <controlpoint xx="-2" yy="0" zz="0.0" />
-                        <controlpoint xx="0" yy="1.5" zz="0.0" />
-                        <controlpoint xx="0" yy="-1.5" zz="1" />
-                        <controlpoint xx="-2" yy="0" zz="1" />
-                        <controlpoint xx="0" yy="1.5" zz="1" />
-                        <controlpoint xx="0" yy="-1.5" zz="2" />
-                        <controlpoint xx="0" yy="0" zz="2" />
-                        <controlpoint xx="0" yy="1.5" zz="2" />         
-                    </nurbs>
-                </primitive>
-            </children>
         </node>
 
         <!--<node id="sky">
@@ -1936,7 +1967,6 @@
                 <primitive>          
                     <rectangle xy1="-0.5 -0.5" xy2="0.5 0.5" />
                 </primitive> 
-                <lodref id="demo" />
             </children> 
         </node>
 		

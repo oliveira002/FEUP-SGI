@@ -19,7 +19,7 @@ class MyContents  {
         this.axis = null
         this.fog = null
         this.lights = []
-        this.threeConstants = {
+        this.THREEConstants = {
             "LinearMipmapLinearFilter": THREE.LinearMipmapLinearFilter,
             "LinearFilter": THREE.LinearFilter
         }
@@ -156,12 +156,12 @@ class MyContents  {
         let descriptors = data.descriptors["globals"]
 
         let options = data.options
-        this.app.scene.add( new THREE.AmbientLight( options["ambient"].getHex(THREE.LinearSRGBColorSpace)) )
-        this.app.scene.background = new THREE.Color(options["background"].getHex(THREE.LinearSRGBColorSpace))
+        this.app.scene.add( new THREE.AmbientLight(options.ambient.getHex(THREE.LinearSRGBColorSpace)) )
+        this.app.scene.background = new THREE.Color(options.background.getHex(THREE.LinearSRGBColorSpace))
 
     }
 
-    initTextures(data){
+    /*initTextures(data){
 
         let descriptors = data.descriptors["texture"]
 
@@ -183,6 +183,64 @@ class MyContents  {
             }
         )
         
+    }*/
+
+    initTextures(data){
+        let textures = data.textures
+
+        Object.keys(textures).forEach(
+            (key) => {
+                let textureObj = textures[key]
+                let texture
+
+                if(textureObj.isVideo){
+                    var videoElement = document.createElement('video');
+                    videoElement.loop = true;
+                    videoElement.id = textureObj.id
+                    videoElement.muted = true;
+                    videoElement.autoplay = true;
+                    videoElement.style.display = 'none';
+                    videoElement.play()
+
+                    // Create the source element and set its attributes
+                    var sourceElement = document.createElement('source');
+                    sourceElement.src = textureObj.filepath;
+
+                    // Append the source element to the video element
+                    videoElement.appendChild(sourceElement);
+
+                    // Get the element where you want to append the video (e.g., the body)
+                    var containerElement = document.body;
+
+                    // Append the video element to the container element
+                    containerElement.appendChild(videoElement);
+
+                    texture = new THREE.VideoTexture( videoElement )
+                }
+                else{
+                    texture = new THREE.TextureLoader().load(textureObj.filepath)
+                }
+
+                texture.name = textureObj.id
+                texture.isVideo = textureObj.isVideo
+                texture.magFilter = this.THREEConstants[textureObj.magFilter]
+                texture.minFilter = this.THREEConstants[textureObj.minFilter] 
+                texture.generateMipmaps = textureObj.mipmaps
+                texture.anisotropy = textureObj.anisotropy
+
+                if(!textureObj.mipmaps){
+                    let mipmaps = []
+
+                    for(let i = 0; i <= 7; i++){
+                        mipmaps.push(new THREE.TextureLoader().load(textureObj["mipmap"+i]))    
+                    }
+
+                    texture.mipmaps = mipmaps
+                }
+
+                this.textureMap[textureObj.id] = texture
+            }
+        )
     }
 
     initMaterials(data){
@@ -223,7 +281,9 @@ class MyContents  {
     }
 
     onAfterSceneLoadedAndBeforeRender(data) {
-       
+
+        console.log(data)
+
         // refer to descriptors in class MySceneData.js
         // to see the data structure for each item
         let root = data.nodes.scene
@@ -294,7 +354,7 @@ class MyContents  {
 
             if (child.type === "spotlight" || child.type === "pointlight" || child.type === "directionallight") {
                 // Handle lights
-                let light =this.dealWithLights(child);
+                let light = this.dealWithLights(child);
                 cur.add(light)
             } else if (child.type === "primitive") {
                 // Handle primitives
@@ -303,7 +363,9 @@ class MyContents  {
                 cur.add(mesh);
             } 
             else if(child.type === "lod") {
-                return
+                console.log(child)
+                let lod = this.dealWithLod(child, defaultMaterial)
+                cur.add(lod)
             }
             else {
                 
@@ -320,6 +382,21 @@ class MyContents  {
         });
     
         this.dealWithTransformations(node.transformations, parentGroup);
+    }
+
+    dealWithLod(node, material){
+
+        let lod = new THREE.LOD()
+
+        let children = node.children
+        children.forEach(child => {
+            let mindist = child.mindist
+            let node = child.node
+            
+
+        })
+
+        return lod
     }
 
     dealWithPrimitive(node, material) {
