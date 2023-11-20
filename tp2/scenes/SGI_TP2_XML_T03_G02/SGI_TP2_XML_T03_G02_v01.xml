@@ -6,7 +6,7 @@
     <globals background="0.06 0.06 0.06 1" ambient="0.1 0.1 0.1 1" /> 
 
     <!--<fog color="0.3 0.3 0.3 1.0" near="0.0" far="250.0" />-->
-    <skybox size="140 160 140" center="0 0 0" emissive="0.2 0.2 0.2 1" intensity="1.0"
+    <skybox size="140 160 140" center="0 0 0" emissive="0.01 0.01 0.01 1" intensity="1.0"
         up="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" 
         down="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" 
         left="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" 
@@ -1163,15 +1163,23 @@
                 <noderef id="angleLamp"/>
                 <spotlight id="light10" enabled="true" 
                     color="1 1 0 1"
-                    intensity="15.0"
+                    intensity="50.0"
                     distance="1000"
                     decay="2.0"
                     castshadow="true"
                     position="0 15 3.2" 
                     target="20 0 17"
-                    penumbra="0"
-                    angle="45" 
+                    penumbra="0.2"
+                    angle="60" 
                 /> 
+                <pointlight id="light14" enabled="true" 
+                        color="1 1 0 1" 
+                        intensity="2.0"
+                        distance="5"
+                        decay="2.0"
+                        castshadow="false"
+                        position="0 15 3.2" 
+                />     
             </children>
         </node>
 
@@ -1186,17 +1194,25 @@
                 <noderef id= "lampBottom2"/>
                 <noderef id= "lampMid2"/>
                 <noderef id="angleLamp"/>
-                <spotlight id="light10" enabled="true" 
+                <spotlight id="light11" enabled="true" 
                     color="1 1 0 1"
-                    intensity="15.0"
+                    intensity="50.0"
                     distance="1000"
                     decay="2.0"
                     castshadow="true"
                     position="0 15 3.2" 
                     target="20 0 -17"
-                    penumbra="0"
-                    angle="45" 
+                    penumbra="0.2"
+                    angle="60" 
                 /> 
+                <pointlight id="light15" enabled="true" 
+                        color="1 1 0 1" 
+                        intensity="2.0"
+                        distance="5"
+                        decay="2.0"
+                        castshadow="false"
+                        position="0 15 3.2" 
+                />     
             </children>
         </node>
 
@@ -1211,17 +1227,25 @@
                 <noderef id= "lampBottom2"/>
                 <noderef id= "lampMid2"/>
                 <noderef id="angleLamp"/>
-                <spotlight id="light10" enabled="true" 
+                <spotlight id="light12" enabled="true" 
                     color="1 1 0 1"
-                    intensity="15.0"
+                    intensity="50.0"
                     distance="1000"
                     decay="2.0"
                     castshadow="true"
                     position="0 15 3.2" 
                     target="-20 0 -17"
-                    penumbra="0"
-                    angle="45" 
+                    penumbra="0.2"
+                    angle="60" 
                 /> 
+                <pointlight id="light16" enabled="true" 
+                        color="1 1 0 1" 
+                        intensity="2.0"
+                        distance="5"
+                        decay="2.0"
+                        castshadow="false"
+                        position="0 15 3.2" 
+                />     
             </children>
         </node>
 
@@ -1236,17 +1260,25 @@
                 <noderef id= "lampBottom2"/>
                 <noderef id= "lampMid2"/>
                 <noderef id="angleLamp"/>
-                <spotlight id="light10" enabled="true" 
+                <spotlight id="light13" enabled="true" 
                     color="1 1 0 1"
-                    intensity="15.0"
-                    distance="1000"
+                    intensity="50.0"
+                    distance="100"
                     decay="2.0"
                     castshadow="true"
                     position="0 15 3.2" 
                     target="-20 0 17"
-                    penumbra="0"
-                    angle="45" 
+                    penumbra="0.2"
+                    angle="60" 
                 /> 
+                <pointlight id="light17" enabled="true" 
+                        color="1 1 0 1" 
+                        intensity="2.0"
+                        distance="5"
+                        decay="2.0"
+                        castshadow="false"
+                        position="0 15 3.2" 
+                />     
             </children>
         </node>
 
