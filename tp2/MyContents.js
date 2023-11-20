@@ -14,6 +14,7 @@ class MyContents  {
     constructor(app) {
         this.app = app
         this.builder = new MyNurbsBuilder()
+        this.helpersOn = true
 
         // Globals
         this.axis = null
@@ -403,9 +404,6 @@ class MyContents  {
                     node.decay
                 );
 
-                let ola = new THREE.SpotLightHelper(light)
-                this.app.scene.add(ola)
-
                 light.target.position.set(...node.target)
                 this.app.scene.add(light.target)
 
@@ -699,10 +697,29 @@ class MyContents  {
     }
 
     initHelpers(){
-        console.log(this.lights)
+        if(this.helpersOn){
+            Object.keys(this.lights).forEach(key => {
+                let light = this.lights[key]
+                let helper 
+
+                switch(light.type){
+                    case "PointLight":
+                        helper = new THREE.PointLightHelper(light)
+                        break;
+                    case "SpotLight":
+                        helper = new THREE.SpotLightHelper(light)
+                        break;
+                    case "DirectionalLight":
+                        helper = new THREE.DirectionalLightHelper(light)
+                        break;
+                }
+
+                this.app.scene.add(helper)
+            })
+        }
     }
 
-    degToRad(degrees){
+    degToRad(degrees){   
         return degrees * (Math.PI/180);
     }
 
