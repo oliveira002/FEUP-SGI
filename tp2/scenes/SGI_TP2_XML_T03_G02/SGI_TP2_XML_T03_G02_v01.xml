@@ -2,11 +2,11 @@
 <yaf> 
 
 	<!-- Credits of the original file go to Group 2, class 3 of course MEIC-SGI school year 2023/2024, FEUP, University of Porto -->
-	
-    <globals background="0.06 0.06 0.06 1" ambient="0.15 0.15 0.15 1" /> 
 
-    <fog color="0.3 0.3 0.3 1.0" near="0.0" far="250.0" />
-    <skybox size="140 160 140" center="0 0 0" emissive="0.01 0.01 0.01 1" intensity="1.0"
+    <globals background="0.06 0.06 0.06 1" ambient="0 0 0 1" /> 
+
+    <!--<fog color="0.3 0.3 0.3 1.0" near="0.0" far="250.0" />-->
+    <skybox size="140 160 140" center="0 0 0" emissive="0.2 0.2 0.2 1" intensity="1.0"
         up="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" 
         down="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" 
         left="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" 
@@ -327,9 +327,13 @@
                 <noderef id="leftTrees"/>
                 <noderef id="rightTrees"/>
                 <noderef id="treeRow"/>
-                <noderef id="fountain"/>
+                <!--<noderef id="fountain"/>-->
                 <noderef id="lamp1"/>
                 <noderef id="lamp2"/>
+                <noderef id="lamp3"/>
+                <noderef id="lamp4"/>
+                <noderef id="lamp5"/>
+                <noderef id="lamp6"/>
                 <noderef id="pumpkin1"/>
                 <noderef id="pumpkin2"/>
                 <noderef id="candle1"/>
@@ -349,6 +353,7 @@
                 <noderef id="tombCurve1"/>
                 <noderef id="tombCurve2"/>
                 <noderef id="smallH"/>
+                <noderef id="spotlightLamp"/>
                 <noderef id="vase1" />
             </children> 
         </node>
@@ -866,7 +871,7 @@
 
         <node id="candle1">
             <transforms>
-				<translate value3="10 0 10" />
+				<translate value3="28 4.05 25" />
             </transforms> 
             <children>    
                 <noderef id="candleC"/>       
@@ -875,7 +880,7 @@
 
         <node id="candle2">
             <transforms>
-				<translate value3="-10 0 10" />
+				<translate value3="-28 4.05 25" />
             </transforms> 
             <children>    
                 <noderef id="candleC"/>       
@@ -884,7 +889,7 @@
 
         <node id="candle3">
             <transforms>
-				<translate value3="10 0 -10" />
+				<translate value3="28 4.05 -35" />
             </transforms> 
             <children>    
                 <noderef id="candleC"/>       
@@ -893,7 +898,7 @@
 
         <node id="candle4">
             <transforms>
-				<translate value3="-10 0 -10" />
+				<translate value3="-28 4.05 -35" />
             </transforms> 
             <children>    
                 <noderef id="candleC"/>       
@@ -1085,7 +1090,7 @@
             </transforms>
             <materialref id="pumpkinApp" />
             <children>
-                <pointlight id="light1" enabled="true" 
+                <pointlight id="light9" enabled="true" 
                         color="1 0.4 0.3 1" 
                         intensity="4.0"
                         distance="1000"
@@ -1107,7 +1112,7 @@
             </transforms>
             <materialref id="pumpkinApp" />
             <children>
-                <pointlight id="light1" enabled="true" 
+                <pointlight id="light2" enabled="true" 
                         color="1 0.4 0.3 1" 
                         intensity="4.0"
                         distance="1000"
@@ -1135,11 +1140,75 @@
                 <noderef id="midFountain"/>
                 <noderef id="topFountain"/>
                 <noderef id="topSphere"/>
+                <noderef id="topSphere2"/>
+                <noderef id="topSphere3"/>
+                <noderef id="topSphere4"/>
                 <noderef id="waterBottom"/>
                 <noderef id="waterMid"/>
                 <noderef id="waterTop"/>
                 <noderef id="coverMid"/>
                 <noderef id="coverTop"/>
+            </children>
+        </node>
+
+        <node id="spotlightLamp">
+            <transforms>
+                <translate value3="0 0 0"/>
+            </transforms>
+            <materialref id="postApp" />
+            <children>
+                <noderef id= "lampBottom"/>
+                <noderef id= "lampBottom2"/>
+                <noderef id= "lampMid2"/>
+                <noderef id="angleLamp"/>
+                <spotlight id="light10" enabled="true" 
+                    color="1 1 0 1"
+                    intensity="10.0"
+                    distance="1000"
+                    decay="2.0"
+                    castshadow="true"
+                    position="0 15 3.2" 
+                    target="0 0 10"
+                    penumbra="1.0"
+                    angle="30" 
+                /> 
+            </children>
+        </node>
+
+        <node id="angleLamp">
+            <transforms>
+                <rotate value3="-20 0 0"/>
+                <translate value3="0 0 4.6"/>
+            </transforms>
+            <children>
+                <noderef id= "sideLamp"/>
+                <noderef id= "spotLamp"/>
+            </children>
+        </node>
+
+        <node id="spotLamp">
+            <transforms>
+                <translate value3="0 12.7 3.6"/>
+                <rotate value3="20 90 90"/>
+            </transforms>
+            <materialref id="postApp" />
+            <children>
+                <primitive>
+                    <cylinder base="0.7" top="0.4" height="1.7" slices="7" stacks="1" capsclose="true" thetalength="2.95" thetastart="0"/>
+                </primitive>
+            </children>
+        </node>
+
+        <node id="sideLamp">
+            <transforms>
+                <translate value3="0 13.2 1.65"/>
+                <rotate value3="90 0 0"/>
+            </transforms>
+            <materialref id="postApp" />
+            <children>
+                <primitive>
+                    <cylinder base="0.2" top="0.2" height="3" slices="6" stacks="1" capsclose="true"/>
+                </primitive>
             </children>
         </node>
 
@@ -1155,6 +1224,7 @@
                 <noderef id= "lampTop4"/>
             </children>
         </node>
+        
 
         <node id="lamp1">
             <transforms>
@@ -1192,6 +1262,78 @@
             </children>
         </node>
 
+        <node id="lamp3">
+            <transforms>
+                <translate value3="10 0 10"/>
+            </transforms>
+            <materialref id="postApp" />
+            <children>
+                <pointlight id="light5" enabled="true" 
+                        color="1 1 0 1" 
+                        intensity="15.0"
+                        distance="10"
+                        decay="2.0"
+                        castshadow="false"
+                        position="0 12 0" 
+                />
+                <noderef id= "lamp"/>
+            </children>
+        </node>
+
+        <node id="lamp4">
+            <transforms>
+                <translate value3="10 0 -10"/>
+            </transforms>
+            <materialref id="postApp" />
+            <children>
+                <pointlight id="light6" enabled="true" 
+                        color="1 1 0 1" 
+                        intensity="15.0"
+                        distance="10"
+                        decay="2.0"
+                        castshadow="false"
+                        position="0 12 0" 
+                />
+                <noderef id= "lamp"/>
+            </children>
+        </node>
+
+        <node id="lamp5">
+            <transforms>
+                <translate value3="-10 0 10"/>
+            </transforms>
+            <materialref id="postApp" />
+            <children>
+                <pointlight id="light7" enabled="true" 
+                        color="1 1 0 1" 
+                        intensity="15.0"
+                        distance="10"
+                        decay="2.0"
+                        castshadow="false"
+                        position="0 12 0" 
+                />
+                <noderef id= "lamp"/>
+            </children>
+        </node>
+
+        <node id="lamp6">
+            <transforms>
+                <translate value3="-10 0 -10"/>
+            </transforms>
+            <materialref id="postApp" />
+            <children>
+                <pointlight id="light8" enabled="true" 
+                        color="1 1 0 1" 
+                        intensity="15.0"
+                        distance="10"
+                        decay="2.0"
+                        castshadow="false"
+                        position="0 12 0" 
+                />
+                <noderef id= "lamp"/>
+            </children>
+        </node>
+
         <node id= "lampBottom">
             <transforms>
                 <translate value3="0 0.5 0"/>
@@ -1221,6 +1363,17 @@
             <children>
                 <primitive>
                     <cylinder base="0.2" top="0.2" height="8" slices="16" stacks="16" capsclose="true"/>
+                </primitive>
+            </children>
+        </node>
+
+        <node id= "lampMid2">
+            <transforms>
+                <translate value3="0 9 0"/>
+            </transforms>
+            <children>
+                <primitive>
+                    <cylinder base="0.2" top="0.2" height="12" slices="16" stacks="16" capsclose="true"/>
                 </primitive>
             </children>
         </node>
@@ -1425,12 +1578,55 @@
         <node id="topSphere">
 
 			<transforms>
-				<translate value3="0 9.5 0" />
+				<translate value3="0 9.6 0" />
+                <rotate value3="0 0 30"/>
             </transforms> 
 						
             <children>             
                 <primitive>
-                    <sphere radius="0.5" slices="32" stacks="32" />
+                    <polygon radius="0.6" stacks="15" slices="6" color_p="0.7 0.7 0.7 1" color_c="0.7 0.7 0.7 0"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="topSphere2">
+
+			<transforms>
+				<translate value3="0 9.6 0" />
+                <rotate value3="0 90 30"/>
+            </transforms> 
+						
+            <children>             
+                <primitive>
+                    <polygon radius="0.6" stacks="15" slices="6" color_p="0.7 0.7 0.7 1" color_c="0.7 0.7 0.7 0"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="topSphere3">
+
+			<transforms>
+				<translate value3="0 9.6 0" />
+                <rotate value3="0 135 30"/>
+            </transforms> 
+						
+            <children>             
+                <primitive>
+                    <polygon radius="0.6" stacks="15" slices="6" color_p="0.7 0.7 0.7 1" color_c="0.7 0.7 0.7 0"/>
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="topSphere4">
+
+			<transforms>
+				<translate value3="0 9.6 0" />
+                <rotate value3="0 45 30"/>
+            </transforms> 
+						
+            <children>             
+                <primitive>
+                    <polygon radius="0.6" stacks="15" slices="6" color_p="0.7 0.7 0.7 1" color_c="0.7 0.7 0.7 0"/>
                 </primitive>
             </children> 
         </node>
@@ -1783,7 +1979,7 @@
             <transforms>
                 <translate value3 = "-3 1 0"/> 
             </transforms>
-            <materialref id="crackedApp" />
+            <materialref id="crackedHApp" />
             <children>             
                 <primitive>
                     <box xyz1="-2.65 -1.6 -0.85" xyz2="2.2 1.6 0.8" />

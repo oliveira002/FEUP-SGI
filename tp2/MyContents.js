@@ -403,6 +403,9 @@ class MyContents  {
                     node.decay
                 );
 
+                let ola = new THREE.SpotLightHelper(light)
+                this.app.scene.add(ola)
+
                 light.target.position.set(...node.target)
                 this.app.scene.add(light.target)
 
