@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { MyAxis } from './MyAxis.js';
 import { MyFileReader } from './parser/MyFileReader.js';
+import { MyNurbsBuilder } from './MyNurbsBuilder.js';
 /**
  *  This class contains the contents of out application
  */
@@ -12,6 +13,7 @@ class MyContents  {
     */ 
     constructor(app) {
         this.app = app
+        this.builder = new MyNurbsBuilder()
 
         // globals
         this.axis = null
@@ -92,7 +94,7 @@ class MyContents  {
                 new THREE.MeshPhongMaterial(({emissive: skyboxInfo.emissive, map: backTex, side: THREE.BackSide}))
             ]
             
-            console.log(skyboxInfo)
+            //console.log(skyboxInfo)
             this.skyBoxGeometry = new THREE.BoxGeometry(skyboxInfo.size[0],skyboxInfo.size[1],skyboxInfo.size[2])
             this.skyBoxMesh = new THREE.Mesh(this.skyBoxGeometry,materials)
             this.skyBoxMesh.position.set(skyboxInfo.center[0],skyboxInfo.center[1] - 0.01,skyboxInfo.center[2])
@@ -225,13 +227,11 @@ class MyContents  {
         // refer to descriptors in class MySceneData.js
         // to see the data structure for each item
         let root = data.nodes.scene
-
-        console.log(data)
         
         this.iterateNodes(root,this.groupi,["def"])
-        console.log(this.lights)
+        //console.log(this.lights)
         this.app.scene.add(this.groupi);
-        console.log(data)
+        //console.log(data)
   
 
         this.output(data.options)
@@ -296,15 +296,12 @@ class MyContents  {
                 // Handle lights
                 let light =this.dealWithLights(child);
                 cur.add(light)
-            } else if (child.type === "primitive" && child.subtype != "nurbs") {
+            } else if (child.type === "primitive") {
                 // Handle primitives
-                console.log(defaultMaterial)
+                //console.log(defaultMaterial)
                 let mesh = this.dealWithPrimitive(child, defaultMaterial);
                 cur.add(mesh);
             } 
-            else if(child.type === "primitive" && child.subtype == "nurbs") {
-                return
-            }
             else if(child.type === "lod") {
                 return
             }
@@ -357,7 +354,7 @@ class MyContents  {
 
                 const geometry = new THREE.BufferGeometry();
 
-                console.log(node)
+                //console.log(node)
 
                 const vertices = new Float32Array(
                     [...metrics.xyz1,
@@ -418,7 +415,32 @@ class MyContents  {
                 return mesh
             }
             case "nurbs": {
-                return
+                let metrics = node.representations[0]
+                console.log(metrics)
+
+                let samplesU = metrics.parts_u
+                let samplesV = metrics.parts_v
+                let orderU = metrics.degree_u
+                let orderV = metrics.degree_v
+                let controlpoints = metrics.controlpoints
+
+                let geoPoints = []
+                let k = 0
+                for(let i = 0; i <= orderU; i++){
+                    let pointsU = []
+                    for(let j = 0; j <= orderV; j++, k++){
+                        pointsU.push([controlpoints[k].xx, controlpoints[k].yy, controlpoints[k].zz])
+                        
+                    }
+                    geoPoints.push(pointsU)
+                }
+
+                let surfaceData = this.builder.build(geoPoints, orderU, orderV, samplesU, samplesV, mat)
+                let mesh = new THREE.Mesh(surfaceData, mat);
+                mesh.receiveShadow = true
+                mesh.castShadow = true
+
+                return mesh
             }
             case "box": {
                 // metrics
@@ -537,6 +559,9 @@ class MyContents  {
                 });
  
                 const mesh = new THREE.Mesh(geometry, mat);
+                mesh.receiveShadow = true
+                mesh.castShadow = true
+
                 return mesh
             }
         }

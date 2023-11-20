@@ -221,6 +221,8 @@
     <graph rootid="scene"> 	
 		<node id="scene"> 
             <children>
+                <noderef id="test" />
+
                 <!--<noderef id="pillar" /> -->
                 <noderef id="sky"/>
                 <noderef id="floor"/>
@@ -251,6 +253,30 @@
                 <noderef id="helmet"/>
                 <noderef id="shovelFull"/>
             </children> 
+        </node>
+
+        <node id="test">
+            <transforms>
+                <translate value3="0 15 0" />
+            </transforms>
+            <children>
+                <primitive>
+                    <nurbs degree_u="3" degree_v="2" parts_u="16" parts_v="16" distance="0.0">
+                        <controlpoint xx="0" yy="-1.5" zz="-1" />
+                        <controlpoint xx="0" yy="0" zz="-1" />
+                        <controlpoint xx="0" yy="1.5" zz="-1" />
+                        <controlpoint xx="0" yy="-1.5" zz="0.0" />
+                        <controlpoint xx="-2" yy="0" zz="0.0" />
+                        <controlpoint xx="0" yy="1.5" zz="0.0" />
+                        <controlpoint xx="0" yy="-1.5" zz="1" />
+                        <controlpoint xx="-2" yy="0" zz="1" />
+                        <controlpoint xx="0" yy="1.5" zz="1" />
+                        <controlpoint xx="0" yy="-1.5" zz="2" />
+                        <controlpoint xx="0" yy="0" zz="2" />
+                        <controlpoint xx="0" yy="1.5" zz="2" />         
+                    </nurbs>
+                </primitive>
+            </children>
         </node>
 
         <!--<node id="sky">
