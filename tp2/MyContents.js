@@ -202,17 +202,11 @@ class MyContents  {
                     videoElement.style.display = 'none';
                     videoElement.play()
 
-                    // Create the source element and set its attributes
                     var sourceElement = document.createElement('source');
                     sourceElement.src = textureObj.filepath;
-
-                    // Append the source element to the video element
                     videoElement.appendChild(sourceElement);
 
-                    // Get the element where you want to append the video (e.g., the body)
                     var containerElement = document.body;
-
-                    // Append the video element to the container element
                     containerElement.appendChild(videoElement);
 
                     texture = new THREE.VideoTexture( videoElement )
@@ -223,22 +217,56 @@ class MyContents  {
 
                 texture.name = textureObj.id
                 texture.isVideo = textureObj.isVideo
-                texture.magFilter = this.THREEConstants[textureObj.magFilter]
-                texture.minFilter = this.THREEConstants[textureObj.minFilter] 
                 texture.generateMipmaps = textureObj.mipmaps
                 texture.anisotropy = textureObj.anisotropy
 
                 if(!textureObj.mipmaps){
-                    let mipmaps = []
 
                     for(let i = 0; i <= 7; i++){
-                        mipmaps.push(new THREE.TextureLoader().load(textureObj["mipmap"+i]))    
+                        let mipmapPath = textureObj["mipmap"+i]
+
+                        if(mipmapPath === null) continue
+                        
+                        this.loadMipmap(texture, i, mipmapPath)
                     }
 
-                    texture.mipmaps = mipmaps
+                    texture.needsUpdate = true
+                }
+                else{
+                    texture.magFilter = this.THREEConstants[textureObj.magFilter]
+                    texture.minFilter = this.THREEConstants[textureObj.minFilter] 
+                
                 }
 
                 this.textureMap[textureObj.id] = texture
+            }
+        )
+    }
+
+    loadMipmap(parentTexture, level, path){
+
+        // load texture. On loaded call the function to create the mipmap for the specified level 
+        new THREE.TextureLoader().load(path, 
+            function(mipmapTexture)  // onLoad callback
+            {
+                const canvas = document.createElement('canvas')
+                const ctx = canvas.getContext('2d')
+                ctx.scale(1, 1);
+                
+                // const fontSize = 48
+                const img = mipmapTexture.image         
+                canvas.width = img.width;
+                canvas.height = img.height
+
+                // first draw the image
+                ctx.drawImage(img, 0, 0 )
+                             
+                // set the mipmap image in the parent texture in the appropriate level
+                parentTexture.mipmaps[level] = canvas
+            },
+            undefined, // onProgress callback currently not supported
+            function(err) {
+                console.error('Unable to load the image ' + path + ' as mipmap level ' + level + ".", err)
             }
         )
     }
