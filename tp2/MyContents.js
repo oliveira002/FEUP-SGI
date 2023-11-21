@@ -60,6 +60,7 @@ class MyContents  {
 
         this.reader = new MyFileReader(app, this, this.onSceneLoaded);
 		//this.reader.open("scenes/demo/demo.xml");
+        //this.reader.open("scenes/test/test.xml");
         this.reader.open("scenes/SGI_TP2_XML_T03_G02/SGI_TP2_XML_T03_G02_v01.xml");		
     }
 
@@ -343,21 +344,18 @@ class MyContents  {
     }
 
     // Recursively iterates over a node and its children
-    iterateNodes(node, materialID, castShadows = false, receiveShadows = false){
-
-        console.log(castShadows, receiveShadows)
-
+    iterateNodes(node, materialID, castShadows, receiveShadows){
         let group = new THREE.Group();
 
         if(node.type === "node")
             materialID = (node.materialIds.length > 0) ? node.materialIds[0] : materialID
 
-        if(node.castShadow){
-            castShadows = true
+        if(!castShadows){
+            castShadows = node.castShadows
         }
 
-        if(node.receiveShadow){
-            receiveShadows = true
+        if(!receiveShadows){
+            receiveShadows = node.receiveShadows
         }
 
         let children = node.children
@@ -435,7 +433,7 @@ class MyContents  {
                 light = null
                 break;
         }
-
+        
         light.name = node.id 
         light.position.set(...(node.position));
         light.visible = node.enabled

@@ -5,7 +5,7 @@
 
     <globals background="0.06 0.06 0.06 1" ambient="0.15 0.15 0.15 1" /> 
 
-    <!--<fog color="0.3 0.3 0.3 1.0" near="0.0" far="250.0" />-->
+    <fog color="0.15 0.15 0.15 1.0" near="0.0" far="250.0" />
     <skybox size="140 160 140" center="0 0 0" emissive="0.01 0.01 0.01 1" intensity="1.0"
         up="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" 
         down="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" 
@@ -34,7 +34,12 @@
         <texture id="waterTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/water.mp4" isVideo="true"/>
         <texture id="stoneBlockTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/stoneblock.jpg" />
         <texture id="darkStoneBlockTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/darkstone.jpg" />
-        <texture id="floorTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/floor.png" />
+        <texture id="floorTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/floor.png"
+            mipmaps="false"
+            mipmap0="scenes/SGI_TP2_XML_T03_G02/textures/floor.png"
+            mipmap1="scenes/SGI_TP2_XML_T03_G02/textures/floor512.png"
+            mipmap2="scenes/SGI_TP2_XML_T03_G02/textures/floor256.png"
+            anisotropy="2" />
         <texture id="skyTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/sky.jpg" />
         <texture id="crackedTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/cracked.jpg" />
         <texture id="leafTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/leaf.jpg" />
@@ -315,7 +320,7 @@
             </children>
         </node>
 
-		<node id="scene"> 
+		<node id="scene" castshadows="true" receiveshadows="true"> 
             <children>
                 <!--<noderef id="test" />-->
 
@@ -1127,7 +1132,7 @@
 
         <node id="fountain">
             <transforms>
-                <translate value3= "0.7 0 0"/>
+                <translate value3= "0 0 0"/>
             </transforms>
             <materialref id="fountainApp" />
             <children>
@@ -1163,8 +1168,8 @@
                 <noderef id="angleLamp"/>
                 <spotlight id="light10" enabled="true" 
                     color="1 1 0 1"
-                    intensity="50.0"
-                    distance="1000"
+                    intensity="150.0"
+                    distance="100"
                     decay="2.0"
                     castshadow="true"
                     position="0 15 3.2" 
@@ -1196,8 +1201,8 @@
                 <noderef id="angleLamp"/>
                 <spotlight id="light11" enabled="true" 
                     color="1 1 0 1"
-                    intensity="50.0"
-                    distance="1000"
+                    intensity="150.0"
+                    distance="100"
                     decay="2.0"
                     castshadow="true"
                     position="0 15 3.2" 
@@ -1229,8 +1234,8 @@
                 <noderef id="angleLamp"/>
                 <spotlight id="light12" enabled="true" 
                     color="1 1 0 1"
-                    intensity="50.0"
-                    distance="1000"
+                    intensity="150.0"
+                    distance="100"
                     decay="2.0"
                     castshadow="true"
                     position="0 15 3.2" 
@@ -1262,7 +1267,7 @@
                 <noderef id="angleLamp"/>
                 <spotlight id="light13" enabled="true" 
                     color="1 1 0 1"
-                    intensity="50.0"
+                    intensity="150.0"
                     distance="100"
                     decay="2.0"
                     castshadow="true"
@@ -1319,7 +1324,7 @@
             </children>
         </node>
 
-        <node id="lamp" castshadows="true" receiveshadows="true">
+        <node id="lamp">
             <materialref id="postApp" />
             <children>
                 <noderef id= "lampBottom"/>
