@@ -6,7 +6,7 @@
     <globals background="0.06 0.06 0.06 1" ambient="0.15 0.15 0.15 1" /> 
 
     <!--<fog color="0.3 0.3 0.3 1.0" near="0.0" far="250.0" />-->
-    <skybox size="140 160 140" center="0 0 0" emissive="0.2 0.2 0.2 1" intensity="1.0"
+    <skybox size="140 160 140" center="0 0 0" emissive="0.01 0.01 0.01 1" intensity="1.0"
         up="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" 
         down="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" 
         left="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" 
@@ -327,13 +327,9 @@
                 <noderef id="leftTrees"/>
                 <noderef id="rightTrees"/>
                 <noderef id="treeRow"/>
-                <!--<noderef id="fountain"/>-->
+                <noderef id="fountain"/>
                 <noderef id="lamp1"/>
                 <noderef id="lamp2"/>
-                <noderef id="lamp3"/>
-                <noderef id="lamp4"/>
-                <noderef id="lamp5"/>
-                <noderef id="lamp6"/>
                 <noderef id="pumpkin1"/>
                 <noderef id="pumpkin2"/>
                 <noderef id="candle1"/>
@@ -353,7 +349,10 @@
                 <noderef id="tombCurve1"/>
                 <noderef id="tombCurve2"/>
                 <noderef id="smallH"/>
-                <noderef id="spotlightLamp"/>
+                <noderef id="spotlightLamp1"/>
+                <noderef id="spotlightLamp2"/>
+                <noderef id="spotlightLamp3"/>
+                <noderef id="spotlightLamp4"/>
                 <noderef id="vase1" />
             </children> 
         </node>
@@ -1151,9 +1150,10 @@
             </children>
         </node>
 
-        <node id="spotlightLamp">
+        <node id="spotlightLamp1">
             <transforms>
-                <translate value3="0 0 0"/>
+                <translate value3="10 0 10"/>
+                <rotate value3="0 30 0"/>
             </transforms>
             <materialref id="postApp" />
             <children>
@@ -1163,15 +1163,122 @@
                 <noderef id="angleLamp"/>
                 <spotlight id="light10" enabled="true" 
                     color="1 1 0 1"
-                    intensity="10.0"
+                    intensity="50.0"
                     distance="1000"
                     decay="2.0"
                     castshadow="true"
                     position="0 15 3.2" 
-                    target="0 0 10"
-                    penumbra="1.0"
-                    angle="30" 
+                    target="20 0 17"
+                    penumbra="0.2"
+                    angle="60" 
                 /> 
+                <pointlight id="light14" enabled="true" 
+                        color="1 1 0 1" 
+                        intensity="2.0"
+                        distance="5"
+                        decay="2.0"
+                        castshadow="false"
+                        position="0 15 3.2" 
+                />     
+            </children>
+        </node>
+
+        <node id="spotlightLamp2">
+            <transforms>
+                <translate value3="10 0 -10"/>
+                <rotate value3="0 120 0"/>
+            </transforms>
+            <materialref id="postApp" />
+            <children>
+                <noderef id= "lampBottom"/>
+                <noderef id= "lampBottom2"/>
+                <noderef id= "lampMid2"/>
+                <noderef id="angleLamp"/>
+                <spotlight id="light11" enabled="true" 
+                    color="1 1 0 1"
+                    intensity="50.0"
+                    distance="1000"
+                    decay="2.0"
+                    castshadow="true"
+                    position="0 15 3.2" 
+                    target="20 0 -17"
+                    penumbra="0.2"
+                    angle="60" 
+                /> 
+                <pointlight id="light15" enabled="true" 
+                        color="1 1 0 1" 
+                        intensity="2.0"
+                        distance="5"
+                        decay="2.0"
+                        castshadow="false"
+                        position="0 15 3.2" 
+                />     
+            </children>
+        </node>
+
+        <node id="spotlightLamp3">
+            <transforms>
+                <translate value3="-10 0 -10"/>
+                <rotate value3="0 -120 0"/>
+            </transforms>
+            <materialref id="postApp" />
+            <children>
+                <noderef id= "lampBottom"/>
+                <noderef id= "lampBottom2"/>
+                <noderef id= "lampMid2"/>
+                <noderef id="angleLamp"/>
+                <spotlight id="light12" enabled="true" 
+                    color="1 1 0 1"
+                    intensity="50.0"
+                    distance="1000"
+                    decay="2.0"
+                    castshadow="true"
+                    position="0 15 3.2" 
+                    target="-20 0 -17"
+                    penumbra="0.2"
+                    angle="60" 
+                /> 
+                <pointlight id="light16" enabled="true" 
+                        color="1 1 0 1" 
+                        intensity="2.0"
+                        distance="5"
+                        decay="2.0"
+                        castshadow="false"
+                        position="0 15 3.2" 
+                />     
+            </children>
+        </node>
+
+        <node id="spotlightLamp4">
+            <transforms>
+                <translate value3="-10 0 10"/>
+                <rotate value3="0 -30 0"/>
+            </transforms>
+            <materialref id="postApp" />
+            <children>
+                <noderef id= "lampBottom"/>
+                <noderef id= "lampBottom2"/>
+                <noderef id= "lampMid2"/>
+                <noderef id="angleLamp"/>
+                <spotlight id="light13" enabled="true" 
+                    color="1 1 0 1"
+                    intensity="50.0"
+                    distance="100"
+                    decay="2.0"
+                    castshadow="true"
+                    position="0 15 3.2" 
+                    target="-20 0 17"
+                    penumbra="0.2"
+                    angle="60" 
+                /> 
+                <pointlight id="light17" enabled="true" 
+                        color="1 1 0 1" 
+                        intensity="2.0"
+                        distance="5"
+                        decay="2.0"
+                        castshadow="false"
+                        position="0 15 3.2" 
+                />     
             </children>
         </node>
 
