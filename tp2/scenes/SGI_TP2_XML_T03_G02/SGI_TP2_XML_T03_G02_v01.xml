@@ -5,7 +5,7 @@
 
     <globals background="0.06 0.06 0.06 1" ambient="0.1 0.1 0.1 1" /> 
 
-    <fog color="0.15 0.15 0.15 1.0" near="0.0" far="100.0" />
+    <fog color="0.15 0.15 0.15 1.0" near="0.0" far="150.0" />
     <skybox size="140 160 140" center="0 0 0" emissive="0.01 0.01 0.01 1" intensity="1.0"
         up="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" 
         down="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" 
@@ -63,7 +63,6 @@
         <texture id="whiteTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/white.jpg"/>
         <texture id="crackedHTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/cracked2.jpg"/>
         <texture id="crossTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/cross.png"/>
-        <texture id="restTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/rip2.png"/>
         <texture id="vase1Tex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/vase1.jpg"/>
         <texture id="flowerTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/flower.png"/>
         <texture id="flower2Tex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/flower2.png"/>
@@ -266,14 +265,6 @@
             shininess="30"
             twosided="true"
             textureref="crossTex"/>
-        
-        <material id="restApp"
-            emissive="0.0 0.0 0.0 1" 
-            color="1.0 1.0 1.0 1" 
-            specular="0.07 0.07 0.07 0" 
-            shininess="30"
-            twosided="true"
-            textureref="restTex"/>
 
 
         <material id="vase1App" 
@@ -304,6 +295,13 @@
 
     <graph rootid="scene"> 	
 
+        <lod id="candleLod">
+            <noderef id="candleC" mindist="50"/>
+            <noderef id="candleBundle2" mindist="35"/>
+            <noderef id="candleBundle3" mindist="20"/>
+            <noderef id="candleBundle4" mindist="5"/>
+        </lod>
+        <!--
         <lod id="lodDemo">
             <noderef id="testDist20" mindist="10"/>
             <noderef id="testDist40" mindist="15"/>
@@ -345,7 +343,7 @@
             <children>
                 <lodref id="lodDemo"/>
             </children>
-        </node>
+        </node>-->
 
 		<node id="scene" castshadows="true" receiveshadows="true"> 
             <children>
@@ -1008,19 +1006,19 @@
 
         <node id="candle1">
             <transforms>
-				<translate value3="28 4.05 25" />
+				<translate value3="28 4.05 24.9" />
             </transforms> 
             <children>    
-                <noderef id="candleC"/>       
+                <lodref id="candleLod"/>       
             </children> 
         </node>
 
         <node id="candle2">
             <transforms>
-				<translate value3="-28 4.05 25" />
+				<translate value3="-28 4.05 24.9" />
             </transforms> 
             <children>    
-                <noderef id="candleC"/>       
+                <lodref id="candleLod"/>       
             </children> 
         </node>
 
@@ -1029,7 +1027,7 @@
 				<translate value3="28 4.05 -35" />
             </transforms> 
             <children>    
-                <noderef id="candleC"/>       
+                <lodref id="candleLod"/>       
             </children> 
         </node>
 
@@ -1038,7 +1036,7 @@
 				<translate value3="-28 4.05 -35" />
             </transforms> 
             <children>    
-                <noderef id="candleC"/>       
+                <lodref id="candleLod"/>       
             </children> 
         </node>
 
@@ -1048,7 +1046,7 @@
                 <scale value3="0.7 0.7 0.7" />
             </transforms> 
             <children>    
-                <noderef id="candleC"/>       
+                <lodref id="candleLod"/>       
             </children> 
         </node>
 
@@ -1068,6 +1066,80 @@
                         castshadow="false"
                         position="0 2.1 0" 
                 />       
+            </children> 
+        </node>
+
+        <node id= "candleC2">
+            <transforms>
+				<translate value3="0.5 0 0" />
+                <scale value3="0.8 0.8 0.8"/>
+            </transforms> 
+            <children>    
+                <noderef id="wax"/>       
+                <noderef id="candle"/>
+                <noderef id="candleTop"/>
+                <pointlight id="light4" enabled="true" 
+                        color="1 0.4 0.3 1" 
+                        intensity="2.0"
+                        distance="10"
+                        decay="2.0"
+                        castshadow="false"
+                        position="0 2.1 0" 
+                />       
+            </children> 
+        </node>
+
+        <node id= "candleC3">
+            <transforms>
+				<translate value3="0 0 0.5" />
+                <scale value3="0.8 0.8 0.8"/>
+            </transforms> 
+            <children>    
+                <noderef id="wax"/>       
+                <noderef id="candle"/>
+                <noderef id="candleTop"/>
+                <pointlight id="light4" enabled="true" 
+                        color="1 0.4 0.3 1" 
+                        intensity="2.0"
+                        distance="10"
+                        decay="2.0"
+                        castshadow="false"
+                        position="0 2.1 0" 
+                />       
+            </children> 
+        </node>
+
+        <node id="candleBundle2">
+            <transforms>
+				<translate value3="0 0 0.44" />
+                <scale value3="0.8 0.8 0.8"/>
+                <rotate value3="0 14 0" />
+            </transforms> 
+            <children>    
+                <noderef id="candleC"/>
+                <noderef id="candleC2"/>
+            </children> 
+        </node>
+
+        <node id="candleBundle3">
+            <transforms>
+				<translate value3="0 0 0" />
+                <scale value3="0.8 0.8 0.8"/>
+                <rotate value3="0 14 0" />
+            </transforms> 
+            <children>    
+                <noderef id="candleC"/>
+                <noderef id="candleC2"/>
+                <noderef id="candleC3"/>
+            </children> 
+        </node>
+        
+
+        <node id="candleBundle4">
+            <children>    
+                <noderef id="candleC"/>
+                <noderef id="candleC2"/>
+                <noderef id="candleBundle2"/>
             </children> 
         </node>
 

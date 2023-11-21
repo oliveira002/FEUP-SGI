@@ -14,7 +14,7 @@ class MyContents  {
     constructor(app) {
         this.app = app
         this.builder = new MyNurbsBuilder()
-        this.helpersOn = true
+        this.helpersOn = false
 
         // Globals
         this.axis = null
