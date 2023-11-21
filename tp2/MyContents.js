@@ -338,16 +338,27 @@ class MyContents  {
         let rootId = data.rootId
         this.root = data.nodes[rootId]
 
-        this.sceneGroup = this.iterateNodes(this.root, 'default')
+        this.sceneGroup = this.iterateNodes(this.root, 'default', this.root.castShadows, this.root.receiveShadows)
         this.app.scene.add(this.sceneGroup)
     }
 
-    // Recursively iterates over a node and it's children
-    iterateNodes(node, materialID){
+    // Recursively iterates over a node and its children
+    iterateNodes(node, materialID, castShadows = false, receiveShadows = false){
+
+        console.log(castShadows, receiveShadows)
+
         let group = new THREE.Group();
 
         if(node.type === "node")
             materialID = (node.materialIds.length > 0) ? node.materialIds[0] : materialID
+
+        if(node.castShadow){
+            castShadows = true
+        }
+
+        if(node.receiveShadow){
+            receiveShadows = true
+        }
 
         let children = node.children
 
@@ -360,7 +371,7 @@ class MyContents  {
             }
             // Child is a primitive
             else if(child.type === "primitive"){
-                object = this.dealWithPrimitive(child, materialID, node.castShadows, node.receiveShadows)
+                object = this.dealWithPrimitive(child, materialID, castShadows, receiveShadows)
             }
             // Child is a LOD
             else if(child.type === "lod"){
@@ -368,7 +379,7 @@ class MyContents  {
             }
             // Child is a node
             else{
-                object = this.iterateNodes(child, materialID)
+                object = this.iterateNodes(child, materialID, castShadows, receiveShadows)
             }
 
             group.add(object)
@@ -439,7 +450,7 @@ class MyContents  {
     }
 
     // Creates a primitive object
-    dealWithPrimitive(node, materialID, castShadows, receiveShadows){
+    dealWithPrimitive(node, materialID, castShadow, receiveShadow){
 
         let primitiveFuncMap = {
             "cylinder" : this.buildCylinder.bind(this), 
@@ -455,8 +466,8 @@ class MyContents  {
         let mat = this.materialMap[materialID]
 
         let mesh = primitiveFuncMap[node.subtype](node.representations[0], mat)
-        mesh.castShadow = castShadows
-        mesh.receiveShadow = receiveShadows
+        mesh.castShadow = castShadow
+        mesh.receiveShadow = receiveShadow
 
         return mesh
         
@@ -672,6 +683,7 @@ class MyContents  {
         return mesh
     }
 
+    // TODO
     dealWithLOD(node, material){
 
     }
