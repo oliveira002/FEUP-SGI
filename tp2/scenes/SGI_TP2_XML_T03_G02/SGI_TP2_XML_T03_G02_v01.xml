@@ -5,7 +5,7 @@
 
     <globals background="0.06 0.06 0.06 1" ambient="0.15 0.15 0.15 1" /> 
 
-    <fog color="0.15 0.15 0.15 1.0" near="0.0" far="250.0" />
+    <fog color="0.15 0.15 0.15 1.0" near="0.0" far="100.0" />
     <skybox size="140 160 140" center="0 0 0" emissive="0.01 0.01 0.01 1" intensity="1.0"
         up="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" 
         down="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" 
@@ -1167,7 +1167,7 @@
                 <noderef id= "lampMid2"/>
                 <noderef id="angleLamp"/>
                 <spotlight id="light10" enabled="true" 
-                    color="1 1 0 1"
+                    color="0.7 0.7 0.7 1"
                     intensity="150.0"
                     distance="100"
                     decay="2.0"
@@ -1200,7 +1200,7 @@
                 <noderef id= "lampMid2"/>
                 <noderef id="angleLamp"/>
                 <spotlight id="light11" enabled="true" 
-                    color="1 1 0 1"
+                    color="0.7 0.7 0.7 1"
                     intensity="150.0"
                     distance="100"
                     decay="2.0"
@@ -1233,7 +1233,7 @@
                 <noderef id= "lampMid2"/>
                 <noderef id="angleLamp"/>
                 <spotlight id="light12" enabled="true" 
-                    color="1 1 0 1"
+                    color="0.7 0.7 0.7 1"
                     intensity="150.0"
                     distance="100"
                     decay="2.0"
@@ -1266,7 +1266,7 @@
                 <noderef id= "lampMid2"/>
                 <noderef id="angleLamp"/>
                 <spotlight id="light13" enabled="true" 
-                    color="1 1 0 1"
+                    color="0.7 0.7 0.7 1"
                     intensity="150.0"
                     distance="100"
                     decay="2.0"
