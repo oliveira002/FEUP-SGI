@@ -282,9 +282,13 @@
     <graph rootid="scene"> 	
 
         <lod id="lodDemo">
-            <noderef id="testDist20" mindist="20"/>
-            <noderef id="testDist40" mindist="40"/>
-            <noderef id="testDist100" mindist="100"/>
+            <noderef id="testDist20" mindist="10"/>
+            <noderef id="testDist40" mindist="15"/>
+            <noderef id="testDist100" mindist="20"/>
+        </lod>
+
+        <lod id="lod2">
+            <noderef id="testDist100" mindist="30"/>
         </lod>
 
         <node id="testDist20">
@@ -359,6 +363,7 @@
                 <noderef id="spotlightLamp3"/>
                 <noderef id="spotlightLamp4"/>
                 <noderef id="vase1" />
+                <lodref id="lodDemo" />
             </children> 
         </node>
 

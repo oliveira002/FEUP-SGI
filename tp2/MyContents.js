@@ -339,16 +339,17 @@ class MyContents  {
         let rootId = data.rootId
         this.root = data.nodes[rootId]
 
-        this.sceneGroup = this.iterateNodes(this.root, 'default', this.root.castShadows, this.root.receiveShadows)
+        this.sceneGroup = this.iterateNodes(this.root, 'default', this.root.castShadows, this.root.receiveShadows, false)
         this.app.scene.add(this.sceneGroup)
     }
 
     // Recursively iterates over a node and its children
-    iterateNodes(node, materialID, castShadows, receiveShadows){
-        let group = new THREE.Group();
+    iterateNodes(node, materialID, castShadows, receiveShadows, isLod){
+        
+        let group = (isLod) ? new THREE.LOD() : new THREE.Group();
 
         if(node.type === "node")
-            materialID = (node.materialIds.length > 0) ? node.materialIds[0] : materialID
+            materialID = (node.materialIds !== undefined && node.materialIds.length > 0) ? node.materialIds[0] : materialID
 
         if(!castShadows){
             castShadows = node.castShadows
@@ -358,7 +359,7 @@ class MyContents  {
             receiveShadows = node.receiveShadows
         }
 
-        let children = node.children
+        let children = (node.type !== "lodnoderef") ? node.children : [node.node]
 
         children.forEach(child => {
             let object
@@ -371,20 +372,20 @@ class MyContents  {
             else if(child.type === "primitive"){
                 object = this.dealWithPrimitive(child, materialID, castShadows, receiveShadows)
             }
-            // Child is a LOD
-            else if(child.type === "lod"){
-                object = this.dealWithLOD(child, materialID)
-            }
-            // Child is a node
+            // Child is a node or a LOD
             else{
-                object = this.iterateNodes(child, materialID, castShadows, receiveShadows)
+                object = this.iterateNodes(child, materialID, castShadows, receiveShadows, child.type === "lod")
             }
 
-            group.add(object)
+            if(isLod)
+                group.addLevel(object, parseInt(child.mindist))
+            else
+                group.add(object)
 
         })
 
-        this.dealWithTransformations(group, node.transformations)
+        if(node.transformations)
+            this.dealWithTransformations(group, node.transformations)
 
         return group
     }
@@ -682,8 +683,13 @@ class MyContents  {
     }
 
     // TODO
-    dealWithLOD(node, material){
+    dealWithLOD(node, material, castShadows, receiveShadows){
+        let lod = new THREE.LOD()
 
+        console.log(node)
+
+
+        return lod
     }
 
     dealWithTransformations(object, transformations){
