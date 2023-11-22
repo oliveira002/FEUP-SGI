@@ -19,12 +19,6 @@
             angle="75" 
             near="0.1" 
             far="1000" 
-            location="10 8 -14" 
-            target="0 0 0" />
-        <perspective id="Cam 2" 
-            angle="75" 
-            near="0.1" 
-            far="1000" 
             location="11 13 13" 
             target="0 0 0" />
     </cameras> 

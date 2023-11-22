@@ -22,6 +22,7 @@ class MyApp  {
         this.lastCameraName = null
         this.cameras = []
         this.frustumSize = 20
+        this.targets = []
 
         // other attributes
         this.renderer = null
@@ -67,6 +68,8 @@ class MyApp  {
      * initializes all the cameras
      */
     initCameras() {
+        
+        /*
         const aspect = window.innerWidth / window.innerHeight;
 
         // Create a basic perspective camera
@@ -102,6 +105,7 @@ class MyApp  {
         orthoFront.position.set(0,0, this.frustumSize /4) 
         orthoFront.lookAt( new THREE.Vector3(0,0,0) );
         this.cameras['Front'] = orthoFront
+        */
     }
 
     /**
@@ -141,7 +145,13 @@ class MyApp  {
             else {
                 this.controls.object = this.activeCamera
             }
+
+            this.updateCameraTarget()
         }
+    }
+
+    updateCameraTarget(){
+        this.controls.target = this.targets[this.activeCameraName]
     }
 
     /**

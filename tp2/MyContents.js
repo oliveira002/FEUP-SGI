@@ -96,7 +96,7 @@ class MyContents  {
     // Builds the scene
     buildScene(data){
         this.initGlobals(data)
-        //this.initCameras(data)
+        this.initCameras(data)
         this.initTextures(data)
         this.initMaterials(data)
         this.initSceneGraph(data)
@@ -166,9 +166,9 @@ class MyContents  {
             (key) => {
                 let cameraObj = cameras[key]
                 let camera = (cameraObj.type === "perspective") ? this.buildPerspCamera(cameraObj) : this.buildOrthoCamera(cameraObj)
-
+                   
                 camera.position.set(...cameraObj.location)
-                this.app.controls.target = new THREE.Vector3(...cameraObj.target)
+                //this.app.controls.target = new THREE.Vector3(...cameraObj.target)
 
                 if (cameraObj.name = data.activeCameraId){
                     this.app.activeCameraName = data.activeCameraId
@@ -176,6 +176,7 @@ class MyContents  {
                 }
 
                 this.app.cameras[cameraObj.id] = camera
+                this.app.targets[cameraObj.id] = new THREE.Vector3(...cameraObj.target)
             }
         )
     }

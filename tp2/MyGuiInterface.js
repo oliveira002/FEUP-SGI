@@ -37,8 +37,6 @@ class MyGuiInterface  {
             cameraFolder.open();
         }
 
-        console.log(this.contents)
-
         this.initFog = this.contents.app.scene.fog
 
         this.datgui.add(this, 'wireframeEnabled').name('Toggle Wireframe').onChange(() => {
@@ -67,9 +65,6 @@ class MyGuiInterface  {
             this.contents.helpersOn = this.helpersEnabled
             this.contents.displayHelpers()
         });
-
-
-        
     }
 }
     
