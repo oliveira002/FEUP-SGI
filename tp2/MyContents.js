@@ -15,6 +15,7 @@ class MyContents  {
         this.app = app
         this.builder = new MyNurbsBuilder()
         this.helpersOn = false
+        this.controlPtsOn = true
 
         // Globals
         this.axis = null
@@ -56,6 +57,7 @@ class MyContents  {
         this.textureMap = []
 
         // Objects and Primitives
+        this.nurbsPoints = []
 
 
         this.reader = new MyFileReader(app, this, this.onSceneLoaded);
@@ -96,7 +98,8 @@ class MyContents  {
         this.initTextures(data)
         this.initMaterials(data)
         this.initSceneGraph(data)
-        this.initHelpers()
+        this.displayHelpers()
+        this.displayControlPoints()
     }
 
     // Initializes all the global scene objects
@@ -563,7 +566,14 @@ class MyContents  {
         let surfaceData = this.builder.build(geoPoints, orderU, orderV, samplesU, samplesV, material)
         let mesh = new THREE.Mesh(surfaceData, material);
 
-        return mesh
+        let group = new THREE.Group()
+        group.add(mesh)
+
+        if(this.controlPtsOn){
+            group.add(this.getControlPointObjects(geoPoints))
+        }
+
+        return group
     }
     
     buildBox(representation, material){
@@ -682,16 +692,6 @@ class MyContents  {
         return mesh
     }
 
-    // TODO
-    dealWithLOD(node, material, castShadows, receiveShadows){
-        let lod = new THREE.LOD()
-
-        console.log(node)
-
-
-        return lod
-    }
-
     dealWithTransformations(object, transformations){
         transformations.forEach(operation => {
            switch(operation.type) {
@@ -712,7 +712,7 @@ class MyContents  {
         });
     }
 
-    initHelpers(){
+    displayHelpers(){
         if(this.helpersOn){
             Object.keys(this.lights).forEach(key => {
                 let light = this.lights[key]
@@ -733,6 +733,28 @@ class MyContents  {
                 this.app.scene.add(helper)
             })
         }
+    }
+
+    getControlPointObjects(controlPoints) {
+        let group = new THREE.Group()
+
+        let sphereGeometry = new THREE.SphereGeometry(0.07, 20, 20);
+
+        let colorOffset = 0x00
+        for (let i = 0; i < controlPoints.length; i++) {
+            let row = controlPoints[i];
+            let sphereMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000+colorOffset });
+
+            for (let j = 0; j < row.length; j++) {
+                let point = row[j];
+                let controlPoint = new THREE.Mesh(sphereGeometry, sphereMaterial);
+                controlPoint.position.set(...point);
+                group.add(controlPoint);
+            }
+            colorOffset += 0x00ffff/controlPoints.length
+        }
+
+        return group
     }
 
     degToRad(degrees){   

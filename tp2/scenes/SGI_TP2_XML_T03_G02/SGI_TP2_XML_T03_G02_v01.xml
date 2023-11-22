@@ -40,7 +40,6 @@
             mipmap1="scenes/SGI_TP2_XML_T03_G02/textures/floor512.png"
             mipmap2="scenes/SGI_TP2_XML_T03_G02/textures/floor256.png"
             anisotropy="2" />
-        <texture id="skyTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/sky.jpg" />
         <texture id="crackedTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/cracked.jpg" />
         <texture id="leafTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/leaf.jpg" />
         <texture id="trunkTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/trunk.jpg"/>
@@ -109,14 +108,6 @@
             specular="0.07 0.07 0.07 0" 
             shininess="30"
             textureref="darkStoneBlockTex"/>
-
-        <material id="skyApp"
-            emissive="0.0 0.0 0.0 1" 
-            color="1.0 1.0 1.0 1.0" 
-            specular="0.07 0.07 0.07 0" 
-            shininess="30"
-            twosided="true"
-            textureref="skyTex"/>
         
         <material id="crackedApp"
             emissive="0.0 0.0 0.0 1" 
@@ -401,7 +392,6 @@
         <node id="arch">
             <transforms>
                 <translate value3="0 8.32 38.8" />
-                <scale value3="1 7 1" />
             </transforms> 
 
 			<materialref id="stoneBlockArchApp" />
@@ -410,24 +400,24 @@
                 <primitive>
                     <nurbs degree_u="1" degree_v="3" parts_u="32" parts_v="32" distance="0.0">
                         <controlpoint xx="-7.75" yy="0" zz="0" />
-                        <controlpoint xx="-7.75" yy="1.3332" zz="0" />
-                        <controlpoint xx="7.75" yy="1.3332" zz="0" />
+                        <controlpoint xx="-7.75" yy="9.3324" zz="0" />
+                        <controlpoint xx="7.75" yy="9.3324" zz="0" />
                         <controlpoint xx="7.75" yy="0" zz="0" />
                         <controlpoint xx="-7.75" yy="0" zz="2.5" />
-                        <controlpoint xx="-7.75" yy="1.3332" zz="2.5" />
-                        <controlpoint xx="7.75" yy="1.3332" zz="2.5" />
+                        <controlpoint xx="-7.75" yy="9.3324" zz="2.5" />
+                        <controlpoint xx="7.75" yy="9.3324" zz="2.5" />
                         <controlpoint xx="7.75" yy="0" zz="2.5" />
                     </nurbs>
                 </primitive>
                 <primitive>
                     <nurbs degree_u="1" degree_v="3" parts_u="32" parts_v="32" distance="0.0">
                         <controlpoint xx="-5.21" yy="0" zz="0" />
-                        <controlpoint xx="-5.21" yy="0.8888" zz="0" />
-                        <controlpoint xx="5.21" yy="0.8888" zz="0" />
+                        <controlpoint xx="-5.21" yy="6.2216" zz="0" />
+                        <controlpoint xx="5.21" yy="6.2216" zz="0" />
                         <controlpoint xx="5.21" yy="0" zz="0" />
                         <controlpoint xx="-5.21" yy="0" zz="2.5" />
-                        <controlpoint xx="-5.21" yy="0.8888" zz="2.5" />
-                        <controlpoint xx="5.21" yy="0.8888" zz="2.5" />
+                        <controlpoint xx="-5.21" yy="6.2216" zz="2.5" />
+                        <controlpoint xx="5.21" yy="6.2216" zz="2.5" />
                         <controlpoint xx="5.21" yy="0" zz="2.5" />
                     </nurbs>
                 </primitive>
@@ -604,18 +594,6 @@
                 </primitive>
             </children>
         </node>
-
-        <!--<node id="sky">
-            <materialref id="skyApp" />
-            <transforms>
-				<translate value3="0 -25 0" />
-            </transforms> 
-            <children>             
-                <primitive>
-                    <sphere radius="60" slices="64" stacks="64" thetalength="1.2" />
-                </primitive>
-            </children> 
-        </node> -->
         
         <node id="floor">
             <transforms>
