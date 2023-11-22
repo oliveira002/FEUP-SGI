@@ -17,6 +17,7 @@ class MyContents  {
         this.polygonMaterialNr = 1
         this.helpersOn = false
         this.controlPtsOn = false
+        
 
         // Globals
         this.axis = null

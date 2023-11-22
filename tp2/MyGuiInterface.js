@@ -16,6 +16,8 @@ class MyGuiInterface  {
         this.datgui =  new GUI();
         this.contents = null
         this.wireframeEnabled = false
+        this.fogEnabled = true
+        this.initFog = null
     }
 
     /**
@@ -33,6 +35,10 @@ class MyGuiInterface  {
             cameraFolder.open();
         }
 
+        console.log(this.contents)
+
+        this.initFog = this.contents.app.scene.fog
+
         this.datgui.add(this, 'wireframeEnabled').name('Toggle Wireframe').onChange(() => {
             
             let matMap = this.contents.materialMap
@@ -44,7 +50,18 @@ class MyGuiInterface  {
                 }
             })
         });
+        
 
+        this.datgui.add(this, 'fogEnabled').name('Toggle Fog').onChange(() => {
+            if(this.fogEnabled) {
+                this.contents.app.scene.fog = this.initFog
+            }
+            else {
+                this.contents.app.scene.fog = null
+            }
+        });
+
+        
     }
 }
     
