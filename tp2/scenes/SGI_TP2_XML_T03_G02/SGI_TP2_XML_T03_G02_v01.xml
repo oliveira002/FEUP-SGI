@@ -304,54 +304,11 @@
     <graph rootid="scene"> 	
 
         <lod id="candleLod">
-            <noderef id="candleC" mindist="50"/>
-            <noderef id="candleBundle2" mindist="35"/>
-            <noderef id="candleBundle3" mindist="20"/>
+            <noderef id="candleC" mindist="40"/>
+            <noderef id="candleBundle2" mindist="30"/>
+            <noderef id="candleBundle3" mindist="15"/>
             <noderef id="candleBundle4" mindist="5"/>
         </lod>
-        <!--
-        <lod id="lodDemo">
-            <noderef id="testDist20" mindist="10"/>
-            <noderef id="testDist40" mindist="15"/>
-            <noderef id="testDist100" mindist="20"/>
-        </lod>
-
-        <lod id="lod2">
-            <noderef id="testDist100" mindist="30"/>
-        </lod>
-
-        <node id="testDist20">
-            <children>
-                <primitive>
-                    <polygon radius="10" slices="9" stacks="10" color_c="0 0 0 0" color_p="1 1 1 1"/>
-                </primitive>
-            </children>
-        </node>
-
-        <node id="testDist40">
-            <children>
-                <primitive>
-                    <polygon radius="10" slices="6" stacks="10" color_c="0 0 1 0" color_p="1 1 1 1"/>
-                </primitive>
-            </children>
-        </node>
-
-        <node id="testDist100">
-            <children>
-                <primitive>
-                    <polygon radius="10" slices="3" stacks="10" color_c="0 1 1 0" color_p="1 1 1 1"/>
-                </primitive>
-            </children>
-        </node>
-
-        <node id="test">
-            <transforms>
-                <translate value3="0 15 0" />
-            </transforms>
-            <children>
-                <lodref id="lodDemo"/>
-            </children>
-        </node>-->
 
 		<node id="scene" castshadows="true" receiveshadows="true"> 
             <children>
@@ -1337,8 +1294,8 @@
         <node id="pumpkin1">
             <transforms>
                 <scale value3= "1 1 1.1"/>
-                <translate value3= "5 1.2 45"/>
-                <rotate value3= "0 -120 0"/>
+                <translate value3= "10 1.2 43"/>
+                <rotate value3= "0 -140 0"/>
             </transforms>
             <materialref id="pumpkinApp" />
             <children>
@@ -1359,8 +1316,8 @@
         <node id="pumpkin2">
             <transforms>
                 <scale value3= "1 1 1.1"/>
-                <translate value3= "-5 1.2 45"/>
-                <rotate value3= "0 -60 0"/>
+                <translate value3= "-10 1.2 43"/>
+                <rotate value3= "0 -30 0"/>
             </transforms>
             <materialref id="pumpkinApp" />
             <children>
