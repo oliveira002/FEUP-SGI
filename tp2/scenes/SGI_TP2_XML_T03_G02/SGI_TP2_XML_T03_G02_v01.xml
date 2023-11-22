@@ -95,6 +95,14 @@
             specular="0.07 0.07 0.07 0" 
             shininess="30"
             textureref="stoneBlockTex"/>
+
+        <material id="stoneBlockArchApp"
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 1.0" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            textureref="stoneBlockTex"
+            twosided="true"/>
         
         <material id="darkStoneBlockApp"
             emissive="0.0 0.0 0.0 1" 
@@ -304,54 +312,8 @@
 
     <graph rootid="scene"> 	
 
-        <lod id="lodDemo">
-            <noderef id="testDist20" mindist="10"/>
-            <noderef id="testDist40" mindist="15"/>
-            <noderef id="testDist100" mindist="20"/>
-        </lod>
-
-        <lod id="lod2">
-            <noderef id="testDist100" mindist="30"/>
-        </lod>
-
-        <node id="testDist20">
-            <children>
-                <primitive>
-                    <polygon radius="10" slices="9" stacks="10" color_c="0 0 0 0" color_p="1 1 1 1"/>
-                </primitive>
-            </children>
-        </node>
-
-        <node id="testDist40">
-            <children>
-                <primitive>
-                    <polygon radius="10" slices="6" stacks="10" color_c="0 0 1 0" color_p="1 1 1 1"/>
-                </primitive>
-            </children>
-        </node>
-
-        <node id="testDist100">
-            <children>
-                <primitive>
-                    <polygon radius="10" slices="3" stacks="10" color_c="0 1 1 0" color_p="1 1 1 1"/>
-                </primitive>
-            </children>
-        </node>
-
-        <node id="test">
-            <transforms>
-                <translate value3="0 15 0" />
-            </transforms>
-            <children>
-                <lodref id="lodDemo"/>
-            </children>
-        </node>
-
 		<node id="scene" castshadows="true" receiveshadows="true"> 
             <children>
-                <!--<noderef id="test" />-->
-
-                <!--<noderef id="pillar" /> -->
                 <noderef id="sky"/>
                 <noderef id="floor"/>
                 <noderef id="rightWall"/>
@@ -388,11 +350,47 @@
                 <noderef id="spotlightLamp3"/>
                 <noderef id="spotlightLamp4"/>
                 <noderef id="vase1" />
-                <lodref id="lodDemo" />
                 <noderef id="vase2" />
                 <noderef id="vase3" />
                 <noderef id="vase4" />
+                <noderef id="arch" />
             </children> 
+        </node>
+
+        <node id="arch">
+            <transforms>
+                <translate value3="0 8.32 38.8" />
+                <scale value3="1 7 1" />
+            </transforms> 
+
+			<materialref id="stoneBlockArchApp" />
+			
+            <children>             
+                <primitive>
+                    <nurbs degree_u="1" degree_v="3" parts_u="32" parts_v="32" distance="0.0">
+                        <controlpoint xx="-7.75" yy="0" zz="0" />
+                        <controlpoint xx="-7.75" yy="1.3332" zz="0" />
+                        <controlpoint xx="7.75" yy="1.3332" zz="0" />
+                        <controlpoint xx="7.75" yy="0" zz="0" />
+                        <controlpoint xx="-7.75" yy="0" zz="2.5" />
+                        <controlpoint xx="-7.75" yy="1.3332" zz="2.5" />
+                        <controlpoint xx="7.75" yy="1.3332" zz="2.5" />
+                        <controlpoint xx="7.75" yy="0" zz="2.5" />
+                    </nurbs>
+                </primitive>
+                <primitive>
+                    <nurbs degree_u="1" degree_v="3" parts_u="32" parts_v="32" distance="0.0">
+                        <controlpoint xx="-5.21" yy="0" zz="0" />
+                        <controlpoint xx="-5.21" yy="0.8888" zz="0" />
+                        <controlpoint xx="5.21" yy="0.8888" zz="0" />
+                        <controlpoint xx="5.21" yy="0" zz="0" />
+                        <controlpoint xx="-5.21" yy="0" zz="2.5" />
+                        <controlpoint xx="-5.21" yy="0.8888" zz="2.5" />
+                        <controlpoint xx="5.21" yy="0.8888" zz="2.5" />
+                        <controlpoint xx="5.21" yy="0" zz="2.5" />
+                    </nurbs>
+                </primitive>
+            </children>	
         </node>
 
         <node id="flower1">
