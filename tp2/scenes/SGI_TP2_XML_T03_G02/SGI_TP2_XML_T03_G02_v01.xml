@@ -21,6 +21,12 @@
             far="1000" 
             location="11 13 13" 
             target="0 0 0" />
+        <perspective id="Cam 2" 
+            angle="75" 
+            near="0.1" 
+            far="1000" 
+            location="20 13 13" 
+            target="0 0 0" />
     </cameras> 
 
     <!-- bloco de texturas. Este bloco tem de existir mas pode estar vazio, se nao forem usadas texturas --> 
@@ -72,6 +78,13 @@
             shininess="30"
             textureref="" />
         -->
+
+        <material id="wireframeApp" 
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 1.0" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            wireframe="true" />
 
         <material id="floorApp" 
             emissive="0.0 0.0 0.0 1" 

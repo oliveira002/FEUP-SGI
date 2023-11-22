@@ -311,8 +311,10 @@ class MyContents  {
             (key) => {
                 let materialObj = materials[key]
 
-                let texture = this.textureMap[materialObj.textureref]
-                texture.repeat.set(materialObj.texlength_s, materialObj.texlength_t)
+                if(materialObj.textureref){
+                    let texture = this.textureMap[materialObj.textureref]
+                    texture.repeat.set(materialObj.texlength_s, materialObj.texlength_t)
+                }
 
                 let material = new THREE.MeshPhongMaterial({
                     name: materialObj.id,
@@ -325,9 +327,14 @@ class MyContents  {
                     shininess: materialObj.shininess,
                     wireframe: materialObj.wireframe,
                     flatShading: materialObj.shading === "flat",
-                    map: texture,
                     side: materialObj.twosided ? THREE.DoubleSide : THREE.FrontSide,
                 })
+
+                if(materialObj.textureref){
+                    let texture = this.textureMap[materialObj.textureref]
+                    texture.repeat.set(materialObj.texlength_s, materialObj.texlength_t)
+                    material.map = texture
+                }
 
                 if(this.textureMap[materialObj.bumpref]){
                     material.bumpMap = this.textureMap[materialObj.bumpref]
@@ -683,10 +690,13 @@ class MyContents  {
         geometry.computeBoundingSphere()
         geometry.computeBoundingBox()
 
+        let wireframe = material.wireframe
+
         material = new THREE.MeshBasicMaterial({
             vertexColors: true,
             side: THREE.DoubleSide,
-            transparent: true
+            transparent: true,
+            wireframe: wireframe
         });
 
         this.materialMap["polygon " + this.polygonMaterialNr++] = material
