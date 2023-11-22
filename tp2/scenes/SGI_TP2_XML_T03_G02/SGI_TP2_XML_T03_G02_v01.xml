@@ -353,7 +353,159 @@
                 <noderef id="vase4" />
                 <noderef id="arch" />
                 <noderef id="sign" />
+                <noderef id="pearlyGatesOfHell" />
             </children> 
+        </node>
+
+        <node id="pearlyGatesOfHell">
+            <transforms>
+                <translate value3="0 0 40" />
+            </transforms>	
+            <children>             
+                <lodref id="pearlyGatesOfHellLod" />
+            </children>
+        </node>
+
+        <lod id="pearlyGatesOfHellLod">
+            <noderef id="pearlyGatesOfHellOpen" mindist="0"/>
+            <noderef id="pearlyGatesOfHellClosed" mindist="40"/>
+        </lod>
+
+        <node id="pearlyGatesOfHellClosed">
+			
+            <materialref id="darkStoneBlockApp" />
+			
+            <children>             
+                <noderef id="pearlyGatesOfHellLeftClosed" />
+                <noderef id="pearlyGatesOfHellRightClosed" />
+            </children>
+        </node>
+
+        <node id="pearlyGatesOfHellRightClosed">
+            <transforms>
+                <translate value3="-1 -2.5 0" />
+            </transforms> 
+
+            <materialref id="darkStoneBlockApp" />
+			
+            <children>             
+                <noderef id="pearlyGatesOfHellHalf" />
+            </children>
+        </node>
+
+        <node id="pearlyGatesOfHellLeftClosed">
+            <transforms>
+                <translate value3="-6 -2.5 0" />
+            </transforms>
+
+            <materialref id="darkStoneBlockApp" />
+			
+            <children>             
+                <noderef id="pearlyGatesOfHellHalf" />
+            </children>
+        </node>
+
+        <node id="pearlyGatesOfHellOpen">
+			
+            <materialref id="darkStoneBlockApp" />
+			
+            <children>             
+                <noderef id="pearlyGatesOfHellLeftOpen" />
+                <noderef id="pearlyGatesOfHellRightOpen" />
+            </children>
+        </node>
+
+        <node id="pearlyGatesOfHellRightOpen">
+            <transforms>
+                <translate value3="5 -2.5 0" />
+                <rotate value3="0 -90 0" />
+            </transforms> 
+
+            <materialref id="darkStoneBlockApp" />
+			
+            <children>             
+                <noderef id="pearlyGatesOfHellHalf" />
+            </children>
+        </node>
+
+        <node id="pearlyGatesOfHellLeftOpen">
+            <transforms>
+                <translate value3="-5 -2.5 0" />
+                <rotate value3="0 -90 0" />
+            </transforms>
+
+            <materialref id="darkStoneBlockApp" />
+			
+            <children>             
+                <noderef id="pearlyGatesOfHellHalf" />
+            </children>
+        </node>
+
+        <node id="pearlyGatesOfHellHalf">
+            <materialref id="darkStoneBlockApp" />
+			
+            <children>             
+                <noderef id="pearlyGatesOfHellVert" />
+                <noderef id="pearlyGatesOfHellHor" />
+            </children>
+        </node>
+
+        <node id="pearlyGatesOfHellVert">
+            <transforms>
+                <scale value3="1 3 1.5" />
+            </transforms> 
+			
+            <materialref id="darkStoneBlockApp" />
+			
+            <children>             
+                <noderef id="gridColumn" />
+                <noderef id="gridColumn1" />
+                <noderef id="gridColumn2" />
+            </children>
+        </node>
+
+        <node id="pearlyGatesOfHellHor">
+            <transforms>
+                <translate value3="0 0 0" />
+                <scale value3="1 1 1"/>
+            </transforms> 
+            <materialref id="darkStoneBlockApp" />
+			
+            <children>             
+                <noderef id="pearlyGatesOfHellHor1" />
+                <noderef id="pearlyGatesOfHellHor2" />
+                <noderef id="pearlyGatesOfHellHor3" />
+            </children>
+        </node>
+
+        <node id="pearlyGatesOfHellHor1">
+            <transforms>
+                <translate value3="0 2 0" />
+            </transforms> 
+			
+            <children>             
+                <noderef id="gridRow" />
+            </children>
+        </node>
+
+        <node id="pearlyGatesOfHellHor2">
+            <transforms>
+                <translate value3="0 4 0" />
+            </transforms> 
+			
+            <children>             
+                <noderef id="gridRow" />
+            </children>
+        </node>
+
+        <node id="pearlyGatesOfHellHor3">
+            <transforms>
+                <translate value3="0 6 0" />
+            </transforms> 
+			
+            <children>             
+                <noderef id="gridRow" />
+            </children>
         </node>
 
         <node id="sign">
@@ -2528,7 +2680,7 @@
                 <noderef id="gridColumn"/>
                 <noderef id="gridColumn1"/>
                 <noderef id="gridColumn2"/>
-                <noderef id= "gridRow"/>
+                <noderef id="gridRow"/>
             </children> 
         </node>
 
@@ -2644,6 +2796,7 @@
                 <noderef id="gridColumnTopSup"/>
             </children> 
         </node>
+
         <node id="gridColumnBase">
             <transforms>
                 <translate value3="0 1.5 0" />
