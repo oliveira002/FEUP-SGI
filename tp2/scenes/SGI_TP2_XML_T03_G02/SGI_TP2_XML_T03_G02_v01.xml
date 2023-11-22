@@ -66,6 +66,7 @@
         <texture id="vase1Tex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/vase1.jpg"/>
         <texture id="flowerTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/flower.png"/>
         <texture id="flower2Tex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/flower2.png"/>
+        <texture id="signTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/image.png"/>
     </textures> 
 
     <materials> 
@@ -298,6 +299,14 @@
             shininess="30"
             textureref="flower2Tex"
             twosided="true" />
+        
+        <material id="signApp" 
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 0.99" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            textureref="signTex"
+            twosided="true" />
 
     </materials> 
 
@@ -395,6 +404,21 @@
                 <noderef id="vase3" />
                 <noderef id="vase4" />
                 <noderef id="arch" />
+                <noderef id="sign" />
+            </children> 
+        </node>
+
+        <node id="sign">
+            <transforms>
+                <translate value3="0.25 11.2 40.2" />
+                <scale value3="0.95 0.95 0.95" />
+            </transforms> 
+			<materialref id="signApp" />
+			
+            <children>             
+                <primitive>
+                    <rectangle xy1="-12 -6" xy2="12 6" />
+                </primitive>
             </children> 
         </node>
 
