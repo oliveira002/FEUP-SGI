@@ -34,15 +34,15 @@ class MyGuiInterface  {
         }
 
         this.datgui.add(this, 'wireframeEnabled').name('Toggle Wireframe').onChange(() => {
-
-            let materialIds = Object.keys(this.contents.materialMap);
-
-            for (const materialId of materialIds) {
-                const material = this.contents.materialMap[materialId];
+            
+            let matMap = this.contents.materialMap
+            
+            Object.keys(matMap).forEach( key => {
+                const material = this.contents.materialMap[key];
                 if (material) {
                     material.wireframe = this.wireframeEnabled;
-                } 
-            }
+                }
+            })
         });
 
     }

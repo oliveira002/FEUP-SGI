@@ -14,6 +14,7 @@ class MyContents  {
     constructor(app) {
         this.app = app
         this.builder = new MyNurbsBuilder()
+        this.polygonMaterialNr = 1
         this.helpersOn = false
         this.controlPtsOn = false
 
@@ -99,7 +100,6 @@ class MyContents  {
         this.initMaterials(data)
         this.initSceneGraph(data)
         this.displayHelpers()
-        this.displayControlPoints()
     }
 
     // Initializes all the global scene objects
@@ -686,6 +686,8 @@ class MyContents  {
             side: THREE.DoubleSide,
             transparent: true
         });
+
+        this.materialMap["polygon " + this.polygonMaterialNr++] = material
 
         const mesh = new THREE.Mesh(geometry, material);
 
