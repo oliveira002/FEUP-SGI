@@ -17,6 +17,8 @@ class MyGuiInterface  {
         this.contents = null
         this.wireframeEnabled = false
         this.fogEnabled = true
+        this.helpersEnabled = false
+        this.controlPointsEnabled = false
         this.initFog = null
     }
 
@@ -60,6 +62,12 @@ class MyGuiInterface  {
                 this.contents.app.scene.fog = null
             }
         });
+
+        this.datgui.add(this, 'helpersEnabled').name('Toggle Helpers').onChange(() => {
+            this.contents.helpersOn = this.helpersEnabled
+            this.contents.displayHelpers()
+        });
+
 
         
     }

@@ -49,6 +49,7 @@ class MyContents  {
         }
         this.lightTypes = ["spotlight", "pointlight", "directionallight"] 
         this.lights = []
+        this.helpers = []
 
         // Materials
         this.materialMap = {
@@ -60,7 +61,6 @@ class MyContents  {
 
         // Objects and Primitives
         this.nurbsPoints = []
-
 
         this.reader = new MyFileReader(app, this, this.onSceneLoaded);
 		//this.reader.open("scenes/demo/demo.xml");
@@ -734,7 +734,16 @@ class MyContents  {
                 }
 
                 this.app.scene.add(helper)
+                this.helpers.push(helper)
             })
+        }
+        else {
+            this.helpers.forEach(helper => {
+                this.app.scene.remove(helper);
+                helper.dispose(); // Dispose the helper to free up resources
+            });
+    
+            this.helpers = []; // Clear the array
         }
     }
 
