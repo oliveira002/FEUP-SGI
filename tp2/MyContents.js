@@ -503,7 +503,7 @@ class MyContents  {
         let width = Math.abs(representation.xy1[0] - representation.xy2[0])
         let height = Math.abs(representation.xy1[1] - representation.xy2[1])
 
-        let center = [representation.xy1[0] + width/2, representation.xy1[1] + height/2]
+        let center = [Math.min(representation.xy1[0], representation.xy2[0]) + width/2, Math.min(representation.xy1[1], representation.xy2[1]) + height/2]
         let deltaX = center[0]
         let deltaY = center[1]
 
@@ -590,7 +590,9 @@ class MyContents  {
         let height = Math.abs(representation.xyz1[1] - representation.xyz2[1])
         let depth = Math.abs(representation.xyz1[2] - representation.xyz2[2])
 
-        let center = [representation.xyz1[0] + width/2, representation.xyz1[1] + height/2, representation.xyz1[2] + depth/2]
+        let center = [Math.min(representation.xyz1[0], representation.xyz2[0]) + width/2, 
+            Math.min(representation.xyz1[1], representation.xyz2[1]) + height/2, 
+            Math.min(representation.xyz1[2], representation.xyz2[2]) + depth/2]
         let deltaX = center[0]
         let deltaY = center[1]
         let deltaZ = center[2]

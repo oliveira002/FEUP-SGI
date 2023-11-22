@@ -371,7 +371,19 @@
                 <noderef id="arch" />
                 <noderef id="sign" />
                 <noderef id="pearlyGatesOfHell" />
+                <noderef id="test" />
             </children> 
+        </node>
+
+        <node id="test">
+            <transforms>
+                <translate value3="0 30 0" />
+            </transforms>
+            <children>             
+                <primitive>
+                    <rectangle xy1="4 2" xy2="1 1" /> 
+                </primitive>
+            </children>
         </node>
 
         <node id="pearlyGatesOfHell">
