@@ -21,13 +21,77 @@
             far="1000" 
             location="11 13 13" 
             target="0 0 0" />
-        <perspective id="Cam 2" 
+
+        <perspective id="Entrance" 
             angle="75" 
             near="0.1" 
             far="1000" 
-            location="20 13 13" 
+            location="0 5 85" 
             target="0 0 0" />
-    </cameras> 
+        <perspective id="Candle LOD" 
+            angle="75" 
+            near="0.1" 
+            far="1000" 
+            location="10.5 4 34" 
+            target="10.5 0 27" />
+        
+        <perspective id="Fountain" 
+            angle="75" 
+            near="0.1" 
+            far="1000" 
+            location="0.1 18 -1" 
+            target="0.1 5 -1" />
+
+        <perspective id="Chapels" 
+            angle="75" 
+            near="0.1" 
+            far="1000" 
+            location="0 20 6" 
+            target="-5 16 -6.7" />
+        
+        <perspective id="Tombstone LOD and Vase" 
+            angle="75" 
+            near="0.1" 
+            far="1000" 
+            location="23 14 8" 
+            target="34 -5 8" />
+        
+        <perspective id="Hole and Coffin" 
+            angle="75" 
+            near="0.1" 
+            far="1000" 
+            location="-16 15 34" 
+            target="-16 -11 12" />
+        
+        <perspective id="Trees I" 
+            angle="75" 
+            near="0.1" 
+            far="1000" 
+            location="-19 21 27" 
+            target="-53 8 20" />
+        
+        <perspective id="Trees II" 
+            angle="75" 
+            near="0.1" 
+            far="1000" 
+            location="29 8 -46" 
+            target="-8 9 -71" />
+
+        <perspective id="Floor BumpTexture" 
+            angle="75" 
+            near="0.1" 
+            far="1000" 
+            location="11 4 37" 
+            target="-3 1 11" />
+        
+        <perspective id="Floor MipMap" 
+            angle="75" 
+            near="0.1" 
+            far="1000" 
+            location="-1 51 10" 
+            target="-1 0 10" />
+        
+    </cameras>
 
     <!-- bloco de texturas. Este bloco tem de existir mas pode estar vazio, se nao forem usadas texturas --> 
     <textures>        
