@@ -3,7 +3,7 @@
 
 	<!-- Credits of the original file go to Group 2, class 3 of course MEIC-SGI school year 2023/2024, FEUP, University of Porto -->
 
-    <globals background="0.06 0.06 0.06 1" ambient="0.1 0.1 0.1 1" /> 
+    <globals background="0.06 0.06 0.06 1" ambient="1 1 1 1" /> 
 
     <fog color="0.15 0.15 0.15 1.0" near="0.0" far="160.0" />
     <skybox size="140 160 140" center="0 0 0" emissive="0 0 0 1" intensity="10.0"
@@ -14,7 +14,7 @@
         front="scenes/SGI_TP2_XML_T03_G02/textures/stars.jpg" 
         back="scenes/SGI_TP2_XML_T03_G02/textures/stars.jpg" />
 
-    <cameras initial="Cam 1" > 
+    <cameras initial="Cam 2" > 
         <perspective id="Cam 1" 
             angle="75" 
             near="0.1" 
@@ -25,8 +25,8 @@
             angle="75" 
             near="0.1" 
             far="1000" 
-            location="20 13 13" 
-            target="0 0 0" />
+            location="-0.2333 40 11.75" 
+            target="-0.2333 0 11.75" />
     </cameras> 
 
     <!-- bloco de texturas. Este bloco tem de existir mas pode estar vazio, se nao forem usadas texturas --> 
@@ -339,18 +339,19 @@
             color="1.0 1.0 1.0 1.0" 
             specular="0.07 0.07 0.07 0" 
             shininess="30"
-            textureref="casketTex" />
+            textureref="casketTex"
+            twosided="true" />
 
     </materials> 
 
     <graph rootid="scene"> 	
 
-        <lod id="candleLod">
+        <!--<lod id="candleLod">
             <noderef id="candleC" mindist="40"/>
             <noderef id="candleBundle2" mindist="30"/>
             <noderef id="candleBundle3" mindist="15"/>
             <noderef id="candleBundle4" mindist="5"/>
-        </lod>
+        </lod>-->
 
 		<node id="scene" castshadows="true" receiveshadows="true"> 
             <children>
@@ -429,20 +430,29 @@
 				<translate value3="0 15 0" />
             </transforms> 
             <materialref id="casketApp"/>
-            <children>           	
+            <children>
+                <noderef id="front" />           	
                 <noderef id="frontRight" />
                 <noderef id="frontLeft" />
-                <noderef id="right" />
-                <noderef id="left" />
                 <noderef id="backRight" />
                 <noderef id="backLeft" />
+                <noderef id="back" />
                 <noderef id="bottom" />
+                <noderef id="cover" />
             </children>
         </node>  
 
+        <node id="front">
+            <children>
+                <primitive>
+                    <box xyz1="-4 0 -0.5" xyz2="4 4 0.5" />
+                </primitive>
+            </children>  
+        </node>
+
         <node id="frontRight">
             <transforms>
-				<translate value3="3.18 0 0" />
+				<translate value3="5.5 0 3.2" />
                 <rotate value3="0 -60 0" />
             </transforms>
             <children>
@@ -454,7 +464,7 @@
 
         <node id="frontLeft">
             <transforms>
-				<translate value3="-3.18 0 0" />
+				<translate value3="-5.5 0 3.2" />
                 <rotate value3="0 60 0" />
             </transforms> 
             <children>
@@ -464,66 +474,74 @@
             </children> 
         </node>
 
-        <node id="right">
+        <node id="backRight">
             <transforms>
-				<translate value3="5.85 0 9.5" />
-                <rotate value3="0 -90 0" />
+				<translate value3="5 0 19" />
+                <rotate value3="0 80 0" />
             </transforms> 
             <children>
                 <primitive>
-                    <box xyz1="-7 0 -0.5" xyz2="7 4 0.5" />
+                    <box xyz1="-7 0 -0.5" xyz2="13 4 0.5" />
                 </primitive>
             </children>
         </node>
         
         
-        <node id="left">
+        <node id="backLeft">
             <transforms>
-				<translate value3="-5.85 0 9.5" />
-                <rotate value3="0 -90 0" />
+				<translate value3="-6 0 13" />
+                <rotate value3="0 -80 0" />
             </transforms> 
             <children>
                 <primitive>
-                    <box xyz1="-7 0 -0.5" xyz2="7 4 0.5" />
+                    <box xyz1="-7 0 -0.5" xyz2="13 4 0.5" />
                 </primitive>
             </children>
         </node>
         
-        
-        <node id="backRight"> 
+        <node id="back">
             <transforms>
-				<translate value3="2.635 0 18.06" />
-                <rotate value3="0 30 0" />
-            </transforms>
+				<translate value3="0 0 25.5" />
+            </transforms> 
             <children>
                 <primitive>
-                    <box xyz1="-3.35 0 -0.5" xyz2="4 4 0.5" />
+                    <box xyz1="-4 0 -0.5" xyz2="4 4 0.5" />
                 </primitive>
-            </children>
+            </children>  
         </node>
-        
-        
-        <node id="backLeft"> 
-            <transforms>
-				<translate value3="-2.635 0 18.06" />
-                <rotate value3="0 -30 0" />
-            </transforms>
-            <children>
-                <primitive>
-                    <box xyz1="-4 0 -0.5" xyz2="3.35 4 0.5" />
-                </primitive>
-            </children>
-        </node>
-        
         
         <node id="bottom">
+            <children>
+                <noderef id="bottomMiddle" />
+                <noderef id="bottomLeft" />
+                <noderef id="bottomRight" />
+            </children>
+        </node>
+
+        <node id="bottomMiddle">
             <transforms>
 				<translate value3="0 0 8.5" />
                 <rotate value3="-90 0 0" />
             </transforms> 
             <children>
                 <primitive>
-                    <rectangle xy1="-5.5 -8" xy2="5.5 6" />
+                    <rectangle xy1="-4 -16.5" xy2="4 8" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="bottomLeft">
+            <children>
+                <primitive>
+                    <triangle xyz1="-4 0 1.6" xyz2="-6.75 0 6.25" xyz3="-4 0 22" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="bottomRight">
+            <children>
+                <primitive>
+                    <triangle xyz1="4 0 1.6" xyz2="6.75 0 6.25" xyz3="4 0 22" />
                 </primitive>
             </children>
         </node>

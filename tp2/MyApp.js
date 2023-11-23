@@ -194,7 +194,7 @@ class MyApp  {
         // required if controls.enableDamping or controls.autoRotate are set to true
         this.controls.update();
 
-        console.log("Pos:",this.activeCamera.position, "\nTarget:", this.controls.target)
+        //console.log("Pos:",this.activeCamera.position, "\nTarget:", this.controls.target)
 
         // render the scene
         this.renderer.render(this.scene, this.activeCamera);
