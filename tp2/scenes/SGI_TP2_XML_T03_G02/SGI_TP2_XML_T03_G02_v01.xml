@@ -61,11 +61,14 @@
         <texture id="helmetTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/helmet.jpg"/>
         <texture id="whiteTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/white.jpg"/>
         <texture id="crackedHTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/cracked2.jpg"/>
+        <texture id="crackedCTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/cracked3.jpg"/>
         <texture id="crossTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/cross.png"/>
+        <texture id="cross2Tex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/cross2.png"/>
         <texture id="vase1Tex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/vase1.jpg"/>
         <texture id="flowerTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/flower.png"/>
         <texture id="flower2Tex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/flower2.png"/>
         <texture id="signTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/image.png"/>
+        <texture id="chapelDoorTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/door.png"/>
     </textures> 
 
     <materials> 
@@ -265,6 +268,22 @@
             twosided="true"
             textureref="crackedHTex"/>
         
+        <material id="crackedCApp"
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 1" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            twosided="true"
+            textureref="crackedCTex"/>
+        
+        <material id="chapelDoorApp"
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 0.99" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            twosided="true"
+            textureref="chapelDoorTex"/>
+        
         <material id="crossApp"
             emissive="0.0 0.0 0.0 1" 
             color="1.0 1.0 1.0 0.99" 
@@ -272,6 +291,14 @@
             shininess="30"
             twosided="true"
             textureref="crossTex"/>
+        
+        <material id="cross2App"
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 0.99" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            twosided="true"
+            textureref="cross2Tex"/>
 
 
         <material id="vase1App" 
@@ -327,6 +354,18 @@
                     castshadow="false"
                     position="0 70 0" 
                     target="-5 80 0"
+                    penumbra="0.2"
+                    angle="60" 
+                /> 
+
+                <spotlight id="light28" enabled="true" 
+                    color="1 1 1 1"
+                    intensity="100.0"
+                    distance="100"
+                    decay="2.0"
+                    castshadow="false"
+                    position="0 20 0" 
+                    target="0 20 -24"
                     penumbra="0.2"
                     angle="60" 
                 /> 
@@ -388,6 +427,8 @@
                 <noderef id="roof" />
                 <noderef id="foundation" />
                 <noderef id="pillarsChapel" />
+                <noderef id="chapelDoor"/>
+                <noderef id="crossPlane2"/>
             </children>
         </node>
 
@@ -396,17 +437,44 @@
                 <translate value3="20 0 -24" />
             </transforms>
 
-            <materialref id="stoneBlockApp" />
-
             <children>             
                 <noderef id="building" />
                 <noderef id="roof" />
                 <noderef id="foundation" />
                 <noderef id="pillarsChapel" />
+                <noderef id="chapelDoor"/>
+                <noderef id="crossPlane2"/>
+            </children>
+        </node>
+
+        <node id="crossPlane2">
+            <materialref id="cross2App" />
+            <transforms>
+                <translate value3= "-7.5 14.5 0.01"/>
+                <rotate value3="0 0 0"/>   
+                <scale value3="1.2 1.2 1.2"/>   
+            </transforms>
+            <children>
+                <primitive>
+                    <rectangle xy1="-2 -1.2" xy2="2 1.2"/>
+                </primitive>
+            </children>
+        </node>
+
+        <node id="chapelDoor">
+            <transforms>
+                <translate value3="-7.5 5.65 -4.90"/>
+            </transforms>
+            <materialref id="chapelDoorApp"/>
+            <children>             
+                <primitive>
+                    <rectangle xy1="-3 -5" xy2="3 5" />
+                </primitive>
             </children>
         </node>
 
         <node id="building">
+            <materialref id="crackedHApp"/>
             <transforms>
                 <translate value3="-1 2 -5" />
             </transforms>		
@@ -418,6 +486,7 @@
         </node>
 
         <node id="roof">
+            <materialref id="crackedCApp"/>
             <transforms>
                 <translate value3="-7.5 14.25 -12" />
                 <rotate value3="-90 0 0" />
@@ -431,6 +500,7 @@
         </node>
 
         <node id="pillarsChapel">		
+            <materialref id="fountainApp"/>
             <children>
                 <noderef id="pillarChapelLeft" />
                 <noderef id="pillarChapelRight" />            
@@ -464,6 +534,7 @@
         </node>
 
         <node id="foundation">
+            <materialref id="crackedCApp"/>
             <transforms>
                 <translate value3="0 0 0" />
             </transforms>		
