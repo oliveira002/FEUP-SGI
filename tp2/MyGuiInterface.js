@@ -20,6 +20,10 @@ class MyGuiInterface  {
         this.helpersEnabled = false
         this.controlPointsEnabled = false
         this.initFog = null
+        this.fogParams = {
+            near: 0,
+            far: 160,
+        };
     }
 
     /**
@@ -37,9 +41,9 @@ class MyGuiInterface  {
             cameraFolder.open();
         }
 
-        this.initFog = this.contents.app.scene.fog
+        const helperFolder = this.datgui.addFolder('Visualization');
 
-        this.datgui.add(this, 'wireframeEnabled').name('Toggle Wireframe').onChange(() => {
+        helperFolder.add(this, 'wireframeEnabled').name('Toggle Wireframe').onChange(() => {
             
             let matMap = this.contents.materialMap
             
@@ -50,9 +54,18 @@ class MyGuiInterface  {
                 }
             })
         });
+
+        helperFolder.add(this, 'helpersEnabled').name('Toggle Light Helpers').onChange(() => {
+            this.contents.helpersOn = this.helpersEnabled
+            this.contents.displayHelpers()
+        });
         
 
-        this.datgui.add(this, 'fogEnabled').name('Toggle Fog').onChange(() => {
+        const fogFolder = this.datgui.addFolder('Fog Parameters');
+
+        this.initFog = this.contents.app.scene.fog
+
+        fogFolder.add(this, 'fogEnabled').name('Toggle Fog').onChange(() => {
             if(this.fogEnabled) {
                 this.contents.app.scene.fog = this.initFog
             }
@@ -61,10 +74,19 @@ class MyGuiInterface  {
             }
         });
 
-        this.datgui.add(this, 'helpersEnabled').name('Toggle Helpers').onChange(() => {
-            this.contents.helpersOn = this.helpersEnabled
-            this.contents.displayHelpers()
+        fogFolder.add(this.fogParams, 'near', 0.1, 1000).name('Near').onChange(() => {
+            this.updateFog();
         });
+        fogFolder.add(this.fogParams, 'far', 100, 5000).name('Far').onChange(() => {
+            this.updateFog();
+        });
+    }
+
+    updateFog() {
+        if (this.app.scene.fog != null && this.app.scene.fog != undefined ) {
+            this.app.scene.fog.near = this.fogParams.near;
+            this.app.scene.fog.far = this.fogParams.far;
+        }
     }
 }
     
