@@ -163,7 +163,9 @@
             shininess="30" 
             textureref="floorTex"
             bumpref="floorTex"
-            bumpscale="2" />
+            bumpscale="2"
+            texlength_s="140"
+            texlength_t="140" />
 
         <material id="stoneBlockApp"
             emissive="0.0 0.0 0.0 1" 
@@ -267,7 +269,9 @@
             specular="0.07 0.07 0.07 0" 
             shininess="30"
             twosided="true"
-            textureref="tombWordsTex"/>
+            textureref="tombWordsTex"
+            texlength_s="3.1"
+            texlength_t="5.3"/>
         
         <material id="ripApp"
             emissive="0.0 0.0 0.0 1" 
@@ -275,7 +279,9 @@
             specular="0.07 0.07 0.07 0" 
             shininess="30"
             twosided="true"
-            textureref="ripTex"/>
+            textureref="ripTex"
+            texlength_s="3.1"
+            texlength_t="5.3"/>
 
          <material id="dirtApp"
             emissive="0.0 0.0 0.0 1" 
@@ -309,7 +315,9 @@
             specular="0.07 0.07 0.07 0" 
             shininess="30"
             twosided="true"
-            textureref="skullTex"/>
+            textureref="skullTex"
+            texlength_s="10"
+            texlength_t="10"/>
         
         <material id="helmetApp"
             emissive="0.0 0.0 0.0 1" 
@@ -349,7 +357,9 @@
             specular="0.07 0.07 0.07 0" 
             shininess="30"
             twosided="true"
-            textureref="chapelDoorTex"/>
+            textureref="chapelDoorTex"
+            texlength_s="6"
+            texlength_t="10"/>
         
         <material id="crossApp"
             emissive="0.0 0.0 0.0 1" 
@@ -357,7 +367,9 @@
             specular="0.07 0.07 0.07 0" 
             shininess="30"
             twosided="true"
-            textureref="crossTex"/>
+            textureref="crossTex"
+            texlength_s="1.2"
+            texlength_t="1.2"/>
         
         <material id="cross2App"
             emissive="0.0 0.0 0.0 1" 
@@ -365,7 +377,9 @@
             specular="0.07 0.07 0.07 0" 
             shininess="30"
             twosided="true"
-            textureref="cross2Tex"/>
+            textureref="cross2Tex"
+            texlength_s="4"
+            texlength_t="2.4"/>
 
 
         <material id="vase1App" 
@@ -382,7 +396,9 @@
             specular="0.07 0.07 0.07 0" 
             shininess="30"
             textureref="flowerTex"
-            twosided="true" />
+            twosided="true"
+            texlength_s="2"
+            texlength_t="2" />
         
         <material id="flower2App" 
             emissive="0.0 0.0 0.0 1" 
@@ -390,7 +406,9 @@
             specular="0.07 0.07 0.07 0" 
             shininess="30"
             textureref="flower2Tex"
-            twosided="true" />
+            twosided="true"
+            texlength_s="2"
+            texlength_t="2" />
         
         <material id="signApp" 
             emissive="0.0 0.0 0.0 1" 
@@ -398,7 +416,9 @@
             specular="0.07 0.07 0.07 0" 
             shininess="30"
             textureref="signTex"
-            twosided="true" />
+            twosided="true"
+            texlength_s="24"
+            texlength_t="12" />
 
         <material id="casketApp" 
             emissive="0.0 0.0 0.0 1" 

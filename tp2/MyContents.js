@@ -312,11 +312,6 @@ class MyContents  {
             (key) => {
                 let materialObj = materials[key]
 
-                if(materialObj.textureref){
-                    let texture = this.textureMap[materialObj.textureref]
-                    texture.repeat.set(materialObj.texlength_s, materialObj.texlength_t)
-                }
-
                 let material = new THREE.MeshPhongMaterial({
                     name: materialObj.id,
                     color: materialObj.color.getHex(),
@@ -333,7 +328,7 @@ class MyContents  {
 
                 if(materialObj.textureref){
                     let texture = this.textureMap[materialObj.textureref]
-                    texture.repeat.set(materialObj.texlength_s, materialObj.texlength_t)
+                    //texture.repeat.set(materialObj.texlength_s, materialObj.texlength_t)
                     material.map = texture
                     material.userData = [materialObj.texlength_s, materialObj.texlength_t]
                 }
@@ -500,6 +495,11 @@ class MyContents  {
             !representation.capsclose, 
             representation.thetastart,
             representation.thetalength)
+
+        let texture = material.map
+        let [texlength_s, texlength_t] = material.userData
+        texture.repeat.set(texlength_s, texlength_t)
+
         let mesh = new THREE.Mesh(cyl, material)
 
         return mesh
@@ -514,6 +514,11 @@ class MyContents  {
         let deltaY = center[1]
 
         let rect = new THREE.PlaneGeometry(width,height,representation.parts_x,representation.parts_y)
+
+        let texture = material.map
+        let [texlength_s, texlength_t] = material.userData
+        texture.repeat.set(width/texlength_s, height/texlength_t)
+
         let mesh = new THREE.Mesh(rect, material)
         
         mesh.translateX(deltaX)
@@ -592,6 +597,10 @@ class MyContents  {
             representation.thetalength
         )
 
+        let texture = material.map
+        let [texlength_s, texlength_t] = material.userData
+        texture.repeat.set(texlength_s, texlength_t)
+        
         let mesh = new THREE.Mesh(sphere, material)
 
         return mesh
@@ -615,6 +624,10 @@ class MyContents  {
             geoPoints.push(pointsU)
         }
 
+        let texture = material.map
+        let [texlength_s, texlength_t] = material.userData
+        texture.repeat.set(texlength_s, texlength_t)
+        
         let surfaceData = this.builder.build(geoPoints, orderU, orderV, samplesU, samplesV, material)
         let mesh = new THREE.Mesh(surfaceData, material);
 
@@ -645,6 +658,11 @@ class MyContents  {
         let depthSeg = representation.parts_z
 
         let prim = new THREE.BoxGeometry(width, height, depth, widthSeg, heightSeg, depthSeg)
+
+        let texture = material.map
+        let [texlength_s, texlength_t] = material.userData
+        texture.repeat.set(texlength_s, texlength_t)
+        
         let mesh = new THREE.Mesh(prim, material)
 
         mesh.translateX(deltaX)
