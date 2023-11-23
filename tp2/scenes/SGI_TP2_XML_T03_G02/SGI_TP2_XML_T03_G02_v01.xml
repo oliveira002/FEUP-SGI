@@ -3,7 +3,7 @@
 
 	<!-- Credits of the original file go to Group 2, class 3 of course MEIC-SGI school year 2023/2024, FEUP, University of Porto -->
 
-    <globals background="0.06 0.06 0.06 1" ambient="0.1 0.1 0.1 1" /> 
+    <globals background="0.06 0.06 0.06 1" ambient="1 1 1 1" /> 
 
     <fog color="0.15 0.15 0.15 1.0" near="0.0" far="160.0" />
     <skybox size="140 160 140" center="0 0 0" emissive="0 0 0 1" intensity="10.0"
@@ -371,7 +371,107 @@
                 <noderef id="arch" />
                 <noderef id="sign" />
                 <noderef id="pearlyGatesOfHell" />
+                <noderef id="chapel1" />
+                <noderef id="chapel2" />
             </children> 
+        </node>
+
+        <node id="chapel1">
+            <transforms>
+                <translate value3="-5 0 -24" />
+            </transforms>
+
+            <materialref id="stoneBlockApp" />
+
+            <children>             
+                <noderef id="building" />
+                <noderef id="roof" />
+                <noderef id="foundation" />
+                <noderef id="pillarsChapel" />
+            </children>
+        </node>
+
+        <node id="chapel2">
+            <transforms>
+                <translate value3="20 0 -24" />
+            </transforms>
+
+            <materialref id="stoneBlockApp" />
+
+            <children>             
+                <noderef id="building" />
+                <noderef id="roof" />
+                <noderef id="foundation" />
+                <noderef id="pillarsChapel" />
+            </children>
+        </node>
+
+        <node id="building">
+            <transforms>
+                <translate value3="-1 2 -5" />
+            </transforms>		
+            <children>
+                <primitive>
+                    <box xyz1="0 0 0" xyz2="-13 10 -18"/>
+                </primitive>             
+            </children>
+        </node>
+
+        <node id="roof">
+            <transforms>
+                <translate value3="-7.5 14.25 -12" />
+                <rotate value3="-90 0 0" />
+                <scale value3="1 1 0.5" />
+            </transforms>		
+            <children>
+                <primitive>
+                    <cylinder base="9" top="9" height="24" slices="3" stacks="1" capsclose="true"/>
+                </primitive>             
+            </children>
+        </node>
+
+        <node id="pillarsChapel">		
+            <children>
+                <noderef id="pillarChapelLeft" />
+                <noderef id="pillarChapelRight" />            
+            </children>
+        </node>
+
+        <node id="pillarChapelLeft">
+            <transforms>
+                <translate value3="-12 7 -1.5" />
+            </transforms>		
+            <children>
+                <noderef id="pillarChapel"/>             
+            </children>
+        </node>
+
+        <node id="pillarChapelRight">
+            <transforms>
+                <translate value3="-3 7 -1.5" />
+            </transforms>	
+            <children>
+                <noderef id="pillarChapel" />            
+            </children>
+        </node>
+
+        <node id="pillarChapel">
+            <children>
+                <primitive>
+                    <cylinder base="0.5" top="0.5" height="10" slices="20" stacks="1" capsclose="true"/>
+                </primitive>          
+            </children>
+        </node>
+
+        <node id="foundation">
+            <transforms>
+                <translate value3="0 0 0" />
+            </transforms>		
+            <children>
+                <primitive>
+                    <box xyz1="0 0 0" xyz2="-15 2 -24"/>
+                </primitive>             
+            </children>
         </node>
 
         <node id="pearlyGatesOfHell">
@@ -1507,7 +1607,7 @@
         <node id="pumpkin3">
             <transforms>
                 <scale value3= "0.7 0.7 0.8"/>
-                <translate value3= "12 0.84 -25"/>
+                <translate value3= "12 2.84 -25"/>
                 <rotate value3= "0 240 0"/>
             </transforms>
             <materialref id="pumpkinApp" />
@@ -1529,7 +1629,7 @@
         <node id="pumpkin4">
             <transforms>
                 <scale value3= "0.7 0.7 0.8"/>
-                <translate value3= "-12 0.84 -25"/>
+                <translate value3= "-12 2.84 -25"/>
                 <rotate value3= "0 -60 0"/>
             </transforms>
             <materialref id="pumpkinApp" />
