@@ -1,4 +1,5 @@
 import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+import * as THREE from 'three';
 import { MyApp } from './MyApp.js';
 import { MyContents } from './MyContents.js';
 
@@ -20,6 +21,7 @@ class MyGuiInterface  {
         this.helpersEnabled = false
         this.controlPointsEnabled = false
         this.initFog = null
+        this.ambientColor = {color: 0.1, a: 1}
         this.fogParams = {
             near: 0,
             far: 160,
@@ -74,11 +76,19 @@ class MyGuiInterface  {
             }
         });
 
+
         fogFolder.add(this.fogParams, 'near', 0.1, 1000).name('Near').onChange(() => {
             this.updateFog();
         });
+
         fogFolder.add(this.fogParams, 'far', 100, 5000).name('Far').onChange(() => {
             this.updateFog();
+        });
+
+        const ambientFolder = this.datgui.addFolder('Ambient Color');
+
+        ambientFolder.add(this.ambientColor, 'color', 0, 1).name('color').onChange(() => {
+            this.updateAmbientLightColor();
         });
     }
 
@@ -87,6 +97,12 @@ class MyGuiInterface  {
             this.app.scene.fog.near = this.fogParams.near;
             this.app.scene.fog.far = this.fogParams.far;
         }
+    }
+
+    updateAmbientLightColor() {
+        let color = new THREE.Color(this.ambientColor.color, this.ambientColor.color, this.ambientColor.color);
+        color = new THREE.Color(color.getHex(THREE.LinearSRGBColorSpace))
+        this.contents.app.scene.children[0].color = color
     }
 }
     
