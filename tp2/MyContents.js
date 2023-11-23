@@ -524,7 +524,6 @@ class MyContents  {
     
     buildTriangle(representation, material){
 
-        console.log(material.userData)
 
         let geometry = new THREE.BufferGeometry();
 
