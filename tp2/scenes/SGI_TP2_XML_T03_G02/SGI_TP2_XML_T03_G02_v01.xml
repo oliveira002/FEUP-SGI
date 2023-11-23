@@ -69,6 +69,7 @@
         <texture id="flower2Tex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/flower2.png"/>
         <texture id="signTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/image.png"/>
         <texture id="chapelDoorTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/door.png"/>
+        <texture id="casketTex" filepath="scenes/SGI_TP2_XML_T03_G02/textures/wood.jpg"/>
     </textures> 
 
     <materials> 
@@ -333,6 +334,13 @@
             textureref="signTex"
             twosided="true" />
 
+        <material id="casketApp" 
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 1.0" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            textureref="casketTex" />
+
     </materials> 
 
     <graph rootid="scene"> 	
@@ -412,9 +420,114 @@
                 <noderef id="pearlyGatesOfHell" />
                 <noderef id="chapel1" />
                 <noderef id="chapel2" />
+                <noderef id="casket" />
             </children> 
         </node>
 
+         <node id="casket">
+            <transforms>
+				<translate value3="0 15 0" />
+            </transforms> 
+            <materialref id="casketApp"/>
+            <children>           	
+                <noderef id="frontRight" />
+                <noderef id="frontLeft" />
+                <noderef id="right" />
+                <noderef id="left" />
+                <noderef id="backRight" />
+                <noderef id="backLeft" />
+                <noderef id="bottom" />
+            </children>
+        </node>  
+
+        <node id="frontRight">
+            <transforms>
+				<translate value3="3.18 0 0" />
+                <rotate value3="0 -60 0" />
+            </transforms>
+            <children>
+                <primitive>
+                    <box xyz1="-4 0 -0.5" xyz2="4 4 0.5" />
+                </primitive>
+            </children>  
+        </node>
+
+        <node id="frontLeft">
+            <transforms>
+				<translate value3="-3.18 0 0" />
+                <rotate value3="0 60 0" />
+            </transforms> 
+            <children>
+                <primitive>
+                    <box xyz1="-4 0 -0.5" xyz2="4 4 0.5" />
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="right">
+            <transforms>
+				<translate value3="5.85 0 9.5" />
+                <rotate value3="0 -90 0" />
+            </transforms> 
+            <children>
+                <primitive>
+                    <box xyz1="-7 0 -0.5" xyz2="7 4 0.5" />
+                </primitive>
+            </children>
+        </node>
+        
+        
+        <node id="left">
+            <transforms>
+				<translate value3="-5.85 0 9.5" />
+                <rotate value3="0 -90 0" />
+            </transforms> 
+            <children>
+                <primitive>
+                    <box xyz1="-7 0 -0.5" xyz2="7 4 0.5" />
+                </primitive>
+            </children>
+        </node>
+        
+        
+        <node id="backRight"> 
+            <transforms>
+				<translate value3="2.635 0 18.06" />
+                <rotate value3="0 30 0" />
+            </transforms>
+            <children>
+                <primitive>
+                    <box xyz1="-3.35 0 -0.5" xyz2="4 4 0.5" />
+                </primitive>
+            </children>
+        </node>
+        
+        
+        <node id="backLeft"> 
+            <transforms>
+				<translate value3="-2.635 0 18.06" />
+                <rotate value3="0 -30 0" />
+            </transforms>
+            <children>
+                <primitive>
+                    <box xyz1="-4 0 -0.5" xyz2="3.35 4 0.5" />
+                </primitive>
+            </children>
+        </node>
+        
+        
+        <node id="bottom">
+            <transforms>
+				<translate value3="0 0 8.5" />
+                <rotate value3="-90 0 0" />
+            </transforms> 
+            <children>
+                <primitive>
+                    <rectangle xy1="-5.5 -8" xy2="5.5 6" />
+                </primitive>
+            </children>
+        </node>
+        
         <node id="chapel1">
             <transforms>
                 <translate value3="-5 0 -24" />
