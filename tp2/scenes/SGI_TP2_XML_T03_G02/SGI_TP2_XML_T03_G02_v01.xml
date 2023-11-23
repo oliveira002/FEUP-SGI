@@ -15,20 +15,13 @@
         front="scenes/SGI_TP2_XML_T03_G02/textures/stars.jpg" 
         back="scenes/SGI_TP2_XML_T03_G02/textures/stars.jpg" />
 
-    <cameras initial="Cam 2" > 
+    <cameras initial="Cam 1" > 
         <perspective id="Cam 1" 
             angle="75" 
             near="0.1" 
             far="1000" 
             location="11 13 13" 
             target="0 0 0" />
-
-        <perspective id="Cam 2" 
-            angle="75" 
-            near="0.1" 
-            far="1000" 
-            location="-0.2333 40 11.75" 
-            target="-0.2333 0 11.75" />
 
         <perspective id="Entrance" 
             angle="75" 
@@ -48,15 +41,15 @@
             angle="75" 
             near="0.1" 
             far="1000" 
-            location="0.1 18 -1" 
+            location="-0.172 15.78 19.15" 
             target="0.1 5 -1" />
 
         <perspective id="Chapels" 
             angle="75" 
             near="0.1" 
             far="1000" 
-            location="0 20 6" 
-            target="-5 16 -6.7" />
+            location="-1.82 14.52 -5.4" 
+            target="-1.84 14 -7.25" />
         
         <perspective id="Tombstone LOD and Vase" 
             angle="75" 
@@ -419,12 +412,12 @@
 
     <graph rootid="scene"> 	
 
-        <!--<lod id="candleLod">
+        <lod id="candleLod">
             <noderef id="candleC" mindist="40"/>
             <noderef id="candleBundle2" mindist="30"/>
             <noderef id="candleBundle3" mindist="15"/>
             <noderef id="candleBundle4" mindist="5"/>
-        </lod>-->
+        </lod>
 
 		<node id="scene" castshadows="true" receiveshadows="true"> 
             <children>
