@@ -64,8 +64,8 @@ class MyContents  {
 
         this.reader = new MyFileReader(app, this, this.onSceneLoaded);
 		//this.reader.open("scenes/demo/demo.xml");
-        //this.reader.open("scenes/test/test.xml");
-        this.reader.open("scenes/SGI_TP2_XML_T03_G02/SGI_TP2_XML_T03_G02_v01.xml");		
+        //this.reader.open("scenes/SGI_TP2_XML_T03_G03/scene.xml"); // Matos	
+        this.reader.open("scenes/SGI_TP2_XML_T03_G02/scene.xml"); // Mine
     }
 
     /**
@@ -143,12 +143,12 @@ class MyContents  {
             let backTex = new THREE.TextureLoader().load(skyboxInfo.back); 
 
             let materials = [
-                new THREE.MeshPhongMaterial(({emissive: skyboxInfo.emissive, map: rightTex, side: THREE.BackSide})),
-                new THREE.MeshPhongMaterial(({emissive: skyboxInfo.emissive, map: leftTex, side: THREE.BackSide})),
-                new THREE.MeshPhongMaterial(({emissive: skyboxInfo.emissive, map: upTex, side: THREE.BackSide})),
-                new THREE.MeshPhongMaterial(({emissive: skyboxInfo.emissive, map: downTex, side: THREE.BackSide})),
-                new THREE.MeshPhongMaterial(({emissive: skyboxInfo.emissive, map: frontTex, side: THREE.BackSide})),
-                new THREE.MeshPhongMaterial(({emissive: skyboxInfo.emissive, map: backTex, side: THREE.BackSide}))
+                new THREE.MeshPhongMaterial(({emissive: skyboxInfo.emissive, emissiveIntensity: skyboxInfo.intensity, map: rightTex, side: THREE.BackSide})),
+                new THREE.MeshPhongMaterial(({emissive: skyboxInfo.emissive, emissiveIntensity: skyboxInfo.intensity, map: leftTex, side: THREE.BackSide})),
+                new THREE.MeshPhongMaterial(({emissive: skyboxInfo.emissive, emissiveIntensity: skyboxInfo.intensity, map: upTex, side: THREE.BackSide})),
+                new THREE.MeshPhongMaterial(({emissive: skyboxInfo.emissive, emissiveIntensity: skyboxInfo.intensity, map: downTex, side: THREE.BackSide})),
+                new THREE.MeshPhongMaterial(({emissive: skyboxInfo.emissive, emissiveIntensity: skyboxInfo.intensity, map: frontTex, side: THREE.BackSide})),
+                new THREE.MeshPhongMaterial(({emissive: skyboxInfo.emissive, emissiveIntensity: skyboxInfo.intensity, map: backTex, side: THREE.BackSide}))
             ]
 
             let skyboxGeometry = new THREE.BoxGeometry(...skyboxInfo.size)
@@ -335,7 +335,7 @@ class MyContents  {
                     let texture = this.textureMap[materialObj.textureref]
                     texture.repeat.set(materialObj.texlength_s, materialObj.texlength_t)
                     material.map = texture
-                    material.userData= [materialObj.texlength_s, materialObj.texlength_t]
+                    material.userData = [materialObj.texlength_s, materialObj.texlength_t]
                 }
 
                 if(this.textureMap[materialObj.bumpref]){
