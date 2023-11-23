@@ -341,6 +341,10 @@ class MyContents  {
                     material.bumpScale = materialObj.bumpscale
                 }
 
+                if(this.textureMap[materialObj.specularref]){
+                    material.specularMap = this.textureMap[materialObj.specularref]
+                }
+
                 this.materialMap[materialObj.id] = material
             }
         )
