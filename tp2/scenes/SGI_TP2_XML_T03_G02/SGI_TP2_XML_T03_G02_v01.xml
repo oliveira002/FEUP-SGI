@@ -430,7 +430,7 @@
                     position="0 70 0" 
                     target="-5 80 0"
                     penumbra="0.2"
-                    angle="60" 
+                    angle="1.04719755" 
                 /> 
 
                 <spotlight id="light28" enabled="true" 
@@ -442,7 +442,7 @@
                     position="0 20 0" 
                     target="0 20 -24"
                     penumbra="0.2"
-                    angle="60" 
+                    angle="1.04719755" 
                 /> 
                 <noderef id="floor"/>
                 <noderef id="rightWall"/>
@@ -495,7 +495,7 @@
         <node id="cobweb">
             <transforms>
                 <translate value3="-14 -4 15" />
-                <rotate value3="-30 -45 -45" />
+                <rotate value3="-0.523598776 -0.785398163 -0.785398163" />
             </transforms>
 
             <materialref id="wireframeApp" />
@@ -536,7 +536,7 @@
         <node id="frontRight">
             <transforms>
 				<translate value3="5.5 0 3.2" />
-                <rotate value3="0 -60 0" />
+                <rotate value3="0 -1.04719755 0" />
             </transforms>
             <children>
                 <primitive>
@@ -548,7 +548,7 @@
         <node id="frontLeft">
             <transforms>
 				<translate value3="-5.5 0 3.2" />
-                <rotate value3="0 60 0" />
+                <rotate value3="0 1.04719755 0" />
             </transforms> 
             <children>
                 <primitive>
@@ -560,7 +560,7 @@
         <node id="backRight">
             <transforms>
 				<translate value3="5 0 19" />
-                <rotate value3="0 80 0" />
+                <rotate value3="0 1.3962634 0" />
             </transforms> 
             <children>
                 <primitive>
@@ -573,7 +573,7 @@
         <node id="backLeft">
             <transforms>
 				<translate value3="-6 0 13" />
-                <rotate value3="0 -80 0" />
+                <rotate value3="0 -1.3962634 0" />
             </transforms> 
             <children>
                 <primitive>
@@ -604,7 +604,7 @@
         <node id="bottomMiddle">
             <transforms>
 				<translate value3="0 0 8.5" />
-                <rotate value3="-90 0 0" />
+                <rotate value3="-1.57079633 0 0" />
             </transforms> 
             <children>
                 <primitive>
@@ -664,8 +664,7 @@
         <node id="crossPlane2">
             <materialref id="cross2App" />
             <transforms>
-                <translate value3= "-7.5 14.5 0.01"/>
-                <rotate value3="0 0 0"/>   
+                <translate value3= "-7.5 14.5 0.01"/> 
                 <scale value3="1.2 1.2 1.2"/>   
             </transforms>
             <children>
@@ -703,7 +702,7 @@
             <materialref id="crackedCApp"/>
             <transforms>
                 <translate value3="-7.5 14.25 -12" />
-                <rotate value3="-90 0 0" />
+                <rotate value3="-1.57079633 0 0" />
                 <scale value3="1 1 0.5" />
             </transforms>		
             <children>
@@ -820,7 +819,7 @@
         <node id="pearlyGatesOfHellRightOpen">
             <transforms>
                 <translate value3="5 -2.5 0" />
-                <rotate value3="0 -90 0" />
+                <rotate value3="0 -1.57079633 0" />
             </transforms> 
 
             <materialref id="darkStoneBlockApp" />
@@ -833,7 +832,7 @@
         <node id="pearlyGatesOfHellLeftOpen">
             <transforms>
                 <translate value3="-5 -2.5 0" />
-                <rotate value3="0 -90 0" />
+                <rotate value3="0 -1.57079633 0" />
             </transforms>
 
             <materialref id="darkStoneBlockApp" />
@@ -962,7 +961,7 @@
         <node id="flower1">
             <transforms>
                 <translate value3="-0.4 2.1 0" />
-				<rotate value3="0 -30 0" />
+				<rotate value3="0 -0.523598776 0" />
             </transforms> 
 
 			<materialref id="flowerApp" />
@@ -977,7 +976,7 @@
         <node id="flower2">
             <transforms>
                 <translate value3="0 2.1 0.3" />
-				<rotate value3="0 30 0" />
+				<rotate value3="0 0.523598776 0" />
             </transforms> 
 
 			<materialref id="flower2App" />
@@ -992,7 +991,7 @@
         <node id="flower3">
             <transforms>
                 <translate value3="0 2.1 -0.2" />
-				<rotate value3="0 -180 0" />
+				<rotate value3="0 -3.14159265 0" />
             </transforms> 
 
 			<materialref id="flowerApp" />
@@ -1075,7 +1074,7 @@
 
         <node id="vase1Left">
             <transforms>
-                <rotate value3="0 180 0"/>
+                <rotate value3="0 3.14159265 0"/>
             </transforms>
 
             <children>
@@ -1132,7 +1131,7 @@
         
         <node id="floor">
             <transforms>
-				<rotate value3="-90 0 0" />
+				<rotate value3="-1.57079633 0 0" />
             </transforms> 
 
 			<materialref id="floorApp" />
@@ -1148,7 +1147,7 @@
             <materialref id="crackedHApp" />
             <transforms>
                 <translate value3= "24 0 35"/>
-                <rotate value3="0 -90 0"/>   
+                <rotate value3="0 -1.57079633 0"/>   
             </transforms>
             <children>
                 <noderef id="bottomH"/>
@@ -1165,8 +1164,7 @@
         <node id="crossPlane">
             <materialref id="crossApp" />
             <transforms>
-                <translate value3= "-0.03 8.3 2.01"/>
-                <rotate value3="0 0 0"/>   
+                <translate value3= "-0.03 8.3 2.01"/>  
                 <scale value3="1.4 1 1"/>
             </transforms>
             <children>
@@ -1179,7 +1177,7 @@
         <node id="topH">
             <transforms>
                 <translate value3= "0 8.2 0"/>
-                <rotate value3="-90 0 0"/>   
+                <rotate value3="-1.57079633 0 0"/>   
                 <scale value3="1 1 0.7"/>   
             </transforms>
             <children>
@@ -1192,7 +1190,7 @@
         <node id="topSupH">
             <transforms>
                 <translate value3= "0 7 0"/>
-                <rotate value3="0 45 0"/>   
+                <rotate value3="0 0.785398163 0"/>   
             </transforms>
             <children>
                 <primitive>
@@ -1204,7 +1202,7 @@
         <node id="bottomH">
             <transforms>
                 <translate value3= "0 1 0"/>
-                <rotate value3="0 45 0"/>   
+                <rotate value3="0 0.785398163 0"/>   
             </transforms>
             <children>
                 <primitive>
@@ -1216,8 +1214,7 @@
 
         <node id="cylH1">
             <transforms>
-                <translate value3= "0.8 1 0.8"/>
-                <rotate value3="0 0 0"/>   
+                <translate value3= "0.8 1 0.8"/> 
             </transforms>
             <children>
                 <noderef id="cylH"/>
@@ -1227,7 +1224,7 @@
         <node id="cylH2">
             <transforms>
                 <translate value3= "0.8 1 -0.8"/>
-                <rotate value3="0 0 0"/>   
+
             </transforms>
             <children>
                 <noderef id="cylH"/>
@@ -1237,7 +1234,7 @@
         <node id="cylH3">
             <transforms>
                 <translate value3= "-0.8 1 0.8"/>
-                <rotate value3="0 0 0"/>   
+
             </transforms>
             <children>
                 <noderef id="cylH"/>
@@ -1247,7 +1244,7 @@
         <node id="cylH4">
             <transforms>
                 <translate value3= "-0.8 1 -0.8"/>
-                <rotate value3="0 0 0"/>   
+
             </transforms>
             <children>
                 <noderef id="cylH"/>
@@ -1258,7 +1255,7 @@
             <materialref id="whiteApp"/>
             <transforms>
                 <translate value3= "0 3.25 0"/>
-                <rotate value3="0 45 0"/>   
+                <rotate value3="0 0.785398163 0"/>   
             </transforms>
             <children>
                 <primitive>
@@ -1271,7 +1268,7 @@
             <materialref id="stoneBlockApp" />
             <transforms>
                 <translate value3= "8 0 25"/>
-                <rotate value3="0 -10 0"/>   
+                <rotate value3="0 -0.174532925 0"/>   
                 <scale value3= "1.12 1.12 1.12"/>
             </transforms>
             <children>
@@ -1283,7 +1280,7 @@
             <materialref id="stoneBlockApp" />
             <transforms>
                 <translate value3= "16 0 25"/>
-                <rotate value3="0 25 0"/>   
+                <rotate value3="0 0.436332313 0"/>   
                 <scale value3= "1.3 1.3 1.3"/>
             </transforms>
             <children>
@@ -1318,7 +1315,7 @@
         <node id="cross1">
             <transforms> 
                 <translate value3="12 0 25"/>    
-                <rotate value3="0 -30 0"/>   
+                <rotate value3="0 -0.523598776 0"/>   
             </transforms>
             
             <children>
@@ -1344,7 +1341,7 @@
 
         <node id="crossSup">
             <transforms>     
-                <rotate value3="0 45 0"/>   
+                <rotate value3="0 0.785398163 0"/>   
                 <translate value3="0 0.25 0"/>   
             </transforms>
             
@@ -1358,7 +1355,7 @@
         <node id = "shovelFull">
             <transforms>
                 <translate value3="-18.8 0 12" />
-                <rotate value3="0 90 0" />
+                <rotate value3="0 1.57079633 0" />
             </transforms> 
             <children> 
                 <noderef id="shovel"/>
@@ -1369,7 +1366,7 @@
         <node id="shovel">
             <materialref id="crackedApp" />
             <transforms>
-				<rotate value3="180 0 6" />
+				<rotate value3="3.14159265 0 0.104719755" />
                 <translate value3="0 -2.2 0" />
                 <scale value3 = "1 1 2"/>
             </transforms> 
@@ -1382,7 +1379,7 @@
 
         <node id="stick">
             <transforms>
-				<rotate value3="90 0 0" />
+				<rotate value3="1.57079633 0 0" />
                 <translate value3="0.2 2.1 -0.2" />
             </transforms> 
 
@@ -1398,7 +1395,7 @@
         <node id="helmet">
             <transforms>
                 <translate value3="-16.8 0 9.5"/>
-				<rotate value3="0 90 0" />
+				<rotate value3="0 1.57079633 0" />
             </transforms> 
 
 			<materialref id="helmetApp" />
@@ -1414,7 +1411,7 @@
         <node id="helmetOut">
             <transforms>
                 <translate value3="0 0 0"/>
-				<rotate value3="0 90 0" />
+				<rotate value3="0 1.57079633 0" />
                 <scale value3="1.9 1 1.3"/>
             </transforms> 
 
@@ -1431,7 +1428,7 @@
         <node id="skull" castshadows="false" receiveshadows="false">
             <transforms>
                 <translate value3="-16.8 -5.99 20.5"/>
-				<rotate value3="-90 0 0" />
+				<rotate value3="-1.57079633 0 0" />
                 <scale value3="0.6 1 0.6" />
             </transforms> 
 
@@ -1447,7 +1444,7 @@
         <node id="hole">
             <materialref id="dirtApp"/>
             <transforms>
-				<rotate value3="0 0 90" />
+				<rotate value3="0 0 1.57079633" />
                 <scale value3= "6 8.2 17.5"/>
                 <translate value3="-3.02 16.8 22.5"/>
             </transforms> 
@@ -1491,7 +1488,7 @@
         <node id="tombstonePlain1">
             <transforms>
 				<translate value3="35 0 18" />
-                <rotate value3="0 -94 0" />
+                <rotate value3="0 -1.6406095 0" />
             </transforms>
             <children>    
                 <noderef id="tombstonePlain"/>       
@@ -1501,7 +1498,7 @@
         <node id="tombstonePlain2">
             <transforms>
 				<translate value3="35 0 8" />
-                <rotate value3="0 -88 0" />
+                <rotate value3="0 -1.53588974 0" />
             </transforms>
             <children>    
                 <noderef id="tombstonePlain"/>       
@@ -1511,7 +1508,7 @@
         <node id="tombstonePlain3">
             <transforms>
 				<translate value3="35 0 -10" />
-                <rotate value3="0 -90 0" />
+                <rotate value3="0 -1.57079633 0" />
             </transforms>
             <children>    
                 <noderef id="tombstonePlain"/>       
@@ -1521,7 +1518,7 @@
         <node id="tombstonePlain4">
             <transforms>
 				<translate value3="35 0 -25" />
-                <rotate value3="0 -93 0" />
+                <rotate value3="0 -1.6231562 0" />
             </transforms>
             <children>    
                 <noderef id="tombstonePlain"/>       
@@ -1531,7 +1528,7 @@
         <node id="tombstonePlain5">
             <transforms>
 				<translate value3="-35 0 -10" />
-                <rotate value3="0 -94 0" />
+                <rotate value3="0 -1.6406095 0" />
                 <scale value3= "-1 1 -1"/>
             </transforms>
             <children>    
@@ -1542,7 +1539,7 @@
         <node id="tombstoneCurve1">
             <transforms>
 				<translate value3="-35 0 16" />
-                <rotate value3="0 92 0" />
+                <rotate value3="0 1.60570291 0" />
             </transforms>
             <children>    
                 <noderef id="tombstoneCurve"/>       
@@ -1552,7 +1549,7 @@
         <node id="tombstoneCurve2">
             <transforms>
 				<translate value3="35 0 -18" />
-                <rotate value3="0 -88 0" />
+                <rotate value3="0 -1.53588974 0" />
             </transforms>
             <children>    
                 <noderef id="tombstoneCurve"/>       
@@ -1668,7 +1665,7 @@
             <transforms>
 				<translate value3="0 0 0.44" />
                 <scale value3="0.8 0.8 0.8"/>
-                <rotate value3="0 14 0" />
+                <rotate value3="0 0.244346095 0" />
             </transforms> 
             <children>    
                 <noderef id="candleC"/>
@@ -1680,7 +1677,7 @@
             <transforms>
 				<translate value3="0 0 0" />
                 <scale value3="0.8 0.8 0.8"/>
-                <rotate value3="0 14 0" />
+                <rotate value3="0 0.244346095 0" />
             </transforms> 
             <children>    
                 <noderef id="candleC"/>
@@ -1725,7 +1722,7 @@
         <node id="wax">
             <transforms>
                 <translate value3="0 0.01 0"/>
-				<rotate value3="-90 0 0" />
+				<rotate value3="-1.57079633 0 0" />
             </transforms> 
 
 			<materialref id="waxApp" />
@@ -1755,7 +1752,7 @@
             <materialref id="dirtApp" />
             <transforms>
                 <translate value3="0 -0.7 9.26"/>
-                <rotate value3="0 90 0"/>
+                <rotate value3="0 1.57079633 0"/>
 				<scale value3="5.3 1.6 3" />
             </transforms> 
              <children>
@@ -1769,7 +1766,6 @@
          <materialref id="ripApp" />
             <transforms>
                 <translate value3="0 1.8 0.26"/>
-				<rotate value3="0 0 0" />
             </transforms> 
             <children>             
                 <primitive>
@@ -1780,7 +1776,7 @@
 
         <node id="tombstoneCurveTop">
             <transforms>
-                <rotate value3="0 90 90" />
+                <rotate value3="0 1.57079633 1.57079633" />
                 <translate value3="5 0 0" />
             </transforms>
             <children>
@@ -1816,7 +1812,7 @@
          <materialref id="tombWordsApp" />
             <transforms>
                 <translate value3="0 1.51 6"/>
-				<rotate value3="-90 0 0" />
+				<rotate value3="-1.57079633 0 0" />
             </transforms> 
             <children>             
                 <primitive>
@@ -1850,7 +1846,7 @@
             <transforms>
                 <scale value3= "1 1 1.1"/>
                 <translate value3= "10 1.2 43"/>
-                <rotate value3= "0 -140 0"/>
+                <rotate value3= "0 -2.44346095 0"/>
             </transforms>
             <materialref id="pumpkinApp" />
             <children>
@@ -1872,7 +1868,7 @@
             <transforms>
                 <scale value3= "1 1 1.1"/>
                 <translate value3= "-10 1.2 43"/>
-                <rotate value3= "0 -30 0"/>
+                <rotate value3= "0 -0.523598776 0"/>
             </transforms>
             <materialref id="pumpkinApp" />
             <children>
@@ -1894,7 +1890,7 @@
             <transforms>
                 <scale value3= "0.7 0.7 0.8"/>
                 <translate value3= "12 2.84 -25"/>
-                <rotate value3= "0 240 0"/>
+                <rotate value3= "0 4.1887902 0"/>
             </transforms>
             <materialref id="pumpkinApp" />
             <children>
@@ -1916,7 +1912,7 @@
             <transforms>
                 <scale value3= "0.7 0.7 0.8"/>
                 <translate value3= "-12 2.84 -25"/>
-                <rotate value3= "0 -60 0"/>
+                <rotate value3= "0 -1.04719755 0"/>
             </transforms>
             <materialref id="pumpkinApp" />
             <children>
@@ -1967,7 +1963,7 @@
                     position="0 20.6 0" 
                     target="0 0 -1"
                     penumbra="0.2"
-                    angle="60" 
+                    angle="1.04719755" 
                 /> 
             </children>
         </node>
@@ -1975,7 +1971,7 @@
         <node id="spotlightLamp1">
             <transforms>
                 <translate value3="10 0 10"/>
-                <rotate value3="0 30 0"/>
+                <rotate value3="0 0.523598776 0"/>
             </transforms>
             <materialref id="postApp" />
             <children>
@@ -1992,7 +1988,7 @@
                     position="0 15 3.2" 
                     target="20 0 17"
                     penumbra="0.2"
-                    angle="60" 
+                    angle="1.04719755" 
                 /> 
                 <pointlight id="light14" enabled="true" 
                         color="0.7 0.7 0.7 1"
@@ -2008,7 +2004,7 @@
         <node id="spotlightLamp2">
             <transforms>
                 <translate value3="10 0 -10"/>
-                <rotate value3="0 120 0"/>
+                <rotate value3="0 2.0943951 0"/>
             </transforms>
             <materialref id="postApp" />
             <children>
@@ -2025,7 +2021,7 @@
                     position="0 15 3.2" 
                     target="20 0 -17"
                     penumbra="0.2"
-                    angle="60" 
+                    angle="1.04719755" 
                 /> 
                 <pointlight id="light15" enabled="true" 
                         color="0.7 0.7 0.7 1"
@@ -2041,7 +2037,7 @@
         <node id="spotlightLamp3">
             <transforms>
                 <translate value3="-10 0 -10"/>
-                <rotate value3="0 -120 0"/>
+                <rotate value3="0 -2.0943951 0"/>
             </transforms>
             <materialref id="postApp" />
             <children>
@@ -2058,7 +2054,7 @@
                     position="0 15 3.2" 
                     target="-20 0 -17"
                     penumbra="0.2"
-                    angle="60" 
+                    angle="1.04719755" 
                 /> 
                 <pointlight id="light16" enabled="true" 
                         color="0.7 0.7 0.7 1"
@@ -2074,7 +2070,7 @@
         <node id="spotlightLamp4">
             <transforms>
                 <translate value3="-10 0 10"/>
-                <rotate value3="0 -30 0"/>
+                <rotate value3="0 -0.523598776 0"/>
             </transforms>
             <materialref id="postApp" />
             <children>
@@ -2091,7 +2087,7 @@
                     position="0 15 3.2" 
                     target="-20 0 17"
                     penumbra="0.2"
-                    angle="60" 
+                    angle="1.04719755" 
                 /> 
                 <pointlight id="light17" enabled="true" 
                         color="0.7 0.7 0.7 1"
@@ -2106,7 +2102,7 @@
 
         <node id="angleLamp">
             <transforms>
-                <rotate value3="-20 0 0"/>
+                <rotate value3="-0.34906585 0 0"/>
                 <translate value3="0 0 4.6"/>
             </transforms>
             <children>
@@ -2118,7 +2114,7 @@
         <node id="spotLamp">
             <transforms>
                 <translate value3="0 12.7 3.6"/>
-                <rotate value3="20 90 90"/>
+                <rotate value3="0.34906585 1.57079633 1.57079633"/>
             </transforms>
             <materialref id="postApp" />
             <children>
@@ -2131,7 +2127,7 @@
         <node id="sideLamp">
             <transforms>
                 <translate value3="0 13.2 1.65"/>
-                <rotate value3="90 0 0"/>
+                <rotate value3="1.57079633 0 0"/>
             </transforms>
             <materialref id="postApp" />
             <children>
@@ -2508,7 +2504,7 @@
 
 			<transforms>
 				<translate value3="0 9.6 0" />
-                <rotate value3="0 0 30"/>
+                <rotate value3="0 0 0.523598776"/>
             </transforms> 
 						
             <children>             
@@ -2522,7 +2518,7 @@
 
 			<transforms>
 				<translate value3="0 9.6 0" />
-                <rotate value3="0 90 30"/>
+                <rotate value3="0 1.57079633 0.523598776"/>
             </transforms> 
 						
             <children>             
@@ -2536,7 +2532,7 @@
 
 			<transforms>
 				<translate value3="0 9.6 0" />
-                <rotate value3="0 135 30"/>
+                <rotate value3="0 2.35619449 0.523598776"/>
             </transforms> 
 						
             <children>             
@@ -2550,7 +2546,7 @@
 
 			<transforms>
 				<translate value3="0 9.6 0" />
-                <rotate value3="0 45 30"/>
+                <rotate value3="0 0.785398163 0.523598776"/>
             </transforms> 
 						
             <children>             
@@ -2917,7 +2913,7 @@
         </node>
         <node id="twoGridsRot">
             <transforms>
-                <rotate value3 = "0 90 0"/> 
+                <rotate value3 = "0 1.57079633 0"/> 
                 <translate value3 = "0 0 0"/> 
             </transforms>
             <materialref id="stoneBlockApp" />
@@ -3001,7 +2997,7 @@
         <node id="twoGrids1">
             <transforms>
                 <translate value3 = "30 0 -75"/> 
-                <rotate value3 = "0 180 0"/> 
+                <rotate value3 = "0 3.14159265 0"/> 
             </transforms>
             <materialref id="stoneBlockApp" />
             <children>             
@@ -3022,7 +3018,7 @@
         <node id="twoGrids3">
             <transforms>
                 <translate value3 = "15 0 -90"/> 
-                <rotate value3 = "0 180 0"/> 
+                <rotate value3 = "0 3.14159265 0"/> 
             </transforms>
             <materialref id="stoneBlockApp" />
             <children>             
@@ -3033,7 +3029,7 @@
         <node id="twoGrids4">
             <transforms>
                 <translate value3 = "0 0 -90"/> 
-                <rotate value3 = "0 180 0"/> 
+                <rotate value3 = "0 3.14159265 0"/> 
             </transforms>
             <materialref id="stoneBlockApp" />
             <children>             
@@ -3044,7 +3040,7 @@
         <node id="twoGridsRef">
             <transforms>
                 <translate value3 = "0 0 0"/> 
-                <rotate value3 = "0 90 0"/> 
+                <rotate value3 = "0 1.57079633 0"/> 
             </transforms>
             <materialref id="stoneBlockApp" />
             <children>             
@@ -3067,7 +3063,7 @@
         <node id="threeGridsRef">
             <transforms>
                 <translate value3 = "0 0 0"/> 
-                <rotate value3 = "0 180 0"/> 
+                <rotate value3 = "0 3.14159265 0"/> 
             </transforms>
             <materialref id="stoneBlockApp" />
             <children>             
@@ -3131,7 +3127,7 @@
             <materialref id="darkStoneBlockApp"/>
             <transforms>
                 <translate value3 = "3.6 2.1 0"/> 
-                <rotate value3 = "0 0 90"/> 
+                <rotate value3 = "0 0 1.57079633"/> 
             </transforms>
             <children>             
                 <primitive>
@@ -3282,7 +3278,7 @@
 
          <node id="bottomPiece">
             <transforms>
-                <rotate value3="0 45 0"/>
+                <rotate value3="0 0.785398163 0"/>
             </transforms>
             <materialref id="stoneBlockApp" />
             <children>             
@@ -3294,7 +3290,7 @@
 
         <node id="bottomPiece11">
             <transforms>
-                <rotate value3="0 45 0"/>
+                <rotate value3="0 0.785398163 0"/>
             </transforms>
             <materialref id="stoneBlockApp" />
             <children>             
@@ -3342,7 +3338,7 @@
         <node id="bottomPiece10">
             <transforms>
                 <translate value3="0 3.25 0"/>
-                <rotate value3="0 45 0"/>
+                <rotate value3="0 0.785398163 0"/>
             </transforms>
             <materialref id="stoneBlockApp" />
             <children>             
@@ -3356,7 +3352,7 @@
         <node id="bottomPiece3">
             <transforms>
                 <translate value3="0 2.05 0"/>
-                <rotate value3="0 45 0"/>
+                <rotate value3="0 0.785398163 0"/>
             </transforms>
             <materialref id="stoneBlockApp" />
             <children>             
@@ -3370,7 +3366,7 @@
         <node id="bottomPiece4">
             <transforms>
                 <translate value3="0 3.35 0"/>
-                <rotate value3="0 45 0"/>
+                <rotate value3="0 0.785398163 0"/>
             </transforms>
             <children>             
                 <primitive>
@@ -3407,7 +3403,7 @@
         <node id="bottomPiece7">
             <transforms>
                 <translate value3="0 6.15 0"/>
-                <rotate value3="0 45 0"/>
+                <rotate value3="0 0.785398163 0"/>
             </transforms>
             <materialref id="stoneBlockApp" />
             <children>             
@@ -3421,7 +3417,7 @@
 
             <transforms>
 				<translate value3="0 0 -0.5" />
-				<rotate value3="0 180.0 0.0" />
+				<rotate value3="0 3.14159265 0" />
             </transforms> 
 
             <children>   
@@ -3448,7 +3444,7 @@
 
             <transforms>
 				<translate value3="0 -0.5 0" />
-				<rotate value3="90 0.0 0.0" />
+				<rotate value3="1.57079633 0.0 0.0" />
             </transforms> 
 
             <children>   
@@ -3462,7 +3458,7 @@
 
             <transforms>
 				<translate value3="0 0.5 0" />
-				<rotate value3="-90 0.0 0.0" />
+				<rotate value3="-1.57079633 0 0" />
             </transforms> 
 
             <children>             
@@ -3476,7 +3472,7 @@
 
             <transforms>
 				<translate value3="-0.5 0 0" />
-				<rotate value3="0.0 -90.0 0.0" />
+				<rotate value3="0 -1.57079633 0" />
             </transforms> 
 
             <children>             

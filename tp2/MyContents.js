@@ -119,7 +119,7 @@ class MyContents  {
         let ambientLight = new THREE.AmbientLight(options.ambient.getHex(THREE.LinearSRGBColorSpace))
         this.app.scene.add(ambientLight)
         this.lights["ambientLight"] = ambientLight
-        
+
         this.app.scene.background = new THREE.Color(options.background.getHex(THREE.LinearSRGBColorSpace))
     }
 
@@ -427,7 +427,7 @@ class MyContents  {
                     node.color.getHex(THREE.LinearSRGBColorSpace), 
                     node.intensity, 
                     node.distance, 
-                    this.degToRad(node.angle), 
+                    node.angle, 
                     node.penumbra, 
                     node.decay
                 );
@@ -760,9 +760,9 @@ class MyContents  {
                     object.translateZ(operation.translate[2])
                     break;
                 case "R":
-                    object.rotateX(this.degToRad(operation.rotation[0]))
-                    object.rotateY(this.degToRad(operation.rotation[1]))
-                    object.rotateZ(this.degToRad(operation.rotation[2]))
+                    object.rotateX(operation.rotation[0])
+                    object.rotateY(operation.rotation[1])
+                    object.rotateZ(operation.rotation[2])
                     break;
                 case "S": 
                     object.scale.set(...operation.scale)
