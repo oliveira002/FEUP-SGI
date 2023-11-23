@@ -6,6 +6,7 @@
     <globals background="0.06 0.06 0.06 1" ambient="0.1 0.1 0.1 1" /> 
 
     <fog color="0.15 0.15 0.15 1.0" near="0.0" far="160.0" />
+
     <skybox size="140 160 140" center="0 0 0" emissive="0 0 0 1" intensity="10.0"
         up="scenes/SGI_TP2_XML_T03_G02/textures/stars.png" 
         down="scenes/SGI_TP2_XML_T03_G02/textures/stars.jpg" 
@@ -497,9 +498,10 @@
             </children> 
         </node>
 
-         <node id="casket">
+         <node id="casket" castshadows="false" receiveshadows="false">
             <transforms>
-				<translate value3="0 15 0" />
+				<translate value3="-16.5 -6 16" />
+                <scale value3="0.4 0.5 0.5" />
             </transforms> 
             <materialref id="casketApp"/>
             <children>
@@ -1417,10 +1419,11 @@
         </node>
 
 
-        <node id="skull">
+        <node id="skull" castshadows="false" receiveshadows="false">
             <transforms>
-                <translate value3="-16.8 -6 20.5"/>
+                <translate value3="-16.8 -5.99 20.5"/>
 				<rotate value3="-90 0 0" />
+                <scale value3="0.6 1 0.6" />
             </transforms> 
 
 			<materialref id="skullApp" />

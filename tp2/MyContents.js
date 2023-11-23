@@ -116,9 +116,10 @@ class MyContents  {
 
     // Initializes the ambient light and background objects
     initOptions(options){
-        this.app.scene.add(
-            new THREE.AmbientLight(options.ambient.getHex(THREE.LinearSRGBColorSpace))
-        )
+        let ambientLight = new THREE.AmbientLight(options.ambient.getHex(THREE.LinearSRGBColorSpace))
+        this.app.scene.add(ambientLight)
+        this.lights["ambientLight"] = ambientLight
+        
         this.app.scene.background = new THREE.Color(options.background.getHex(THREE.LinearSRGBColorSpace))
     }
 
@@ -334,6 +335,7 @@ class MyContents  {
                     let texture = this.textureMap[materialObj.textureref]
                     texture.repeat.set(materialObj.texlength_s, materialObj.texlength_t)
                     material.map = texture
+                    material.userData= [materialObj.texlength_s, materialObj.texlength_t]
                 }
 
                 if(this.textureMap[materialObj.bumpref]){
@@ -521,23 +523,61 @@ class MyContents  {
     }
     
     buildTriangle(representation, material){
-        const geometry = new THREE.BufferGeometry();
 
-        const vertices = new Float32Array(
+        console.log(material.userData)
+
+        let geometry = new THREE.BufferGeometry();
+
+        let vertices = new Float32Array(
             [...representation.xyz1,
             ...representation.xyz2,
             ...representation.xyz3]
         );
 
-        const indices = [
+        let indices = [
             0, 1, 2,
             2, 1, 0,
         ];
+        
+        // a = dist(V1V2) 
+        let a = Math.sqrt(
+            Math.pow(representation.xyz2[0] - representation.xyz1[0], 2) +
+            Math.pow(representation.xyz2[1] - representation.xyz1[1], 2) + 
+            Math.pow(representation.xyz2[2] - representation.xyz1[2], 2)
+        )
+
+        // b = dist(V2V3)
+        let b = Math.sqrt(
+            Math.pow(representation.xyz3[0] - representation.xyz2[0], 2) +
+            Math.pow(representation.xyz3[1] - representation.xyz2[1], 2) + 
+            Math.pow(representation.xyz3[2] - representation.xyz2[2], 2)
+        )
+
+        // c = dist(V3V1)
+        let c = Math.sqrt(
+            Math.pow(representation.xyz1[0] - representation.xyz3[0], 2) +
+            Math.pow(representation.xyz1[1] - representation.xyz3[1], 2) + 
+            Math.pow(representation.xyz1[2] - representation.xyz3[2], 2)
+        )
+
+        let cos = (Math.pow(a, 2) + Math.pow(b, 2) + Math.pow(c, 2)) / (2 * a * c)
+        let sin = Math.sqrt(1- Math.pow(cos, 2))
+        
+        let [texlength_s, texlength_t] = material.userData
+        let uv = new Float32Array([
+            0,0,
+            (a / texlength_s), 0,
+            (c * cos / texlength_s), (c * sin / texlength_t)
+        ])
 
         geometry.setIndex( indices );
         geometry.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
+        geometry.setAttribute( 'uv', new THREE.BufferAttribute( uv, 2 ) );
         
-        const mesh = new THREE.Mesh( geometry, material );
+        geometry.computeVertexNormals();
+        geometry.uvsNeedUpdate = true;
+
+        let mesh = new THREE.Mesh( geometry, material );
 
         return mesh
     }
