@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-16" standalone="yes"?>
+<yaf> 
+
+	<!-- Credits of the original file go to Group 2, class 3 of course MEIC-SGI school year 2023/2024, FEUP, University of Porto -->
+
+    <globals background="0.06 0.06 0.06 1" ambient="0.1 0.1 0.1 1" /> 
+
+    <!--<fog color="0.15 0.15 0.15 1.0" near="0.0" far="160.0" />-->
+
+    <!--<skybox size="140 160 140" center="0 0 0" emissive="0 0 0 1" intensity="10.0"
+        up="" 
+        down="" 
+        left="" 
+        right="" 
+        front="" 
+        back="" />-->
+
+    <cameras initial="Cam 1" > 
+        <perspective id="Cam 1" 
+            angle="75" 
+            near="0.1" 
+            far="1000" 
+            location="11 13 13" 
+            target="0 0 0" />  
+    </cameras>
+
+    <!-- bloco de texturas. Este bloco tem de existir mas pode estar vazio, se nao forem usadas texturas --> 
+    <textures>
+        <!-- <texture id="" filepath=""/> -->
+    </textures> 
+
+    <materials>
+        <!-- Default values for required attributes:
+        <material id="" 
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 1.0" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30"
+            textureref="" />
+        -->
+        <material id="1" 
+            emissive="0.0 0.0 0.0 1" 
+            color="1.0 1.0 1.0 1.0" 
+            specular="0.07 0.07 0.07 0" 
+            shininess="30" />
+    </materials> 
+
+    <graph rootid="scene">
+		<node id="scene" castshadows="true" receiveshadows="true"> 
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="0 0"/>
+                </primitive>
+            </children> 
+        </node>
+    </graph> 
+</yaf> 
