@@ -42,6 +42,25 @@ class MyGuiInterface  {
             cameraFolder.add(this.app, 'activeCameraName', Object.keys(this.app.cameras)).name("Active camera");
             cameraFolder.open();
         }
+
+        const helperFolder = this.datgui.addFolder('Visualization');
+
+        helperFolder.add(this, 'wireframeEnabled').name('Toggle Wireframe').onChange(() => {
+            
+            let matMap = this.contents.materialMap
+            
+            Object.keys(matMap).forEach( key => {
+                const material = this.contents.materialMap[key];
+                if (material) {
+                    material.wireframe = this.wireframeEnabled;
+                }
+            })
+        });
+
+        helperFolder.add(this, 'helpersEnabled').name('Toggle Light Helpers').onChange(() => {
+            this.contents.helpersOn = this.helpersEnabled
+            this.contents.displayHelpers()
+        });
     }
 }
     
