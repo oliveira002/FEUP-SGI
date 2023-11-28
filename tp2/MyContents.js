@@ -89,10 +89,6 @@ class MyContents  {
         this.buildScene(data);
     }
 
-    output(obj, indent = 0) {
-        console.log("" + new Array(indent * 4).join(' ') + " - " + obj.type + " " + (obj.id !== undefined ? "'" + obj.id + "'" : ""))
-    }
-
     // Builds the scene
     buildScene(data){
         this.initGlobals(data)
@@ -132,7 +128,7 @@ class MyContents  {
 
     // Initializes the skybox objects
     initSkybox(skybox){
-        if(skybox !== null){
+        if(skybox !== null && skybox.length !== 0){
             let skyboxInfo = skybox.default
 
             let rightTex = new THREE.TextureLoader().load(skyboxInfo.right);  
@@ -328,7 +324,6 @@ class MyContents  {
 
                 if(materialObj.textureref){
                     let texture = this.textureMap[materialObj.textureref]
-                    //texture.repeat.set(materialObj.texlength_s, materialObj.texlength_t)
                     material.map = texture
                     material.userData = [materialObj.texlength_s, materialObj.texlength_t]
                 }
@@ -497,8 +492,10 @@ class MyContents  {
             representation.thetalength)
 
         let texture = material.map
-        let [texlength_s, texlength_t] = material.userData
-        texture.repeat.set(texlength_s, texlength_t)
+        if(texture){
+            let [texlength_s, texlength_t] = material.userData
+            texture.repeat.set(texlength_s, texlength_t)
+        }
 
         let mesh = new THREE.Mesh(cyl, material)
 
@@ -516,9 +513,11 @@ class MyContents  {
         let rect = new THREE.PlaneGeometry(width,height,representation.parts_x,representation.parts_y)
 
         let texture = material.map
-        let [texlength_s, texlength_t] = material.userData
-        texture.repeat.set(width/texlength_s, height/texlength_t)
-
+        if(texture){
+            let [texlength_s, texlength_t] = material.userData
+            texture.repeat.set(width/texlength_s, height/texlength_t)
+        }
+        
         let mesh = new THREE.Mesh(rect, material)
         
         mesh.translateX(deltaX)
@@ -566,20 +565,23 @@ class MyContents  {
 
         let cos = (Math.pow(a, 2) + Math.pow(b, 2) + Math.pow(c, 2)) / (2 * a * c)
         let sin = Math.sqrt(1- Math.pow(cos, 2))
-        
-        let [texlength_s, texlength_t] = material.userData
-        let uv = new Float32Array([
-            0,0,
-            (a / texlength_s), 0,
-            (c * cos / texlength_s), (c * sin / texlength_t)
-        ])
 
         geometry.setIndex( indices );
         geometry.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
-        geometry.setAttribute( 'uv', new THREE.BufferAttribute( uv, 2 ) );
         
         geometry.computeVertexNormals();
-        geometry.uvsNeedUpdate = true;
+
+        let texture = material.map
+        if(texture){
+            let [texlength_s, texlength_t] = material.userData
+            let uv = new Float32Array([
+                0,0,
+                (a / texlength_s), 0,
+                (c * cos / texlength_s), (c * sin / texlength_t)
+            ])
+            geometry.setAttribute( 'uv', new THREE.BufferAttribute( uv, 2 ) );
+            geometry.uvsNeedUpdate = true;
+        }
 
         let mesh = new THREE.Mesh( geometry, material );
 
@@ -598,8 +600,10 @@ class MyContents  {
         )
 
         let texture = material.map
-        let [texlength_s, texlength_t] = material.userData
-        texture.repeat.set(texlength_s, texlength_t)
+        if(texture){
+            let [texlength_s, texlength_t] = material.userData
+            texture.repeat.set(texlength_s, texlength_t)
+        }
         
         let mesh = new THREE.Mesh(sphere, material)
 
@@ -625,8 +629,10 @@ class MyContents  {
         }
 
         let texture = material.map
-        let [texlength_s, texlength_t] = material.userData
-        texture.repeat.set(texlength_s, texlength_t)
+        if(texture){
+            let [texlength_s, texlength_t] = material.userData
+            texture.repeat.set(texlength_s, texlength_t)
+        }
         
         let surfaceData = this.builder.build(geoPoints, orderU, orderV, samplesU, samplesV, material)
         let mesh = new THREE.Mesh(surfaceData, material);
@@ -660,8 +666,10 @@ class MyContents  {
         let prim = new THREE.BoxGeometry(width, height, depth, widthSeg, heightSeg, depthSeg)
 
         let texture = material.map
-        let [texlength_s, texlength_t] = material.userData
-        texture.repeat.set(texlength_s, texlength_t)
+        if(texture){
+            let [texlength_s, texlength_t] = material.userData
+            texture.repeat.set(width/texlength_s, height/texlength_t)
+        }
         
         let mesh = new THREE.Mesh(prim, material)
 
