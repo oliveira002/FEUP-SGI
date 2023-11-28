@@ -29,6 +29,7 @@
         <!-- <texture id="" filepath=""/> -->
     </textures> 
 
+    <!-- bloco de materiais. Este bloco tem de existir mas pode estar vazio, se nao forem usados materiais --> 
     <materials>
         <!-- Default values for required attributes:
         <material id="" 
@@ -38,20 +39,25 @@
             shininess="30"
             textureref="" />
         -->
-        <material id="1" 
-            emissive="0.0 0.0 0.0 1" 
-            color="1.0 1.0 1.0 1.0" 
-            specular="0.07 0.07 0.07 0" 
-            shininess="30" />
     </materials> 
 
     <graph rootid="scene">
 		<node id="scene" castshadows="true" receiveshadows="true"> 
             <children>
+                <noderef id="ground" />
+            </children>
+        </node>
+
+        <node id="ground">
+            <transforms>
+                <rotate value3="-90 0 0" />
+            </transforms>
+            
+            <children>
                 <primitive>
-                    <rectangle xy1="0 0" xy2="0 0"/>
+                    <rectangle xy1="-70 -70" xy2="70 70"/>
                 </primitive>
-            </children> 
+            </children>
         </node>
     </graph> 
 </yaf> 
