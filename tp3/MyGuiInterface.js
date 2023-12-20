@@ -17,15 +17,8 @@ class MyGuiInterface  {
         this.datgui =  new GUI();
         this.contents = null
         this.wireframeEnabled = false
-        this.fogEnabled = true
         this.helpersEnabled = false
         this.controlPointsEnabled = false
-        this.initFog = null
-        this.ambientColor = {color: 0.1, a: 1}
-        this.fogParams = {
-            near: 0,
-            far: 160,
-        };
     }
 
     /**
@@ -48,6 +41,8 @@ class MyGuiInterface  {
         helperFolder.add(this, 'wireframeEnabled').name('Toggle Wireframe').onChange(() => {
             
             let matMap = this.contents.materialMap
+
+            if(!matMap) return
             
             Object.keys(matMap).forEach( key => {
                 const material = this.contents.materialMap[key];
