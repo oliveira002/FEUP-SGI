@@ -31,29 +31,13 @@ class MyContents {
     this.car = null;
     this.scenery = null;
 
-    this.shaders = []
   }
 
-
-  initShaders() {
-
-    this.shaders = [ new MyShader(this.app, 'Terrain Shader', "Terrain Shader", "../../shaders/terrain.vert", "../../shaders/terrain.frag", {
-      uSampler1: {type: 'sampler2D', value: this.heightMapTex },
-      uSampler2: {type: 'sampler2D', value: this.terrainTex },
-      normScale: {type: 'f', value: 1.0 },
-      displacement: {type: 'f', value: 0.0 },
-      normalizationFactor: {type: 'f', value: 1 },
-    })]
-
-    this.waitForShaders()
-
-  }
   /**
    * initializes the contents
    */
   init() {
-    
-    this.initShaders()
+  
     
     this.setupEventListeners();
 
@@ -70,7 +54,7 @@ class MyContents {
 
       this.floor = new THREE.Mesh(geo, mat)
       this.floor.rotateX(degToRad(-90))
-      this.app.scene.add(this.floor)
+      //this.app.scene.add(this.floor)
     }
 
     if(this.car === null){
@@ -78,13 +62,11 @@ class MyContents {
       this.app.scene.add(this.car)
     }
 
-    /*
+    
     if(this.scenery === null) {
       this.scenery = new MyScenery(this.app, 100, 100)
-      this.scenery.mesh.material = this.shaders[0].material
-      this.scenery.mesh.material.needsUpdate = true
-      this.app.scene.add(this.scenery.mesh)
-    }*/
+      this.app.scene.add(this.scenery)
+    }
 
   }
 
@@ -173,14 +155,6 @@ class MyContents {
     return group;
   }
 
-  waitForShaders() {
-    for (let i=0; i<this.shaders.length; i++) {
-        if (this.shaders[i].ready === false) {
-            setTimeout(this.waitForShaders.bind(this), 100)
-            return;
-        }
-    }
-}
 
   update() {
     this.car.update()

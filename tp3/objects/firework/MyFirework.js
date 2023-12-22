@@ -1,8 +1,9 @@
 import * as THREE from 'three'
 
-class MyFirework {
+class MyFirework extends THREE.Object3D {
 
     constructor(app, scene, fireworkColor) {
+        super()
         this.app = app
         this.scene = scene
         this.fireworkColor = 0xff0000 || fireworkColor
@@ -170,4 +171,5 @@ class MyFirework {
     }
 }
 
+MyFirework.prototype.isGroup = true;
 export { MyFirework }
