@@ -3,6 +3,8 @@ import { degToRad } from "./utils.js"
 import { MyAxis } from "./objects/gui/MyAxis.js";
 import { MyNurbsBuilder } from "./builders/MyNurbsBuilder.js";
 import { MyCar } from "./objects/vehicle/MyCar.js";
+import {MyScenery} from './objects/scenery/MyScenery.js'
+import { MyShader } from "./MyShader.js";
 
 /**
  *  This class contains the contents of out application
@@ -27,13 +29,32 @@ class MyContents {
     // Objects
     this.floor = null;
     this.car = null;
+    this.scenery = null;
+
+    this.shaders = []
   }
 
+
+  initShaders() {
+
+    this.shaders = [ new MyShader(this.app, 'Terrain Shader', "Terrain Shader", "../../shaders/terrain.vert", "../../shaders/terrain.frag", {
+      uSampler1: {type: 'sampler2D', value: this.heightMapTex },
+      uSampler2: {type: 'sampler2D', value: this.terrainTex },
+      normScale: {type: 'f', value: 1.0 },
+      displacement: {type: 'f', value: 0.0 },
+      normalizationFactor: {type: 'f', value: 1 },
+    })]
+
+    this.waitForShaders()
+
+  }
   /**
    * initializes the contents
    */
   init() {
-
+    
+    this.initShaders()
+    
     this.setupEventListeners();
 
     if(this.axis === null) {
@@ -49,7 +70,6 @@ class MyContents {
 
       this.floor = new THREE.Mesh(geo, mat)
       this.floor.rotateX(degToRad(-90))
-
       this.app.scene.add(this.floor)
     }
 
@@ -57,6 +77,14 @@ class MyContents {
       this.car = new MyCar()
       this.app.scene.add(this.car)
     }
+
+    /*
+    if(this.scenery === null) {
+      this.scenery = new MyScenery(this.app, 100, 100)
+      this.scenery.mesh.material = this.shaders[0].material
+      this.scenery.mesh.material.needsUpdate = true
+      this.app.scene.add(this.scenery.mesh)
+    }*/
 
   }
 
@@ -144,6 +172,15 @@ class MyContents {
 
     return group;
   }
+
+  waitForShaders() {
+    for (let i=0; i<this.shaders.length; i++) {
+        if (this.shaders[i].ready === false) {
+            setTimeout(this.waitForShaders.bind(this), 100)
+            return;
+        }
+    }
+}
 
   update() {
     this.car.update()
