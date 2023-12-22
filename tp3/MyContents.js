@@ -5,7 +5,7 @@ import { MyNurbsBuilder } from "./builders/MyNurbsBuilder.js";
 import { MyCar } from "./objects/vehicle/MyCar.js";
 import {MyScenery} from './objects/scenery/MyScenery.js'
 import { MyShader } from "./MyShader.js";
-
+import {MySnow} from './objects/scenery/MySnow.js'
 /**
  *  This class contains the contents of out application
  */
@@ -30,6 +30,7 @@ class MyContents {
     this.floor = null;
     this.car = null;
     this.scenery = null;
+    this.snow = []
 
   }
 
@@ -158,6 +159,17 @@ class MyContents {
 
   update() {
     this.car.update()
+
+    if(Math.random()  < 0.05 ) {
+      var mesh = new MySnow(this.app,this);
+      this.app.scene.add(mesh);
+      this.snow.push(mesh);
+      console.log("firework added")
+    }
+
+    for (var i = 0; i < this.snow.length; i++) {
+        this.snow[i].update();
+    }
   }
 }
 

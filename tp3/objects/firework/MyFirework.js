@@ -1,12 +1,10 @@
 import * as THREE from 'three'
 
-class MyFirework extends THREE.Object3D {
+class MyFirework {
 
-    constructor(app, scene, fireworkColor) {
-        super()
+    constructor(app, scene) {
         this.app = app
         this.scene = scene
-        this.fireworkColor = 0xff0000 || fireworkColor
         this.done = false 
         this.dest = [] 
         
@@ -26,6 +24,11 @@ class MyFirework extends THREE.Object3D {
         
         this.height = 20
         this.speed = 60
+
+
+        const color = new THREE.Color();
+        color.setHSL(THREE.MathUtils.randFloat(0.1, 0.9), THREE.MathUtils.randFloat(0.1, 0.9), THREE.MathUtils.randFloat(0.1, 0.9));
+        this.fireworkColor = color
 
         this.launch() 
 
@@ -68,7 +71,7 @@ class MyFirework extends THREE.Object3D {
         for (let i = 0; i < n; i++) {
             const theta = THREE.MathUtils.randFloat(rangeBegin, rangeEnd);
             const phi = THREE.MathUtils.randFloat(0, Math.PI * 2);
-            const radius = THREE.MathUtils.randFloat(2, 3);
+            const radius = THREE.MathUtils.randFloat(1, 2);
 
             const x = radius * Math.sin(theta) * Math.cos(phi);
             const y = radius * Math.sin(theta) * Math.sin(phi);
@@ -77,8 +80,7 @@ class MyFirework extends THREE.Object3D {
             explosionVertices.push(x + origin[0], y + origin[1], z + origin[2]);
 
             const color = new THREE.Color();
-            const randomColor = THREE.MathUtils.randFloat(0.1, 0.9)
-            color.setHSL(randomColor, randomColor, randomColor);
+            color.setHSL(THREE.MathUtils.randFloat(0.1, 0.9), THREE.MathUtils.randFloat(0.1, 0.9), THREE.MathUtils.randFloat(0.1, 0.9));
             explosionColors.push(color.r, color.g, color.b);
         }
 
@@ -105,7 +107,7 @@ class MyFirework extends THREE.Object3D {
             explosionPoints.material.dispose();
             this.app.scene.remove(explosionPoints);
             this.done = true
-        }, 1000);
+        }, 500);
     }
     
     /**
@@ -148,7 +150,7 @@ class MyFirework extends THREE.Object3D {
                 //is YY coordinate higher close to destination YY? 
                 if( Math.ceil( vertices[1] ) > ( this.dest[1] * 0.95 ) ) {
                     // add n particles departing from the location at (vertices[0], vertices[1], vertices[2])
-                    this.explode(vertices, 50, this.height * 0.05, this.height * 0.5) 
+                    this.explode(vertices, 10, this.height * 0.05, this.height * 0.5) 
                     return 
                 }
             }
@@ -171,5 +173,4 @@ class MyFirework extends THREE.Object3D {
     }
 }
 
-MyFirework.prototype.isGroup = true;
 export { MyFirework }
