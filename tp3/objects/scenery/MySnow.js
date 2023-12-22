@@ -83,7 +83,6 @@ class MySnow extends THREE.Object3D {
             this.remove(this.snowList[i]);
             this.snowList.splice(i, 1);
             i -= 1;
-            console.log(this.snowList.length);
           }
         }
     }

@@ -6,6 +6,7 @@ import { MyCar } from "./objects/vehicle/MyCar.js";
 import {MyScenery} from './objects/scenery/MyScenery.js'
 import { MyShader } from "./MyShader.js";
 import {MySnow} from './objects/scenery/MySnow.js'
+import { MyPowerUp } from "./objects/single/MyPowerUp.js";
 /**
  *  This class contains the contents of out application
  */
@@ -31,6 +32,7 @@ class MyContents {
     this.car = null;
     this.scenery = null;
     this.snow = []
+    this.powerup = null;
 
   }
 
@@ -60,13 +62,19 @@ class MyContents {
 
     if(this.car === null){
       this.car = new MyCar()
-      this.app.scene.add(this.car)
+      //this.app.scene.add(this.car)
     }
 
     
     if(this.scenery === null) {
       this.scenery = new MyScenery(this.app, 100, 100)
       this.app.scene.add(this.scenery)
+    }
+
+    if(this.powerup === null) {
+      this.powerup = new MyPowerUp(this.app)
+      this.powerup.translateY(50)
+      this.app.scene.add(this.powerup)
     }
 
   }
@@ -159,12 +167,12 @@ class MyContents {
 
   update() {
     this.car.update()
+    this.powerup.update()
 
     if(Math.random()  < 0.05 ) {
       var mesh = new MySnow(this.app,this);
       this.app.scene.add(mesh);
       this.snow.push(mesh);
-      console.log("firework added")
     }
 
     for (var i = 0; i < this.snow.length; i++) {

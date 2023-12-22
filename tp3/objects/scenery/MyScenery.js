@@ -9,17 +9,17 @@ class MyScenery extends THREE.Object3D{
 		this.width = width
 		this.height = height
 
-		this.geometry = new THREE.PlaneGeometry(10, 10,200,200);
+		this.geometry = new THREE.PlaneGeometry(10, 10,100,100);
 		
-		this.heightMapTex = new THREE.TextureLoader().load('images/heightmap2.jpg' )
+		this.heightMapTex = new THREE.TextureLoader().load('images/heightmap4.jpg' )
 		this.heightMapTex.wrapS = THREE.RepeatWrapping;
 		this.heightMapTex.wrapT = THREE.RepeatWrapping;
 
-        this.terrainTex = new THREE.TextureLoader().load('images/terrain2.jpg' )
+        this.terrainTex = new THREE.TextureLoader().load('images/terrain5.jpg' )
 		this.terrainTex.wrapS = THREE.RepeatWrapping;
 		this.terrainTex.wrapT = THREE.RepeatWrapping;
 
-		this.altimetry = new THREE.TextureLoader().load('images/altimetry.png' )
+		this.altimetry = new THREE.TextureLoader().load('images/altimetry3.png' )
 		this.altimetry.wrapS = THREE.RepeatWrapping;
 		this.altimetry.wrapT = THREE.RepeatWrapping;
 
