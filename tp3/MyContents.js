@@ -3,7 +3,10 @@ import { degToRad } from "./utils.js"
 import { MyAxis } from "./objects/gui/MyAxis.js";
 import { MyNurbsBuilder } from "./builders/MyNurbsBuilder.js";
 import { MyCar } from "./objects/vehicle/MyCar.js";
-
+import {MyScenery} from './objects/scenery/MyScenery.js'
+import { MyShader } from "./MyShader.js";
+import {MySnow} from './objects/scenery/MySnow.js'
+import { MyPowerUp } from "./objects/single/MyPowerUp.js";
 /**
  *  This class contains the contents of out application
  */
@@ -27,13 +30,18 @@ class MyContents {
     // Objects
     this.floor = null;
     this.car = null;
+    this.scenery = null;
+    this.snow = []
+    this.powerup = null;
+
   }
 
   /**
    * initializes the contents
    */
   init() {
-
+  
+    
     this.setupEventListeners();
 
     if(this.axis === null) {
@@ -49,13 +57,24 @@ class MyContents {
 
       this.floor = new THREE.Mesh(geo, mat)
       this.floor.rotateX(degToRad(-90))
-
-      this.app.scene.add(this.floor)
+      //this.app.scene.add(this.floor)
     }
 
     if(this.car === null){
       this.car = new MyCar()
-      this.app.scene.add(this.car)
+      //this.app.scene.add(this.car)
+    }
+
+    
+    if(this.scenery === null) {
+      this.scenery = new MyScenery(this.app, 100, 100)
+      this.app.scene.add(this.scenery)
+    }
+
+    if(this.powerup === null) {
+      this.powerup = new MyPowerUp(this.app)
+      this.powerup.translateY(50)
+      this.app.scene.add(this.powerup)
     }
 
   }
@@ -145,8 +164,20 @@ class MyContents {
     return group;
   }
 
+
   update() {
     this.car.update()
+    this.powerup.update()
+
+    if(Math.random()  < 0.05 ) {
+      var mesh = new MySnow(this.app,this);
+      this.app.scene.add(mesh);
+      this.snow.push(mesh);
+    }
+
+    for (var i = 0; i < this.snow.length; i++) {
+        this.snow[i].update();
+    }
   }
 }
 
