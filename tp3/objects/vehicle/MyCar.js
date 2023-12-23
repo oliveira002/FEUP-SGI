@@ -7,7 +7,7 @@ class MyCar extends THREE.Object3D {
      * 
      * @param {MyApp} app the application object
      */
-    constructor(app, position=null, velocity, acceleration, maxVelocity) {
+    constructor(app, position=null, speed, acceleration, maxspeed) {
         super();
         this.app = app;
         this.type = 'Group';
@@ -18,16 +18,18 @@ class MyCar extends THREE.Object3D {
 
         // Direction (in rad)
         this.dir = new THREE.Vector3(1, 0, 0)
-        this.angle = 0
-        this.rotationFactor = 2*Math.PI/100
+        this.prevDir = this.dir
+        this.turningAngle = 2*Math.PI/350
 
-        // Velocity
-        this.velocity = velocity ?? 1
-        this.maxVelocity = 1
-        this.brakingFactor = 0.95
+        // speed
+        this.speed = 0
+        this.minSpeed = 0.08
+        this.maxSpeed = 1
+        this.brakingFactor = 0.975
+        this.dragFactor = 0.995
 
         // Acceleration
-        this.acceleration = acceleration ?? 0
+        this.accelerationFactor = 1.02
 
         this.init()
 
@@ -65,18 +67,50 @@ class MyCar extends THREE.Object3D {
     }
 
     update(){
-        // Drive
-        if(this.pressedKeys.w) this.pos.x += this.velocity;
-        else {}
+
+        if(this.speed < this.minSpeed) this.speed = 0;
+        if(this.speed > this.maxSpeed) this.speed = this.maxSpeed
 
         // Break
-        if(this.pressedKeys.s) this.velocity *= this.brakingFactor;
+        if(this.pressedKeys.s) {
+            this.speed = this.brakingFactor * Math.pow(this.speed,2);
+        }
+        else{ 
+            // Accelerate
+            if(this.pressedKeys.w) {
+                if(this.speed === 0) this.speed = this.minSpeed
+                else this.speed *= this.accelerationFactor;
+            }
+            else this.speed = Math.max(this.speed * this.dragFactor, 0)
+        }
 
-        // Rotate Left or Right
-        if(this.pressedKeys.a) this.angle += this.rotationFactor;
-        if(this.pressedKeys.d) this.angle -= this.rotationFactor;
+        // Update position based on local direction
+        const deltaPosition = new THREE.Vector3().copy(this.dir).multiplyScalar(this.speed);
+        this.pos.add(deltaPosition);
 
-        
+        this.prevDir = new THREE.Vector3(...this.dir)
+
+        let angle = 0;
+        if(this.speed !== 0){
+            // Rotate Left or Right
+            if(this.pressedKeys.a && !this.pressedKeys.d) {
+                this.dir.applyAxisAngle(new THREE.Vector3(0,1,0), this.turningAngle);
+                angle = this.turningAngle
+            }
+            if(this.pressedKeys.d && !this.pressedKeys.a) {
+                this.dir.applyAxisAngle(new THREE.Vector3(0,1,0), -this.turningAngle);
+                angle = -this.turningAngle
+            }
+
+            //this.rotateY(angle)
+        }
+
+        // Update rotation using quaternion
+        const quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), angle);
+        this.quaternion.multiplyQuaternions(quaternion, this.quaternion);
+
+        // Update position
+        this.position.set(this.pos.x, this.pos.y, this.pos.z);
     }
 
 
