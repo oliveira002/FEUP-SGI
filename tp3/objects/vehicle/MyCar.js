@@ -72,7 +72,6 @@ class MyCar extends THREE.Object3D {
         cameraPos.add(new THREE.Vector3(0,10,0))
         cameraPos.add(this.position)
 
-        
         this.camera.position.set(...cameraPos)
 
     }

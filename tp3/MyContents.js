@@ -22,7 +22,7 @@ class MyContents {
     this.builder = new MyNurbsBuilder();
     this.helpersOn = false;
     this.controlPtsOn = false;
-    this.reader = new MyReader("demo")
+    this.reader = new MyReader(this.app,"demo")
 
     // Globals
     this.axis = null;
@@ -35,6 +35,8 @@ class MyContents {
     this.scenery = null;
     this.snow = []
     this.powerup = null;
+    this.track = this.reader.track
+    //this.app.scene.add(this.track);
 
   }
 
@@ -43,7 +45,9 @@ class MyContents {
    */
   init() {
   
-    
+    const ambientLight = new THREE.AmbientLight( 0xffffff, 1 );
+    this.app.scene.add( ambientLight );
+
     this.setupEventListeners();
 
     if(this.axis === null) {
@@ -53,24 +57,13 @@ class MyContents {
 
     if(this.car === null){
       this.car = new MyCar(this.app, "Car")
-      this.app.scene.add(this.car)
+      //this.app.scene.add(this.car)
     }
 
     
     if(this.scenery === null) {
       this.scenery = new MyScenery(this.app, 100, 100)
-      this.app.scene.add(this.scenery)
-    }
-
-    if(this.powerup === null) {
-      this.powerup = new MyPowerUp(this.app)
-      this.powerup.translateY(50)
-      this.app.scene.add(this.powerup)
-    }
-
-    if(this.firework === null) {
-      this.firework = new MyFirework(this.app, this)
-      this.app.scene.add(this.firework)
+      //this.app.scene.add(this.scenery)
     }
 
   }
@@ -163,8 +156,11 @@ class MyContents {
 
   update() {
     this.car.update()
-    this.powerup.update()
 
+    //this.updateSnow()
+  }
+
+  updateSnow(){
     if(Math.random()  < 0.05 ) {
       var mesh = new MySnow(this.app,this);
       this.app.scene.add(mesh);
