@@ -1,17 +1,36 @@
 import * as THREE from 'three';
-import { MyApp } from '../MyApp.js';
 
 class MyReader extends THREE.Object3D {
 
-    /**
-     * 
-     * @param {MyApp} app the application object
-     */
-    constructor(app) {
+    constructor(trackName) {
         super();
-        this.app = app;
         this.type = 'Group';
+        this.tracksFilePath = "./objects/track/tracks.json"
+        
+        this.init(trackName)
     }
+
+    init(trackName) {
+        fetch(this.tracksFilePath)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Failed to fetch ${this.tracksFilePath}`);
+            }
+            return response.json();
+            })
+            .then(jsonData => {
+            if (jsonData.hasOwnProperty(trackName)) {
+                // TODO instantiate objects
+                console.log(`Entry for key '${trackName}':`, jsonData[trackName]);
+            } else {
+                console.error(`Track '${trackName}' not found in the JSON file.`);
+            }
+            })
+        .catch(error => {
+            console.error('Error:', error.message);
+        });
+    }
+
 }
 
 MyReader.prototype.isGroup = true;

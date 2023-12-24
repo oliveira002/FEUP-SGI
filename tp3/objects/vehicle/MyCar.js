@@ -7,11 +7,12 @@ class MyCar extends THREE.Object3D {
      * 
      * @param {MyApp} app the application object
      */
-    constructor(app, position=null, speed, acceleration, maxspeed) {
+    constructor(app, name, position=null) {
         super();
         this.app = app;
         this.type = 'Group';
         this.pressedKeys = { w: false, a: false, s: false, d: false };
+        this.name = name
         
         // Position
         this.pos = position ?? new THREE.Vector3(0, 0, 0)
@@ -24,8 +25,8 @@ class MyCar extends THREE.Object3D {
         // speed
         this.speed = 0
         this.minSpeed = 0.08
-        this.maxSpeed = 1
-        this.brakingFactor = 0.975
+        this.maxSpeed = 10
+        this.brakingFactor = 0.99
         this.dragFactor = 0.995
 
         // Acceleration
@@ -45,6 +46,44 @@ class MyCar extends THREE.Object3D {
         this.car.translateY(3/2)
 
         this.add(this.car)
+
+        this.initCamera()
+
+    }
+
+    initCamera(){
+        const aspect = window.innerWidth / window.innerHeight;
+        this.camera = new THREE.PerspectiveCamera( 100, aspect, 0.1, 1000 )
+
+        this.updateCameraPos()
+
+        this.app.cameras[this.name] = this.camera
+
+        this.updateCameraTarget()
+
+    }
+
+    updateCameraPos(){
+
+        let cameraPos = this.dir.clone().multiplyScalar(-1)
+        cameraPos.x *= 20
+        cameraPos.z *= 20
+        
+        cameraPos.add(new THREE.Vector3(0,10,0))
+        cameraPos.add(this.position)
+
+        
+        this.camera.position.set(...cameraPos)
+
+    }
+
+    updateCameraTarget(){
+        this.app.targets[this.name] = new THREE.Vector3(
+            this.position.x, 
+            this.position.y, 
+            this.position.z
+        )
+        this.camera.lookAt(this.app.targets[this.name])
     }
 
     updateKeyPressed(type, key){
@@ -67,13 +106,10 @@ class MyCar extends THREE.Object3D {
     }
 
     update(){
-
-        if(this.speed < this.minSpeed) this.speed = 0;
-        if(this.speed > this.maxSpeed) this.speed = this.maxSpeed
-
+        
         // Break
         if(this.pressedKeys.s) {
-            this.speed = this.brakingFactor * Math.pow(this.speed,2);
+            this.speed = this.brakingFactor * this.speed
         }
         else{ 
             // Accelerate
@@ -83,6 +119,9 @@ class MyCar extends THREE.Object3D {
             }
             else this.speed = Math.max(this.speed * this.dragFactor, 0)
         }
+
+        if(this.speed < this.minSpeed) this.speed = 0;
+        if(this.speed > this.maxSpeed) this.speed = this.maxSpeed
 
         // Update position based on local direction
         const deltaPosition = new THREE.Vector3().copy(this.dir).multiplyScalar(this.speed);
@@ -101,8 +140,6 @@ class MyCar extends THREE.Object3D {
                 this.dir.applyAxisAngle(new THREE.Vector3(0,1,0), -this.turningAngle);
                 angle = -this.turningAngle
             }
-
-            //this.rotateY(angle)
         }
 
         // Update rotation using quaternion
@@ -111,6 +148,10 @@ class MyCar extends THREE.Object3D {
 
         // Update position
         this.position.set(this.pos.x, this.pos.y, this.pos.z);
+
+        this.updateCameraPos()
+        this.updateCameraTarget()
+
     }
 
 

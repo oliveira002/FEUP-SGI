@@ -6,7 +6,9 @@ import { MyCar } from "./objects/vehicle/MyCar.js";
 import {MyScenery} from './objects/scenery/MyScenery.js'
 import { MyShader } from "./MyShader.js";
 import {MySnow} from './objects/scenery/MySnow.js'
-import { MyPowerUp } from "./objects/single/MyPowerUp.js";
+import { MyPowerUp } from "./objects/track/MyPowerUp.js";
+import { MyReader } from "./objects/track/MyReader.js";
+import { MyFirework } from "./objects/single/MyFirework.js";
 /**
  *  This class contains the contents of out application
  */
@@ -20,6 +22,7 @@ class MyContents {
     this.builder = new MyNurbsBuilder();
     this.helpersOn = false;
     this.controlPtsOn = false;
+    this.reader = new MyReader("demo")
 
     // Globals
     this.axis = null;
@@ -28,7 +31,6 @@ class MyContents {
     this.materialMap = null;
 
     // Objects
-    this.floor = null;
     this.car = null;
     this.scenery = null;
     this.snow = []
@@ -49,20 +51,9 @@ class MyContents {
       this.app.scene.add(this.axis);
     }
 
-    if(this.floor === null){
-      let geo = new THREE.PlaneGeometry(100, 100)
-      let mat = new THREE.MeshBasicMaterial({
-        color: 0xaa0000
-      })
-
-      this.floor = new THREE.Mesh(geo, mat)
-      this.floor.rotateX(degToRad(-90))
-      //this.app.scene.add(this.floor)
-    }
-
     if(this.car === null){
-      this.car = new MyCar()
-      //this.app.scene.add(this.car)
+      this.car = new MyCar(this.app, "Car")
+      this.app.scene.add(this.car)
     }
 
     
@@ -75,6 +66,11 @@ class MyContents {
       this.powerup = new MyPowerUp(this.app)
       this.powerup.translateY(50)
       this.app.scene.add(this.powerup)
+    }
+
+    if(this.firework === null) {
+      this.firework = new MyFirework(this.app, this)
+      this.app.scene.add(this.firework)
     }
 
   }
