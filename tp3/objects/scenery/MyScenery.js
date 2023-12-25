@@ -27,9 +27,6 @@ class MyScenery extends THREE.Object3D{
 			uSampler1: {type: 'sampler2D', value: this.heightMapTex},
 			uSampler2: {type: 'sampler2D', value: this.terrainTex },
 			uSampler3: {type: 'sampler2D', value: this.altimetry },
-			normScale: {type: 'f', value: 2.0 },
-			displacement: {type: 'f', value: 0.0 },
-			normalizationFactor: {type: 'f', value: 1 },
 		})
 
 		this.waitForShaders()

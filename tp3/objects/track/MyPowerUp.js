@@ -54,12 +54,11 @@ class MyPowerUp extends THREE.Object3D {
         textGeo.boundingBox.getCenter(textCenter);
         textGeo.translate(-textCenter.x, -textCenter.y, -textCenter.z);
 
-
         let textMesh = new THREE.Mesh(textGeo, textMaterial);
         textMesh.translateY(3.8)
         
         this.textMesh = textMesh;
-        this.add(textMesh); // Add the text mesh as a child of the power-up
+        this.add(textMesh);
       });
 
     this.add(this.mesh);
