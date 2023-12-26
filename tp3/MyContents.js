@@ -12,6 +12,7 @@ import { MyReader } from "./objects/track/MyReader.js";
 import { MyFirework } from "./objects/single/MyFirework.js";
 import { MyBanana } from "./objects/track/MyBanana.js";
 import { MyOil } from "./objects/track/MyOil.js";
+import { MyGarage } from "./objects/scenery/MyGarage.js";
 
 /**
  *  This class contains the contents of out application
@@ -26,7 +27,7 @@ class MyContents {
     this.builder = new MyNurbsBuilder();
     this.helpersOn = false;
     this.controlPtsOn = false;
-    this.reader = new MyReader(this.app,"track2")
+    //this.reader = new MyReader(this.app,"track2")
 
     // Globals
     this.axis = null;
@@ -40,7 +41,7 @@ class MyContents {
     this.scenery = null;
     this.snow = []
     this.powerup = null;
-    this.track = this.reader.track
+    //this.track = this.reader.track
     //this.app.scene.add(this.track);
 
   }
@@ -62,12 +63,12 @@ class MyContents {
 
     if(this.car === null){
       this.car = new MyCar(this.app, "Car")
-      this.app.scene.add(this.car)
+      //this.app.scene.add(this.car)
     }
 
     
     if(this.scenery === null) {
-      this.scenery = new MyScenery(this.app, 100, 100)
+      //this.scenery = new MyScenery(this.app, 100, 100)
       //this.app.scene.add(this.scenery)
     }
 
@@ -75,6 +76,10 @@ class MyContents {
       this.hud = new MyHUD(this.app)
       this.app.scene.add(this.hud)
     }
+
+    this.app.scene.add(new MyGarage(this.app))
+
+
     
     //this.app.scene.add(new MyPowerUp(this.app))
     //this.app.scene.add(new MyOil(this.app))
