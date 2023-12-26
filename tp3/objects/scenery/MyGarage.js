@@ -168,6 +168,53 @@ class MyGarage extends THREE.Object3D {
         );
 
         loader.load(
+            'images/metal_ladder.glb',
+            (gltf) => {
+                var model = gltf.scene
+                model.scale.set(0.07,0.07,0.07)
+                model.translateZ(12.95)
+                model.translateY(0.44)
+
+                model.rotateZ(Math.PI/2)
+                model.rotateY(Math.PI)
+                textureLoader.load('images/furniture.jpg', (texture) => {
+                    model.traverse((child) => {
+                        if (child.isMesh) {
+                            child.material.map = texture;
+                        }
+                    });
+                })
+
+                //model.rotateX(-Math.PI/2)
+                this.add(model); 
+            },
+            (xhr) => {
+                console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+            },
+            (error) => {
+                console.log('An error happened', error);
+            }
+        );
+
+        loader.load(
+            'images/cork_board.glb',
+            (gltf) => {
+                var model = gltf.scene
+                model.scale.set(2,2,2)
+                model.translateY(4)
+                model.translateZ(14.95)
+                model.rotateY(-Math.PI)
+                this.add(model); 
+            },
+            (xhr) => {
+                console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+            },
+            (error) => {
+                console.log('An error happened', error);
+            }
+        );
+
+        loader.load(
             'images/low-poly_sedan_car.glb',
             (gltf) => {
                 var model = gltf.scene
@@ -281,13 +328,13 @@ class MyGarage extends THREE.Object3D {
     initCone() {
         this.coneGroup = new THREE.Group();
 
-        this.cone = new THREE.CylinderGeometry(0, 0.6, 1.5);
+        this.cone = new THREE.CylinderGeometry(0, 0.6, 1.8);
         this.coneTexture = new THREE.TextureLoader().load('images/cone.jpg');
         this.coneTexture.wrapS = THREE.RepeatWrapping;
         this.coneTexture.wrapT = THREE.RepeatWrapping;
         this.coneMaterial = new THREE.MeshPhongMaterial({ map: this.coneTexture });
         this.coneMesh = new THREE.Mesh(this.cone, this.coneMaterial);
-        this.coneMesh.translateY(0.85);
+        this.coneMesh.translateY(1);
 
         this.coneSup = new THREE.BoxGeometry(1.2, 0.2, 1.2);
         this.coneSupMaterial = new THREE.MeshPhongMaterial({ emissive: "#895c38", color: "#895c38" });
