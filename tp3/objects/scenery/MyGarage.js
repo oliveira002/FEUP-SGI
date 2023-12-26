@@ -7,7 +7,7 @@ import { Reflector } from 'three/addons/objects/Reflector.js';
 import { MyCaution } from './MyCaution.js';
 import {MyPortrait} from './MyPortrait.js'
 import { MyTable } from './MyTable.js';
-
+import { MySpriteSheet } from '../single/MySpriteSheet.js';
 
 class MyGarage extends THREE.Object3D {
 
@@ -28,6 +28,7 @@ class MyGarage extends THREE.Object3D {
         this.initTable()
         this.initSupport()
         this.initCone()
+        this.initCarInfo()
 
         const shelfPath = 'images/furniture.jpg'
         this.shelf = new MyShelf(this.app, 6,1.6,5,shelfPath)
@@ -167,6 +168,24 @@ class MyGarage extends THREE.Object3D {
         );
 
         loader.load(
+            'images/low-poly_sedan_car.glb',
+            (gltf) => {
+                var model = gltf.scene
+                model.scale.set(0.55,0.55,0.55)
+                model.rotateY(Math.PI / 1.9)
+                model.translateX(-3.5)
+                model.translateZ(2)
+                this.add(model); 
+            },
+            (xhr) => {
+                console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+            },
+            (error) => {
+                console.log('An error happened', error);
+            }
+        );
+
+        loader.load(
             'images/used_tire__tyre.glb',
             (gltf) => {
                 var model = gltf.scene;
@@ -281,6 +300,24 @@ class MyGarage extends THREE.Object3D {
         this.coneGroup.translateY(2)
         this.coneGroup.translateZ(13.25)
         this.add(this.coneGroup);
+    }
+
+    initCarInfo() {
+        var pickup = new MySpriteSheet(this.app, "PICKUP")
+        pickup.translateY(2.6)
+        pickup.translateZ(-2.7)
+        pickup.translateX(2.5)
+        pickup.rotateY(Math.PI / 2)
+        pickup.scale.set(0.015,0.015,0.015)
+
+        var normal = new MySpriteSheet(this.app, "CASUAL")
+        normal.translateY(3)
+        normal.translateZ(3.9)
+        normal.translateX(2.5)
+        normal.rotateY(Math.PI / 2)
+        normal.scale.set(0.015,0.015,0.015)
+
+        this.add(normal, pickup)
     }
 }
 

@@ -13,6 +13,7 @@ import { MyFirework } from "./objects/single/MyFirework.js";
 import { MyBanana } from "./objects/track/MyBanana.js";
 import { MyOil } from "./objects/track/MyOil.js";
 import { MyGarage } from "./objects/scenery/MyGarage.js";
+import { MySpriteSheet } from "./objects/single/MySpriteSheet.js";
 
 /**
  *  This class contains the contents of out application
@@ -79,8 +80,6 @@ class MyContents {
 
     this.app.scene.add(new MyGarage(this.app))
 
-
-    
     //this.app.scene.add(new MyPowerUp(this.app))
     //this.app.scene.add(new MyOil(this.app))
 

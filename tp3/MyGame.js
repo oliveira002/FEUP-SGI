@@ -18,8 +18,7 @@ class MyGame {
         this.app = app;
         this.state = State.START
 
-        
-
+    
     }
 }
 
