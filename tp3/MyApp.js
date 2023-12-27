@@ -82,6 +82,10 @@ class MyApp  {
         
     }
 
+    getActiveCamera() {
+        return this.cameras[this.activeCameraName]
+    }
+
     /**
      * sets the active camera by name
      * @param {String} cameraName 

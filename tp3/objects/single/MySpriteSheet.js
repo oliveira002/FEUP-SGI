@@ -49,6 +49,7 @@ class MySpriteSheet extends THREE.Object3D {
           map: this.spritesheetTexture.clone(),
           color: new THREE.Color(0xffffff), // Set color to white
           transparent: true,
+          side: THREE.DoubleSide
         });
         
         const geometry = new THREE.PlaneGeometry(charWidth, charHeight);

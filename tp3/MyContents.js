@@ -3,6 +3,7 @@ import { degToRad } from "./utils.js"
 import { MyAxis } from "./objects/gui/MyAxis.js";
 import { MyNurbsBuilder } from "./builders/MyNurbsBuilder.js";
 import { MyCar } from "./objects/vehicle/MyCar.js";
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'; // Make sure to import GLTFLoader
 import {MyScenery} from './objects/scenery/MyScenery.js'
 import { MyShader } from "./MyShader.js";
 import { MyHUD} from './objects/gui/MyHUD.js'
@@ -42,6 +43,22 @@ class MyContents {
     this.scenery = null;
     this.snow = []
     this.powerup = null;
+    this.availableLayers = []
+    this.pickableObjs = []
+  
+    // picking
+    this.raycaster = new THREE.Raycaster()
+    this.raycaster.near = 1
+    this.raycaster.far = 20
+    this.pointer = new THREE.Vector2()
+    this.intersectedObj = null
+    this.pickingColor = "0x00ff00"
+
+    // gamestate
+    this.carMapping = {}
+    this.myCar = null
+    this.opponentCar = null
+    this.turn = 1 // 1 if my car 2 if opponent car
     //this.track = this.reader.track
     //this.app.scene.add(this.track);
 
@@ -78,7 +95,11 @@ class MyContents {
       this.app.scene.add(this.hud)
     }
 
-    this.app.scene.add(new MyGarage(this.app))
+    this.garage = new MyGarage(this.app)
+    this.app.scene.add(this.garage)
+    this.initCars()
+    this.initCarSprites()
+
 
     //this.app.scene.add(new MyPowerUp(this.app))
     //this.app.scene.add(new MyOil(this.app))
@@ -107,6 +128,10 @@ class MyContents {
           break;
       }
     });
+
+    document.addEventListener("pointermove", this.onPointerMove.bind(this));
+    document.addEventListener("click", this.onMouseClick.bind(this));
+
   }
 
   displayHelpers() {
@@ -188,6 +213,149 @@ class MyContents {
     for (var i = 0; i < this.snow.length; i++) {
         this.snow[i].update();
     }
+  }
+
+  onPointerMove(event) {
+    this.pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+    this.pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+    this.raycaster.setFromCamera(this.pointer, this.app.getActiveCamera());
+
+    var intersects = this.raycaster.intersectObjects(this.pickableObjs);
+    this.pickingHelper(intersects)
+
+  }
+
+  onMouseClick(event) {
+    this.pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+    this.pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+    this.raycaster.setFromCamera(this.pointer, this.app.getActiveCamera());
+    var intersects = this.raycaster.intersectObjects(this.pickableObjs);
+
+    if (intersects.length > 0) {
+        const obj = this.getAllObject(intersects[0].object)
+        this.chooseCar(obj)
+    }
+  }
+
+  chooseCar(obj) {
+    if(this.turn === 1) {
+      this.myCar = this.carMapping[obj.name]
+      console.log(this.myCar)
+      this.turn += 1
+    }
+    else if(this.turn === 2) {
+      this.opponentCar = this.carMapping[obj.name]
+      console.log(this.opponentCar)
+      this.turn += 1
+    }
+  }
+
+  pickingHelper(intersects) {
+    if (intersects.length > 0) {
+        const obj = intersects[0].object
+        this.changeObjectProperty(obj)
+    } else {
+        this.restoreObjectProperty()
+    }
+  }
+
+  restoreObjectProperty() {
+    if (this.lastPickedObj)
+      this.objectPickingEffect(this.lastPickedObj.name, false)
+    this.lastPickedObj = null;
+  }
+
+  getAllObject(obj) {
+    var checkObjs = ["truck","sedan"]
+    while(obj && !checkObjs.includes(obj.name)) {
+      obj = obj.parent
+    }
+
+    return obj
+  }
+
+  changeObjectProperty(obj) {
+
+    obj = this.getAllObject(obj)
+
+    if (this.lastPickedObj != obj) {
+      this.lastPickedObj = obj
+      this.objectPickingEffect(obj.name, true)
+    }
+  }
+
+  objectPickingEffect(name, isHover) {
+    var value = isHover ? 0.2 : -0.2
+    var mapping = {"truck": this.pickupSprite, "sedan": this.casualSprite}
+    mapping[name].translateY(value)
+  }
+
+
+  initCars() {
+
+    const loader = new GLTFLoader();
+
+    loader.load(
+      'images/pickup_truck.glb',
+      (gltf) => {
+          this.truck = gltf.scene
+          this.truck.scale.set(1.25,1.25,1.25)
+          this.truck.rotateY(Math.PI / 2.15)
+          this.truck.translateX(3.5)
+          this.truck.translateZ(1)
+          this.truck.name = "truck"
+          this.app.scene.add(this.truck); 
+          this.pickableObjs.push(this.truck)
+          this.carMapping["truck"] = this.truck
+
+      },
+      (xhr) => {
+          console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+      },
+      (error) => {
+          console.log('An error happened', error);
+      }
+  );
+
+    loader.load(
+      'images/low-poly_sedan_car.glb',
+      (gltf) => {
+          this.sedan = gltf.scene
+          this.sedan.scale.set(0.55,0.55,0.55)
+          this.sedan.rotateY(Math.PI / 1.9)
+          this.sedan.translateX(-3.5)
+          this.sedan.translateZ(2)
+          this.sedan.name = "sedan"
+          this.app.scene.add(this.sedan); 
+          this.pickableObjs.push(this.sedan)
+          this.carMapping["sedan"] = this.sedan
+      },
+      (xhr) => {
+          console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+      },
+      (error) => {
+          console.log('An error happened', error);
+      }
+    );
+  }
+
+  initCarSprites() {
+    this.pickupSprite = new MySpriteSheet(this.app, "PICKUP")
+    this.pickupSprite.translateY(2.6)
+    this.pickupSprite.translateZ(-2.7)
+    this.pickupSprite.translateX(2.5)
+    this.pickupSprite.rotateY(Math.PI / 2)
+    this.pickupSprite.scale.set(0.015,0.015,0.015)
+
+    this.casualSprite = new MySpriteSheet(this.app, "CASUAL")
+    this.casualSprite.translateY(3)
+    this.casualSprite.translateZ(3.9)
+    this.casualSprite.translateX(2.5)
+    this.casualSprite.rotateY(Math.PI / 2)
+    this.casualSprite.scale.set(0.015,0.015,0.015)
+    this.app.scene.add(this.pickupSprite,  this.casualSprite)
   }
 }
 

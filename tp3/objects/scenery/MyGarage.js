@@ -28,7 +28,6 @@ class MyGarage extends THREE.Object3D {
         this.initTable()
         this.initSupport()
         this.initCone()
-        this.initCarInfo()
 
         const shelfPath = 'images/furniture.jpg'
         this.shelf = new MyShelf(this.app, 6,1.6,5,shelfPath)
@@ -48,7 +47,6 @@ class MyGarage extends THREE.Object3D {
         this.caution.translateZ(-0.2)
         this.caution.rotateY(Math.PI / 1.8)
         this.add(this.caution)
-
     }
 
     initFloor() {
@@ -150,24 +148,6 @@ class MyGarage extends THREE.Object3D {
         );
 
         loader.load(
-            'images/pickup_truck.glb',
-            (gltf) => {
-                var model = gltf.scene
-                model.scale.set(1.25,1.25,1.25)
-                model.rotateY(Math.PI / 2.15)
-                model.translateX(3.5)
-                model.translateZ(1)
-                this.add(model); 
-            },
-            (xhr) => {
-                console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-            },
-            (error) => {
-                console.log('An error happened', error);
-            }
-        );
-
-        loader.load(
             'images/metal_ladder.glb',
             (gltf) => {
                 var model = gltf.scene
@@ -204,24 +184,6 @@ class MyGarage extends THREE.Object3D {
                 model.translateY(4)
                 model.translateZ(14.95)
                 model.rotateY(-Math.PI)
-                this.add(model); 
-            },
-            (xhr) => {
-                console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-            },
-            (error) => {
-                console.log('An error happened', error);
-            }
-        );
-
-        loader.load(
-            'images/low-poly_sedan_car.glb',
-            (gltf) => {
-                var model = gltf.scene
-                model.scale.set(0.55,0.55,0.55)
-                model.rotateY(Math.PI / 1.9)
-                model.translateX(-3.5)
-                model.translateZ(2)
                 this.add(model); 
             },
             (xhr) => {
@@ -347,24 +309,6 @@ class MyGarage extends THREE.Object3D {
         this.coneGroup.translateY(2)
         this.coneGroup.translateZ(13.25)
         this.add(this.coneGroup);
-    }
-
-    initCarInfo() {
-        var pickup = new MySpriteSheet(this.app, "PICKUP")
-        pickup.translateY(2.6)
-        pickup.translateZ(-2.7)
-        pickup.translateX(2.5)
-        pickup.rotateY(Math.PI / 2)
-        pickup.scale.set(0.015,0.015,0.015)
-
-        var normal = new MySpriteSheet(this.app, "CASUAL")
-        normal.translateY(3)
-        normal.translateZ(3.9)
-        normal.translateX(2.5)
-        normal.rotateY(Math.PI / 2)
-        normal.scale.set(0.015,0.015,0.015)
-
-        this.add(normal, pickup)
     }
 }
 
