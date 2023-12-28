@@ -113,6 +113,7 @@ class MyContents {
     }
 
     this.menu = new MyMenu(this.app)
+    this.menu.translateX(500,0,0)
     this.app.scene.add(this.menu)
     console.log(this.menu)
 
