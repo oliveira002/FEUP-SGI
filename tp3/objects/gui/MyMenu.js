@@ -12,7 +12,7 @@ class MyMenu extends THREE.Object3D {
         this.app = app;
         this.type = 'Group';
         this.spritesheetBlack = new MySpriteSheet(15,8, "images/test2.png");
-        this.spritesheetRed = new MySpriteSheet(15,8, "images/test.png");
+        this.spritesheetRed = new MySpriteSheet(15,8, "images/test3.png");
         this.pickableObjs = []
 
         this.initBackground()
@@ -20,14 +20,13 @@ class MyMenu extends THREE.Object3D {
         this.diffClick = ["diffLeft", "diffRight"]
         this.trackClick = ["trackLeft", "trackRight"]
         this.initCamera()
-
     }
 
     initBackground() {
         this.background = new THREE.PlaneGeometry(42,20)
         
         
-        this.bgTex = new THREE.TextureLoader().load('images/bg.jpg');
+        this.bgTex = new THREE.TextureLoader().load('images/main.jpg');
         this.bgTex.wrapS = THREE.RepeatWrapping;
         this.bgTex.wrapT = THREE.RepeatWrapping;
 
@@ -43,13 +42,13 @@ class MyMenu extends THREE.Object3D {
     initSpriteSheets() {
         this.difficultyTitle = this.spritesheetBlack.createTextGroup("Difficulty:")
         this.difficultyTitle.scale.set(10,10,10)
-        this.difficultyTitle.translateX(-2.8)
-        this.difficultyTitle.translateY(5)
+        this.difficultyTitle.translateX(-3.6)
+        this.difficultyTitle.translateY(0)
 
         this.trackTitle = this.spritesheetBlack.createTextGroup("Track:")
         this.trackTitle.scale.set(10,10,10)
-        this.trackTitle.translateX(-1.5)
-        this.trackTitle.translateY(1)
+        this.trackTitle.translateX(-2.1)
+        this.trackTitle.translateY(-4)
 
         this.add(this.difficultyTitle, this.trackTitle)
 
@@ -118,20 +117,20 @@ class MyMenu extends THREE.Object3D {
     buildDifficulties() {
         this.easy = this.spritesheetBlack.createTextGroup("easy")
         this.easy.scale.set(10,10,10)
-        this.easy.translateX(-0.8)
-        this.easy.translateY(3.5)
+        this.easy.translateX(-1.6)
+        this.easy.translateY(-1.5)
         this.activeDifficulty = this.easy
         this.add(this.activeDifficulty)
 
         this.hard = this.spritesheetBlack.createTextGroup("hard")
         this.hard.scale.set(10,10,10)
-        this.hard.translateX(-0.8)
-        this.hard.translateY(3.5)
+        this.hard.translateX(-1.6)
+        this.hard.translateY(-1.5)
 
         this.normal = this.spritesheetBlack.createTextGroup("normal")
         this.normal.scale.set(10,10,10)
-        this.normal.translateX(-1.5)
-        this.normal.translateY(3.5)
+        this.normal.translateX(-2.3)
+        this.normal.translateY(-1.5)
 
         this.difficultyArrowLeft = this.spritesheetBlack.createTextGroup("<")
         this.difficultyArrowLeft.name = "diffLeft"
@@ -141,12 +140,12 @@ class MyMenu extends THREE.Object3D {
 
         for (var i = 0; i < this.diffArrows.length; i++) {
             this.diffArrows[i].scale.set(10,10,10)
-            this.diffArrows[i].translateY(3.5)
+            this.diffArrows[i].translateY(-1.5)
             this.pickableObjs.push(this.diffArrows[i])
         }
 
-        this.difficultyArrowLeft.translateX(-2.2)
-        this.difficultyArrowRight.translateX(2.5)
+        this.difficultyArrowLeft.translateX(-3.1)
+        this.difficultyArrowRight.translateX(1.8)
 
         this.add(this.difficultyArrowLeft, this.difficultyArrowRight)
 
@@ -155,20 +154,20 @@ class MyMenu extends THREE.Object3D {
     buildTracks() {
         this.track1 = this.spritesheetBlack.createTextGroup("Track 1")
         this.track1.scale.set(10,10,10)
-        this.track1.translateX(-1.6)
-        this.track1.translateY(-0.8)
+        this.track1.translateX(-2.4)
+        this.track1.translateY(-5.8)
         this.activeTrack = this.track1
         this.add(this.activeTrack)
 
         this.track2 = this.spritesheetBlack.createTextGroup("Track 2")
         this.track2.scale.set(10,10,10)
-        this.track2.translateX(-1.6)
-        this.track2.translateY(-0.8)
+        this.track2.translateX(-2.4)
+        this.track2.translateY(-5.8)
 
         this.track3 = this.spritesheetBlack.createTextGroup("Track 3")
         this.track3.scale.set(10,10,10)
-        this.track3.translateX(-1.6)
-        this.track3.translateY(-0.8)
+        this.track3.translateX(-2.4)
+        this.track3.translateY(-5.8)
 
         this.trackArrowLeft = this.spritesheetBlack.createTextGroup("<")
         this.trackArrowLeft.name = "trackLeft"
@@ -179,11 +178,11 @@ class MyMenu extends THREE.Object3D {
         for (var i = 0; i < this.trackArrows.length; i++) {
             this.pickableObjs.push(this.trackArrows[i])
             this.trackArrows[i].scale.set(10,10,10)
-            this.trackArrows[i].translateY(-0.8)
+            this.trackArrows[i].translateY(-5.8)
         }
 
-        this.trackArrowLeft.translateX(-2.5)
-        this.trackArrowRight.translateX(3.2)
+        this.trackArrowLeft.translateX(-3.3)
+        this.trackArrowRight.translateX(2.4)
         this.add(this.trackArrowLeft, this.trackArrowRight)
     }
 
@@ -206,8 +205,8 @@ class MyMenu extends THREE.Object3D {
 
         this.startBlack = this.spritesheetBlack.createTextGroup("Start")
         this.startBlack.scale.set(15,15,15)
-        this.startBlack.translateX(-1.92)
-        this.startBlack.translateY(-3)
+        this.startBlack.translateX(-2.6)
+        this.startBlack.translateY(-8)
 
         this.blackGroup.add(this.startBlack)
         this.activeStart = this.blackGroup
@@ -221,8 +220,8 @@ class MyMenu extends THREE.Object3D {
 
         this.startRed = this.spritesheetRed.createTextGroup("Start")
         this.startRed.scale.set(15,15,15)
-        this.startRed.translateX(-1.92)
-        this.startRed.translateY(-3)
+        this.startRed.translateX(-2.6)
+        this.startRed.translateY(-8)
         this.redGroup.add(this.startRed)
 
     }
