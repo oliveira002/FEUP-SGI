@@ -40,7 +40,7 @@ class MyMainMenu extends THREE.Object3D {
         this.playBlack = this.spritesheetBlack.createTextGroup("Play")
         this.playBlack.scale.set(25,25,25)
         this.playBlack.translateX(-2.5)
-        this.playBlack.translateY(-3)
+        this.playBlack.translateY(-1.5)
 
         this.activePlay = this.playBlack
         this.pickableObjs.push(this.activePlay)
@@ -48,7 +48,7 @@ class MyMainMenu extends THREE.Object3D {
         this.playRed = this.spritesheetRed.createTextGroup("Play")
         this.playRed.scale.set(25,25,25)
         this.playRed.translateX(-2.5)
-        this.playRed.translateY(-3)
+        this.playRed.translateY(-1.5)
 
         this.add(this.playBlack)
     }
