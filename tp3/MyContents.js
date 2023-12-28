@@ -17,7 +17,7 @@ import { MyBanana } from "./objects/track/MyBanana.js";
 import { MyOil } from "./objects/track/MyOil.js";
 import { MyGarage } from "./objects/scenery/MyGarage.js";
 import { MySpriteSheet } from "./objects/single/MySpriteSheet.js";
-import { MyGame } from "./MyGame.js";
+import { MyGame, State } from "./MyGame.js";
 
 /**
  *  This class contains the contents of out application
@@ -65,7 +65,6 @@ class MyContents {
     this.myCar = null
     this.opponentCar = null
     this.turn = 1
-    this.state = "MENU" // 1 if my car 2 if opponent car
     //this.track = this.reader.track
     //this.app.scene.add(this.track);
 
@@ -112,10 +111,13 @@ class MyContents {
     }
 
     if(this.garage === null) {
-      //this.garage = new MyGarage(this.app)
-      //this.app.scene.add(this.garage)
-      //this.initCars()
-      //this.initCarSprites()
+      this.garageGroup = new THREE.Group()
+      this.garage = new MyGarage(this.app)
+      this.garageGroup.add(this.garage)
+      this.initCars()
+      this.initCarSprites()
+      this.garageGroup.translateX(-500)
+      this.app.scene.add(this.garageGroup)
     }
 
     this.menu = new MyMenu(this.app)
@@ -261,17 +263,18 @@ class MyContents {
   }
 
   handleClick(obj) {
-    switch(this.state) {
-      case "MENU":
+    switch(this.game.state) {
+      case State.CHOOSE_GAME_SETTINGS:
+        console.log(obj)
         if(obj.parent.parent.name === "Black") {
-          this.state = "GARAGE"
+          this.game.state = State.CHOOSE_CAR_PLAYER
         }
         else {
           this.menu.handleClick(obj.parent.name)
         }
         break;
       
-      case "GARAGE":
+      case State.CHOOSE_CAR_PLAYER:
         obj = this.getAllObject(obj)
         this.chooseCar(obj)
         break;
@@ -316,7 +319,7 @@ class MyContents {
   }
 
   changeObjectProperty(obj) {
-    if(this.state === "MENU") {
+    if(this.game.state === State.CHOOSE_GAME_SETTINGS) {
       if (this.lastPickedObj != obj) {
         this.lastPickedObj = obj
         this.objectPickingEffect(obj, true)
@@ -332,9 +335,8 @@ class MyContents {
   }
 
   objectPickingEffect(obj, isHover) {
-    if(this.state === "MENU") {
+    if(this.game.state === State.CHOOSE_GAME_SETTINGS) {
       var value = isHover ? 1.15 : 1
-      console.log(obj)
       if(obj.parent.parent.name === "Black") {
         this.menu.switchStart(isHover)
       }
@@ -363,7 +365,7 @@ class MyContents {
           this.truck.translateX(3.5)
           this.truck.translateZ(1)
           this.truck.name = "truck"
-          this.app.scene.add(this.truck); 
+          this.garageGroup.add(this.truck); 
           this.pickableObjs.push(this.truck)
           this.carMapping["truck"] = this.truck
 
@@ -385,7 +387,7 @@ class MyContents {
           this.sedan.translateX(-3.5)
           this.sedan.translateZ(2)
           this.sedan.name = "sedan"
-          this.app.scene.add(this.sedan); 
+          this.garageGroup.add(this.sedan); 
           this.pickableObjs.push(this.sedan)
           this.carMapping["sedan"] = this.sedan
       },
@@ -411,7 +413,7 @@ class MyContents {
     this.casualSprite.translateX(2.5)
     this.casualSprite.rotateY(Math.PI / 2)
 
-    this.app.scene.add(this.pickupSprite,  this.casualSprite)
+    this.garageGroup.add(this.pickupSprite,  this.casualSprite)
   }
 }
 
