@@ -19,11 +19,12 @@ class MyMenu extends THREE.Object3D {
         this.initSpriteSheets()
         this.diffClick = ["diffLeft", "diffRight"]
         this.trackClick = ["trackLeft", "trackRight"]
+        this.initCamera()
 
     }
 
     initBackground() {
-        this.background = new THREE.PlaneGeometry(40,20)
+        this.background = new THREE.PlaneGeometry(42,20)
         
         
         this.bgTex = new THREE.TextureLoader().load('images/bg.jpg');
@@ -223,6 +224,30 @@ class MyMenu extends THREE.Object3D {
         this.startRed.translateX(-1.92)
         this.startRed.translateY(-3)
         this.redGroup.add(this.startRed)
+
+    }
+
+    initCamera(){
+        
+        const aspect = window.innerWidth / window.innerHeight;
+        const frustumSize = 20
+
+        // defines the frustum size for the orthographic cameras
+        const left = -frustumSize / 2 * aspect
+        const right = frustumSize /2 * aspect 
+        const top = frustumSize / 2 
+        const bottom = -frustumSize / 2
+        const near = -frustumSize /2
+        const far =  frustumSize
+
+        // create a left view orthographic camera
+        const menu = new THREE.OrthographicCamera( left, right, top, bottom, near, far);
+        menu.up = new THREE.Vector3(0,1,0);
+        menu.position.set(0,0,frustumSize /4)
+        menu.lookAt( new THREE.Vector3(0,0,0) );
+        this.app.cameras['Menu'] = menu
+
+        this.add(menu)
 
     }
 }

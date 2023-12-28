@@ -121,7 +121,6 @@ class MyContents {
     this.menu = new MyMenu(this.app)
     this.menu.translateX(500,0,0)
     this.app.scene.add(this.menu)
-    console.log(this.menu)
 
     //this.app.scene.add(new MyPowerUp(this.app))
     //this.app.scene.add(new MyOil(this.app))
