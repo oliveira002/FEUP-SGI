@@ -29,7 +29,7 @@ class MyContents {
     this.builder = new MyNurbsBuilder();
     this.helpersOn = false;
     this.controlPtsOn = false;
-    //this.reader = new MyReader(this.app,"track2")
+    this.reader = new MyReader(this.app,"Monza")
 
     // Globals
     this.axis = null;
@@ -86,8 +86,9 @@ class MyContents {
 
     
     if(this.scenery === null) {
-      //this.scenery = new MyScenery(this.app, 100, 100)
-      //this.app.scene.add(this.scenery)
+      this.scenery = new MyScenery(this.app, 100, 100)
+      this.scenery.translateY(-33)
+      this.app.scene.add(this.scenery)
     }
 
     if(this.hud === null) {
@@ -95,10 +96,10 @@ class MyContents {
       this.app.scene.add(this.hud)
     }
 
-    this.garage = new MyGarage(this.app)
-    this.app.scene.add(this.garage)
-    this.initCars()
-    this.initCarSprites()
+    //this.garage = new MyGarage(this.app)
+    //this.app.scene.add(this.garage)
+    //this.initCars()
+    //this.initCarSprites()
 
 
     //this.app.scene.add(new MyPowerUp(this.app))

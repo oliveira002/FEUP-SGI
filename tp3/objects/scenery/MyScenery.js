@@ -9,7 +9,7 @@ class MyScenery extends THREE.Object3D{
 		this.width = width
 		this.height = height
 
-		this.geometry = new THREE.PlaneGeometry(10, 10,100,100);
+		this.geometry = new THREE.PlaneGeometry(10, 10, 100, 100);
 		
 		this.heightMapTex = new THREE.TextureLoader().load('images/heightmap4.jpg' )
 		this.heightMapTex.wrapS = THREE.RepeatWrapping;
@@ -40,7 +40,7 @@ class MyScenery extends THREE.Object3D{
 
 		this.mesh = new THREE.Mesh(this.geometry, this.shader.material);
     	this.mesh.rotateX(-Math.PI / 2);
-		this.mesh.scale.set(50,50,50)
+		this.mesh.scale.set(35,35,35)
 		this.add(this.mesh)
 	}
 }
