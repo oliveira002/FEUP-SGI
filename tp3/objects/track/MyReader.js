@@ -47,7 +47,6 @@ class MyReader extends THREE.Object3D {
         });
 
         this.track = new MyTrack(curvePoints)
-        this.track.translateY(4)
         this.app.scene.add(this.track)
     }
 
