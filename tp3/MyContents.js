@@ -63,7 +63,7 @@ class MyContents {
     this.myCar = null
     this.opponentCar = null
     this.turn = 1
-    this.state = "MENU" // 1 if my car 2 if opponent car
+    this.state = "GARAGE" // 1 if my car 2 if opponent car
     //this.track = this.reader.track
     //this.app.scene.add(this.track);
 
@@ -106,10 +106,13 @@ class MyContents {
     }
 
     if(this.garage === null) {
-      //this.garage = new MyGarage(this.app)
-      //this.app.scene.add(this.garage)
-      //this.initCars()
-      //this.initCarSprites()
+      this.garageGroup = new THREE.Group()
+      this.garage = new MyGarage(this.app)
+      this.garageGroup.add(this.garage)
+      this.initCars()
+      this.initCarSprites()
+      this.garageGroup.translateX(-500)
+      this.app.scene.add(this.garageGroup)
     }
 
     this.menu = new MyMenu(this.app)
@@ -237,7 +240,7 @@ class MyContents {
 
     this.raycaster.setFromCamera(this.pointer, this.app.getActiveCamera());
 
-    var intersects = this.raycaster.intersectObjects(this.menu.pickableObjs);
+    var intersects = this.raycaster.intersectObjects(this.pickableObjs);
     this.pickingHelper(intersects)
 
   }
@@ -358,7 +361,7 @@ class MyContents {
           this.truck.translateX(3.5)
           this.truck.translateZ(1)
           this.truck.name = "truck"
-          this.app.scene.add(this.truck); 
+          this.garageGroup.add(this.truck); 
           this.pickableObjs.push(this.truck)
           this.carMapping["truck"] = this.truck
 
@@ -380,7 +383,7 @@ class MyContents {
           this.sedan.translateX(-3.5)
           this.sedan.translateZ(2)
           this.sedan.name = "sedan"
-          this.app.scene.add(this.sedan); 
+          this.garageGroup.add(this.sedan); 
           this.pickableObjs.push(this.sedan)
           this.carMapping["sedan"] = this.sedan
       },
@@ -406,7 +409,7 @@ class MyContents {
     this.casualSprite.translateX(2.5)
     this.casualSprite.rotateY(Math.PI / 2)
 
-    this.app.scene.add(this.pickupSprite,  this.casualSprite)
+    this.garageGroup.add(this.pickupSprite,  this.casualSprite)
   }
 }
 
