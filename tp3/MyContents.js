@@ -3,7 +3,7 @@ import { degToRad } from "./utils.js"
 import { MyAxis } from "./objects/gui/MyAxis.js";
 import { MyNurbsBuilder } from "./builders/MyNurbsBuilder.js";
 import { MyCar } from "./objects/vehicle/MyCar.js";
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'; // Make sure to import GLTFLoader
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import {MyScenery} from './objects/scenery/MyScenery.js'
 import { MyShader } from "./MyShader.js";
 import { MyHUD} from './objects/gui/MyHUD.js'
@@ -17,6 +17,7 @@ import { MyBanana } from "./objects/track/MyBanana.js";
 import { MyOil } from "./objects/track/MyOil.js";
 import { MyGarage } from "./objects/scenery/MyGarage.js";
 import { MySpriteSheet } from "./objects/single/MySpriteSheet.js";
+import { MyGame } from "./MyGame.js";
 
 /**
  *  This class contains the contents of out application
@@ -31,7 +32,7 @@ class MyContents {
     this.builder = new MyNurbsBuilder();
     this.helpersOn = false;
     this.controlPtsOn = false;
-    this.reader = new MyReader(this.app,"Monza")
+    this.reader = new MyReader(this.app,"Portimão")
 
     // Globals
     this.axis = null;
@@ -59,6 +60,7 @@ class MyContents {
     this.spritesheet = null
 
     // gamestate
+    this.game = new MyGame();
     this.carMapping = {}
     this.myCar = null
     this.opponentCar = null
@@ -66,6 +68,9 @@ class MyContents {
     this.state = "GARAGE" // 1 if my car 2 if opponent car
     //this.track = this.reader.track
     //this.app.scene.add(this.track);
+
+
+
 
   }
 
@@ -86,7 +91,8 @@ class MyContents {
 
     if(this.car === null){
       this.car = new MyCar(this.app, "Car")
-      //this.app.scene.add(this.car)
+      this.car.scale.set(0.05, 0.05, 0.05)
+      this.app.scene.add(this.car)
     }
 
     

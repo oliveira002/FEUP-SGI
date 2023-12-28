@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 import { MyApp } from '../../MyApp.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { degToRad } from '../../utils.js';
 
 class MyCar extends THREE.Object3D {
 
@@ -13,6 +15,7 @@ class MyCar extends THREE.Object3D {
         this.type = 'Group';
         this.pressedKeys = { w: false, a: false, s: false, d: false };
         this.name = name
+        this.loaded = false
         
         // Position
         this.pos = position ?? new THREE.Vector3(0, 0, 0)
@@ -24,8 +27,8 @@ class MyCar extends THREE.Object3D {
 
         // speed
         this.speed = 0
-        this.minSpeed = 0.08
-        this.maxSpeed = 10
+        this.minSpeed = 0.008
+        this.maxSpeed = 0.1
         this.brakingFactor = 0.99
         this.dragFactor = 0.995
 
@@ -37,15 +40,26 @@ class MyCar extends THREE.Object3D {
     }
 
     init(){
-        let geo = new THREE.BoxGeometry(7, 3, 5)
-        let mat = new THREE.MeshBasicMaterial({
-            color: 0x00aaaa
-        })
 
-        this.car = new THREE.Mesh(geo, mat)
-        this.car.translateY(3/2)
+        const loader = new GLTFLoader();
 
-        this.add(this.car)
+        loader.load(
+            'images/Nissan_Silvia_S15.glb',
+            (gltf) => {
+                this.car = gltf.scene
+                this.car.name = "car"
+                this.car.rotateY(degToRad(90))
+                this.car.scale.set(10,10,10)
+                this.add(this.car);
+                console.log(this.car) 
+            },
+            (xhr) => {
+                console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+            },
+            (error) => {
+                console.log('An error happened', error);
+            }
+          );
 
         this.initCamera()
 
@@ -66,10 +80,10 @@ class MyCar extends THREE.Object3D {
     updateCameraPos(){
 
         let cameraPos = this.dir.clone().multiplyScalar(-1)
-        cameraPos.x *= 20
-        cameraPos.z *= 20
+        cameraPos.x *= 2
+        cameraPos.z *= 2
         
-        cameraPos.add(new THREE.Vector3(0,10,0))
+        cameraPos.add(new THREE.Vector3(0,2,0))
         cameraPos.add(this.position)
 
         this.camera.position.set(...cameraPos)

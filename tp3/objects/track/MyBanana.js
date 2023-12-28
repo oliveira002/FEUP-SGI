@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'; // Make sure to import GLTFLoader
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 class MyBanana extends THREE.Object3D {
 
@@ -12,7 +12,7 @@ class MyBanana extends THREE.Object3D {
         this.app = app;
         this.type = 'Group';
 
-        const loader = new GLTFLoader(); // Instantiate GLTFLoader
+        const loader = new GLTFLoader();
 
         loader.load(
             'images/banana_peel_mario_kart.glb',
