@@ -7,6 +7,8 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'; // Make sure to
 import {MyScenery} from './objects/scenery/MyScenery.js'
 import { MyShader } from "./MyShader.js";
 import { MyHUD} from './objects/gui/MyHUD.js'
+import { MyMenu} from './objects/gui/MyMenu.js'
+
 import {MySnow} from './objects/scenery/MySnow.js'
 import { MyPowerUp } from "./objects/track/MyPowerUp.js";
 import { MyReader } from "./objects/track/MyReader.js";
@@ -41,6 +43,7 @@ class MyContents {
     // Objects
     this.car = null;
     this.scenery = null;
+    this.garage = null;
     this.snow = []
     this.powerup = null;
     this.availableLayers = []
@@ -53,12 +56,14 @@ class MyContents {
     this.pointer = new THREE.Vector2()
     this.intersectedObj = null
     this.pickingColor = "0x00ff00"
+    this.spritesheet = null
 
     // gamestate
     this.carMapping = {}
     this.myCar = null
     this.opponentCar = null
-    this.turn = 1 // 1 if my car 2 if opponent car
+    this.turn = 1
+    this.state = "MENU" // 1 if my car 2 if opponent car
     //this.track = this.reader.track
     //this.app.scene.add(this.track);
 
@@ -95,11 +100,20 @@ class MyContents {
       this.app.scene.add(this.hud)
     }
 
-    this.garage = new MyGarage(this.app)
-    this.app.scene.add(this.garage)
-    this.initCars()
-    this.initCarSprites()
+    if(this.spritesheet === null) {
+      this.spritesheet = new MySpriteSheet(15,8, "images/test2.png");
+    }
 
+    if(this.garage === null) {
+      //this.garage = new MyGarage(this.app)
+      //this.app.scene.add(this.garage)
+      //this.initCars()
+      //this.initCarSprites()
+    }
+
+    this.menu = new MyMenu(this.app)
+    this.app.scene.add(this.menu)
+    console.log(this.menu)
 
     //this.app.scene.add(new MyPowerUp(this.app))
     //this.app.scene.add(new MyOil(this.app))
@@ -221,7 +235,7 @@ class MyContents {
 
     this.raycaster.setFromCamera(this.pointer, this.app.getActiveCamera());
 
-    var intersects = this.raycaster.intersectObjects(this.pickableObjs);
+    var intersects = this.raycaster.intersectObjects(this.menu.pickableObjs);
     this.pickingHelper(intersects)
 
   }
@@ -231,11 +245,29 @@ class MyContents {
     this.pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
     this.raycaster.setFromCamera(this.pointer, this.app.getActiveCamera());
-    var intersects = this.raycaster.intersectObjects(this.pickableObjs);
+    var intersects = this.raycaster.intersectObjects(this.menu.pickableObjs);
 
     if (intersects.length > 0) {
-        const obj = this.getAllObject(intersects[0].object)
+        const obj = intersects[0].object
+        this.handleClick(obj)
+    }
+  }
+
+  handleClick(obj) {
+    switch(this.state) {
+      case "MENU":
+        if(obj.parent.parent.name === "Black") {
+          this.state = "GARAGE"
+        }
+        else {
+          this.menu.handleClick(obj.parent.name)
+        }
+        break;
+      
+      case "GARAGE":
+        obj = this.getAllObject(obj)
         this.chooseCar(obj)
+        break;
     }
   }
 
@@ -263,7 +295,7 @@ class MyContents {
 
   restoreObjectProperty() {
     if (this.lastPickedObj)
-      this.objectPickingEffect(this.lastPickedObj.name, false)
+      this.objectPickingEffect(this.lastPickedObj, false)
     this.lastPickedObj = null;
   }
 
@@ -277,19 +309,37 @@ class MyContents {
   }
 
   changeObjectProperty(obj) {
-
-    obj = this.getAllObject(obj)
-
-    if (this.lastPickedObj != obj) {
-      this.lastPickedObj = obj
-      this.objectPickingEffect(obj.name, true)
+    if(this.state === "MENU") {
+      if (this.lastPickedObj != obj) {
+        this.lastPickedObj = obj
+        this.objectPickingEffect(obj, true)
+      }
+    }
+    else {
+      obj = this.getAllObject(obj)
+      if (this.lastPickedObj != obj) {
+        this.lastPickedObj = obj
+        this.objectPickingEffect(obj, true)
+      }
     }
   }
 
-  objectPickingEffect(name, isHover) {
-    var value = isHover ? 0.2 : -0.2
-    var mapping = {"truck": this.pickupSprite, "sedan": this.casualSprite}
-    mapping[name].translateY(value)
+  objectPickingEffect(obj, isHover) {
+    if(this.state === "MENU") {
+      var value = isHover ? 1.15 : 1
+      console.log(obj)
+      if(obj.parent.parent.name === "Black") {
+        this.menu.switchStart(isHover)
+      }
+      else {
+        obj.scale.set(value,value,value)
+      }
+    }
+    else {
+      var value = isHover ? 0.2 : -0.2
+      var mapping = {"truck": this.pickupSprite, "sedan": this.casualSprite}
+      mapping[obj.name].translateY(value)
+    }
   }
 
 
@@ -342,19 +392,18 @@ class MyContents {
   }
 
   initCarSprites() {
-    this.pickupSprite = new MySpriteSheet(this.app, "PICKUP")
+    this.pickupSprite = this.spritesheet.createTextGroup("Truck");
     this.pickupSprite.translateY(2.6)
-    this.pickupSprite.translateZ(-2.7)
+    this.pickupSprite.translateZ(-2.9)
     this.pickupSprite.translateX(2.5)
     this.pickupSprite.rotateY(Math.PI / 2)
-    this.pickupSprite.scale.set(0.015,0.015,0.015)
 
-    this.casualSprite = new MySpriteSheet(this.app, "CASUAL")
+    this.casualSprite = this.spritesheet.createTextGroup("Sedan")
     this.casualSprite.translateY(3)
-    this.casualSprite.translateZ(3.9)
+    this.casualSprite.translateZ(3.6)
     this.casualSprite.translateX(2.5)
     this.casualSprite.rotateY(Math.PI / 2)
-    this.casualSprite.scale.set(0.015,0.015,0.015)
+
     this.app.scene.add(this.pickupSprite,  this.casualSprite)
   }
 }
