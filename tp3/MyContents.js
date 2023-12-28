@@ -17,7 +17,7 @@ import { MyBanana } from "./objects/track/MyBanana.js";
 import { MyOil } from "./objects/track/MyOil.js";
 import { MyGarage } from "./objects/scenery/MyGarage.js";
 import { MySpriteSheet } from "./objects/single/MySpriteSheet.js";
-import { MyGame } from "./MyGame.js";
+import { MyGame, State } from "./MyGame.js";
 
 /**
  *  This class contains the contents of out application
@@ -65,7 +65,6 @@ class MyContents {
     this.myCar = null
     this.opponentCar = null
     this.turn = 1
-    this.state = "GARAGE" // 1 if my car 2 if opponent car
     //this.track = this.reader.track
     //this.app.scene.add(this.track);
 
@@ -246,7 +245,7 @@ class MyContents {
 
     this.raycaster.setFromCamera(this.pointer, this.app.getActiveCamera());
 
-    var intersects = this.raycaster.intersectObjects(this.pickableObjs);
+    var intersects = this.raycaster.intersectObjects(this.menu.pickableObjs);
     this.pickingHelper(intersects)
 
   }
@@ -265,17 +264,18 @@ class MyContents {
   }
 
   handleClick(obj) {
-    switch(this.state) {
-      case "MENU":
+    switch(this.game.state) {
+      case State.CHOOSE_GAME_SETTINGS:
+        console.log(obj)
         if(obj.parent.parent.name === "Black") {
-          this.state = "GARAGE"
+          this.game.state = State.CHOOSE_CAR_PLAYER
         }
         else {
           this.menu.handleClick(obj.parent.name)
         }
         break;
       
-      case "GARAGE":
+      case State.CHOOSE_CAR_PLAYER:
         obj = this.getAllObject(obj)
         this.chooseCar(obj)
         break;
@@ -320,7 +320,7 @@ class MyContents {
   }
 
   changeObjectProperty(obj) {
-    if(this.state === "MENU") {
+    if(this.game.state === State.CHOOSE_GAME_SETTINGS) {
       if (this.lastPickedObj != obj) {
         this.lastPickedObj = obj
         this.objectPickingEffect(obj, true)
@@ -336,9 +336,8 @@ class MyContents {
   }
 
   objectPickingEffect(obj, isHover) {
-    if(this.state === "MENU") {
+    if(this.game.state === State.CHOOSE_GAME_SETTINGS) {
       var value = isHover ? 1.15 : 1
-      console.log(obj)
       if(obj.parent.parent.name === "Black") {
         this.menu.switchStart(isHover)
       }

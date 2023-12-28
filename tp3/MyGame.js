@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { MyApp } from './MyApp.js';
 
-const State = Object.freeze({
+export const State = Object.freeze({
     MAIN_MENU: Symbol("Main Menu"),
     RULES: Symbol("Rules"),
     CHOOSE_GAME_SETTINGS: Symbol("Choose game settings"),
@@ -24,7 +24,7 @@ class MyGame {
      */
     constructor(app) {
         this.app = app;
-        this.state = State.MAIN_MENU
+        this.state = State.CHOOSE_GAME_SETTINGS
     }
 
     exec_game_stm(){
@@ -33,9 +33,13 @@ class MyGame {
                 this.state = State.START
             case State.RULES:
             case State.CHOOSE_GAME_SETTINGS:
+                this.state = State.CHOOSE_CAR_PLAYER
             case State.CHOOSE_CAR_PLAYER:
+                this.state = State.CHOOSE_CAR_OPP
             case State.CHOOSE_CAR_OPP:
+                this.state = State.CHOOSE_OBSTACLE
             case State.CHOOSE_OBSTACLE:
+                this.state = State.PLAYING
             case State.PLACE_OBSTACLE:
             case State.START:
             case State.LOADING:
