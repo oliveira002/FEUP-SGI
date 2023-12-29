@@ -32,6 +32,7 @@ class MyOil extends THREE.Object3D {
         this.oil.translateZ(0.03)
 
         this.add(this.oil)
+        this.name = "Oil"
     }
 }
 

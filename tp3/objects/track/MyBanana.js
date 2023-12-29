@@ -21,6 +21,7 @@ class MyBanana extends THREE.Object3D {
                 model.scale.set(0.003,0.003,0.003)
                 model.translateY(0.54)
                 this.add(model); 
+                this.name = "Banana"
             },
             (xhr) => {
                 console.log((xhr.loaded / xhr.total * 100) + '% loaded');

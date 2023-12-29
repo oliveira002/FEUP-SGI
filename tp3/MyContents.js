@@ -19,6 +19,7 @@ import { MyGarage } from "./objects/scenery/MyGarage.js";
 import { MySpriteSheet } from "./objects/single/MySpriteSheet.js";
 import { MyGame, State } from "./MyGame.js";
 import { MyMainMenu } from "./objects/gui/menus/MyMainMenu.js";
+import { MyObstaclesGarage } from "./objects/scenery/MyObstaclesGarage.js";
 
 /**
  *  This class contains the contents of out application
@@ -32,7 +33,7 @@ class MyContents {
     this.app = app;
     this.builder = new MyNurbsBuilder();
     this.helpersOn = false;
-    this.reader = new MyReader(this.app,"Portimão")
+    //this.reader = new MyReader(this.app,"Portimão")
 
     // Globals
     this.axis = null;
@@ -45,11 +46,12 @@ class MyContents {
     this.car = null;
     this.scenery = null;
     this.garage = null;
+    this.obsGarage = null
     this.snow = []
     this.powerup = null;
     this.availableLayers = []
     this.pickableObjs = []
-  
+
     // picking
     this.raycaster = new THREE.Raycaster()
     this.raycaster.near = 1
@@ -63,7 +65,7 @@ class MyContents {
     this.myCar = null
     this.opponentCar = null
     this.turn = 1
-    this.track = this.reader.track
+    //this.track = this.reader.track
     //this.app.scene.add(this.track);
 
   }
@@ -92,7 +94,7 @@ class MyContents {
     if(this.scenery === null) {
       this.scenery = new MyScenery(this.app, 100, 100)
       this.scenery.translateY(-33)
-      this.app.scene.add(this.scenery)
+      //this.app.scene.add(this.scenery)
     }
 
     if(this.hud === null) {
@@ -104,7 +106,7 @@ class MyContents {
       this.spritesheet = new MySpriteSheet(15,8, "images/test2.png");
     }
 
-    /*
+    
     if(this.garage === null) {
       this.garage = new MyGarage(this.app)
       this.garage.translateX(78)
@@ -112,15 +114,25 @@ class MyContents {
       this.garage.translateZ(-9)
       this.garage.rotateY(-Math.PI / 2)
       this.app.scene.add(this.garage)
-    }*/
+    }
 
-    /*
+    
+    if(this.obsGarage === null) {
+      this.obsGarage = new MyObstaclesGarage(this.app)
+      this.obsGarage.translateX(108)
+      this.obsGarage.translateY(-10)
+      this.obsGarage.translateZ(-9)
+      this.obsGarage.rotateY(-Math.PI / 2)
+      this.app.scene.add(this.obsGarage)
+    }
+
+    
     this.menu = new MyMenu(this.app)
-    this.menu.translateX(500,0,0)
+    //this.menu.translateX(500,0,0)
     this.app.scene.add(this.menu)
     this.pickableObjs = this.menu.pickableObjs
     this.app.setActiveCamera('Menu')
-    */
+    
 
     //this.menu.mainMenu = new MyMainMenu(this.app)
     //this.menu.mainMenu.translateX(-200,0,0)
@@ -217,7 +229,6 @@ class MyContents {
           this.game.state = State.CHOOSE_CAR_PLAYER
           this.menu.updateCameraByGameState(this.game.state)
           this.pickableObjs = this.garage.pickableObjs
-
           // difficulty and track stored in this variables
           //console.log(this.menu.gameSettingsMenu.activeDifficulty) 
           //console.log(this.menu.gameSettingsMenu.activeTrack)
@@ -238,6 +249,14 @@ class MyContents {
         obj = this.getObjectParent(obj)
         this.opponentCar = this.garage.carMapping[obj.name]
         this.game.state = State.CHOOSE_OBSTACLE
+        this.pickableObjs = this.obsGarage.pickableObjs
+        break;
+      }
+      case State.CHOOSE_OBSTACLE: {
+        obj = this.getObjectParent(obj)
+        this.objectPickingEffect(obj, false)
+        this.selectedObstacle = this.obsGarage.obsMapping[obj.name]
+        this.game.state = State.PLACE_OBSTACLE
         break;
       }
     }
@@ -261,10 +280,20 @@ class MyContents {
   }
 
   getObjectParent(obj) {
-    while(obj && !this.garage.checkObjs.includes(obj.name)) {
-      obj = obj.parent
+    switch(this.game.state) {
+      case(State.CHOOSE_CAR_PLAYER):
+      case(State.CHOOSE_CAR_OPP):
+        while(obj && !this.garage.checkObjs.includes(obj.name)) {
+          obj = obj.parent
+        }
+        break;
+      
+      case(State.CHOOSE_OBSTACLE):
+        while(obj && !this.obsGarage.checkObjs.includes(obj.name)) {
+          obj = obj.parent
+        }
+        break;
     }
-
     return obj
   }
 
@@ -272,6 +301,10 @@ class MyContents {
     switch(this.game.state){
       case State.MAIN_MENU:
       case State.CHOOSE_GAME_SETTINGS: {
+        break;
+      }
+      case State.CHOOSE_OBSTACLE: {
+        obj = this.getObjectParent(obj)
         break;
       }
       default: {
@@ -310,6 +343,11 @@ class MyContents {
       case State.CHOOSE_CAR_OPP: {
         var value = isHover ? 0.2 : -0.2
         this.garage.spriteMapping[obj.name].translateY(value)
+        break;
+      }
+      case State.CHOOSE_OBSTACLE: {
+        var value = isHover ? 0.2 : -0.2
+        this.obsGarage.spriteMapping[obj.name].translateY(value)
         break;
       }
       default: {}

@@ -66,6 +66,8 @@ class MyCaution extends THREE.Object3D {
             element.castShadow = true
             element.receiveShadow = true
         });
+
+        this.name = "Caution"
     }
 }
 
