@@ -41,13 +41,12 @@ class MyNameMenu extends THREE.Object3D {
         this.playBlack.translateX(-3.4)
         this.playBlack.translateY(-1.5)
 
-        this.arrow = this.spritesheetBlack.createTextGroup(">")
+        this.arrow = this.spritesheetRed.createTextGroup(">")
         this.arrow.scale.set(10,10,10)
         this.arrow.translateX(-7.4)
         this.arrow.translateY(-4.5)
 
-        this.activePlay = this.playBlack
-        this.pickableObjs.push(this.activePlay)
+        this.pickableObjs.push(this.playBlack)
 
         this.add(this.playBlack, this.arrow)
     }
@@ -74,11 +73,11 @@ class MyNameMenu extends THREE.Object3D {
 
         const period = 2; 
         const amplitude = 0.5; 
-        const scaleFactor = amplitude * Math.sin(5 * Math.PI * (elapsedTime / period)) + 10.5;
+        const scaleFactor = amplitude * Math.sin(8 * Math.PI * (elapsedTime / period)) + 10.5;
       
 
         this.arrow.scale.set(scaleFactor, scaleFactor, scaleFactor);
-      }
+    }
 }
 
 MyNameMenu.prototype.isGroup = true;

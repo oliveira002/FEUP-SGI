@@ -213,8 +213,14 @@ class MyContents {
   }
 
   update() {
-    if(this.game.state == State.NAME_MENU) {
-      this.menu.nameMenu.update()
+    switch(this.game.state) {
+
+      case State.CHOOSE_GAME_SETTINGS:
+        this.menu.gameSettingsMenu.update()
+        break;
+      case State.NAME_MENU:
+        this.menu.nameMenu.update()
+        break;
     }
     this.car.update()
     this.hud.update()

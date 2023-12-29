@@ -19,6 +19,8 @@ class MyGameSettingsMenu extends THREE.Object3D {
         this.initSpriteSheets()
         this.diffClick = ["diffLeft", "diffRight"]
         this.trackClick = ["trackLeft", "trackRight"]
+
+        this.startTime = Date.now();
     }
 
     initBackground() {
@@ -228,7 +230,20 @@ class MyGameSettingsMenu extends THREE.Object3D {
         this.startRed.translateX(-2.6)
         this.startRed.translateY(-8)
         this.redGroup.add(this.startRed)
+    }
 
+    update() {
+        const elapsedTime = (Date.now() - this.startTime) / 1000;
+
+        const period = 2; 
+        const amplitude = 0.5; 
+        const scaleFactor = amplitude * Math.sin(8 * Math.PI * (elapsedTime / period)) + 10.5;
+        
+        
+        this.trackArrowLeft.scale.set(scaleFactor, scaleFactor, scaleFactor);
+        this.trackArrowRight.scale.set(scaleFactor, scaleFactor, scaleFactor);
+        this.difficultyArrowLeft.scale.set(scaleFactor, scaleFactor, scaleFactor);
+        this.difficultyArrowRight.scale.set(scaleFactor, scaleFactor, scaleFactor);
     }
 }
 
