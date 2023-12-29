@@ -47,7 +47,7 @@ class MySnow extends THREE.Object3D {
                 size: size,
                 map: sprite,
                 blending: THREE.AdditiveBlending,
-                depthTest: false,
+                depthTest: true,
                 transparent: true
             } );
 

@@ -9,6 +9,15 @@ class MyScenery extends THREE.Object3D{
 		this.width = width
 		this.height = height
 
+		this.skybox = new THREE.SphereGeometry(350,100,100)
+		
+		this.skyboxTex = new THREE.TextureLoader().load('images/skybox.png' )
+		this.skyboxTex.wrapS = THREE.RepeatWrapping;
+		this.skyboxTex.wrapT = THREE.RepeatWrapping;
+		this.skyboxMaterial = new THREE.MeshPhongMaterial({map: this.skyboxTex, side: THREE.DoubleSide, shininess: 20})
+		this.skyboxMesh = new THREE.Mesh(this.skybox, this.skyboxMaterial)
+		this.add(this.skyboxMesh)
+
 		this.geometry = new THREE.PlaneGeometry(10, 10, 100, 100);
 		
 		this.heightMapTex = new THREE.TextureLoader().load('images/heightmap4.jpg' )

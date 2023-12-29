@@ -64,7 +64,7 @@ class MyContents {
     this.opponentCar = null
     this.turn = 1
     this.track = this.reader.track
-    this.app.scene.add(this.track);
+    //this.app.scene.add(this.track);
 
   }
 
