@@ -14,7 +14,6 @@ class MyHUD extends THREE.Object3D {
         this.app = app;
         this.type = 'Group';
 
-        // Reference HTML elements
         this.stateElement = document.getElementById('state');
         this.timeElement = document.getElementById('time');
         this.velocityElement = document.getElementById('velocity');
@@ -23,8 +22,8 @@ class MyHUD extends THREE.Object3D {
 
     updateValues() {
         const velocity = this.app.contents.car.speed.toFixed(2);
-        
-        this.stateElement.textContent = "ola";
+        console.log(this.app)
+        this.stateElement.textContent = this.app.contents.game.state;
         this.timeElement.textContent = 'top';
         this.velocityElement.textContent = velocity;
         this.lapsElement.textContent = "1";

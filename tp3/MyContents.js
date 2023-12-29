@@ -109,7 +109,7 @@ class MyContents {
     /*
     if(this.garage === null) {
       this.garage = new MyGarage(this.app)
-      this.garage.translateX(78)
+      this.garage.translateX(120)
       this.garage.translateY(-10)
       this.garage.translateZ(-9)
       this.garage.rotateY(-Math.PI / 2)
@@ -119,7 +119,7 @@ class MyContents {
     
     if(this.obsGarage === null) {
       this.obsGarage = new MyObstaclesGarage(this.app)
-      this.obsGarage.translateX(108)
+      this.obsGarage.translateX(150)
       this.obsGarage.translateY(-10)
       this.obsGarage.translateZ(-9)
       this.obsGarage.rotateY(-Math.PI / 2)
@@ -281,8 +281,8 @@ class MyContents {
       case State.CHOOSE_CAR_OPP: {
         obj = this.getObjectParent(obj)
         this.opponentCar = this.garage.carMapping[obj.name]
-        this.game.state = State.CHOOSE_OBSTACLE
-        this.pickableObjs = this.obsGarage.pickableObjs
+        this.game.state = State.PLAYING
+        this.pickableObjs = []
         break;
       }
       case State.CHOOSE_OBSTACLE: {
