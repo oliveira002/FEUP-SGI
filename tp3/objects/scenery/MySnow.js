@@ -75,7 +75,7 @@ class MySnow extends THREE.Object3D {
 
       this.snowList[i].position.y += this.snowList[i].vy;
 
-      if (this.snowList[i].position.y < -1000) {
+      if (this.snowList[i].position.y < -300) {
         this.snowList[i].material.opacity += 0.1;
         this.remove(this.snowList[i]);
         this.snowList.splice(i, 1);
