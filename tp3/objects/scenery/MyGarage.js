@@ -19,7 +19,13 @@ class MyGarage extends THREE.Object3D {
         super();
         this.app = app;
         this.type = 'Group';
-
+        this.pickableObjs = []
+        this.spritesheet = new MySpriteSheet(15,8, "images/test2.png");
+        this.spritesheetRed = new MySpriteSheet(15,8, "images/test3.png");
+        this.carMapping = {}
+        this.checkObjs = ["sedan", "truck"]
+        this.spriteMapping = {}
+        
         this.initFloor()
         this.initCeiling()
         this.initWalls()
@@ -28,7 +34,10 @@ class MyGarage extends THREE.Object3D {
         this.initTable()
         this.initSupport()
         this.initCone()
+        this.initCars()
+        this.initCarSprites()
 
+        
         const shelfPath = 'images/furniture.jpg'
         this.shelf = new MyShelf(this.app, 6,1.6,5,shelfPath)
         this.shelf.translateX(-8.18)
@@ -309,6 +318,85 @@ class MyGarage extends THREE.Object3D {
         this.coneGroup.translateY(2)
         this.coneGroup.translateZ(13.25)
         this.add(this.coneGroup);
+    }
+
+    initCarSprites() {
+        this.pickupSprite = this.spritesheet.createTextGroup("Truck");
+        this.pickupSprite.translateY(2.6)
+        this.pickupSprite.translateZ(-2.9)
+        this.pickupSprite.translateX(2.5)
+        this.pickupSprite.rotateY(Math.PI / 2)
+        this.spriteMapping["truck"] = this.pickupSprite
+    
+        this.casualSprite = this.spritesheet.createTextGroup("Sedan")
+        this.casualSprite.translateY(3)
+        this.casualSprite.translateZ(3.6)
+        this.casualSprite.translateX(2.5)
+        this.casualSprite.rotateY(Math.PI / 2)
+        this.spriteMapping["sedan"] = this.casualSprite
+    
+        this.add(this.pickupSprite,  this.casualSprite)
+    }
+
+    initCars() {
+
+        const loader = new GLTFLoader();
+    
+        loader.load(
+          'images/pickup_truck.glb',
+          (gltf) => {
+              this.truck = gltf.scene
+              this.truck.scale.set(1.25,1.25,1.25)
+              this.truck.rotateY(Math.PI / 2.15)
+              this.truck.translateX(3.5)
+              this.truck.translateZ(1)
+              this.truck.name = "truck"
+              this.add(this.truck); 
+              this.pickableObjs.push(this.truck)
+              this.carMapping["truck"] = this.truck
+    
+          },
+          (xhr) => {
+              console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+          },
+          (error) => {
+              console.log('An error happened', error);
+          }
+      );
+    
+        loader.load(
+          'images/low-poly_sedan_car.glb',
+          (gltf) => {
+              this.sedan = gltf.scene
+              this.sedan.scale.set(0.55,0.55,0.55)
+              this.sedan.rotateY(Math.PI / 1.9)
+              this.sedan.translateX(-3.5)
+              this.sedan.translateZ(2)
+              this.sedan.name = "sedan"
+              this.add(this.sedan); 
+              this.pickableObjs.push(this.sedan)
+              this.carMapping["sedan"] = this.sedan
+          },
+          (xhr) => {
+              console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+          },
+          (error) => {
+              console.log('An error happened', error);
+          }
+        );
+    }
+
+    removeCarPickable(car) {
+        var index = this.pickableObjs.indexOf(car);
+        this.pickableObjs.splice(index, 1);
+
+        this.carSelectedSprite = this.spritesheetRed.createTextGroup("Your Car");
+        this.carSelectedSprite.rotateY(Math.PI / 2)
+        this.carSelectedSprite.position.set(...this.spriteMapping[car.name].position)
+        this.carSelectedSprite.translateX(-0.2)
+
+        this.remove(this.spriteMapping[car.name])
+        this.add(this.carSelectedSprite)
     }
 }
 

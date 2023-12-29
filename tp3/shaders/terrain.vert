@@ -18,5 +18,5 @@ void main() {
 
     gl_Position = projectionMatrix * modelViewMatrix * vec4(position.xy, position.z + offset.z * 3.0, 1.0); 
 
-	fragCoord = vec2(0, offset.z * 0.9 + 0.1);
+	fragCoord = vec2(0, offset.z * 0.9);
 }

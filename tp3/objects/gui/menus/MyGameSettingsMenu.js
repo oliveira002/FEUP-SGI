@@ -118,6 +118,7 @@ class MyGameSettingsMenu extends THREE.Object3D {
         this.easy.scale.set(10,10,10)
         this.easy.translateX(-1.6)
         this.easy.translateY(-1.5)
+        this.easy.name = "easy"
         this.activeDifficulty = this.easy
         this.add(this.activeDifficulty)
 
@@ -125,11 +126,13 @@ class MyGameSettingsMenu extends THREE.Object3D {
         this.hard.scale.set(10,10,10)
         this.hard.translateX(-1.6)
         this.hard.translateY(-1.5)
+        this.hard.name = "hard"
 
         this.normal = this.spritesheetBlack.createTextGroup("normal")
         this.normal.scale.set(10,10,10)
         this.normal.translateX(-2.3)
         this.normal.translateY(-1.5)
+        this.normal.name = "normal"
 
         this.difficultyArrowLeft = this.spritesheetBlack.createTextGroup("<")
         this.difficultyArrowLeft.name = "diffLeft"
@@ -155,6 +158,7 @@ class MyGameSettingsMenu extends THREE.Object3D {
         this.track1.scale.set(10,10,10)
         this.track1.translateX(-2.4)
         this.track1.translateY(-5.8)
+        this.track1.name = "track1"
         this.activeTrack = this.track1
         this.add(this.activeTrack)
 
@@ -162,11 +166,13 @@ class MyGameSettingsMenu extends THREE.Object3D {
         this.track2.scale.set(10,10,10)
         this.track2.translateX(-2.4)
         this.track2.translateY(-5.8)
+        this.track2.name = "track2"
 
         this.track3 = this.spritesheetBlack.createTextGroup("Track 3")
         this.track3.scale.set(10,10,10)
         this.track3.translateX(-2.4)
         this.track3.translateY(-5.8)
+        this.track3.name = "track3"
 
         this.trackArrowLeft = this.spritesheetBlack.createTextGroup("<")
         this.trackArrowLeft.name = "trackLeft"

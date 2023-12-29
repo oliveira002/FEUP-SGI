@@ -24,7 +24,7 @@ class MyGame {
      */
     constructor(app) {
         this.app = app;
-        this.state = State.MAIN_MENU
+        this.state = State.PLAYING
     }
 
     exec_game_stm(){

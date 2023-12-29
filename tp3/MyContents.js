@@ -32,7 +32,7 @@ class MyContents {
     this.app = app;
     this.builder = new MyNurbsBuilder();
     this.helpersOn = false;
-    //this.reader = new MyReader(this.app,"Portimão")
+    this.reader = new MyReader(this.app,"Portimão")
 
     // Globals
     this.axis = null;
@@ -60,12 +60,11 @@ class MyContents {
 
     // gamestate
     this.game = new MyGame();
-    this.carMapping = {}
     this.myCar = null
     this.opponentCar = null
     this.turn = 1
-    //this.track = this.reader.track
-    //this.app.scene.add(this.track);
+    this.track = this.reader.track
+    this.app.scene.add(this.track);
 
   }
 
@@ -93,7 +92,7 @@ class MyContents {
     if(this.scenery === null) {
       this.scenery = new MyScenery(this.app, 100, 100)
       this.scenery.translateY(-33)
-      //this.app.scene.add(this.scenery)
+      this.app.scene.add(this.scenery)
     }
 
     if(this.hud === null) {
@@ -105,22 +104,17 @@ class MyContents {
       this.spritesheet = new MySpriteSheet(15,8, "images/test2.png");
     }
 
-    /*
     if(this.garage === null) {
-      this.garageGroup = new THREE.Group()
       this.garage = new MyGarage(this.app)
-      this.garageGroup.add(this.garage)
-      this.initCars()
-      this.initCarSprites()
-      this.garageGroup.translateX(-500)
-      this.app.scene.add(this.garageGroup)
-    }*/
+      this.garage.translateX(-500)
+      this.app.scene.add(this.garage)
+    }
 
-    this.menu = new MyMenu(this.app)
+    //this.menu = new MyMenu(this.app)
     //this.menu.translateX(500,0,0)
-    this.app.scene.add(this.menu)
-    this.pickableObjs = this.menu.pickableObjs
-    this.app.setActiveCamera('Menu')
+    //this.app.scene.add(this.menu)
+    //this.pickableObjs = this.menu.pickableObjs
+    //this.app.setActiveCamera('Menu')
 
     //this.menu.mainMenu = new MyMainMenu(this.app)
     //this.menu.mainMenu.translateX(-200,0,0)
@@ -179,7 +173,7 @@ class MyContents {
   update() {
     this.car.update()
     this.hud.update()
-    //this.updateSnow()
+    this.updateSnow()
   }
 
   updateSnow(){
@@ -204,9 +198,9 @@ class MyContents {
   }
 
   handleClick(obj) {
+    this.lastPickedObj = null
     switch(this.game.state) {
       case State.MAIN_MENU: {
-        this.lastPickedObj = null
         this.game.state = State.CHOOSE_GAME_SETTINGS
         this.menu.updateCameraByGameState(this.game.state)
         this.pickableObjs = this.menu.gameSettingsMenu.pickableObjs
@@ -215,6 +209,12 @@ class MyContents {
       case State.CHOOSE_GAME_SETTINGS: {
         if(obj.parent.parent.name === "Black") {
           this.game.state = State.CHOOSE_CAR_PLAYER
+          this.menu.updateCameraByGameState(this.game.state)
+          this.pickableObjs = this.garage.pickableObjs
+
+          // difficulty and track stored in this variables
+          //console.log(this.menu.gameSettingsMenu.activeDifficulty) 
+          //console.log(this.menu.gameSettingsMenu.activeTrack)
         }
         else {
           this.menu.gameSettingsMenu.handleClick(obj.parent.name)
@@ -223,22 +223,28 @@ class MyContents {
       }
       case State.CHOOSE_CAR_PLAYER: {
         obj = this.getObjectParent(obj)
-        this.chooseCar(obj)
+        this.myCar = this.garage.carMapping[obj.name]
+        this.garage.removeCarPickable(this.myCar)
+        this.game.state = State.CHOOSE_CAR_OPP
+        break;
+      }
+      case State.CHOOSE_CAR_OPP: {
+        obj = this.getObjectParent(obj)
+        this.opponentCar = this.garage.carMapping[obj.name]
+        this.game.state = State.CHOOSE_OBSTACLE
         break;
       }
     }
   }
 
   chooseCar(obj) {
-    if(this.turn === 1) {
+    if(this.game.state === State.CHOOSE_CAR_PLAYER) {
       this.myCar = this.carMapping[obj.name]
-      console.log(this.myCar)
-      this.turn += 1
+      this.game.state = State.CHOOSE_CAR_OPP
     }
-    else if(this.turn === 2) {
+    else if(this.game.state === State.CHOOSE_CAR_OPP) {
       this.opponentCar = this.carMapping[obj.name]
-      console.log(this.opponentCar)
-      this.turn += 1
+      this.game.state = State.CHOOSE_OBSTACLE
     }
   }
 
@@ -249,8 +255,7 @@ class MyContents {
   }
 
   getObjectParent(obj) {
-    var checkObjs = ["truck","sedan"]
-    while(obj && !checkObjs.includes(obj.name)) {
+    while(obj && !this.garage.checkObjs.includes(obj.name)) {
       obj = obj.parent
     }
 
@@ -276,7 +281,6 @@ class MyContents {
   }
 
   objectPickingEffect(obj, isHover) {
-
     switch(this.game.state){
       case State.MAIN_MENU: {
         this.menu.mainMenu.switchStart(isHover)
@@ -294,77 +298,16 @@ class MyContents {
       }
       case State.CHOOSE_CAR_PLAYER: {
         var value = isHover ? 0.2 : -0.2
-        var mapping = {"truck": this.pickupSprite, "sedan": this.casualSprite}
-        mapping[obj.name].translateY(value)
+        this.garage.spriteMapping[obj.name].translateY(value)
+        break;
+      }
+      case State.CHOOSE_CAR_OPP: {
+        var value = isHover ? 0.2 : -0.2
+        this.garage.spriteMapping[obj.name].translateY(value)
         break;
       }
       default: {}
     }
-  }
-
-
-  initCars() {
-
-    const loader = new GLTFLoader();
-
-    loader.load(
-      'images/pickup_truck.glb',
-      (gltf) => {
-          this.truck = gltf.scene
-          this.truck.scale.set(1.25,1.25,1.25)
-          this.truck.rotateY(Math.PI / 2.15)
-          this.truck.translateX(3.5)
-          this.truck.translateZ(1)
-          this.truck.name = "truck"
-          this.garageGroup.add(this.truck); 
-          this.pickableObjs.push(this.truck)
-          this.carMapping["truck"] = this.truck
-
-      },
-      (xhr) => {
-          console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-      },
-      (error) => {
-          console.log('An error happened', error);
-      }
-  );
-
-    loader.load(
-      'images/low-poly_sedan_car.glb',
-      (gltf) => {
-          this.sedan = gltf.scene
-          this.sedan.scale.set(0.55,0.55,0.55)
-          this.sedan.rotateY(Math.PI / 1.9)
-          this.sedan.translateX(-3.5)
-          this.sedan.translateZ(2)
-          this.sedan.name = "sedan"
-          this.garageGroup.add(this.sedan); 
-          this.pickableObjs.push(this.sedan)
-          this.carMapping["sedan"] = this.sedan
-      },
-      (xhr) => {
-          console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-      },
-      (error) => {
-          console.log('An error happened', error);
-      }
-    );
-  }
-
-  initCarSprites() {
-    this.pickupSprite = this.spritesheet.createTextGroup("Truck");
-    this.pickupSprite.translateY(2.6)
-    this.pickupSprite.translateZ(-2.9)
-    this.pickupSprite.translateX(2.5)
-    this.pickupSprite.rotateY(Math.PI / 2)
-
-    this.casualSprite = this.spritesheet.createTextGroup("Sedan")
-    this.casualSprite.translateY(3)
-    this.casualSprite.translateZ(3.6)
-    this.casualSprite.translateX(2.5)
-    this.casualSprite.rotateY(Math.PI / 2)
-
-    this.garageGroup.add(this.pickupSprite,  this.casualSprite)
   }
 }
 
