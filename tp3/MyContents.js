@@ -251,12 +251,6 @@ class MyContents {
         this.pickableObjs = this.menu.nameMenu.pickableObjs
         break;
       }
-      case State.NAME_MENU: {
-        this.game.state = State.CHOOSE_GAME_SETTINGS
-        this.menu.updateCameraByGameState(this.game.state)
-        this.pickableObjs = this.menu.gameSettingsMenu.pickableObjs
-        break;
-      }
       case State.CHOOSE_GAME_SETTINGS: {
         if(obj.parent.parent.name === "Black") {
           this.game.state = State.CHOOSE_CAR_PLAYER
