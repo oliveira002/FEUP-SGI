@@ -86,7 +86,7 @@ class MyContents {
     if(this.car === null){
       this.car = new MyCar(this.app, "Car")
       this.car.scale.set(0.05, 0.05, 0.05)
-      this.app.scene.add(this.car)
+      //this.app.scene.add(this.car)
     }
     
     if(this.scenery === null) {
@@ -104,17 +104,23 @@ class MyContents {
       this.spritesheet = new MySpriteSheet(15,8, "images/test2.png");
     }
 
+    /*
     if(this.garage === null) {
       this.garage = new MyGarage(this.app)
-      this.garage.translateX(-500)
+      this.garage.translateX(78)
+      this.garage.translateY(-10)
+      this.garage.translateZ(-9)
+      this.garage.rotateY(-Math.PI / 2)
       this.app.scene.add(this.garage)
-    }
+    }*/
 
-    //this.menu = new MyMenu(this.app)
-    //this.menu.translateX(500,0,0)
-    //this.app.scene.add(this.menu)
-    //this.pickableObjs = this.menu.pickableObjs
-    //this.app.setActiveCamera('Menu')
+    /*
+    this.menu = new MyMenu(this.app)
+    this.menu.translateX(500,0,0)
+    this.app.scene.add(this.menu)
+    this.pickableObjs = this.menu.pickableObjs
+    this.app.setActiveCamera('Menu')
+    */
 
     //this.menu.mainMenu = new MyMainMenu(this.app)
     //this.menu.mainMenu.translateX(-200,0,0)
@@ -173,7 +179,7 @@ class MyContents {
   update() {
     this.car.update()
     this.hud.update()
-    this.updateSnow()
+    //this.updateSnow()
   }
 
   updateSnow(){

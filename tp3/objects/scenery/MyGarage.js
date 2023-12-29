@@ -106,14 +106,14 @@ class MyGarage extends THREE.Object3D {
 
         this.ceilingMesh = new THREE.Mesh( this.ceiling, this.ceilingMaterial);
         this.ceilingMesh.rotation.x = -Math.PI / 2;
-        this.ceilingMesh.translateZ(8)
+        this.ceilingMesh.translateZ(15)
         this.add(this.ceilingMesh)
     }
 
     initWalls() {
         const wallPath = 'images/wall.png'
-        this.walls = new MyWalls(this.app,8,18,30,wallPath,wallPath,wallPath)
-        this.walls.translateY(4)
+        this.walls = new MyWalls(this.app,20,18,30,wallPath,wallPath,wallPath)
+        this.walls.translateY(10)
         this.add(this.walls)
     }
 
@@ -322,16 +322,19 @@ class MyGarage extends THREE.Object3D {
 
     initCarSprites() {
         this.pickupSprite = this.spritesheet.createTextGroup("Truck");
-        this.pickupSprite.translateY(2.6)
-        this.pickupSprite.translateZ(-2.9)
+        this.pickupSprite.translateY(2.7)
+        this.pickupSprite.translateZ(-2.7)
         this.pickupSprite.translateX(2.5)
+        this.pickupSprite.scale.set(5,5,5)
         this.pickupSprite.rotateY(Math.PI / 2)
         this.spriteMapping["truck"] = this.pickupSprite
     
         this.casualSprite = this.spritesheet.createTextGroup("Sedan")
+
         this.casualSprite.translateY(3)
-        this.casualSprite.translateZ(3.6)
+        this.casualSprite.translateZ(4)
         this.casualSprite.translateX(2.5)
+        this.casualSprite.scale.set(5,5,5)
         this.casualSprite.rotateY(Math.PI / 2)
         this.spriteMapping["sedan"] = this.casualSprite
     
@@ -393,7 +396,8 @@ class MyGarage extends THREE.Object3D {
         this.carSelectedSprite = this.spritesheetRed.createTextGroup("Your Car");
         this.carSelectedSprite.rotateY(Math.PI / 2)
         this.carSelectedSprite.position.set(...this.spriteMapping[car.name].position)
-        this.carSelectedSprite.translateX(-0.2)
+        this.carSelectedSprite.translateX(-0.5)
+        this.carSelectedSprite.scale.set(5,5,5)
 
         this.remove(this.spriteMapping[car.name])
         this.add(this.carSelectedSprite)
