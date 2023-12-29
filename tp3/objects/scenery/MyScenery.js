@@ -24,7 +24,7 @@ class MyScenery extends THREE.Object3D{
 		this.heightMapTex.wrapS = THREE.RepeatWrapping;
 		this.heightMapTex.wrapT = THREE.RepeatWrapping;
 
-        this.terrainTex = new THREE.TextureLoader().load('images/terrain5.jpg' )
+        this.terrainTex = new THREE.TextureLoader().load('images/heightmap8.jpg' )
 		this.terrainTex.wrapS = THREE.RepeatWrapping;
 		this.terrainTex.wrapT = THREE.RepeatWrapping;
 

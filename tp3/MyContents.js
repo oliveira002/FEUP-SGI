@@ -64,7 +64,7 @@ class MyContents {
     this.game = new MyGame();
     this.myCar = null
     this.opponentCar = null
-    this.turn = 1
+    this.name = ""
     //this.track = this.reader.track
     //this.app.scene.add(this.track);
 
@@ -88,7 +88,7 @@ class MyContents {
     if(this.car === null){
       this.car = new MyCar(this.app, "Car")
       this.car.scale.set(0.05, 0.05, 0.05)
-      //this.app.scene.add(this.car)
+      this.app.scene.add(this.car)
     }
     
     if(this.scenery === null) {
@@ -106,7 +106,7 @@ class MyContents {
       this.spritesheet = new MySpriteSheet(15,8, "images/test2.png");
     }
 
-    
+    /*
     if(this.garage === null) {
       this.garage = new MyGarage(this.app)
       this.garage.translateX(78)
@@ -124,7 +124,7 @@ class MyContents {
       this.obsGarage.translateZ(-9)
       this.obsGarage.rotateY(-Math.PI / 2)
       this.app.scene.add(this.obsGarage)
-    }
+    }*/
 
     
     this.menu = new MyMenu(this.app)
@@ -158,6 +158,28 @@ class MyContents {
         }
     }
 
+    function typeName(event) {
+      if (this.game.state === State.NAME_MENU) {
+        switch (event.key) {
+          case 'Enter':
+            this.game.state = State.CHOOSE_GAME_SETTINGS
+            this.pickableObjs = this.menu.gameSettingsMenu.pickableObjs
+            this.menu.updateCameraByGameState(this.game.state)
+            break;
+          
+          case 'Backspace':
+            this.name = this.name.slice(0, -1);
+            this.menu.nameMenu.changeName(this.name)
+            break;
+
+          default:
+            this.name = this.name.concat(event.key)
+            console.log(this.name)
+            this.menu.nameMenu.changeName(this.name)
+        }
+      }
+    }
+
     function getIntersections(event){
       let pointer = new THREE.Vector2()
       pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -183,12 +205,17 @@ class MyContents {
     document.addEventListener('keydown', updateCarKeyPressed.bind(this));
     document.addEventListener('keyup', updateCarKeyPressed.bind(this));
 
+    document.addEventListener('keydown', typeName.bind(this));
+
     document.addEventListener("pointermove", pointerRaycast.bind(this));
     document.addEventListener("click", mouseClickRaycast.bind(this));
 
   }
 
   update() {
+    if(this.game.state == State.NAME_MENU) {
+      this.menu.nameMenu.update()
+    }
     this.car.update()
     this.hud.update()
     //this.updateSnow()
@@ -219,6 +246,12 @@ class MyContents {
     this.lastPickedObj = null
     switch(this.game.state) {
       case State.MAIN_MENU: {
+        this.game.state = State.NAME_MENU
+        this.menu.updateCameraByGameState(this.game.state)
+        this.pickableObjs = this.menu.nameMenu.pickableObjs
+        break;
+      }
+      case State.NAME_MENU: {
         this.game.state = State.CHOOSE_GAME_SETTINGS
         this.menu.updateCameraByGameState(this.game.state)
         this.pickableObjs = this.menu.gameSettingsMenu.pickableObjs
@@ -300,6 +333,7 @@ class MyContents {
   changeObjectProperty(obj) {
     switch(this.game.state){
       case State.MAIN_MENU:
+      case State.NAME_MENU:
       case State.CHOOSE_GAME_SETTINGS: {
         break;
       }
@@ -323,6 +357,9 @@ class MyContents {
     switch(this.game.state){
       case State.MAIN_MENU: {
         this.menu.mainMenu.switchStart(isHover)
+        break;
+      }
+      case State.NAME_MENU: {
         break;
       }
       case State.CHOOSE_GAME_SETTINGS: {

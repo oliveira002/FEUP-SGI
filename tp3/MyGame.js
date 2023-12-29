@@ -3,6 +3,7 @@ import { MyApp } from './MyApp.js';
 
 export const State = Object.freeze({
     MAIN_MENU: "MAIN_MENU",
+    NAME_MENU: "NAME_MENU",
     RULES: "RULES",
     CHOOSE_GAME_SETTINGS: "CHOOSE_GAME_SETTINGS",
     CHOOSE_CAR_PLAYER: "CHOOSE_CAR_PLAYER",

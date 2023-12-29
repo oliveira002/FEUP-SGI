@@ -10,5 +10,5 @@ void main() {
 	vec4 color1 = texture2D(uSampler3, fragCoord);
 
 	//color = color1 * 0.3 + color * 0.7;
-    gl_FragColor = color;
+    gl_FragColor = color1;
 }

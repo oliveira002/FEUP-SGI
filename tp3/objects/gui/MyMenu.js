@@ -1,15 +1,17 @@
 import * as THREE from 'three';
 import { MyMainMenu } from './menus/MyMainMenu.js';
 import { MyGameSettingsMenu } from './menus/MyGameSettingsMenu.js';
+import { MyNameMenu } from './menus/MyNameMenu.js';
 
 const StateToIndex = Object.freeze({
     MAIN_MENU: 0,
-    CHOOSE_GAME_SETTINGS: 1,
-    CHOOSE_CAR_PLAYER: 2,
-    CHOOSE_CAR_OPP: 3,
-    CHOOSE_OBSTACLE: 4,
-	PAUSED: 5,
-	END: 6
+    NAME_MENU: 1,
+    CHOOSE_GAME_SETTINGS: 2,
+    CHOOSE_CAR_PLAYER: 3,
+    CHOOSE_CAR_OPP: 4,
+    CHOOSE_OBSTACLE: 5,
+	PAUSED: 6,
+	END: 7
 })
 
 class MyMenu extends THREE.Object3D {
@@ -24,6 +26,7 @@ class MyMenu extends THREE.Object3D {
         this.type = 'Group';
         this.currentMenu = null;
         this.mainMenu = null;
+        this.nameMenu = null
         this.gameSettingsMenu = null;
         this.pauseMenu = null;
         this.gameOverMenu = null;
@@ -39,8 +42,12 @@ class MyMenu extends THREE.Object3D {
         this.mainMenu = new MyMainMenu(this.app);
         this.add(this.mainMenu)
 
+        this.nameMenu = new MyNameMenu(this.app)
+        this.nameMenu.translateX(42)
+        this.add(this.nameMenu)
+
         this.gameSettingsMenu = new MyGameSettingsMenu(this.app)
-        this.gameSettingsMenu.translateX(42)
+        this.gameSettingsMenu.translateX(84)
         this.add(this.gameSettingsMenu)
 
         this.currentMenu = this.mainMenu
