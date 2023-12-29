@@ -18,7 +18,7 @@ import { MyOil } from "./objects/track/MyOil.js";
 import { MyGarage } from "./objects/scenery/MyGarage.js";
 import { MySpriteSheet } from "./objects/single/MySpriteSheet.js";
 import { MyGame, State } from "./MyGame.js";
-import { MyMainMenu } from "./objects/gui/MyMainMenu.js";
+import { MyMainMenu } from "./objects/gui/menus/MyMainMenu.js";
 
 /**
  *  This class contains the contents of out application
@@ -32,7 +32,6 @@ class MyContents {
     this.app = app;
     this.builder = new MyNurbsBuilder();
     this.helpersOn = false;
-    this.controlPtsOn = false;
     //this.reader = new MyReader(this.app,"Portimão")
 
     // Globals
@@ -55,7 +54,6 @@ class MyContents {
     this.raycaster = new THREE.Raycaster()
     this.raycaster.near = 1
     this.raycaster.far = 20
-    this.pointer = new THREE.Vector2()
     this.intersectedObj = null
     this.pickingColor = "0x00ff00"
     this.spritesheet = null
@@ -68,9 +66,6 @@ class MyContents {
     this.turn = 1
     //this.track = this.reader.track
     //this.app.scene.add(this.track);
-
-
-
 
   }
 
@@ -122,13 +117,15 @@ class MyContents {
     }*/
 
     this.menu = new MyMenu(this.app)
-    this.menu.translateX(500,0,0)
+    //this.menu.translateX(500,0,0)
     this.app.scene.add(this.menu)
+    this.pickableObjs = this.menu.pickableObjs
+    this.app.setActiveCamera('Menu')
 
-    this.mainMenu = new MyMainMenu(this.app)
-    //this.mainMenu.translateX(-200,0,0)
-    this.app.scene.add(this.mainMenu)
-    this.pickableObjs = this.mainMenu.pickableObjs
+    //this.menu.mainMenu = new MyMainMenu(this.app)
+    //this.menu.mainMenu.translateX(-200,0,0)
+    //this.app.scene.add(this.menu.mainMenu)
+    //this.pickableObjs = this.menu.mainMenu.pickableObjs
 
     //this.app.scene.add(new MyPowerUp(this.app))
     //this.app.scene.add(new MyOil(this.app))
@@ -136,100 +133,53 @@ class MyContents {
   }
 
   setupEventListeners(){
-    document.addEventListener('keydown', (event) => {
-      switch (event.key) {
-        case 'w':
-        case 'd':
-        case 's':
-        case 'a':
-          this.car.updateKeyPressed(event.type, event.key)
-          break;
-      }
-    });
 
-    document.addEventListener('keyup', (event) => {
-      switch (event.key) {
-        case 'w':
-        case 'd':
-        case 's':
-        case 'a':
-          this.car.updateKeyPressed(event.type, event.key)
-          break;
-      }
-    });
-
-    document.addEventListener("pointermove", this.onPointerMove.bind(this));
-    document.addEventListener("click", this.onMouseClick.bind(this));
-
-  }
-
-  displayHelpers() {
-    if (this.helpersOn) {
-
-      if(!this.lights) return
-
-      Object.keys(this.lights).forEach((key) => {
-        let light = this.lights[key];
-        let helper;
-
-        switch (light.type) {
-          case "PointLight":
-            helper = new THREE.PointLightHelper(light);
-            break;
-          case "SpotLight":
-            helper = new THREE.SpotLightHelper(light);
-            break;
-          case "DirectionalLight":
-            helper = new THREE.DirectionalLightHelper(light);
+    function updateCarKeyPressed(event){
+      if(this.game.state == State.PLAYING)
+        switch (event.key) {
+          case 'w':
+          case 'd':
+          case 's':
+          case 'a':
+            this.car.updateKeyPressed(event.type, event.key)
             break;
         }
-
-        this.app.scene.add(helper);
-        this.helpers.push(helper);
-      });
-    } else {
-
-      if(!this.helpers) return
-
-      this.helpers.forEach((helper) => {
-        this.app.scene.remove(helper);
-        helper.dispose();
-      });
-
-      this.helpers = [];
     }
-  }
 
-  getControlPointsObjects(controlPoints) {
-    let group = new THREE.Group();
+    function getIntersections(event){
+      let pointer = new THREE.Vector2()
+      pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+      pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
+      this.raycaster.setFromCamera(pointer, this.app.getActiveCamera());
+  
+      return this.raycaster.intersectObjects(this.pickableObjs);
+    }
 
-    let sphereGeometry = new THREE.SphereGeometry(0.07, 20, 20);
-
-    let colorOffset = 0x00;
-    for (let i = 0; i < controlPoints.length; i++) {
-      let row = controlPoints[i];
-      let sphereMaterial = new THREE.MeshBasicMaterial({
-        color: 0xff0000 + colorOffset,
-      });
-
-      for (let j = 0; j < row.length; j++) {
-        let point = row[j];
-        let controlPoint = new THREE.Mesh(sphereGeometry, sphereMaterial);
-        controlPoint.position.set(...point);
-        group.add(controlPoint);
+    function pointerRaycast(event) {
+      var intersections = getIntersections.call(this, event)
+      this.highlightPickedObject(intersections)
+    }
+  
+    function mouseClickRaycast(event) {
+      var intersections = getIntersections.call(this, event)
+      if (intersections.length > 0) {
+          const obj = intersections[0].object
+          this.handleClick(obj)
       }
-      colorOffset += 0x00ffff / controlPoints.length;
     }
 
-    return group;
-  }
+    document.addEventListener('keydown', updateCarKeyPressed.bind(this));
+    document.addEventListener('keyup', updateCarKeyPressed.bind(this));
 
+    document.addEventListener("pointermove", pointerRaycast.bind(this));
+    document.addEventListener("click", mouseClickRaycast.bind(this));
+
+  }
 
   update() {
     this.car.update()
     this.hud.update()
     //this.updateSnow()
-    //this.powerup.update
   }
 
   updateSnow(){
@@ -244,52 +194,38 @@ class MyContents {
     }
   }
 
-  onPointerMove(event) {
-    this.pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
-    this.pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-    this.raycaster.setFromCamera(this.pointer, this.app.getActiveCamera());
-
-    var intersects = this.raycaster.intersectObjects(this.pickableObjs);
-    this.pickingHelper(intersects)
-
-  }
-
-  onMouseClick(event) {
-    this.pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
-    this.pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-    this.raycaster.setFromCamera(this.pointer, this.app.getActiveCamera());
-    var intersects = this.raycaster.intersectObjects(this.pickableObjs);
-
-    if (intersects.length > 0) {
-        const obj = intersects[0].object
-        this.handleClick(obj)
+  highlightPickedObject(intersections) {
+    if (intersections.length > 0) {
+        const obj = intersections[0].object
+        this.changeObjectProperty(obj)
+    } else {
+        this.restoreObjectProperty()
     }
-  }setActiveCamera
+  }
 
   handleClick(obj) {
     switch(this.game.state) {
-      case State.MAIN_MENU:
+      case State.MAIN_MENU: {
         this.lastPickedObj = null
-        this.pickableObjs = this.menu.pickableObjs 
         this.game.state = State.CHOOSE_GAME_SETTINGS
-        this.app.setActiveCamera('Menu')
+        this.menu.updateCameraByGameState(this.game.state)
+        this.pickableObjs = this.menu.gameSettingsMenu.pickableObjs
         break;
-
-      case State.CHOOSE_GAME_SETTINGS:
+      }
+      case State.CHOOSE_GAME_SETTINGS: {
         if(obj.parent.parent.name === "Black") {
           this.game.state = State.CHOOSE_CAR_PLAYER
         }
         else {
-          this.menu.handleClick(obj.parent.name)
+          this.menu.gameSettingsMenu.handleClick(obj.parent.name)
         }
         break;
-      
-      case State.CHOOSE_CAR_PLAYER:
-        obj = this.getAllObject(obj)
+      }
+      case State.CHOOSE_CAR_PLAYER: {
+        obj = this.getObjectParent(obj)
         this.chooseCar(obj)
         break;
+      }
     }
   }
 
@@ -306,22 +242,13 @@ class MyContents {
     }
   }
 
-  pickingHelper(intersects) {
-    if (intersects.length > 0) {
-        const obj = intersects[0].object
-        this.changeObjectProperty(obj)
-    } else {
-        this.restoreObjectProperty()
-    }
-  }
-
   restoreObjectProperty() {
     if (this.lastPickedObj)
       this.objectPickingEffect(this.lastPickedObj, false)
     this.lastPickedObj = null;
   }
 
-  getAllObject(obj) {
+  getObjectParent(obj) {
     var checkObjs = ["truck","sedan"]
     while(obj && !checkObjs.includes(obj.name)) {
       obj = obj.parent
@@ -331,38 +258,47 @@ class MyContents {
   }
 
   changeObjectProperty(obj) {
-    if(this.game.state === State.CHOOSE_GAME_SETTINGS || this.game.state === State.MAIN_MENU) {
-      if (this.lastPickedObj != obj) {
-        this.lastPickedObj = obj
-        this.objectPickingEffect(obj, true)
+    switch(this.game.state){
+      case State.MAIN_MENU:
+      case State.CHOOSE_GAME_SETTINGS: {
+        break;
+      }
+      default: {
+        obj = this.getObjectParent(obj)
+        break
       }
     }
-    else {
-      obj = this.getAllObject(obj)
-      if (this.lastPickedObj != obj) {
-        this.lastPickedObj = obj
-        this.objectPickingEffect(obj, true)
-      }
+
+    if(this.lastPickedObj != obj) {
+      this.lastPickedObj = obj
+      this.objectPickingEffect(obj, true)
     }
   }
 
   objectPickingEffect(obj, isHover) {
-    if(this.game.state === State.CHOOSE_GAME_SETTINGS) {
-      var value = isHover ? 1.15 : 1
-      if(obj.parent.parent.name === "Black") {
-        this.menu.switchStart(isHover)
+
+    switch(this.game.state){
+      case State.MAIN_MENU: {
+        this.menu.mainMenu.switchStart(isHover)
+        break;
       }
-      else {
-        obj.scale.set(value,value,value)
+      case State.CHOOSE_GAME_SETTINGS: {
+        var value = isHover ? 1.15 : 1
+        if(obj.parent.parent.name === "Black") {
+          this.menu.gameSettingsMenu.switchStart(isHover)
+        }
+        else {
+          obj.scale.set(value,value,value)
+        }
+        break;
       }
-    }
-    else if(this.game.state === State.MAIN_MENU) {
-      this.mainMenu.switchStart(isHover)
-    }
-    else if(this.game.state === State.CHOOSE_CAR_PLAYER) {
-      var value = isHover ? 0.2 : -0.2
-      var mapping = {"truck": this.pickupSprite, "sedan": this.casualSprite}
-      mapping[obj.name].translateY(value)
+      case State.CHOOSE_CAR_PLAYER: {
+        var value = isHover ? 0.2 : -0.2
+        var mapping = {"truck": this.pickupSprite, "sedan": this.casualSprite}
+        mapping[obj.name].translateY(value)
+        break;
+      }
+      default: {}
     }
   }
 

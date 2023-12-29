@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { MySpriteSheet } from '../single/MySpriteSheet.js';
+import { MySpriteSheet } from '../../single/MySpriteSheet.js';
 
 class MyMainMenu extends THREE.Object3D {
 
@@ -20,18 +20,14 @@ class MyMainMenu extends THREE.Object3D {
     }
 
     initBackground() {
-        this.background = new THREE.PlaneGeometry(40,20)
-        
+        this.background = new THREE.PlaneGeometry(42,20)
         
         this.bgTex = new THREE.TextureLoader().load('images/main.jpg');
         this.bgTex.wrapS = THREE.RepeatWrapping;
         this.bgTex.wrapT = THREE.RepeatWrapping;
 
-        
         this.backgroundMaterial = new THREE.MeshPhongMaterial({map: this.bgTex})
-
         this.backgroundMesh = new THREE.Mesh(this.background, this.backgroundMaterial)
-        
         this.add(this.backgroundMesh)
     
     }

@@ -2,18 +2,18 @@ import * as THREE from 'three';
 import { MyApp } from './MyApp.js';
 
 export const State = Object.freeze({
-    MAIN_MENU: Symbol("Main Menu"),
-    RULES: Symbol("Rules"),
-    CHOOSE_GAME_SETTINGS: Symbol("Choose game settings"),
-    CHOOSE_CAR_PLAYER: Symbol("Choose player car"),
-    CHOOSE_CAR_OPP: Symbol("Choose opponent car"),
-    CHOOSE_OBSTACLE: Symbol("Choose an obstacle"),
-    PLACE_OBSTACLE: Symbol("Place the obstacle"),
-    START: Symbol("Game start"),
-    LOADING: Symbol("Loading"),
-	PLAYING: Symbol("Playing"),
-	PAUSED: Symbol("Paused"),
-	END: Symbol("End")
+    MAIN_MENU: "MAIN_MENU",
+    RULES: "RULES",
+    CHOOSE_GAME_SETTINGS: "CHOOSE_GAME_SETTINGS",
+    CHOOSE_CAR_PLAYER: "CHOOSE_CAR_PLAYER",
+    CHOOSE_CAR_OPP: "CHOOSE_CAR_OPP",
+    CHOOSE_OBSTACLE: "CHOOSE_OBSTACLE",
+    PLACE_OBSTACLE: "PLACE_OBSTACLE",
+    START: "START",
+    LOADING: "LOADING",
+	PLAYING: "PLAYING",
+	PAUSED: "PAUSED",
+	END: "END"
 })
 
 class MyGame {
