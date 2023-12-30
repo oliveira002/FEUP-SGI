@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { MyMainMenu } from './menus/MyMainMenu.js';
 import { MyGameSettingsMenu } from './menus/MyGameSettingsMenu.js';
 import { MyNameMenu } from './menus/MyNameMenu.js';
+import { MyPauseMenu } from './menus/MyPauseMenu.js';
 
 const StateToIndex = Object.freeze({
     MAIN_MENU: 0,
@@ -48,6 +49,10 @@ class MyMenu extends THREE.Object3D {
         this.gameSettingsMenu = new MyGameSettingsMenu(this.app)
         this.gameSettingsMenu.translateX(this.positionOffset+84)
         this.add(this.gameSettingsMenu)
+
+        this.pauseMenu = new MyPauseMenu(this.app)
+        this.pauseMenu.translateX(this.positionOffset+186)
+        this.add(this.pauseMenu)
 
         this.currentMenu = this.mainMenu
         this.pickableObjs = this.currentMenu.pickableObjs

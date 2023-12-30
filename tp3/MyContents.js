@@ -94,7 +94,7 @@ class MyContents {
     if(this.scenery === null) {
       this.scenery = new MyScenery(this.app, 100, 100)
       this.scenery.translateY(-33)
-      //this.app.scene.add(this.scenery)
+      this.app.scene.add(this.scenery)
     }
 
     if(this.hud === null) {
@@ -109,12 +109,13 @@ class MyContents {
     //this.powerup = new MyPowerUp(this.app)
     //this.app.scene.add(this.powerup)
 
-    
+    /*
     this.menu = new MyMenu(this.app)
     this.menu.updateCameraByGameState(this.game.state)
     this.app.scene.add(this.menu)
     this.pickableObjs = this.menu.pickableObjs
     this.app.setActiveCamera('Menu')
+
 
     if(this.garage === null) {
       this.garage = new MyGarage(this.app)
@@ -133,7 +134,7 @@ class MyContents {
       this.obsGarage.translateZ(-9)
       this.obsGarage.rotateY(-Math.PI / 2)
       this.app.scene.add(this.obsGarage)
-    }
+    }*/
     
 
     //this.menu.mainMenu = new MyMainMenu(this.app)
@@ -223,6 +224,8 @@ class MyContents {
       case State.NAME_MENU:
         this.menu.nameMenu.update()
         break;
+      case State.PAUSED:
+        this.menu.pauseMenu.update()
     }
     this.car.update()
     this.hud.update()
