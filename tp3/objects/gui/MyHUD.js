@@ -18,14 +18,22 @@ class MyHUD extends THREE.Object3D {
         this.timeElement = document.getElementById('time');
         this.velocityElement = document.getElementById('velocity');
         this.lapsElement = document.getElementById('laps');
+        this.needleElement = document.getElementById('needle');
     }
+
 
     updateValues() {
         let velocity = this.app.contents.car.speed*1000
         velocity = velocity.toFixed(0)
         this.stateElement.textContent = this.app.contents.game.state;
         this.timeElement.textContent = 'top';
+
         this.velocityElement.textContent = velocity;
+
+        const rotation = -90 + (velocity / 100) * 180;
+        needle.style.transform = `translateX(-50%) rotate(${rotation}deg)`;
+
+
         this.lapsElement.textContent = "1";
     }
 

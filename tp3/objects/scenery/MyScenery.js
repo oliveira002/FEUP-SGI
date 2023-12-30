@@ -10,7 +10,7 @@ class MyScenery extends THREE.Object3D{
 		this.height = height
 		
 
-		this.skybox = new THREE.SphereGeometry(350,100,100)
+		this.skybox = new THREE.SphereGeometry(150,100,100)
 		
 		this.skyboxTex = new THREE.TextureLoader().load('images/skybox.png' )
 		this.skyboxTex.wrapS = THREE.RepeatWrapping;
