@@ -106,6 +106,10 @@ class MyContents {
       this.spritesheet = new MySpriteSheet(15,8, "images/test2.png");
     }
 
+    this.powerup = new MyPowerUp(this.app)
+    this.app.scene.add(this.powerup)
+
+    /*
     this.menu = new MyMenu(this.app)
     this.menu.updateCameraByGameState(this.game.state)
     this.app.scene.add(this.menu)
@@ -129,7 +133,7 @@ class MyContents {
       this.obsGarage.translateZ(-9)
       this.obsGarage.rotateY(-Math.PI / 2)
       this.app.scene.add(this.obsGarage)
-    }
+    }*/
     
 
     //this.menu.mainMenu = new MyMainMenu(this.app)
@@ -173,7 +177,6 @@ class MyContents {
 
           default:
             this.name = this.name.concat(event.key)
-            console.log(this.name)
             this.menu.nameMenu.changeName(this.name)
         }
       }
@@ -223,6 +226,7 @@ class MyContents {
     }
     this.car.update()
     this.hud.update()
+    this.powerup.update()
     //this.updateSnow()
   }
 

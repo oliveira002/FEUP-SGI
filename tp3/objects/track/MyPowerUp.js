@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import { TTFLoader } from 'three/addons/loaders/TTFLoader.js';
 import { Font } from 'three/addons/loaders/FontLoader.js';
+import { MyShader } from '../../MyShader.js';
 
 
 
@@ -12,26 +13,30 @@ class MyPowerUp extends THREE.Object3D {
   constructor(app, radius) {
     super();
     this.app = app;
-    var scene = this.app.scene
     this.type = 'Group';
-    this.radius = radius || 4; // Use the provided radius or default to 4
+    this.radius = radius || 5; 
+    this.startTime = Date.now();
+    this.scaleFactor = 0.1
 
     this.material = new THREE.MeshPhysicalMaterial({
-        color: 0xadd8e6, // Light blue color
-        metalness: 0.0, // Adjust as needed
-        roughness: 0.1, // Adjust as needed
-        transmission: 0.8, // Simulates glass transparency
+        color: 0xadd8e6,
+        metalness: 0.0, 
+        roughness: 0.1,
+        transmission: 0.8, 
         opacity: 0.6,
         transparent: true,
-      });
+    });
+    
     this.geometry = new THREE.OctahedronGeometry(this.radius);
 
-    this.mesh = new THREE.Mesh(this.geometry, this.material);
 
-    this.mesh.translateY(this.radius)
+    this.shader = new MyShader(this.app, 'PowerUp Shader', "PowerUp Shader", "shaders/powerup.vert", "shaders/powerup.frag", {
+      time: {type: 'f', value: 0.0 },
+    })
+    
+    this.waitForShaders()
 
     const loader = new TTFLoader();
-
     loader.load('fonts/font.ttf', (json) => {
         let bloodFont = new Font(json);
         let textGeo = new TextGeometry('?', {
@@ -55,17 +60,33 @@ class MyPowerUp extends THREE.Object3D {
         textGeo.translate(-textCenter.x, -textCenter.y, -textCenter.z);
 
         let textMesh = new THREE.Mesh(textGeo, textMaterial);
-        textMesh.translateY(3.8)
+        textMesh.scale.set(this.scaleFactor,this.scaleFactor,this.scaleFactor)
         
         this.textMesh = textMesh;
-        this.add(textMesh);
+        this.add(this.textMesh);
       });
-
-    this.add(this.mesh);
   }
 
+  waitForShaders() {
+		if(this.shader.ready === false) {
+			setTimeout(this.waitForShaders.bind(this), 100)
+			return;
+		}
+
+    this.shader.material.uniforms.baseColor = { type: 'c', value: this.material.color };
+    this.shader.material.uniforms.opacity = { type: 'c', value: 0.6};
+    this.shader.material.opacity = 0.6
+    this.shader.material.transparent = true
+    this.mesh = new THREE.Mesh(this.geometry, this.shader.material);
+    this.mesh.scale.set(this.scaleFactor,this.scaleFactor,this.scaleFactor)
+		this.add(this.mesh)
+	}
+
   update() {
-    // Rotate the text around the Y-axis
+    if(this.mesh) {
+      const elapsedTime = (Date.now() - this.startTime) / 1000;
+      this.mesh.material.uniforms.time.value = elapsedTime
+    }
     if (this.textMesh) {
       this.textMesh.rotation.y += 0.01;
     }
