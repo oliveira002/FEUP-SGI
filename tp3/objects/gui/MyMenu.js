@@ -21,7 +21,7 @@ class MyMenu extends THREE.Object3D {
         super();
         this.app = app;
         this.type = 'Group';
-        this.positionOffset = 300
+        this.positionOffset = 500
         this.currentMenu = null;
         this.mainMenu = null;
         this.nameMenu = null
