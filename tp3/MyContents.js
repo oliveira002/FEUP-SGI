@@ -230,7 +230,7 @@ class MyContents {
     this.car.update()
     this.hud.update()
     //this.powerup.update()
-    //this.updateSnow()
+    this.updateSnow()
   }
 
   updateSnow(){

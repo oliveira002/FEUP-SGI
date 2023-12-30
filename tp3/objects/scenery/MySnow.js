@@ -9,7 +9,7 @@ class MySnow extends THREE.Object3D {
     this.angle = 0;
 
     var length = 100; // Increase the number of particles
-    var planeSize = 175;
+    var planeSize = 20;
 
     var geometry = new THREE.BufferGeometry();
 
@@ -25,7 +25,7 @@ class MySnow extends THREE.Object3D {
     var vertices = [];
     for (var i = 0; i < length; i++) {
       var x = this.getRandom(-planeSize / 2, planeSize / 2);
-      var y = this.getRandom(175, 200);
+      var y = this.getRandom(50,100);
       var z = this.getRandom(-planeSize / 2, planeSize / 2);
       vertices.push(x, y, z);
     }
