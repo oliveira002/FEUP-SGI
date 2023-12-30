@@ -21,32 +21,15 @@
 
 <body> 
     <div id="overlay">
-      <div class="flex">
-        <span> Game State:</span>
-        <span id= "state"> PLAYING </span>
+      <div id="raceInfo">
+        <div id="lapNum">
+          <span id="curLap">1</span><span id="totalLap">/3</span>
+        </div>
+        <div class="timeElapsed" id="timeEla">
+          <span id="timeElapsed"> 00:00:00 </span>
+        </div>
       </div>
-      <div class="flex">
-        <span> Time Elapsed:</span>
-        <span id= "time"> 0 </span>
-        <span> s </span>
-      </div>
-      <div class="flex">
-        <span> Velocity:</span>
-        <span id= "velocity"> 0 </span>
-        <span> km/h </span>
-      </div>
-      <div class="flex">
-        <span> Laps:</span>
-        <span id= "laps"> 0 </span>
-      </div>
-    </div>
-    <div id="raceInfo">
-      <div id="lapNum">
-        <span id="curLap">1</span><span id="totalLap">/3</span>
-      </div>
-      <div class="timeElapsed" id="timeEla">
-        <span id="timeElapsed"> 00:00:00 </span>
-      </div>
+      <span id= "state"> PLAYING </span>
     </div>
     <div id="speedometer">
   <span id="rotacoes">6</span>

@@ -41,21 +41,19 @@ body {
 }
 
 #overlay {
+    font-family: 'Bebas Neue', sans-serif;
     position: absolute;
-    top: 70px;
-    left: 10px;
+    display: flex;
+    flex-direction: column;
     color: white;
-    font-family: Arial, sans-serif;
-    background-color: rgba(58, 58, 58, 0.3);
-    padding: 10px;
-    border-radius: 8px;
-    display: none;
+    top: 8%;
+    left: 1%;
 }
 
-#overlay > :first-child {
-    margin-top: 0.5em;
+#state {
+    margin-top: 5px;
+    font-size: 25px;
 }
-
 .flex {
     display: flex;
     margin-bottom: 0.5em;
@@ -64,10 +62,6 @@ body {
 .flex span:first-child {
     margin-right: 0.5em;
     font-weight: bold;
-}
-
-#velocity, #laps, #state, #time {
-    margin-right: 0.3em;
 }
 
 .velInfo {
@@ -100,10 +94,6 @@ body {
 }
 
 #raceInfo {
-    position: absolute;
-    top: 10%;
-    left: 1%;
-    font-family: 'Bebas Neue', sans-serif;
     display: flex;
     align-items: center;
 }
@@ -116,9 +106,9 @@ body {
     align-items: baseline;
   }
 
-#curLap, #totalLap {
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Adjust the shadow properties as needed */
-    display: inline-block; /* Ensure the shadow applies correctly */
+#curLap, #totalLap, #state {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    display: inline-block; 
 }
 
 #curLap {
