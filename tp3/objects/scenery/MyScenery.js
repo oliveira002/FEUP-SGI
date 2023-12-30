@@ -8,6 +8,7 @@ class MyScenery extends THREE.Object3D{
 		this.app = app
 		this.width = width
 		this.height = height
+		
 
 		this.skybox = new THREE.SphereGeometry(350,100,100)
 		
@@ -18,7 +19,7 @@ class MyScenery extends THREE.Object3D{
 		this.skyboxMesh = new THREE.Mesh(this.skybox, this.skyboxMaterial)
 		this.add(this.skyboxMesh)
 
-		this.geometry = new THREE.PlaneGeometry(10, 10, 100, 100);
+		this.geometry = new THREE.PlaneGeometry(5.7, 5.7, 100, 100);
 		
 		this.heightMapTex = new THREE.TextureLoader().load('images/heightmap4.jpg' )
 		this.heightMapTex.wrapS = THREE.RepeatWrapping;
@@ -36,9 +37,20 @@ class MyScenery extends THREE.Object3D{
 			uSampler1: {type: 'sampler2D', value: this.heightMapTex},
 			uSampler2: {type: 'sampler2D', value: this.terrainTex },
 			uSampler3: {type: 'sampler2D', value: this.altimetry },
+			snowHeight: {type: 'f', value: 0.05 },
+			mountainHeight: {type: 'f', value: 0.2 },
+			otherHeight: {type: 'f', value: 0.8 },
 		})
 
 		this.waitForShaders()
+
+		this.floorGeometry = new THREE.PlaneGeometry(5.7, 5.7, 100, 100);
+		this.floorTex = new THREE.TextureLoader().load('images/mfloor.jpg' )
+		this.floorTex.wrapS = THREE.RepeatWrapping;
+		this.floorTex.wrapT = THREE.RepeatWrapping;
+		this.floorTex.magFilter = THREE.NearestFilter;
+    	this.floorTex.minFilter = THREE.LinearMipMapLinearFilter;
+		this.floorMaterial = new THREE.MeshPhongMaterial({map: this.floorTex, side: THREE.DoubleSide, shininess: 20})
 	}
 	
 	waitForShaders() {
@@ -46,11 +58,15 @@ class MyScenery extends THREE.Object3D{
 			setTimeout(this.waitForShaders.bind(this), 100)
 			return;
 		}
-
 		this.mesh = new THREE.Mesh(this.geometry, this.shader.material);
+		this.mesh.translateY(10.4)
     	this.mesh.rotateX(-Math.PI / 2);
 		this.mesh.scale.set(35,35,35)
-		this.add(this.mesh)
+		this.floorMesh = new THREE.Mesh(this.floorGeometry, this.floorMaterial);
+		this.floorMesh.translateY(32.9)
+		this.floorMesh.rotateX(-Math.PI / 2);
+		this.floorMesh.scale.set(35,35,35)
+		this.add(this.mesh, this.floorMesh)
 	}
 }
 

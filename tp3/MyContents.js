@@ -105,11 +105,16 @@ class MyContents {
       this.spritesheet = new MySpriteSheet(15,8, "images/test2.png");
     }
 
+    //this.powerup = new MyPowerUp(this.app)
+    //this.app.scene.add(this.powerup)
+
+    /*
     this.menu = new MyMenu(this.app)
     this.menu.updateCameraByGameState(this.game.state)
     this.app.scene.add(this.menu)
     this.pickableObjs = this.menu.pickableObjs
     this.app.setActiveCamera('Menu')
+
 
     if(this.garage === null) {
       this.garage = new MyGarage(this.app)
@@ -128,7 +133,7 @@ class MyContents {
       this.obsGarage.translateZ(-9)
       this.obsGarage.rotateY(-Math.PI / 2)
       this.app.scene.add(this.obsGarage)
-    }
+    }*/
     
   }
 
@@ -163,7 +168,6 @@ class MyContents {
 
           default:
             this.name = this.name.concat(event.key)
-            console.log(this.name)
             this.menu.nameMenu.changeName(this.name)
         }
       }
@@ -210,10 +214,13 @@ class MyContents {
       case State.NAME_MENU:
         this.menu.nameMenu.update()
         break;
+      case State.PAUSED:
+        this.menu.pauseMenu.update()
     }
     this.car.update()
     this.hud.update()
-    //this.updateSnow()
+    //this.powerup.update()
+    this.updateSnow()
   }
 
   updateSnow(){

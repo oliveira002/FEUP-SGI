@@ -372,6 +372,7 @@ class MyObstaclesGarage extends THREE.Object3D {
         this.banana = new MyBanana(this.app)
         this.banana.translateX(3)
         this.banana.translateZ(5)
+        this.banana.rotateY(Math.PI / 1.8)
         this.pickableObjs.push(this.banana)
         this.obsMapping["Banana"] = this.banana
         this.add(this.banana)
