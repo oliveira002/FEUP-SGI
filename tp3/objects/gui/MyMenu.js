@@ -21,6 +21,7 @@ class MyMenu extends THREE.Object3D {
         super();
         this.app = app;
         this.type = 'Group';
+        this.positionOffset = 300
         this.currentMenu = null;
         this.mainMenu = null;
         this.nameMenu = null
@@ -37,14 +38,15 @@ class MyMenu extends THREE.Object3D {
     initMenus(){
 
         this.mainMenu = new MyMainMenu(this.app);
+        this.mainMenu.translateX(this.positionOffset)
         this.add(this.mainMenu)
 
         this.nameMenu = new MyNameMenu(this.app)
-        this.nameMenu.translateX(42)
+        this.nameMenu.translateX(this.positionOffset+42)
         this.add(this.nameMenu)
 
         this.gameSettingsMenu = new MyGameSettingsMenu(this.app)
-        this.gameSettingsMenu.translateX(84)
+        this.gameSettingsMenu.translateX(this.positionOffset+84)
         this.add(this.gameSettingsMenu)
 
         this.currentMenu = this.mainMenu
@@ -61,7 +63,7 @@ class MyMenu extends THREE.Object3D {
         const top = frustumSize / 2 
         const bottom = -frustumSize / 2
         const near = -frustumSize /2
-        const far =  frustumSize*2
+        const far =  frustumSize
 
         this.camera = new THREE.OrthographicCamera( left, right, top, bottom, near, far);
         this.camera.up = new THREE.Vector3(0,1,0);
@@ -70,14 +72,23 @@ class MyMenu extends THREE.Object3D {
         this.app.cameras['Menu'] = this.camera
 
         this.add(this.camera)
+
+        //this.helper = new THREE.CameraHelper( this.camera );
+        //this.add( this.helper );
     }
 
     updateCameraByGameState(newGameState){
         const frustumSize = 20
 
         let index = StateToIndex[newGameState.toString()]
-        this.camera.position.set(42*index, 0, frustumSize /4)
-        this.camera.lookAt( new THREE.Vector3(42*index,0,0) );
+
+        this.camera.position.set(42*index+this.positionOffset, 0, frustumSize /4)
+        this.camera.lookAt( new THREE.Vector3(42*index+this.positionOffset,0,0) );
+        console.log("Menu:",this.mainMenu.position,"Cam:",this.camera.position)
+
+        //this.remove(this.helper)
+        //this.helper = new THREE.CameraHelper( this.camera );
+        //this.add( this.helper );
     }
 
 }

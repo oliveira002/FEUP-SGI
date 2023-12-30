@@ -13,7 +13,7 @@ class MyCar extends THREE.Object3D {
         super();
         this.app = app;
         this.type = 'Group';
-        this.pressedKeys = { w: false, a: false, s: false, d: false };
+        this.pressedKeys = { w: false, a: false, s: false, d: false, space: false };
         this.name = name
         this.loaded = false
         
@@ -29,7 +29,7 @@ class MyCar extends THREE.Object3D {
         this.speed = 0
         this.minSpeed = 0.008
         this.maxSpeed = 0.1
-        this.brakingFactor = 0.99
+        this.brakingFactor = 0.985
         this.dragFactor = 0.995
 
         // Acceleration
@@ -105,35 +105,43 @@ class MyCar extends THREE.Object3D {
                 if(key === "a") this.pressedKeys.a = true;
                 if(key === "s") this.pressedKeys.s = true;
                 if(key === "d") this.pressedKeys.d = true;
+                if(key === " ") this.pressedKeys.space = true;
                 break;
             case "keyup":
                 if(key === "w") this.pressedKeys.w = false;
                 if(key === "a") this.pressedKeys.a = false;
                 if(key === "s") this.pressedKeys.s = false;
                 if(key === "d") this.pressedKeys.d = false;
+                if(key === " ") this.pressedKeys.space = false;
                 break;
             default:
                 console.error("Invalid event type:", type)
         }
     }
 
-    update(){
-        
-        // Break
-        if(this.pressedKeys.s) {
-            this.speed = this.brakingFactor * this.speed
+    updatePosition(){
+        // Brake
+        if(this.pressedKeys.space) {
+            this.speed *= this.brakingFactor
         }
         else{ 
             // Accelerate
             if(this.pressedKeys.w) {
                 if(this.speed === 0) this.speed = this.minSpeed
-                else this.speed *= this.accelerationFactor;
+                if(this.speed < 0) this.speed *= this.brakingFactor
+                if(this.speed > 0) this.speed *= this.accelerationFactor;
             }
-            else this.speed = Math.max(this.speed * this.dragFactor, 0)
+            else if(this.pressedKeys.s) {
+                if(this.speed === 0) this.speed = -this.minSpeed
+                if(this.speed < 0) this.speed *= this.accelerationFactor;
+                if(this.speed > 0) this.speed *= this.brakingFactor
+            }
+            else this.speed = Math.sign(this.speed) * Math.max(Math.abs(this.speed * this.dragFactor), 0)
         }
 
-        if(this.speed < this.minSpeed) this.speed = 0;
+        if(Math.abs(this.speed) < this.minSpeed) this.speed = 0;
         if(this.speed > this.maxSpeed) this.speed = this.maxSpeed
+        if(this.speed < -this.maxSpeed/3) this.speed = -this.maxSpeed/3
 
         // Update position based on local direction
         const deltaPosition = new THREE.Vector3().copy(this.dir).multiplyScalar(this.speed);
@@ -141,26 +149,35 @@ class MyCar extends THREE.Object3D {
 
         this.prevDir = new THREE.Vector3(...this.dir)
 
+        this.updateAngle()
+
+        // Update position
+        this.position.set(this.pos.x, this.pos.y, this.pos.z);
+    }
+
+    updateAngle(){
+
         let angle = 0;
         if(this.speed !== 0){
             // Rotate Left or Right
             if(this.pressedKeys.a && !this.pressedKeys.d) {
-                this.dir.applyAxisAngle(new THREE.Vector3(0,1,0), this.turningAngle);
-                angle = this.turningAngle
+                this.dir.applyAxisAngle(new THREE.Vector3(0,1,0), this.turningAngle * Math.sign(this.speed));
+                angle = this.turningAngle * Math.sign(this.speed)
             }
             if(this.pressedKeys.d && !this.pressedKeys.a) {
-                this.dir.applyAxisAngle(new THREE.Vector3(0,1,0), -this.turningAngle);
-                angle = -this.turningAngle
+                this.dir.applyAxisAngle(new THREE.Vector3(0,1,0), -this.turningAngle * Math.sign(this.speed));
+                angle = -this.turningAngle * Math.sign(this.speed)
             }
         }
 
         // Update rotation using quaternion
         const quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), angle);
         this.quaternion.multiplyQuaternions(quaternion, this.quaternion);
+    }
 
-        // Update position
-        this.position.set(this.pos.x, this.pos.y, this.pos.z);
+    update(){
 
+        this.updatePosition()
         this.updateCameraPos()
         this.updateCameraTarget()
 

@@ -420,7 +420,7 @@ class MyGarage extends THREE.Object3D {
         this.carSelectedSprite = this.spritesheetRed.createTextGroup("Your Car");
         this.carSelectedSprite.rotateY(Math.PI / 2)
         this.carSelectedSprite.position.set(...this.spriteMapping[car.name].position)
-        this.carSelectedSprite.translateX(1)
+        this.carSelectedSprite.translateX(0.5)
         this.carSelectedSprite.scale.set(5,5,5)
 
         this.remove(this.spriteMapping[car.name])

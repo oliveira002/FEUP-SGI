@@ -106,9 +106,15 @@ class MyContents {
       this.spritesheet = new MySpriteSheet(15,8, "images/test2.png");
     }
 
+    this.menu = new MyMenu(this.app)
+    this.menu.updateCameraByGameState(this.game.state)
+    this.app.scene.add(this.menu)
+    this.pickableObjs = this.menu.pickableObjs
+    this.app.setActiveCamera('Menu')
+
     if(this.garage === null) {
       this.garage = new MyGarage(this.app)
-      this.garage.translateX(120)
+      this.garage.translateX(this.menu.positionOffset + 120)
       this.garage.translateY(-10)
       this.garage.translateZ(-9)
       this.garage.rotateY(-Math.PI / 2)
@@ -118,19 +124,12 @@ class MyContents {
     
     if(this.obsGarage === null) {
       this.obsGarage = new MyObstaclesGarage(this.app)
-      this.obsGarage.translateX(150)
+      this.obsGarage.translateX(this.menu.positionOffset + 150)
       this.obsGarage.translateY(-10)
       this.obsGarage.translateZ(-9)
       this.obsGarage.rotateY(-Math.PI / 2)
       this.app.scene.add(this.obsGarage)
     }
-
-    
-    this.menu = new MyMenu(this.app)
-    //this.menu.translateX(500,0,0)
-    this.app.scene.add(this.menu)
-    this.pickableObjs = this.menu.pickableObjs
-    this.app.setActiveCamera('Menu')
     
 
     //this.menu.mainMenu = new MyMainMenu(this.app)
@@ -152,6 +151,7 @@ class MyContents {
           case 'd':
           case 's':
           case 'a':
+          case ' ':
             this.car.updateKeyPressed(event.type, event.key)
             break;
         }
@@ -282,6 +282,7 @@ class MyContents {
         this.opponentCar = this.garage.carMapping[obj.name]
         this.game.state = State.PLAYING
         this.pickableObjs = []
+        this.app.setActiveCamera('Car')
         break;
       }
       case State.CHOOSE_OBSTACLE: {

@@ -21,7 +21,8 @@ class MyHUD extends THREE.Object3D {
     }
 
     updateValues() {
-        const velocity = this.app.contents.car.speed.toFixed(2);
+        let velocity = this.app.contents.car.speed*1000
+        velocity = velocity.toFixed(0)
         this.stateElement.textContent = this.app.contents.game.state;
         this.timeElement.textContent = 'top';
         this.velocityElement.textContent = velocity;
