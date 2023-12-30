@@ -345,7 +345,7 @@ class MyGarage extends THREE.Object3D {
 
     initCarSprites() {
         this.pickupSprite = this.spritesheet.createTextGroup("Nissan S15");
-        this.pickupSprite.translateY(2.7)
+        this.pickupSprite.translateY(3)
         this.pickupSprite.translateZ(-2.7)
         this.pickupSprite.translateX(2.5)
         this.pickupSprite.scale.set(5,5,5)
@@ -375,7 +375,7 @@ class MyGarage extends THREE.Object3D {
               this.nissan_s15.scale.set(2,2,2)
               this.nissan_s15.rotateY(Math.PI / 2.15)
               this.nissan_s15.translateX(4.5)
-              this.nissan_s15.translateZ(0)
+              this.nissan_s15.translateZ(0.5)
               this.nissan_s15.name = "Nissan S15"
               this.add(this.nissan_s15); 
               this.pickableObjs.push(this.nissan_s15)
