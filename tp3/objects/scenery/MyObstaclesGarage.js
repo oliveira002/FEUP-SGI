@@ -38,6 +38,7 @@ class MyObstaclesGarage extends THREE.Object3D {
         this.initObstacles()
         this.initObsSprites()
         this.initObjs()
+        this.initCamera()
 
         
         const shelfPath = 'images/furniture.jpg'
@@ -52,6 +53,27 @@ class MyObstaclesGarage extends THREE.Object3D {
         this.boxStack.translateZ(-12.8)
         this.boxStack.rotateY(Math.PI / 2)
         this.add(this.boxStack)
+    }
+
+    initCamera(){
+        
+        const aspect = window.innerWidth / window.innerHeight;
+        this.camera = new THREE.PerspectiveCamera( 75, aspect, 0.1, 40 )
+
+        let cameraPos = new THREE.Vector3(15,7,0)
+        this.camera.position.set(...cameraPos)
+
+        this.app.targets["Obstacles"] = new THREE.Vector3(
+            this.position.x-20, 
+            this.position.y, 
+            this.position.z
+        )
+        this.camera.lookAt(this.app.targets["Obstacles"])
+
+        this.app.cameras["Obstacles"] = this.camera
+
+        this.add(this.camera)
+
     }
 
     initFloor() {
@@ -117,7 +139,7 @@ class MyObstaclesGarage extends THREE.Object3D {
         this.tvWidth = 2
         this.tvLength = 4
         this.tvDepth = 0.02
-        this.tvTexturePath = "images/garage_intro.mp4"
+        this.tvTexturePath = "images/crash_test.mp4"
         this.horizontalTvPieceWidth = this.tvWidth/40
         this.horizontalTvPieceLength = 39*this.tvLength/40
         this.verticalTvPieceWidth = this.tvLength/40

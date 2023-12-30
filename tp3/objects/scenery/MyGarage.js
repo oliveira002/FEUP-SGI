@@ -23,7 +23,7 @@ class MyGarage extends THREE.Object3D {
         this.spritesheet = new MySpriteSheet(15,8, "images/test2.png");
         this.spritesheetRed = new MySpriteSheet(15,8, "images/test3.png");
         this.carMapping = {}
-        this.checkObjs = ["sedan", "truck"]
+        this.checkObjs = ["Nissan S15", "Nissan 180MX"]
         this.spriteMapping = {}
         
         this.initFloor()
@@ -36,6 +36,7 @@ class MyGarage extends THREE.Object3D {
         this.initCone()
         this.initCars()
         this.initCarSprites()
+        this.initCamera()
 
         
         const shelfPath = 'images/furniture.jpg'
@@ -57,6 +58,28 @@ class MyGarage extends THREE.Object3D {
         this.caution.rotateY(Math.PI / 1.8)
         this.add(this.caution)
     }
+
+    initCamera(){
+        
+        const aspect = window.innerWidth / window.innerHeight;
+        this.camera = new THREE.PerspectiveCamera( 75, aspect, 0.1, 40 )
+
+        let cameraPos = new THREE.Vector3(15,7,0)
+        this.camera.position.set(...cameraPos)
+
+        this.app.targets["Garage"] = new THREE.Vector3(
+            this.position.x-20, 
+            this.position.y, 
+            this.position.z
+        )
+        this.camera.lookAt(this.app.targets["Garage"])
+
+        this.app.cameras["Garage"] = this.camera
+
+        this.add(this.camera)
+
+    }
+
 
     initFloor() {
         this.floor = new THREE.PlaneGeometry(18,30)
@@ -321,22 +344,22 @@ class MyGarage extends THREE.Object3D {
     }
 
     initCarSprites() {
-        this.pickupSprite = this.spritesheet.createTextGroup("Truck");
+        this.pickupSprite = this.spritesheet.createTextGroup("Nissan S15");
         this.pickupSprite.translateY(2.7)
         this.pickupSprite.translateZ(-2.7)
         this.pickupSprite.translateX(2.5)
         this.pickupSprite.scale.set(5,5,5)
         this.pickupSprite.rotateY(Math.PI / 2)
-        this.spriteMapping["truck"] = this.pickupSprite
+        this.spriteMapping["Nissan S15"] = this.pickupSprite
     
-        this.casualSprite = this.spritesheet.createTextGroup("Sedan")
+        this.casualSprite = this.spritesheet.createTextGroup("Nissan 180MX")
 
         this.casualSprite.translateY(3)
-        this.casualSprite.translateZ(4)
+        this.casualSprite.translateZ(5)
         this.casualSprite.translateX(2.5)
         this.casualSprite.scale.set(5,5,5)
         this.casualSprite.rotateY(Math.PI / 2)
-        this.spriteMapping["sedan"] = this.casualSprite
+        this.spriteMapping["Nissan 180MX"] = this.casualSprite
     
         this.add(this.pickupSprite,  this.casualSprite)
     }
@@ -346,17 +369,17 @@ class MyGarage extends THREE.Object3D {
         const loader = new GLTFLoader();
     
         loader.load(
-          'images/pickup_truck.glb',
+          'images/Nissan_Silvia_S15.glb',
           (gltf) => {
-              this.truck = gltf.scene
-              this.truck.scale.set(1.25,1.25,1.25)
-              this.truck.rotateY(Math.PI / 2.15)
-              this.truck.translateX(3.5)
-              this.truck.translateZ(1)
-              this.truck.name = "truck"
-              this.add(this.truck); 
-              this.pickableObjs.push(this.truck)
-              this.carMapping["truck"] = this.truck
+              this.nissan_s15 = gltf.scene
+              this.nissan_s15.scale.set(2,2,2)
+              this.nissan_s15.rotateY(Math.PI / 2.15)
+              this.nissan_s15.translateX(4.5)
+              this.nissan_s15.translateZ(0)
+              this.nissan_s15.name = "Nissan S15"
+              this.add(this.nissan_s15); 
+              this.pickableObjs.push(this.nissan_s15)
+              this.carMapping["Nissan S15"] = this.nissan_s15
     
           },
           (xhr) => {
@@ -368,17 +391,18 @@ class MyGarage extends THREE.Object3D {
       );
     
         loader.load(
-          'images/low-poly_sedan_car.glb',
+          'images/Nissan_180MX.glb',
           (gltf) => {
-              this.sedan = gltf.scene
-              this.sedan.scale.set(0.55,0.55,0.55)
-              this.sedan.rotateY(Math.PI / 1.9)
-              this.sedan.translateX(-3.5)
-              this.sedan.translateZ(2)
-              this.sedan.name = "sedan"
-              this.add(this.sedan); 
-              this.pickableObjs.push(this.sedan)
-              this.carMapping["sedan"] = this.sedan
+              this.nissan_180mx = gltf.scene
+              this.nissan_180mx.scale.set(0.55,0.55,0.55)
+              this.nissan_180mx.rotateY(Math.PI / 1.9)
+              this.nissan_180mx.translateX(-3.5)
+              this.nissan_180mx.translateY(0.9)
+              this.nissan_180mx.translateZ(2)
+              this.nissan_180mx.name = "Nissan 180MX"
+              this.add(this.nissan_180mx); 
+              this.pickableObjs.push(this.nissan_180mx)
+              this.carMapping["Nissan 180MX"] = this.nissan_180mx
           },
           (xhr) => {
               console.log((xhr.loaded / xhr.total * 100) + '% loaded');
@@ -396,7 +420,7 @@ class MyGarage extends THREE.Object3D {
         this.carSelectedSprite = this.spritesheetRed.createTextGroup("Your Car");
         this.carSelectedSprite.rotateY(Math.PI / 2)
         this.carSelectedSprite.position.set(...this.spriteMapping[car.name].position)
-        this.carSelectedSprite.translateX(-0.5)
+        this.carSelectedSprite.translateX(1)
         this.carSelectedSprite.scale.set(5,5,5)
 
         this.remove(this.spriteMapping[car.name])

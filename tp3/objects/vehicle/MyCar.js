@@ -69,7 +69,6 @@ class MyCar extends THREE.Object3D {
         const aspect = window.innerWidth / window.innerHeight;
         this.camera = new THREE.PerspectiveCamera( 100, aspect, 0.1, 1000 )
 
-        this.updateCameraPos()
 
         this.app.cameras[this.name] = this.camera
 

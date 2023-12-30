@@ -7,9 +7,6 @@ const StateToIndex = Object.freeze({
     MAIN_MENU: 0,
     NAME_MENU: 1,
     CHOOSE_GAME_SETTINGS: 2,
-    CHOOSE_CAR_PLAYER: 3,
-    CHOOSE_CAR_OPP: 4,
-    CHOOSE_OBSTACLE: 5,
 	PAUSED: 6,
 	END: 7
 })
@@ -64,7 +61,7 @@ class MyMenu extends THREE.Object3D {
         const top = frustumSize / 2 
         const bottom = -frustumSize / 2
         const near = -frustumSize /2
-        const far =  frustumSize
+        const far =  frustumSize*2
 
         this.camera = new THREE.OrthographicCamera( left, right, top, bottom, near, far);
         this.camera.up = new THREE.Vector3(0,1,0);

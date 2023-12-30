@@ -45,7 +45,12 @@ class MyPortrait extends THREE.Object3D {
 
         
         if(this.portraitTexturePath === "images/garage_intro.mp4") {
-            const video = document.getElementById('video');
+            const video = document.getElementById('video1');
+            video.play()
+            this.portraitTexture = new THREE.VideoTexture( video );
+        }
+        else if(this.portraitTexturePath === "images/crash_test.mp4") {
+            const video = document.getElementById('video2');
             video.play()
             this.portraitTexture = new THREE.VideoTexture( video );
         }

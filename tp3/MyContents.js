@@ -106,7 +106,6 @@ class MyContents {
       this.spritesheet = new MySpriteSheet(15,8, "images/test2.png");
     }
 
-    /*
     if(this.garage === null) {
       this.garage = new MyGarage(this.app)
       this.garage.translateX(120)
@@ -124,7 +123,7 @@ class MyContents {
       this.obsGarage.translateZ(-9)
       this.obsGarage.rotateY(-Math.PI / 2)
       this.app.scene.add(this.obsGarage)
-    }*/
+    }
 
     
     this.menu = new MyMenu(this.app)
@@ -158,7 +157,7 @@ class MyContents {
         }
     }
 
-    function typeName(event) {
+    function updatePlayerName(event) {
       if (this.game.state === State.NAME_MENU) {
         switch (event.key) {
           case 'Enter':
@@ -205,7 +204,7 @@ class MyContents {
     document.addEventListener('keydown', updateCarKeyPressed.bind(this));
     document.addEventListener('keyup', updateCarKeyPressed.bind(this));
 
-    document.addEventListener('keydown', typeName.bind(this));
+    document.addEventListener('keydown', updatePlayerName.bind(this));
 
     document.addEventListener("pointermove", pointerRaycast.bind(this));
     document.addEventListener("click", mouseClickRaycast.bind(this));
@@ -260,9 +259,9 @@ class MyContents {
       case State.CHOOSE_GAME_SETTINGS: {
         if(obj.parent.parent.name === "Black") {
           this.game.state = State.CHOOSE_CAR_PLAYER
-          this.menu.updateCameraByGameState(this.game.state)
+          this.app.setActiveCamera('Garage')
           this.pickableObjs = this.garage.pickableObjs
-          // difficulty and track stored in this variables
+          // difficulty and track stored in these variables
           //console.log(this.menu.gameSettingsMenu.activeDifficulty) 
           //console.log(this.menu.gameSettingsMenu.activeTrack)
         }

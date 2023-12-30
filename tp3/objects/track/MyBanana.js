@@ -18,7 +18,7 @@ class MyBanana extends THREE.Object3D {
             'images/banana_peel_mario_kart.glb',
             (gltf) => {
                 var model = gltf.scene
-                model.scale.set(0.003,0.003,0.003)
+                model.scale.set(0.0015,0.0015,0.0015)
                 model.translateY(0.54)
                 this.add(model); 
                 this.name = "Banana"
