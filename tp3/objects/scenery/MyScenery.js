@@ -46,7 +46,6 @@ class MyScenery extends THREE.Object3D{
 			setTimeout(this.waitForShaders.bind(this), 100)
 			return;
 		}
-
 		this.mesh = new THREE.Mesh(this.geometry, this.shader.material);
     	this.mesh.rotateX(-Math.PI / 2);
 		this.mesh.scale.set(35,35,35)

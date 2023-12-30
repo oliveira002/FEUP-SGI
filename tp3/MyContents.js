@@ -33,7 +33,7 @@ class MyContents {
     this.app = app;
     this.builder = new MyNurbsBuilder();
     this.helpersOn = false;
-    //this.reader = new MyReader(this.app,"Portimão")
+    this.reader = new MyReader(this.app,"Portimão")
 
     // Globals
     this.axis = null;
@@ -106,10 +106,10 @@ class MyContents {
       this.spritesheet = new MySpriteSheet(15,8, "images/test2.png");
     }
 
-    this.powerup = new MyPowerUp(this.app)
-    this.app.scene.add(this.powerup)
+    //this.powerup = new MyPowerUp(this.app)
+    //this.app.scene.add(this.powerup)
 
-    /*
+    
     this.menu = new MyMenu(this.app)
     this.menu.updateCameraByGameState(this.game.state)
     this.app.scene.add(this.menu)
@@ -133,7 +133,7 @@ class MyContents {
       this.obsGarage.translateZ(-9)
       this.obsGarage.rotateY(-Math.PI / 2)
       this.app.scene.add(this.obsGarage)
-    }*/
+    }
     
 
     //this.menu.mainMenu = new MyMainMenu(this.app)
@@ -226,7 +226,7 @@ class MyContents {
     }
     this.car.update()
     this.hud.update()
-    this.powerup.update()
+    //this.powerup.update()
     //this.updateSnow()
   }
 
