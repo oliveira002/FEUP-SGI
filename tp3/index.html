@@ -39,11 +39,28 @@
         <span> Laps:</span>
         <span id= "laps"> 0 </span>
       </div>
-      <div class="speedometer">
-        <div class="needle" id="needle"></div>
-        <div class="arch" id="arch"></div>
+    </div>
+    <div id="raceInfo">
+      <div id="lapNum">
+        <span id="curLap">1</span><span id="totalLap">/3</span>
+      </div>
+      <div class="timeElapsed" id="timeEla">
+        <span id="timeElapsed"> 00:00:00 </span>
       </div>
     </div>
+    <div id="speedometer">
+  <span id="rotacoes">6</span>
+  <div class="velInfo">
+    <div class="title">KMH</div>
+    <div class="number" id="vel">60</div>
+  </div>
+  <div class="loading-container">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewbox="0 0 100 100">
+      <path class="grey" d="M40,90 A40,40 0 1,1 60,90" style="fill:none;"/>
+      <path class="purple" d="M40,90 A40,40 0 1,1 60,90" style="fill:none;"/>
+    </svg>
+  </div>
+</div>
     <div id="canvas"></div>
     <div id="camera"></div>
     <video loop id="video1" muted="muted" autoplay="" style="display: none;">

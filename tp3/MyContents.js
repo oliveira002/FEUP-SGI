@@ -8,6 +8,7 @@ import {MyScenery} from './objects/scenery/MyScenery.js'
 import { MyShader } from "./MyShader.js";
 import { MyHUD} from './objects/gui/MyHUD.js'
 import { MyMenu} from './objects/gui/MyMenu.js'
+
 import {MySnow} from './objects/scenery/MySnow.js'
 import { MyPowerUp } from "./objects/track/MyPowerUp.js";
 import { MyReader } from "./objects/track/MyReader.js";
@@ -108,7 +109,7 @@ class MyContents {
     //this.powerup = new MyPowerUp(this.app)
     //this.app.scene.add(this.powerup)
 
-    
+    /*
     this.menu = new MyMenu(this.app)
     this.menu.updateCameraByGameState(this.game.state)
     this.app.scene.add(this.menu)
@@ -133,8 +134,17 @@ class MyContents {
       this.obsGarage.translateZ(-9)
       this.obsGarage.rotateY(-Math.PI / 2)
       this.app.scene.add(this.obsGarage)
-    }
+    }*/
     
+
+    //this.menu.mainMenu = new MyMainMenu(this.app)
+    //this.menu.mainMenu.translateX(-200,0,0)
+    //this.app.scene.add(this.menu.mainMenu)
+    //this.pickableObjs = this.menu.mainMenu.pickableObjs
+
+    //this.app.scene.add(new MyPowerUp(this.app))
+    //this.app.scene.add(new MyOil(this.app))
+
   }
 
   setupEventListeners(){

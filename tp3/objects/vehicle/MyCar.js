@@ -33,7 +33,7 @@ class MyCar extends THREE.Object3D {
         this.dragFactor = 0.995
 
         // Acceleration
-        this.accelerationFactor = 1.02
+        this.accelerationFactor = 1.012
 
         this.init()
 

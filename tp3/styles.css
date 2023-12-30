@@ -1,10 +1,14 @@
 
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bitter:wght@500&family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bitter:wght@500&family=VT323&display=swap');
 
 body { 
     margin: 0;
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none; /* Standard syntax */   
+    font-family: 'VT323', monospace;
 }
 
 #canvas { 
@@ -45,6 +49,7 @@ body {
     background-color: rgba(58, 58, 58, 0.3);
     padding: 10px;
     border-radius: 8px;
+    display: none;
 }
 
 #overlay > :first-child {
@@ -65,23 +70,118 @@ body {
     margin-right: 0.3em;
 }
 
-.speedometer {
-    position: relative;
+.velInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 5em;
+}
+
+#rotacoes {
+    font-size: 150px;
+    position: absolute;
+    margin-right: 60px;
+    color: white;
+}
+
+#speedometer {
+    position: absolute;
     width: 200px;
     height: 200px;
-    background-color: rgba(58, 58, 58, 0.3);
     border-radius: 50%;
-    overflow: hidden;
-  }
-  
-  .needle {
+    background: rgba(58, 58, 58, 0.6);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 80%;
+    top: 75%;
+}
+
+#raceInfo {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform-origin: 50% 100%;
-    width: 4px;
-    height: 80px;
-    background-color: red;
-    transform: translateX(-50%) rotate(0deg);
-    transition: transform 0.5s ease;
+    top: 10%;
+    left: 1%;
+    font-family: 'Bebas Neue', sans-serif;
+    display: flex;
+    align-items: center;
+}
+
+#lapNum {
+    font-size: 30px;
+    color: white;
+    margin-right: 0.5em;
+    display: flex;
+    align-items: baseline;
   }
+
+#curLap, #totalLap {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Adjust the shadow properties as needed */
+    display: inline-block; /* Ensure the shadow applies correctly */
+}
+
+#curLap {
+    font-size: 46px;
+    margin-right: 0.1em; /
+}
+
+#totalLap {
+    font-size: 30px;
+}
+
+#timeEla {
+    height: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background: rgba(58, 58, 58, 0.6);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    color: white;
+    font-size: 30px;
+    align-items: center;
+    transform: skewX(-20deg); /* Adjust the skew angle as needed */
+}
+
+#timeEla span {
+    transform: skewX(20deg); /* Counteract the skew for the text */
+}
+
+#speedometer .title {
+    font-size: 30px;
+    color: #f7f7f7ad;
+    font-weight: bold;
+}
+
+#speedometer .number {
+    font-size: 50px;
+    color: #f7f7f7d8;
+    font-weight: bold;
+}
+
+.loading-container {
+    position: absolute;
+}
+
+svg {
+    height: 210px;
+    margin: auto;
+    display: block;
+  }
+
+path {
+    stroke-linecap: round;
+    stroke-width: 4;
+}
+
+path.grey {
+    stroke: lightgrey;
+}
+
+path.purple {
+    stroke: rgb(117, 13, 13);
+    stroke-dashoffset: 0;
+    stroke-dasharray: calc(40 * 3.142 * 1.85 * 0.05) calc(40 * 3.142 * 1.85);
+}
