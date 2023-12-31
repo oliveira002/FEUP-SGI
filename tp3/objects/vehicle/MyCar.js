@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { MyApp } from '../../MyApp.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { degToRad } from '../../utils.js';
+import { computeBoundsTree, disposeBoundsTree, acceleratedRaycast, MeshBVHVisualizer } from 'three-mesh-bvh';
 
 class MyCar extends THREE.Object3D {
 
@@ -16,6 +17,10 @@ class MyCar extends THREE.Object3D {
         this.pressedKeys = { w: false, a: false, s: false, d: false, space: false };
         this.name = name
         this.loaded = false
+
+        THREE.BufferGeometry.prototype.computeBoundsTree = computeBoundsTree;
+        THREE.BufferGeometry.prototype.disposeBoundsTree = disposeBoundsTree;
+        THREE.Mesh.prototype.raycast = acceleratedRaycast;
         
         // Position
         this.pos = position ?? new THREE.Vector3(0, 0, 0)
@@ -48,10 +53,28 @@ class MyCar extends THREE.Object3D {
             (gltf) => {
                 this.car = gltf.scene
                 this.car.name = "car"
-                this.car.rotateY(degToRad(90))
-                this.car.scale.set(10,10,10)
+                this.car.position.set(0.02,-0.4,-0.72)
+                //this.car.scale.set(10,10,10)
+
+                let helpers = []
+
+                this.car.traverse( function( o ) {
+
+                    if ( o.isMesh ){
+                        let geo = o.geometry
+                        geo.computeBoundsTree()
+                        let helper = new MeshBVHVisualizer(o)
+                        helper.update()
+                        helpers.push(helper)
+                    }
+                
+                } );
+                console.log(this.car)
+
                 this.add(this.car);
-                console.log(this.car) 
+                this.helpers = helpers
+                console.log(this.helpers)
+                this.add(...this.helpers)
             },
             (xhr) => {
                 console.log((xhr.loaded / xhr.total * 100) + '% loaded');
@@ -60,6 +83,8 @@ class MyCar extends THREE.Object3D {
                 console.log('An error happened', error);
             }
           );
+
+        this.rotateY(degToRad(90))
 
         this.initCamera()
 
@@ -176,6 +201,11 @@ class MyCar extends THREE.Object3D {
     }
 
     update(){
+
+       if(this.helpers)
+            this.helpers.forEach(helper => {
+                helper.update()
+            })
 
         this.updatePosition()
         this.updateCameraPos()

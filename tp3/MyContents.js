@@ -87,7 +87,6 @@ class MyContents {
 
     if(this.car === null){
       this.car = new MyCar(this.app, "Car")
-      this.car.scale.set(0.05, 0.05, 0.05)
       this.app.scene.add(this.car)
     }
     
