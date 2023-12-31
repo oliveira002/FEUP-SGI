@@ -24,8 +24,7 @@ class MyOpponent extends THREE.Object3D {
 
     async init() {
         await this.buildBox()
-
-        
+    
         const yAxis = new THREE.Vector3(0, 1, 0)
         const normal = new THREE.Vector3(0, 0, 1);
         const keyframeTimes = [];
@@ -33,36 +32,41 @@ class MyOpponent extends THREE.Object3D {
         const quaternionAng = [];
         const quaternionVal = [];
 
-
-        for (var i = 0; i < this.keyPoints.length; i++) {
-            keyframeTimes.push(i / this.totalTime);
+        const totalPoints = this.keyPoints.length
+    
+        for (var i = 0; i < totalPoints - 1; i++) {
+            const startPoint = new THREE.Vector3(...this.keyPoints[i]);
+            const endPoint = new THREE.Vector3(...this.keyPoints[i + 1]);
+        
+            const direction = new THREE.Vector3().subVectors(endPoint, startPoint).normalize();
+        
+            const angle = Math.atan2(direction.x, direction.z);
+        
+            keyframeTimes.push(i * this.totalTime / (totalPoints - 1));
             keyframeValues.push(...this.keyPoints[i]);
-
-            var tg = this.trackCurve.getTangent(i / this.keyPoints.length)
-            const angle = normal.angleTo(tg);
-            const sign = (tg.x < 0 && tg.z < 0) || (tg.x < 0 && tg.z > 0) ? -1 : 1;
-            quaternionAng.push(new THREE.Quaternion().setFromAxisAngle(yAxis, sign * angle));
-
+        
+            quaternionAng.push(new THREE.Quaternion().setFromAxisAngle(yAxis, angle));
         }
 
-        quaternionAng.forEach(q => {
-            quaternionVal.push(...q)
-        });
-        
-        const positionKF = new THREE.VectorKeyframeTrack('.position', keyframeTimes, keyframeValues, THREE.InterpolateSmooth);
-        const quaternionKF = new THREE.QuaternionKeyframeTrack('.quaternion', keyframeTimes, quaternionVal);
 
+    
+        quaternionAng.forEach(q => {
+            quaternionVal.push(...q.toArray());
+        });
+    
+        const positionKF = new THREE.VectorKeyframeTrack('.position', keyframeTimes, keyframeValues, THREE.InterpolateSmooth);
+        const quaternionKF = new THREE.QuaternionKeyframeTrack('.quaternion', keyframeTimes, quaternionVal, THREE.InterpolateSmooth);
+    
         const positionClip = new THREE.AnimationClip('positionAnimation', this.totalTime, [positionKF])
         const rotationClip = new THREE.AnimationClip('rotationAnimation', this.totalTime, [quaternionKF])
-        
+    
         this.mixer = new THREE.AnimationMixer(this.boxMesh)
-
+    
         const positionAction = this.mixer.clipAction(positionClip)
         const rotationAction = this.mixer.clipAction(rotationClip)
-
+    
         positionAction.play()
         rotationAction.play()
-
     }
 
     buildBox() {
