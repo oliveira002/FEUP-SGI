@@ -58,7 +58,6 @@ class MyCar extends THREE.Object3D {
                     this.car = gltf.scene
                     this.car.name = "car"
                     this.car.position.set(0.02,-0.4,-0.72)
-                    //this.car.scale.set(10,10,10)
     
                     let helpers = []
     
@@ -73,12 +72,10 @@ class MyCar extends THREE.Object3D {
                         }
                     
                     } );
-                    console.log(this.car)
-    
-                    this.add(this.car);
                     this.helpers = helpers
-                    console.log(this.helpers)
                     this.add(...this.helpers)
+
+                    this.add(this.car);
     
                     this.wheels.push(this.car.children[0].children[1])
                     this.wheels.push(this.car.children[0].children[2])
@@ -89,7 +86,7 @@ class MyCar extends THREE.Object3D {
                 (error) => {
                     console.log('An error happened', error);
                 }
-              );
+            );
         }
         else if(this.model === "Lambo") {
             loader.load(
@@ -97,8 +94,24 @@ class MyCar extends THREE.Object3D {
                 (gltf) => {
                     this.car = gltf.scene
                     this.car.name = "car"
-                    this.car.rotateY(degToRad(90))
-                    this.car.scale.set(0.06,0.06,0.06)
+                    this.car.scale.set(0.003,0.003,0.003)
+
+                    let helpers = []
+    
+                    this.car.traverse( function( o ) {
+    
+                        if ( o.isMesh ){
+                            let geo = o.geometry
+                            geo.computeBoundsTree()
+                            let helper = new MeshBVHVisualizer(o)
+                            helper.update()
+                            helpers.push(helper)
+                        }
+                    
+                    } );
+                    this.helpers = helpers
+                    this.add(...this.helpers)
+
                     this.add(this.car); 
 
                     this.wheels.push(this.car.children[2])
@@ -130,7 +143,6 @@ class MyCar extends THREE.Object3D {
                 }
             );
         }
-    
 
         this.rotateY(degToRad(90))
 

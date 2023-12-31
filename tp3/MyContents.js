@@ -86,7 +86,7 @@ class MyContents {
     }
 
     if(this.car === null){
-      this.car = new MyCar(this.app, "Car", null, "Silvia")
+      this.car = new MyCar(this.app, "Car", null, "Lambo")
       this.app.scene.add(this.car)
     }
     
