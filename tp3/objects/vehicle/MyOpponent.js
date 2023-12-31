@@ -14,7 +14,7 @@ class MyOpponent extends THREE.Object3D {
         this.boxDisplacement = new THREE.Vector3(0, 2, 0)
 
 
-        console.log(keyPoints)
+        //console.log(keyPoints)
     }
 
     init() {

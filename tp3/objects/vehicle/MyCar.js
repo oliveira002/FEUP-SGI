@@ -366,10 +366,12 @@ class MyCar extends THREE.Object3D {
 
     updateSpeedBasedOnTrackBounds(){
         this.raycasters.forEach( raycaster => {
-            const intersections = raycaster.intersectObjects( this.track );
+            const intersections = raycaster.intersectObjects( this.track, false );
             console.log(intersections) 
-            if(intersections.length === 0){
-               //console.log("out") 
+            for ( let i = 0; i < intersections.length; i ++ ) {
+
+                intersections[ i ].object.material.color.set( 0xff0000 );
+        
             }
         })
     }
