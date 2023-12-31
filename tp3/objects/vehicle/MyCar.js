@@ -93,27 +93,32 @@ class MyCar extends THREE.Object3D {
                             new THREE.Vector3(0.5235543251037598, 0.2165137678384781, 1.710374355316162),
                             dir,
                             0, 
-                            10
+                            1
                         ),
                         new THREE.Raycaster(
                             new THREE.Vector3(-0.5251612067222595, 0.2165137529373169, 1.710374355316162),
                             dir,
                             0, 
-                            10
+                            1
                         ),
                         new THREE.Raycaster(
                             new THREE.Vector3(0.5235543251037598, 0.2165137678384781, 0),
                             dir,
                             0, 
-                            10
+                            1
                         ),
                         new THREE.Raycaster(
                             new THREE.Vector3(-0.5251612067222595, 0.2165137529373169, 0),
                             dir,
                             0, 
-                            10
+                            1
                         )
                     ]
+
+                    this.raycasters.forEach( raycaster => {
+                        var arrow = new THREE.ArrowHelper( raycaster.ray.direction, raycaster.ray.origin, 8, 0xff0000 );
+                        this.add(arrow)
+                    })
 
 
                 },
@@ -360,11 +365,11 @@ class MyCar extends THREE.Object3D {
     }
 
     updateSpeedBasedOnTrackBounds(){
-        console.log(this.track)
         this.raycasters.forEach( raycaster => {
             const intersections = raycaster.intersectObjects( this.track );
+            console.log(intersections) 
             if(intersections.length === 0){
-                
+               //console.log("out") 
             }
         })
     }

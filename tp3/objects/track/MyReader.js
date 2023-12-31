@@ -1,5 +1,9 @@
 import * as THREE from 'three';
 import { MyTrack } from './MyTrack.js';
+import { tracks } from './tracks.js';
+
+
+
 
 class MyReader extends THREE.Object3D {
 
@@ -7,37 +11,23 @@ class MyReader extends THREE.Object3D {
         super();
         this.app = app
         this.type = 'Group';
-        this.tracksFilePath = "./objects/track/tracks.json"
         this.track = null
         this.keyframes = []
         this.keyPoints = []
+
+        this.init(trackName);
     }
 
-    async initialize(trackName) {
-        await this.init(trackName);
-    }
+    init(trackName) {
 
-    async init(trackName) {
-        try {
-            const response = await fetch(this.tracksFilePath);
-            if (!response.ok) {
-                throw new Error(`Failed to fetch ${this.tracksFilePath}`);
-            }
-            const jsonData = await response.json();
+        let object = tracks[trackName];
 
-            if (jsonData.hasOwnProperty(trackName)) {
-                let object = jsonData[trackName];
-                this.createTrack(object.track, object.starting_point_index);
-                this.createPowerUps(object.power_ups);
-                this.createObstacles(object.obstacles);
-                this.createRoutes(object.routes);
-                this.createKeyFrames(object.track, 100);
-            } else {
-                console.error(`Track '${trackName}' not found in the JSON file.`);
-            }
-        } catch (error) {
-            console.error('Error during initialization:', error);
-        }
+        this.createTrack(object.track, object.starting_point_index);
+        this.createPowerUps(object.power_ups);
+        this.createObstacles(object.obstacles);
+        this.createRoutes(object.routes);
+        this.createKeyFrames(object.track, 100);
+
     }
 
     createTrack(points, starting_point_index){

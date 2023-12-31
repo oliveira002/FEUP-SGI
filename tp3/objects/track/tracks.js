@@ -1,4 +1,4 @@
-{
+export const tracks = {
     "Monza": {
         "track": [
             [-33.95, 0, 0.0],

@@ -36,8 +36,6 @@ class MyContents {
     this.helpersOn = false;
     this.reader = new MyReader(this.app,"Portimão")
     this.opponent = null
-    this.initializeReader("Portimão");
-  
 
     // Globals
     this.axis = null;
@@ -69,16 +67,12 @@ class MyContents {
     this.myCar = null
     this.opponentCar = null
     this.name = ""
+    this.track = this.reader.track;
 
     //this.app.scene.add(this.track);
 
   }
 
-  async initializeReader(trackName) {
-    await this.reader.initialize(trackName);
-    this.track = this.reader.track;
-    this.opponent = new MyOpponent(this.app, this.reader.keyPoints)
-}
 
   /**
    * initializes the contents
@@ -100,6 +94,11 @@ class MyContents {
       this.app.scene.add(this.car)
     }
     
+    if(this.opponent === null){
+      this.opponent = new MyOpponent(this.app, this.reader.keyPoints)
+      this.app.scene.add(this.opponent)
+    }
+
     if(this.scenery === null) {
       this.scenery = new MyScenery(this.app, 100, 100)
       this.scenery.translateY(-33)
@@ -238,12 +237,14 @@ class MyContents {
         break;
       case State.PAUSED:
         this.menu.pauseMenu.update()
+        break;
+      case State.PLAYING:
+        this.car.update()
+        this.hud.update()
+        this.updateSnow()
     }
-    /*
-    this.car.update()
-    this.hud.update()
+
     //this.powerup.update()
-    this.updateSnow()*/
   }
 
   updateSnow(){
