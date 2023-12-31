@@ -86,7 +86,7 @@ class MyContents {
     }
 
     if(this.car === null){
-      this.car = new MyCar(this.app, "Car", null, "Silvia")
+      this.car = new MyCar(this.app, "Car", null, "Lambo")
       this.car.scale.set(0.05, 0.05, 0.05)
       this.app.scene.add(this.car)
     }
@@ -136,7 +136,7 @@ class MyContents {
       this.app.scene.add(this.obsGarage)
     }
     
-
+  
     //this.menu.mainMenu = new MyMainMenu(this.app)
     //this.menu.mainMenu.translateX(-200,0,0)
     //this.app.scene.add(this.menu.mainMenu)

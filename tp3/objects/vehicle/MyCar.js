@@ -67,21 +67,36 @@ class MyCar extends THREE.Object3D {
                 }
               );
         }
-        else if(this.model === "MX") {
+        else if(this.model === "Lambo") {
             loader.load(
-                'images/Nissan_180MX.glb',
+                'images/lambo.glb',
                 (gltf) => {
                     this.car = gltf.scene
+                    this.car.name = "car"
                     this.car.rotateY(degToRad(90))
-                    this.car.translateY(23)
-                    this.car.scale.set(15,15,15)
-
-                    this.car.children[0].children[0].rotation.x = 0
-                    this.car.children[0].children[7].rotation.x = 0
-                    this.wheels.push(this.car.children[0].children[0])
-                    this.wheels.push(this.car.children[0].children[7])
-                    console.log(this.wheels)
+                    this.car.scale.set(0.06,0.06,0.06)
                     this.add(this.car); 
+
+                    this.wheels.push(this.car.children[2])
+                    this.wheels.push(this.car.children[3])
+                    this.wheels.forEach(wheel => {
+                        // Assuming wheel.geometry is the geometry of the wheel
+                    
+                        // Calculate the center of the wheel geometry
+                        const wheelCenter = new THREE.Vector3();
+                        wheel.geometry.computeBoundingBox();
+                        wheel.geometry.boundingBox.getCenter(wheelCenter);
+                    
+                        // Calculate the offset between current position and center of geometry
+                        const offset = wheelCenter.clone().sub(wheel.position);
+                    
+                        // Set the pivot point of the wheel to its center
+                        wheel.geometry.center();
+                    
+                        // Update the position to keep it the same relative to the center
+                        wheel.position.add(offset);
+                    });
+
                 },
                 (xhr) => {
                     console.log((xhr.loaded / xhr.total * 100) + '% loaded');
@@ -215,22 +230,25 @@ class MyCar extends THREE.Object3D {
         const quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), angle);
         this.quaternion.multiplyQuaternions(quaternion, this.quaternion);
 
+        
         this.wheels.forEach(wheel => {
-
+            
             if(this.speed === 0 && wheelAngle != 0) {
                 wheelAngle = wheelAngle
             }
             
             else if(angle === 0) {
-                wheelAngle = Math.sign(wheel.rotation.z) * -0.01
+                wheelAngle = Math.sign(wheel.rotation.y) * -0.01
             }
             else {
                 wheelAngle = angle / 2
             }
+            
 
-            wheel.rotateZ(wheelAngle/2);
-            if(Math.abs(wheel.rotation.z + wheelAngle) > Math.PI / 5) {
-                wheel.rotation.z = Math.sign(wheelAngle) * Math.PI / 5
+            wheel.rotateY(wheelAngle / 2)
+            
+            if(Math.abs(wheel.rotation.y + wheelAngle) > Math.PI / 5) {
+                wheel.rotation.y = Math.sign(wheelAngle) * Math.PI / 5
             }
         });
 
