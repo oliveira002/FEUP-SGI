@@ -55,30 +55,34 @@ class MyCar extends THREE.Object3D {
             loader.load(
                 'images/Nissan_Silvia_S15.glb',
                 (gltf) => {
-                    this.car = gltf.scene
-                    this.car.name = "car"
-                    this.car.position.set(0.02,-0.4,-0.72)
-    
-                    let helpers = []
-    
-                    this.car.traverse( function( o ) {
-    
-                        if ( o.isMesh ){
-                            let geo = o.geometry
-                            geo.computeBoundsTree()
-                            let helper = new MeshBVHVisualizer(o)
-                            helper.update()
-                            helpers.push(helper)
+                    this.car = gltf.scene;
+                    this.car.name = "car";
+                    this.car.position.set(0,0,0)
+                    //this.car.position.set(0.02, -0.4, -0.72);
+            
+                    let helpers = [];
+            
+                    this.car.traverse((o) => {
+                        if (o.isMesh) {
+                            let originalGeo = o.geometry;
+                            let scaledGeo = originalGeo.clone();
+                            let mesh = new THREE.Mesh(scaledGeo, o.material);
+            
+                            mesh.position.set(this.car.position.x - 0.02, this.car.position.y + 0.4, this.car.position.z + 0.72);
+                            mesh.geometry.computeBoundsTree();
+            
+                            let helper = new MeshBVHVisualizer(mesh);
+                            helper.update();
+                            helpers.push(helper);
                         }
-                    
-                    } );
-                    this.helpers = helpers
-                    this.add(...this.helpers)
-
+                    });
+            
+                    this.helpers = helpers;
+                    this.add(...this.helpers);
                     this.add(this.car);
-    
-                    this.wheels.push(this.car.children[0].children[1])
-                    this.wheels.push(this.car.children[0].children[2])
+            
+                    this.wheels.push(this.car.children[0].children[1]);
+                    this.wheels.push(this.car.children[0].children[2]);
                 },
                 (xhr) => {
                     console.log((xhr.loaded / xhr.total * 100) + '% loaded');
@@ -98,17 +102,24 @@ class MyCar extends THREE.Object3D {
 
                     let helpers = []
     
-                    this.car.traverse( function( o ) {
-    
-                        if ( o.isMesh ){
-                            let geo = o.geometry
-                            geo.computeBoundsTree()
-                            let helper = new MeshBVHVisualizer(o)
-                            helper.update()
-                            helpers.push(helper)
+                    this.car.traverse((o) => {
+                        if (o.isMesh) {
+                            let geo = o.geometry;
+                            let scaledGeo = geo.clone();
+                            
+                            scaledGeo.scale(this.car.scale.x, this.car.scale.y, this.car.scale.z);      
+                            scaledGeo.computeBoundsTree();
+            
+                            let mesh = new THREE.Mesh(scaledGeo, o.material);
+                            mesh.position.copy(o.position);
+                            mesh.rotation.copy(o.rotation);
+                            mesh.scale.copy(o.scale);
+            
+                            let helper = new MeshBVHVisualizer(mesh);
+                            helper.update();
+                            helpers.push(helper);
                         }
-                    
-                    } );
+                    });
                     this.helpers = helpers
                     this.add(...this.helpers)
 
@@ -117,20 +128,14 @@ class MyCar extends THREE.Object3D {
                     this.wheels.push(this.car.children[2])
                     this.wheels.push(this.car.children[3])
                     this.wheels.forEach(wheel => {
-                        // Assuming wheel.geometry is the geometry of the wheel
-                    
-                        // Calculate the center of the wheel geometry
                         const wheelCenter = new THREE.Vector3();
                         wheel.geometry.computeBoundingBox();
                         wheel.geometry.boundingBox.getCenter(wheelCenter);
                     
-                        // Calculate the offset between current position and center of geometry
                         const offset = wheelCenter.clone().sub(wheel.position);
                     
-                        // Set the pivot point of the wheel to its center
                         wheel.geometry.center();
                     
-                        // Update the position to keep it the same relative to the center
                         wheel.position.add(offset);
                     });
 
@@ -270,26 +275,53 @@ class MyCar extends THREE.Object3D {
 
         
         this.wheels.forEach(wheel => {
-            
-            if(this.speed === 0 && wheelAngle != 0) {
-                wheelAngle = wheelAngle
-            }
-            
-            else if(angle === 0) {
-                wheelAngle = Math.sign(wheel.rotation.y) * -0.01
-            }
-            else {
-                wheelAngle = angle / 2
-            }
-            
-
-            wheel.rotateY(wheelAngle / 2)
-            
-            if(Math.abs(wheel.rotation.y + wheelAngle) > Math.PI / 5) {
-                wheel.rotation.y = Math.sign(wheelAngle) * Math.PI / 5
-            }
+            this.rotateWheel(wheel, angle, wheelAngle)
         });
 
+    }
+
+    rotateWheel(wheel, angle, wheelAngle) {
+        switch(this.model) {
+            case "Silvia":
+                if(this.speed === 0 && wheelAngle != 0) {
+                    wheelAngle = wheelAngle
+                }
+                
+                else if(angle === 0) {
+                    wheelAngle = Math.sign(wheel.rotation.z) * -0.01
+                }
+                else {
+                    wheelAngle = angle / 2
+                }
+                
+    
+                wheel.rotateZ(wheelAngle / 2)
+                
+                if(Math.abs(wheel.rotation.z + wheelAngle) > Math.PI / 5) {
+                    wheel.rotation.z = Math.sign(wheelAngle) * Math.PI / 5
+                }
+                break;
+            
+            case "Lambo":
+                if(this.speed === 0 && wheelAngle != 0) {
+                    wheelAngle = wheelAngle
+                }
+                
+                else if(angle === 0) {
+                    wheelAngle = Math.sign(wheel.rotation.y) * -0.01
+                }
+                else {
+                    wheelAngle = angle / 2
+                }
+                
+    
+                wheel.rotateY(wheelAngle / 2)
+                
+                if(Math.abs(wheel.rotation.y + wheelAngle) > Math.PI / 5) {
+                    wheel.rotation.y = Math.sign(wheelAngle) * Math.PI / 5
+                }
+                break;
+        }
     }
 
 
