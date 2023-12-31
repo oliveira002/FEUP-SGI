@@ -242,7 +242,7 @@ class MyContents {
       case State.PLAYING:
         this.car.update()
         this.hud.update()
-        this.updateSnow()
+        //this.updateSnow()
     }
 
     //this.powerup.update()
