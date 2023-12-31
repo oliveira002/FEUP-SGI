@@ -51,7 +51,7 @@ class MyTrack extends THREE.Object3D {
         geo.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
         geo.computeVertexNormals();
         
-        let mat = new THREE.MeshPhongMaterial({color: 0xffffff, side: THREE.DoubleSide})
+        let mat = new THREE.MeshPhongMaterial({color: 0x696969, side: THREE.DoubleSide})
         let mesh = new THREE.Mesh(geo, mat);
         this.add(mesh);
 

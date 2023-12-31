@@ -75,7 +75,7 @@ class MyContents {
    */
   init() {
   
-    const ambientLight = new THREE.AmbientLight( 0xffffff, 1 );
+    const ambientLight = new THREE.AmbientLight( 0xffffff, 0.5 );
     this.app.scene.add( ambientLight );
 
     this.setupEventListeners();

@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import {MyShader} from '../../MyShader.js'
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 class MyScenery extends THREE.Object3D{
 
@@ -8,14 +9,25 @@ class MyScenery extends THREE.Object3D{
 		this.app = app
 		this.width = width
 		this.height = height
-		
 
-		this.skybox = new THREE.SphereGeometry(150,100,100)
-		
-		this.skyboxTex = new THREE.TextureLoader().load('images/skybox.png' )
-		this.skyboxTex.wrapS = THREE.RepeatWrapping;
-		this.skyboxTex.wrapT = THREE.RepeatWrapping;
-		this.skyboxMaterial = new THREE.MeshPhongMaterial({map: this.skyboxTex, side: THREE.DoubleSide, shininess: 20})
+		this.app.scene.fog = new THREE.Fog( 0xcccccc, 20,505);
+
+		this.skyboxTex = new THREE.TextureLoader().load('images/sky.jpg');
+		this.skyboxTex.mapping = THREE.EquirectangularReflectionMapping;
+		this.skyboxTex.magFilter = THREE.LinearFilter;
+		this.skyboxTex.minFilter = THREE.LinearMipMapLinearFilter;  // Update minFilter
+
+		this.skybox = new THREE.SphereGeometry(200, 100, 100);
+
+		this.skyboxMaterial = new THREE.MeshPhysicalMaterial({
+			envMap: this.skyboxTex,
+			side: THREE.DoubleSide,
+			thickness: 1,
+			roughness: 0.05,
+			reflectivity: 0.8,
+			transmission: 1,
+		});
+				
 		this.skyboxMesh = new THREE.Mesh(this.skybox, this.skyboxMaterial)
 		this.add(this.skyboxMesh)
 
@@ -44,13 +56,18 @@ class MyScenery extends THREE.Object3D{
 
 		this.waitForShaders()
 
+		this.initClouds()
+
 		this.floorGeometry = new THREE.PlaneGeometry(5.7, 5.7, 100, 100);
-		this.floorTex = new THREE.TextureLoader().load('images/mfloor.jpg' )
+		
+		this.floorTex = new THREE.TextureLoader().load('images/mfloor3.jpg' )
 		this.floorTex.wrapS = THREE.RepeatWrapping;
 		this.floorTex.wrapT = THREE.RepeatWrapping;
 		this.floorTex.magFilter = THREE.NearestFilter;
     	this.floorTex.minFilter = THREE.LinearMipMapLinearFilter;
-		this.floorMaterial = new THREE.MeshPhongMaterial({map: this.floorTex, side: THREE.DoubleSide, shininess: 20})
+
+		
+		this.floorMaterial = new THREE.MeshPhongMaterial({bumpMap: this.floorTex, bumpScale: 10,map: this.floorTex, side: THREE.DoubleSide, shininess: 20})
 	}
 	
 	waitForShaders() {
@@ -67,6 +84,39 @@ class MyScenery extends THREE.Object3D{
 		this.floorMesh.rotateX(-Math.PI / 2);
 		this.floorMesh.scale.set(35,35,35)
 		this.add(this.mesh, this.floorMesh)
+	}
+
+	initClouds() {
+		const loader = new GLTFLoader();
+		const cloudCount = 10;
+	
+		loader.load(
+			'images/Clouds.glb',
+			(gltf) => {
+				const originalCloud = gltf.scene;
+				originalCloud.scale.set(50, 50, 50);
+				originalCloud.translateY(100);
+
+	
+				for (let i = 0; i < cloudCount; i++) {
+					const clonedCloud = originalCloud.clone();
+					const xPos = Math.random() * 140 - 50; // Adjust range as needed
+					const zPos = Math.random() * 140 - 50; // Adjust range as needed
+					const yRotation = Math.random() * Math.PI * 2; // Random Y rotation in radians
+
+					clonedCloud.position.set(xPos, 100, zPos);
+					clonedCloud.rotation.set(0, yRotation, 0);
+
+					this.add(clonedCloud);
+				}
+			},
+			(xhr) => {
+				console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
+			},
+			(error) => {
+				console.log('An error happened', error);
+			}
+		);
 	}
 }
 

@@ -220,6 +220,7 @@ class MyCar extends THREE.Object3D {
                 if(this.speed === 0) this.speed = this.minSpeed
                 if(this.speed < 0) this.speed *= this.brakingFactor
                 if(this.speed > 0) this.speed *= this.accelerationFactor;
+
             }
             else if(this.pressedKeys.s) {
                 if(this.speed === 0) this.speed = -this.minSpeed
@@ -320,6 +321,7 @@ class MyCar extends THREE.Object3D {
                 if(Math.abs(wheel.rotation.y + wheelAngle) > Math.PI / 5) {
                     wheel.rotation.y = Math.sign(wheelAngle) * Math.PI / 5
                 }
+
                 break;
         }
     }
