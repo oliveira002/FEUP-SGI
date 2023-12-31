@@ -38,9 +38,7 @@ class MyOpponent extends THREE.Object3D {
         for (var i = 0; i < totalPoints - 1; i++) {
             const startPoint = new THREE.Vector3(...this.keyPoints[i]);
             const endPoint = new THREE.Vector3(...this.keyPoints[i + 1]);
-        
             const direction = new THREE.Vector3().subVectors(endPoint, startPoint).normalize();
-        
             const angle = Math.atan2(direction.x, direction.z);
         
             keyframeTimes.push(i * this.totalTime / (totalPoints - 1));
@@ -48,9 +46,14 @@ class MyOpponent extends THREE.Object3D {
         
             quaternionAng.push(new THREE.Quaternion().setFromAxisAngle(yAxis, angle));
         }
+        
+        const lastPoint = new THREE.Vector3(...this.keyPoints[totalPoints - 1]);
+        keyframeTimes.push((totalPoints - 1) * this.totalTime / (totalPoints - 1));
+        keyframeValues.push(...this.keyPoints[totalPoints - 1]);
+        const lastDirection = new THREE.Vector3().subVectors(lastPoint, this.keyPoints[totalPoints - 2]).normalize();
+        const lastAngle = Math.atan2(lastDirection.x, lastDirection.z);
+        quaternionAng.push(new THREE.Quaternion().setFromAxisAngle(yAxis, lastAngle));
 
-
-    
         quaternionAng.forEach(q => {
             quaternionVal.push(...q.toArray());
         });
