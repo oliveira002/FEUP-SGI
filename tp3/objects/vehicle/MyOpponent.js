@@ -37,21 +37,20 @@ class MyOpponent extends THREE.Object3D {
         for (var i = 0; i < this.keyPoints.length; i++) {
             keyframeTimes.push(i / this.totalTime);
             keyframeValues.push(...this.keyPoints[i]);
-        
-            var tg = this.trackCurve.getTangent(i / this.keyPoints.length);
-        
-            const fromQuaternion = new THREE.Quaternion().setFromUnitVectors(normal, tg);
-            quaternionVal.push(...fromQuaternion.toArray());
-        }
-        
 
-        const positionKF = new THREE.VectorKeyframeTrack('.position', keyframeTimes, keyframeValues, THREE.InterpolateSmooth);
+            var tg = this.trackCurve.getTangent(i / this.keyPoints.length)
+            const angle = normal.angleTo(tg);
+            const sign = (tg.x < 0 && tg.z < 0) || (tg.x < 0 && tg.z > 0) ? -1 : 1;
+            quaternionAng.push(new THREE.Quaternion().setFromAxisAngle(yAxis, sign * angle));
+
+        }
 
         quaternionAng.forEach(q => {
             quaternionVal.push(...q)
         });
         
-        const quaternionKF = new THREE.QuaternionKeyframeTrack('.quaternion', keyframeTimes, quaternionVal, THREE.InterpolateLinear);
+        const positionKF = new THREE.VectorKeyframeTrack('.position', keyframeTimes, keyframeValues, THREE.InterpolateSmooth);
+        const quaternionKF = new THREE.QuaternionKeyframeTrack('.quaternion', keyframeTimes, quaternionVal);
 
         const positionClip = new THREE.AnimationClip('positionAnimation', this.totalTime, [positionKF])
         const rotationClip = new THREE.AnimationClip('rotationAnimation', this.totalTime, [quaternionKF])
@@ -82,7 +81,7 @@ class MyOpponent extends THREE.Object3D {
 
                     this.app.scene.add(this.boxMesh);
 
-                    this.boxMesh.rotateY(Math.PI / 2)
+                    this.boxMesh.rotation.y -= -Math.PI / 2
     
                     console.log('Model loaded successfully');
                     resolve(this.boxMesh);
