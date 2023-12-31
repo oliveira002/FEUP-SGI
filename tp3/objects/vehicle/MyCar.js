@@ -10,13 +10,15 @@ class MyCar extends THREE.Object3D {
      * 
      * @param {MyApp} app the application object
      */
-    constructor(app, name, position=null, model) {
+    constructor(app, name, position=null, model, track) {
         super();
         this.app = app;
         this.type = 'Group';
         this.pressedKeys = { w: false, a: false, s: false, d: false, space: false };
         this.name = name
         this.loaded = false
+        this.raycasters = []
+        this.track = track
 
         THREE.BufferGeometry.prototype.computeBoundsTree = computeBoundsTree;
         THREE.BufferGeometry.prototype.disposeBoundsTree = disposeBoundsTree;
@@ -80,9 +82,45 @@ class MyCar extends THREE.Object3D {
                     this.helpers = helpers;
                     this.add(...this.helpers);
                     this.add(this.car);
+                    console.log(this.car)
             
                     this.wheels.push(this.car.children[0].children[1]);
                     this.wheels.push(this.car.children[0].children[2]);
+
+                    let dir = new THREE.Vector3(0,-1,0)
+                    this.raycasters = [
+                        new THREE.Raycaster(
+                            new THREE.Vector3(0.5235543251037598, 0.2165137678384781, 1.710374355316162),
+                            dir,
+                            0, 
+                            1
+                        ),
+                        new THREE.Raycaster(
+                            new THREE.Vector3(-0.5251612067222595, 0.2165137529373169, 1.710374355316162),
+                            dir,
+                            0, 
+                            1
+                        ),
+                        new THREE.Raycaster(
+                            new THREE.Vector3(0.5235543251037598, 0.2165137678384781, 0),
+                            dir,
+                            0, 
+                            1
+                        ),
+                        new THREE.Raycaster(
+                            new THREE.Vector3(-0.5251612067222595, 0.2165137529373169, 0),
+                            dir,
+                            0, 
+                            1
+                        )
+                    ]
+
+                    this.raycasters.forEach( raycaster => {
+                        var arrow = new THREE.ArrowHelper( raycaster.ray.direction, raycaster.ray.origin, 8, 0xff0000 );
+                        this.add(arrow)
+                    })
+
+
                 },
                 (xhr) => {
                     console.log((xhr.loaded / xhr.total * 100) + '% loaded');
@@ -326,6 +364,15 @@ class MyCar extends THREE.Object3D {
         }
     }
 
+    updateSpeedBasedOnTrackBounds(){
+        this.raycasters.forEach( raycaster => {
+            const intersections = raycaster.intersectObjects( this.track );
+            //console.log(intersections) 
+            if(intersections.length === 0){
+               //console.log("out") 
+            }
+        })
+    }
 
     update(){
 
@@ -337,6 +384,7 @@ class MyCar extends THREE.Object3D {
         this.updatePosition()
         this.updateCameraPos()
         this.updateCameraTarget()
+        this.updateSpeedBasedOnTrackBounds()
     }
 
 
