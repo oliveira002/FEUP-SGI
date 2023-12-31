@@ -59,7 +59,6 @@ class MyTrack extends THREE.Object3D {
         let mat2 = new THREE.LineBasicMaterial({ color: 0x00ff00 });
         let mesh2 = new THREE.Line(line, mat2);
         this.add(mesh2);
-
     }
 }
 
