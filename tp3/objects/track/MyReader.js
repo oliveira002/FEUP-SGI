@@ -12,6 +12,7 @@ class MyReader extends THREE.Object3D {
         this.app = app
         this.type = 'Group';
         this.track = null
+        this.trackCurve = null
         this.keyframes = []
         this.keyPoints = []
 
@@ -26,7 +27,7 @@ class MyReader extends THREE.Object3D {
         this.createPowerUps(object.power_ups);
         this.createObstacles(object.obstacles);
         this.createRoutes(object.routes);
-        this.createKeyFrames(object.track, 100);
+        this.createKeyFrames(object.track, 20);
 
     }
 
@@ -62,10 +63,10 @@ class MyReader extends THREE.Object3D {
             )
         });
 
-        let curve = new THREE.CatmullRomCurve3(curvePoints);
-        this.keyPoints = curve.getPoints(100)
+        this.trackCurve = new THREE.CatmullRomCurve3(curvePoints);
+        this.keyPoints = this.trackCurve.getSpacedPoints(400)
 
-        let pointTime = totalTime / 100
+        let pointTime = totalTime / 400
         let curTime = 0
         this.keyPoints.forEach((point, i) => {
             this.keyframes.push({time: curTime, value: point})

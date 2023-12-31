@@ -73,7 +73,6 @@ class MyContents {
 
   }
 
-
   /**
    * initializes the contents
    */
@@ -95,8 +94,7 @@ class MyContents {
     }
     
     if(this.opponent === null){
-      this.opponent = new MyOpponent(this.app, this.reader.keyPoints)
-      this.app.scene.add(this.opponent)
+      this.opponent = new MyOpponent(this.app, this.reader.keyPoints, this.reader.trackCurve, "Silvia")
     }
 
     if(this.scenery === null) {
@@ -227,6 +225,9 @@ class MyContents {
   }
 
   update() {
+    if(this.opponent) {
+      this.opponent.update()
+    }
     switch(this.game.state) {
 
       case State.CHOOSE_GAME_SETTINGS:
