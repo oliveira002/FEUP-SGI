@@ -9,13 +9,16 @@ class MyCar extends THREE.Object3D {
      * 
      * @param {MyApp} app the application object
      */
-    constructor(app, name, position=null) {
+    constructor(app, name, position=null, model) {
         super();
         this.app = app;
         this.type = 'Group';
         this.pressedKeys = { w: false, a: false, s: false, d: false, space: false };
         this.name = name
         this.loaded = false
+        this.wheels = []
+        this.modelMapping = {}
+        this.model = model
         
         // Position
         this.pos = position ?? new THREE.Vector3(0, 0, 0)
@@ -33,7 +36,7 @@ class MyCar extends THREE.Object3D {
         this.dragFactor = 0.995
 
         // Acceleration
-        this.accelerationFactor = 1.012
+        this.accelerationFactor = 1.01
 
         this.init()
 
@@ -43,23 +46,52 @@ class MyCar extends THREE.Object3D {
 
         const loader = new GLTFLoader();
 
-        loader.load(
-            'images/Nissan_Silvia_S15.glb',
-            (gltf) => {
-                this.car = gltf.scene
-                this.car.name = "car"
-                this.car.rotateY(degToRad(90))
-                this.car.scale.set(10,10,10)
-                this.add(this.car);
-                console.log(this.car) 
-            },
-            (xhr) => {
-                console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-            },
-            (error) => {
-                console.log('An error happened', error);
-            }
-          );
+        if(this.model === "Silvia") {
+            loader.load(
+                'images/Nissan_Silvia_S15.glb',
+                (gltf) => {
+                    this.car = gltf.scene
+                    this.car.name = "car"
+                    this.car.rotateY(degToRad(90))
+                    this.car.scale.set(10,10,10)
+                    this.add(this.car);
+    
+                    this.wheels.push(this.car.children[0].children[1])
+                    this.wheels.push(this.car.children[0].children[2])
+                },
+                (xhr) => {
+                    console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+                },
+                (error) => {
+                    console.log('An error happened', error);
+                }
+              );
+        }
+        else if(this.model === "MX") {
+            loader.load(
+                'images/Nissan_180MX.glb',
+                (gltf) => {
+                    this.car = gltf.scene
+                    this.car.rotateY(degToRad(90))
+                    this.car.translateY(23)
+                    this.car.scale.set(15,15,15)
+
+                    this.car.children[0].children[0].rotation.x = 0
+                    this.car.children[0].children[7].rotation.x = 0
+                    this.wheels.push(this.car.children[0].children[0])
+                    this.wheels.push(this.car.children[0].children[7])
+                    console.log(this.wheels)
+                    this.add(this.car); 
+                },
+                (xhr) => {
+                    console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+                },
+                (error) => {
+                    console.log('An error happened', error);
+                }
+            );
+        }
+    
 
         this.initCamera()
 
@@ -156,10 +188,11 @@ class MyCar extends THREE.Object3D {
     }
 
     updateAngle(){
-
         let angle = 0;
+        let wheelAngle = 0;
+
+
         if(this.speed !== 0){
-            // Rotate Left or Right
             if(this.pressedKeys.a && !this.pressedKeys.d) {
                 this.dir.applyAxisAngle(new THREE.Vector3(0,1,0), this.turningAngle * Math.sign(this.speed));
                 angle = this.turningAngle * Math.sign(this.speed)
@@ -170,17 +203,45 @@ class MyCar extends THREE.Object3D {
             }
         }
 
-        // Update rotation using quaternion
+        else {
+            if(this.pressedKeys.a && !this.pressedKeys.d) {
+                wheelAngle = this.turningAngle 
+            }
+            if(this.pressedKeys.d && !this.pressedKeys.a) {
+                wheelAngle = -this.turningAngle 
+            }
+        }
+
         const quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), angle);
         this.quaternion.multiplyQuaternions(quaternion, this.quaternion);
+
+        this.wheels.forEach(wheel => {
+
+            if(this.speed === 0 && wheelAngle != 0) {
+                wheelAngle = wheelAngle
+            }
+            
+            else if(angle === 0) {
+                wheelAngle = Math.sign(wheel.rotation.z) * -0.01
+            }
+            else {
+                wheelAngle = angle / 2
+            }
+
+            wheel.rotateZ(wheelAngle/2);
+            if(Math.abs(wheel.rotation.z + wheelAngle) > Math.PI / 5) {
+                wheel.rotation.z = Math.sign(wheelAngle) * Math.PI / 5
+            }
+        });
+
     }
+
 
     update(){
 
         this.updatePosition()
         this.updateCameraPos()
         this.updateCameraTarget()
-
     }
 
 

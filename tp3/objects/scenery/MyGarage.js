@@ -399,6 +399,7 @@ class MyGarage extends THREE.Object3D {
               this.nissan_180mx.translateX(-3.5)
               this.nissan_180mx.translateY(0.9)
               this.nissan_180mx.translateZ(2)
+
               this.nissan_180mx.name = "Nissan 180MX"
               this.add(this.nissan_180mx); 
               this.pickableObjs.push(this.nissan_180mx)
