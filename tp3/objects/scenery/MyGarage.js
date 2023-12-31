@@ -23,7 +23,7 @@ class MyGarage extends THREE.Object3D {
         this.spritesheet = new MySpriteSheet(15,8, "images/test2.png");
         this.spritesheetRed = new MySpriteSheet(15,8, "images/test3.png");
         this.carMapping = {}
-        this.checkObjs = ["Nissan S15", "Nissan 180MX"]
+        this.checkObjs = ["Nissan S15", "Lambo"]
         this.spriteMapping = {}
         
         this.initFloor()
@@ -352,14 +352,14 @@ class MyGarage extends THREE.Object3D {
         this.pickupSprite.rotateY(Math.PI / 2)
         this.spriteMapping["Nissan S15"] = this.pickupSprite
     
-        this.casualSprite = this.spritesheet.createTextGroup("Nissan 180MX")
+        this.casualSprite = this.spritesheet.createTextGroup("Lamborghini")
 
         this.casualSprite.translateY(3)
-        this.casualSprite.translateZ(5)
+        this.casualSprite.translateZ(4.5)
         this.casualSprite.translateX(2.5)
         this.casualSprite.scale.set(5,5,5)
         this.casualSprite.rotateY(Math.PI / 2)
-        this.spriteMapping["Nissan 180MX"] = this.casualSprite
+        this.spriteMapping["Lambo"] = this.casualSprite
     
         this.add(this.pickupSprite,  this.casualSprite)
     }
@@ -391,18 +391,18 @@ class MyGarage extends THREE.Object3D {
       );
     
         loader.load(
-          'images/Nissan_180MX.glb',
+          'images/lambo.glb',
           (gltf) => {
-              this.nissan_180mx = gltf.scene
-              this.nissan_180mx.scale.set(0.55,0.55,0.55)
-              this.nissan_180mx.rotateY(Math.PI / 1.9)
-              this.nissan_180mx.translateX(-3.5)
-              this.nissan_180mx.translateY(0.9)
-              this.nissan_180mx.translateZ(2)
-              this.nissan_180mx.name = "Nissan 180MX"
-              this.add(this.nissan_180mx); 
-              this.pickableObjs.push(this.nissan_180mx)
-              this.carMapping["Nissan 180MX"] = this.nissan_180mx
+              this.lambo = gltf.scene
+              this.lambo.scale.set(0.013,0.013,0.013)
+              this.lambo.rotateY(Math.PI / 1.9)
+              this.lambo.translateX(-3.2)
+              this.lambo.translateZ(2)
+
+              this.lambo.name = "Lambo"
+              this.add(this.lambo); 
+              this.pickableObjs.push(this.lambo)
+              this.carMapping["Lambo"] = this.lambo
           },
           (xhr) => {
               console.log((xhr.loaded / xhr.total * 100) + '% loaded');

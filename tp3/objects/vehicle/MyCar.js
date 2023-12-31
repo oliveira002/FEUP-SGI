@@ -10,7 +10,7 @@ class MyCar extends THREE.Object3D {
      * 
      * @param {MyApp} app the application object
      */
-    constructor(app, name, position=null) {
+    constructor(app, name, position=null, model) {
         super();
         this.app = app;
         this.type = 'Group';
@@ -21,6 +21,9 @@ class MyCar extends THREE.Object3D {
         THREE.BufferGeometry.prototype.computeBoundsTree = computeBoundsTree;
         THREE.BufferGeometry.prototype.disposeBoundsTree = disposeBoundsTree;
         THREE.Mesh.prototype.raycast = acceleratedRaycast;
+        this.wheels = []
+        this.modelMapping = {}
+        this.model = model
         
         // Position
         this.pos = position ?? new THREE.Vector3(0, 0, 0)
@@ -38,7 +41,7 @@ class MyCar extends THREE.Object3D {
         this.dragFactor = 0.995
 
         // Acceleration
-        this.accelerationFactor = 1.012
+        this.accelerationFactor = 1.01
 
         this.init()
 
@@ -48,41 +51,86 @@ class MyCar extends THREE.Object3D {
 
         const loader = new GLTFLoader();
 
-        loader.load(
-            'images/Nissan_Silvia_S15.glb',
-            (gltf) => {
-                this.car = gltf.scene
-                this.car.name = "car"
-                this.car.position.set(0.02,-0.4,-0.72)
-                //this.car.scale.set(10,10,10)
+        if(this.model === "Silvia") {
+            loader.load(
+                'images/Nissan_Silvia_S15.glb',
+                (gltf) => {
+                    this.car = gltf.scene
+                    this.car.name = "car"
+                    this.car.position.set(0.02,-0.4,-0.72)
+                    //this.car.scale.set(10,10,10)
+    
+                    let helpers = []
+    
+                    this.car.traverse( function( o ) {
+    
+                        if ( o.isMesh ){
+                            let geo = o.geometry
+                            geo.computeBoundsTree()
+                            let helper = new MeshBVHVisualizer(o)
+                            helper.update()
+                            helpers.push(helper)
+                        }
+                    
+                    } );
+                    console.log(this.car)
+    
+                    this.add(this.car);
+                    this.helpers = helpers
+                    console.log(this.helpers)
+                    this.add(...this.helpers)
+    
+                    this.wheels.push(this.car.children[0].children[1])
+                    this.wheels.push(this.car.children[0].children[2])
+                },
+                (xhr) => {
+                    console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+                },
+                (error) => {
+                    console.log('An error happened', error);
+                }
+              );
+        }
+        else if(this.model === "Lambo") {
+            loader.load(
+                'images/lambo.glb',
+                (gltf) => {
+                    this.car = gltf.scene
+                    this.car.name = "car"
+                    this.car.rotateY(degToRad(90))
+                    this.car.scale.set(0.06,0.06,0.06)
+                    this.add(this.car); 
 
-                let helpers = []
+                    this.wheels.push(this.car.children[2])
+                    this.wheels.push(this.car.children[3])
+                    this.wheels.forEach(wheel => {
+                        // Assuming wheel.geometry is the geometry of the wheel
+                    
+                        // Calculate the center of the wheel geometry
+                        const wheelCenter = new THREE.Vector3();
+                        wheel.geometry.computeBoundingBox();
+                        wheel.geometry.boundingBox.getCenter(wheelCenter);
+                    
+                        // Calculate the offset between current position and center of geometry
+                        const offset = wheelCenter.clone().sub(wheel.position);
+                    
+                        // Set the pivot point of the wheel to its center
+                        wheel.geometry.center();
+                    
+                        // Update the position to keep it the same relative to the center
+                        wheel.position.add(offset);
+                    });
 
-                this.car.traverse( function( o ) {
-
-                    if ( o.isMesh ){
-                        let geo = o.geometry
-                        geo.computeBoundsTree()
-                        let helper = new MeshBVHVisualizer(o)
-                        helper.update()
-                        helpers.push(helper)
-                    }
-                
-                } );
-                console.log(this.car)
-
-                this.add(this.car);
-                this.helpers = helpers
-                console.log(this.helpers)
-                this.add(...this.helpers)
-            },
-            (xhr) => {
-                console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-            },
-            (error) => {
-                console.log('An error happened', error);
-            }
-          );
+                },
+                (xhr) => {
+                    console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+                },
+                (error) => {
+                    console.log('An error happened', error);
+                }
+            );
+        }
+    
 
         this.rotateY(degToRad(90))
 
@@ -181,10 +229,11 @@ class MyCar extends THREE.Object3D {
     }
 
     updateAngle(){
-
         let angle = 0;
+        let wheelAngle = 0;
+
+
         if(this.speed !== 0){
-            // Rotate Left or Right
             if(this.pressedKeys.a && !this.pressedKeys.d) {
                 this.dir.applyAxisAngle(new THREE.Vector3(0,1,0), this.turningAngle * Math.sign(this.speed));
                 angle = this.turningAngle * Math.sign(this.speed)
@@ -195,10 +244,42 @@ class MyCar extends THREE.Object3D {
             }
         }
 
-        // Update rotation using quaternion
+        else {
+            if(this.pressedKeys.a && !this.pressedKeys.d) {
+                wheelAngle = this.turningAngle 
+            }
+            if(this.pressedKeys.d && !this.pressedKeys.a) {
+                wheelAngle = -this.turningAngle 
+            }
+        }
+
         const quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), angle);
         this.quaternion.multiplyQuaternions(quaternion, this.quaternion);
+
+        
+        this.wheels.forEach(wheel => {
+            
+            if(this.speed === 0 && wheelAngle != 0) {
+                wheelAngle = wheelAngle
+            }
+            
+            else if(angle === 0) {
+                wheelAngle = Math.sign(wheel.rotation.y) * -0.01
+            }
+            else {
+                wheelAngle = angle / 2
+            }
+            
+
+            wheel.rotateY(wheelAngle / 2)
+            
+            if(Math.abs(wheel.rotation.y + wheelAngle) > Math.PI / 5) {
+                wheel.rotation.y = Math.sign(wheelAngle) * Math.PI / 5
+            }
+        });
+
     }
+
 
     update(){
 
@@ -210,7 +291,6 @@ class MyCar extends THREE.Object3D {
         this.updatePosition()
         this.updateCameraPos()
         this.updateCameraTarget()
-
     }
 
 

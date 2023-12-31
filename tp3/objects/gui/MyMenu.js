@@ -78,8 +78,8 @@ class MyMenu extends THREE.Object3D {
 
         this.add(this.camera)
 
-        this.helper = new THREE.CameraHelper( this.camera );
-        this.add( this.helper );
+        //this.helper = new THREE.CameraHelper( this.camera );
+        //this.add( this.helper );
     }
 
     updateCameraByGameState(newGameState){
@@ -91,9 +91,9 @@ class MyMenu extends THREE.Object3D {
         this.camera.lookAt( new THREE.Vector3(42*index+this.positionOffset,0,0) );
         console.log("Menu:",this.mainMenu.position,"Cam:",this.camera.position)
 
-        this.remove(this.helper)
-        this.helper = new THREE.CameraHelper( this.camera );
-        this.add( this.helper );
+        //this.remove(this.helper)
+        //this.helper = new THREE.CameraHelper( this.camera );
+        //this.add( this.helper );
     }
 
 }

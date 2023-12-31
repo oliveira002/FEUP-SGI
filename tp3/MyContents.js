@@ -86,7 +86,7 @@ class MyContents {
     }
 
     if(this.car === null){
-      this.car = new MyCar(this.app, "Car")
+      this.car = new MyCar(this.app, "Car", null, "Lambo")
       this.app.scene.add(this.car)
     }
     
@@ -115,7 +115,7 @@ class MyContents {
     this.pickableObjs = this.menu.pickableObjs
     this.app.setActiveCamera('Menu')
 
-
+  
     if(this.garage === null) {
       this.garage = new MyGarage(this.app)
       this.garage.translateX(this.menu.positionOffset + 120)
@@ -133,16 +133,16 @@ class MyContents {
       this.obsGarage.translateZ(-9)
       this.obsGarage.rotateY(-Math.PI / 2)
       this.app.scene.add(this.obsGarage)
-    }*/
+    }
     
-
+  
     //this.menu.mainMenu = new MyMainMenu(this.app)
     //this.menu.mainMenu.translateX(-200,0,0)
     //this.app.scene.add(this.menu.mainMenu)
     //this.pickableObjs = this.menu.mainMenu.pickableObjs
 
     //this.app.scene.add(new MyPowerUp(this.app))
-    //this.app.scene.add(new MyOil(this.app))
+    //this.app.scene.add(new MyOil(this.app))*/
 
   }
 
