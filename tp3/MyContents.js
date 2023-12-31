@@ -77,7 +77,7 @@ class MyContents {
   async initializeReader(trackName) {
     await this.reader.initialize(trackName);
     this.track = this.reader.track;
-    this.opponent = new MyOpponent(this.app, this.reader.keyPoints)
+    this.opponent = new MyOpponent(this.app, this.reader.keyPoints, this.reader.trackCurve)
 }
 
   /**
@@ -228,6 +228,9 @@ class MyContents {
   }
 
   update() {
+    if(this.opponent) {
+      this.opponent.update()
+    }
     switch(this.game.state) {
 
       case State.CHOOSE_GAME_SETTINGS:
