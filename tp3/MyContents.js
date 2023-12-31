@@ -20,6 +20,7 @@ import { MySpriteSheet } from "./objects/single/MySpriteSheet.js";
 import { MyGame, State } from "./MyGame.js";
 import { MyMainMenu } from "./objects/gui/menus/MyMainMenu.js";
 import { MyObstaclesGarage } from "./objects/scenery/MyObstaclesGarage.js";
+import { MyOpponent } from "./objects/vehicle/MyOpponent.js";
 
 /**
  *  This class contains the contents of out application
@@ -34,6 +35,9 @@ class MyContents {
     this.builder = new MyNurbsBuilder();
     this.helpersOn = false;
     this.reader = new MyReader(this.app,"Portimão")
+    this.opponent = null
+    this.initializeReader("Portimão");
+  
 
     // Globals
     this.axis = null;
@@ -65,10 +69,16 @@ class MyContents {
     this.myCar = null
     this.opponentCar = null
     this.name = ""
-    //this.track = this.reader.track
+
     //this.app.scene.add(this.track);
 
   }
+
+  async initializeReader(trackName) {
+    await this.reader.initialize(trackName);
+    this.track = this.reader.track;
+    this.opponent = new MyOpponent(this.app, this.reader.keyPoints)
+}
 
   /**
    * initializes the contents
@@ -86,14 +96,14 @@ class MyContents {
     }
 
     if(this.car === null){
-      this.car = new MyCar(this.app, "Car", null, "Lambo")
-      this.app.scene.add(this.car)
+      //this.car = new MyCar(this.app, "Car", null, "Lambo")
+      //this.app.scene.add(this.car)
     }
     
     if(this.scenery === null) {
       this.scenery = new MyScenery(this.app, 100, 100)
       this.scenery.translateY(-33)
-      this.app.scene.add(this.scenery)
+      //this.app.scene.add(this.scenery)
     }
 
     if(this.hud === null) {
@@ -143,6 +153,9 @@ class MyContents {
 
     //this.app.scene.add(new MyPowerUp(this.app))
     //this.app.scene.add(new MyOil(this.app))*/
+
+    //console.log(this.reader)
+    //this.app.scene.add(new MyOpponent(this.app, this.reader))
 
   }
 
@@ -226,10 +239,11 @@ class MyContents {
       case State.PAUSED:
         this.menu.pauseMenu.update()
     }
+    /*
     this.car.update()
     this.hud.update()
     //this.powerup.update()
-    this.updateSnow()
+    this.updateSnow()*/
   }
 
   updateSnow(){
