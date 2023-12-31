@@ -14,6 +14,7 @@ class MyOpponent extends THREE.Object3D {
         this.clock = new THREE.Clock()
 
 
+        //console.log(keyPoints)
         this.mixer = null
         this.mixerTime = 0
         this.mixerPause = false

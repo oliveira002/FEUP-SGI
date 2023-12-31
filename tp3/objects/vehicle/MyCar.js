@@ -19,6 +19,7 @@ class MyCar extends THREE.Object3D {
         this.loaded = false
         this.raycasters = []
         this.track = track
+        this.wheel_pos = []
 
         THREE.BufferGeometry.prototype.computeBoundsTree = computeBoundsTree;
         THREE.BufferGeometry.prototype.disposeBoundsTree = disposeBoundsTree;
@@ -82,38 +83,24 @@ class MyCar extends THREE.Object3D {
                     this.helpers = helpers;
                     this.add(...this.helpers);
                     this.add(this.car);
-                    console.log(this.car)
             
                     this.wheels.push(this.car.children[0].children[1]);
                     this.wheels.push(this.car.children[0].children[2]);
 
-                    let dir = new THREE.Vector3(0,-1,0)
-                    this.raycasters = [
-                        new THREE.Raycaster(
-                            new THREE.Vector3(0.5235543251037598, 0.2165137678384781, 1.710374355316162),
-                            dir,
-                            0, 
-                            1
-                        ),
-                        new THREE.Raycaster(
-                            new THREE.Vector3(-0.5251612067222595, 0.2165137529373169, 1.710374355316162),
-                            dir,
-                            0, 
-                            1
-                        ),
-                        new THREE.Raycaster(
-                            new THREE.Vector3(0.5235543251037598, 0.2165137678384781, 0),
-                            dir,
-                            0, 
-                            1
-                        ),
-                        new THREE.Raycaster(
-                            new THREE.Vector3(-0.5251612067222595, 0.2165137529373169, 0),
-                            dir,
-                            0, 
-                            1
-                        )
+                    this.wheel_pos = [
+                        this.car.children[0].children[1].position, // FL
+                        this.car.children[0].children[2].position, // FR
+                        this.car.children[0].children[3].position, // BL
+                        this.car.children[0].children[4].position, // BR 
                     ]
+                    let dir = new THREE.Vector3(0,-1,0)
+
+                    this.wheel_pos.forEach( wheelPos => {
+                        const raycaster = new THREE.Raycaster();
+                        raycaster.set(wheelPos, dir);
+
+                        this.raycasters.push(raycaster)
+                    })
 
                     this.raycasters.forEach( raycaster => {
                         var arrow = new THREE.ArrowHelper( raycaster.ray.direction, raycaster.ray.origin, 8, 0xff0000 );
@@ -282,6 +269,22 @@ class MyCar extends THREE.Object3D {
 
         // Update position
         this.position.set(this.pos.x, this.pos.y, this.pos.z);
+
+        this.updateRaycastersPosition()
+    }
+
+    updateRaycastersPosition(){
+
+        console.log(this.wheel_pos[0])
+
+        this.wheel_pos.forEach(wheelpos => {
+            //console.log(wheelpos)        
+        })
+
+        this.raycasters.forEach((raycaster, idx) => {
+            raycaster.ray.origin.addVectors(this.wheel_pos[idx], this.position)
+            //console.log(idx, raycaster)
+        })
     }
 
     updateAngle(){
@@ -365,12 +368,22 @@ class MyCar extends THREE.Object3D {
     }
 
     updateSpeedBasedOnTrackBounds(){
+        let i = 0
+        let wheel = {
+            0: "FR",
+            1: "FL",
+            2: "BR",
+            3: "BL",
+        }
+
         this.raycasters.forEach( raycaster => {
-            const intersections = raycaster.intersectObjects( this.track );
-            //console.log(intersections) 
+            const intersections = raycaster.intersectObjects( [this.track] );
+            //console.log(wheel[i++], intersections) 
             if(intersections.length === 0){
-               //console.log("out") 
+               console.log("out") 
             }
+
+            //console.log(i++, raycaster)
         })
     }
 
