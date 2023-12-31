@@ -275,7 +275,7 @@ class MyCar extends THREE.Object3D {
 
     updateRaycastersPosition(){
 
-        console.log(this.wheel_pos[0])
+       //console.log(this.wheel_pos[0])
 
         this.wheel_pos.forEach(wheelpos => {
             //console.log(wheelpos)        
@@ -335,12 +335,13 @@ class MyCar extends THREE.Object3D {
                 else {
                     wheelAngle = angle / 2
                 }
-                
-    
-                wheel.rotateZ(wheelAngle / 2)
+            
                 
                 if(Math.abs(wheel.rotation.z + wheelAngle) > Math.PI / 5) {
                     wheel.rotation.z = Math.sign(wheelAngle) * Math.PI / 5
+                }
+                else {
+                    wheel.rotateZ(wheelAngle)
                 }
                 break;
             
@@ -357,7 +358,7 @@ class MyCar extends THREE.Object3D {
                 }
                 
     
-                wheel.rotateY(wheelAngle / 2)
+                wheel.rotateY(wheelAngle)
                 
                 if(Math.abs(wheel.rotation.y + wheelAngle) > Math.PI / 5) {
                     wheel.rotation.y = Math.sign(wheelAngle) * Math.PI / 5

@@ -12,14 +12,18 @@ class MyOpponent extends THREE.Object3D {
         this.trackCurve = trackCurve
         this.boxMesh = null
         this.clock = new THREE.Clock()
+        this.wheels = []
+        this.cur = 0
 
 
         //console.log(keyPoints)
         this.mixer = null
+        this.wheel1Mixer = null
+        this.wheel2Mixer = null
         this.mixerTime = 0
         this.mixerPause = false
         this.enableAnimationPosition = true
-        this.totalTime = 20
+        this.totalTime = 50
         this.init()
     }
 
@@ -32,8 +36,12 @@ class MyOpponent extends THREE.Object3D {
         const keyframeValues = [];
         const quaternionAng = [];
         const quaternionVal = [];
+        const wheelKeyframeTimes = [];
+        const wheelKeyframeValues = [];
 
         const totalPoints = this.keyPoints.length
+
+        let initRot = this.wheels[0].rotation.z
     
         for (var i = 0; i < totalPoints - 1; i++) {
             const startPoint = new THREE.Vector3(...this.keyPoints[i]);
@@ -45,6 +53,27 @@ class MyOpponent extends THREE.Object3D {
             keyframeValues.push(...this.keyPoints[i]);
         
             quaternionAng.push(new THREE.Quaternion().setFromAxisAngle(yAxis, angle));
+
+            wheelKeyframeTimes.push(i * this.totalTime / (totalPoints - 1));
+            
+
+            let wheelAngle = 0;
+
+            let lastRot = wheelKeyframeValues[i - 1];
+            if(Math.abs(angle) <= 0.3) {
+                wheelAngle = Math.sign(lastRot) * -0.01
+            }
+            else {
+                wheelAngle = angle / 8
+            }
+
+            if(Math.abs(initRot + wheelAngle) > Math.PI / 7) {
+                initRot = Math.sign(wheelAngle) * Math.PI / 7
+                wheelAngle = initRot
+            }
+
+            wheelKeyframeValues.push(wheelAngle);
+            
         }
         
         const lastPoint = new THREE.Vector3(...this.keyPoints[totalPoints - 1]);
@@ -60,17 +89,24 @@ class MyOpponent extends THREE.Object3D {
     
         const positionKF = new THREE.VectorKeyframeTrack('.position', keyframeTimes, keyframeValues, THREE.InterpolateSmooth);
         const quaternionKF = new THREE.QuaternionKeyframeTrack('.quaternion', keyframeTimes, quaternionVal, THREE.InterpolateSmooth);
+        const wheelRotationKF = new THREE.NumberKeyframeTrack('.rotation[z]', wheelKeyframeTimes, wheelKeyframeValues);
     
         const positionClip = new THREE.AnimationClip('positionAnimation', this.totalTime, [positionKF])
         const rotationClip = new THREE.AnimationClip('rotationAnimation', this.totalTime, [quaternionKF])
+        const wheelsClip = new THREE.AnimationClip('wheelsAnimation', this.totalTime, [wheelRotationKF])
     
         this.mixer = new THREE.AnimationMixer(this.boxMesh)
     
         const positionAction = this.mixer.clipAction(positionClip)
         const rotationAction = this.mixer.clipAction(rotationClip)
-    
+        const wheel1Action = this.wheel1Mixer.clipAction(wheelsClip)
+        const wheel2Action = this.wheel2Mixer.clipAction(wheelsClip)
+
+
         positionAction.play()
         rotationAction.play()
+        wheel1Action.play()
+        wheel2Action.play()
     }
 
     buildBox() {
@@ -83,10 +119,11 @@ class MyOpponent extends THREE.Object3D {
                     this.boxMesh.name = "car";
                     this.boxMesh.position.set(0, 0, 0);
     
-                    this.wheels = [];
                     this.wheels.push(this.boxMesh.children[0].children[1]);
                     this.wheels.push(this.boxMesh.children[0].children[2]);
-
+                    
+                    this.wheel1Mixer = new THREE.AnimationMixer(this.wheels[0]); // Assuming you have one wheel for simplicity
+                    this.wheel2Mixer = new THREE.AnimationMixer(this.wheels[1]);
                     this.app.scene.add(this.boxMesh);
 
                     this.boxMesh.rotation.y -= -Math.PI / 2
@@ -104,7 +141,6 @@ class MyOpponent extends THREE.Object3D {
             );
         });
     }
-
     setMixerTime() {
         this.mixer.setTime(this.mixerTime)
     }
@@ -142,6 +178,14 @@ class MyOpponent extends THREE.Object3D {
         const delta = this.clock.getDelta()
         if(this.mixer) {
             this.mixer.update(delta)
+        }
+
+        if (this.wheel1Mixer) {
+            this.wheel1Mixer.update(delta);
+        }
+
+        if (this.wheel2Mixer) {
+            this.wheel2Mixer.update(delta);
         }
     }
 }
