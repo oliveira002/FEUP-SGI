@@ -76,13 +76,13 @@ class MyScenery extends THREE.Object3D{
 			return;
 		}
 		this.mesh = new THREE.Mesh(this.geometry, this.shader.material);
-		this.mesh.translateY(8.2)
+		this.mesh.translateY(5.3)
     	this.mesh.rotateX(-Math.PI / 2);
-		this.mesh.scale.set(43,43,43)
+		this.mesh.scale.set(48,48,48)
 		this.floorMesh = new THREE.Mesh(this.floorGeometry, this.floorMaterial);
-		this.floorMesh.translateY(33)
+		this.floorMesh.translateY(32.97)
 		this.floorMesh.rotateX(-Math.PI / 2);
-		this.floorMesh.scale.set(43,43,43)
+		this.floorMesh.scale.set(48,48,48)
 		this.add(this.mesh, this.floorMesh)
 	}
 
