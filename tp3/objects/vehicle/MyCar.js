@@ -20,7 +20,7 @@ class MyCar extends THREE.Object3D {
         this.raycasters = []
         this.rayHelpers = []
         this.track = track
-        this.wheel_pos = []
+        this.wheelsOut = []
 
         THREE.BufferGeometry.prototype.computeBoundsTree = computeBoundsTree;
         THREE.BufferGeometry.prototype.disposeBoundsTree = disposeBoundsTree;
@@ -54,7 +54,6 @@ class MyCar extends THREE.Object3D {
     init(){
 
         const loader = new GLTFLoader();
-
         if(this.model === "Silvia") {
             loader.load(
                 'images/Nissan_Silvia_S15.glb',
@@ -87,32 +86,29 @@ class MyCar extends THREE.Object3D {
             
                     this.wheels.push(this.car.children[0].children[1]);
                     this.wheels.push(this.car.children[0].children[2]);
-                    this.wheels.push(this.car.children[0].children[3]);
-                    this.wheels.push(this.car.children[0].children[4]);
 
-                    this.wheel_pos = [
-                        this.car.children[0].children[1], // FL
-                        this.car.children[0].children[2], // FR
-                        this.car.children[0].children[3], // BL
-                        this.car.children[0].children[4], // BR 
-                    ]
-                   
-                    this.wheels.forEach((wheel, index) => {
+                    this.wheelsOut.push(this.car.children[0].children[1]);
+                    this.wheelsOut.push(this.car.children[0].children[2])
+                    this.wheelsOut.push(this.car.children[0].children[3]);
+                    this.wheelsOut.push(this.car.children[0].children[4]);
+
+                    this.wheelsOut.forEach(wheel => {
                         const raycaster = new THREE.Raycaster();
                         raycaster.ray.direction.set(0, -1, 0);
                         raycaster.ray.origin.copy(wheel.position);
                         this.raycasters.push(raycaster);
-                      
+
                         const arrowHelper = new THREE.ArrowHelper(
-                          raycaster.ray.direction,
-                          wheel.position,
-                          2, // Length of the arrow
-                          0x00ff00 // Color of the arrow (green)
+                            raycaster.ray.direction,
+                            wheel.position,
+                            2, // Length of the arrow
+                            0x00ff00 // Color of the arrow (green)
                         );
                         this.rayHelpers.push(arrowHelper);
-                        this.add(arrowHelper)
+                        this.add(arrowHelper);
+                        
                     });
-
+ 
                 },
                 (xhr) => {
                     console.log((xhr.loaded / xhr.total * 100) + '% loaded');
@@ -157,7 +153,14 @@ class MyCar extends THREE.Object3D {
 
                     this.wheels.push(this.car.children[2])
                     this.wheels.push(this.car.children[3])
-                    this.wheels.forEach(wheel => {
+
+                    this.wheelsOut.push(this.car.children[2])
+                    this.wheelsOut.push(this.car.children[3])
+                    this.wheelsOut.push(this.car.children[4])
+                    this.wheelsOut.push(this.car.children[5])
+
+                    
+                    this.wheelsOut.forEach(wheel => {
                         const wheelCenter = new THREE.Vector3();
                         wheel.geometry.computeBoundingBox();
                         wheel.geometry.boundingBox.getCenter(wheelCenter);
@@ -169,6 +172,26 @@ class MyCar extends THREE.Object3D {
                         wheel.position.add(offset);
                     });
 
+
+                    this.wheelsOut.forEach(wheel => {
+                        const wheelWorldPosition = new THREE.Vector3();
+                        wheel.getWorldPosition(wheelWorldPosition); 
+                        const raycaster = new THREE.Raycaster();
+                        raycaster.ray.direction.set(0, -1, 0);
+                        raycaster.ray.origin.copy(wheelWorldPosition);
+                        this.raycasters.push(raycaster);
+
+                        const arrowHelper = new THREE.ArrowHelper(
+                            raycaster.ray.direction,
+                            wheelWorldPosition,
+                            2, // Length of the arrow
+                            0x00ff00 // Color of the arrow (green)
+                        );
+                        this.rayHelpers.push(arrowHelper);
+                        this.add(arrowHelper);
+                    });
+
+
                 },
                 (xhr) => {
                     console.log((xhr.loaded / xhr.total * 100) + '% loaded');
@@ -179,9 +202,8 @@ class MyCar extends THREE.Object3D {
             );
         }
 
-        this.rotateY(degToRad(90))
-
         this.initCamera()
+        this.rotateY(degToRad(90))
 
     }
 
@@ -278,24 +300,38 @@ class MyCar extends THREE.Object3D {
         this.updateRaycastersPosition()
     }
 
-    updateRaycastersPosition(){
+    updateRaycastersPosition() {
+        const car = this;
+      
+        this.wheelsOut.forEach((wheel, index) => {
+          const wheelWorldPosition = new THREE.Vector3();
+          wheel.getWorldPosition(wheelWorldPosition); 
+      
+          const raycaster = this.raycasters[index];
+          raycaster.ray.origin.copy(wheelWorldPosition); 
+          const rotationMatrix = new THREE.Matrix4();
+          rotationMatrix.extractRotation(car.matrixWorld);
+          raycaster.ray.direction.applyMatrix4(rotationMatrix);
+        });
+
+        let isOutside = false
 
         this.raycasters.forEach((raycaster, index) => {
-            raycaster.ray.origin.copy(this.position).add(this.wheel_pos[index].position);
-            raycaster.ray.origin.y += 1; 
             const intersections = raycaster.intersectObject(this.track);
-        
             if (intersections.length > 0) {
-              console.log(`Wheel ${index + 1} is on the track.`);
-              this.rayHelpers[index].setDirection(raycaster.ray.direction);
-              this.rayHelpers[index].setColor(0x00ff00);
-            } else {
-              console.log(`Wheel ${index + 1} is off the track.`);
-              this.rayHelpers[index].setDirection(raycaster.ray.direction);
-              this.rayHelpers[index].setColor(0xff0000); // Change color to red for off-track
-            }
+                //console.log(`Wheel ${index + 1} is on the track.`);
+                this.rayHelpers[index].setDirection(raycaster.ray.direction);
+                this.rayHelpers[index].setColor(0x00ff00);
+              } else {
+                isOutside = true
+                console.log(`Wheel ${index + 1} is off the track.`);
+                this.rayHelpers[index].setDirection(raycaster.ray.direction);
+                this.rayHelpers[index].setColor(0xff0000); // Change color to red for off-track
+              }
           });
-    }
+          
+          this.speed = isOutside ? this.speed * 0.982 : this.speed
+      }
 
     updateAngle(){
         let angle = 0;
@@ -378,29 +414,6 @@ class MyCar extends THREE.Object3D {
         }
     }
 
-    updateSpeedBasedOnTrackBounds(){
-
-        //console.log(this.track)
-
-        let i = 0
-        let wheel = {
-            0: "FR",
-            1: "FL",
-            2: "BR",
-            3: "BL",
-        }
-        //console.log("--------------")
-        this.raycasters.forEach( raycaster => {
-            const intersections = raycaster.intersectObjects( [this.track] );
-            //console.log(wheel[i++], intersections) 
-            if(intersections.length !== 0){
-               console.log("in") 
-            }
-
-            //console.log(i++, raycaster)
-        })
-    }
-
     update(){
 
        if(this.helpers)
@@ -411,7 +424,6 @@ class MyCar extends THREE.Object3D {
         this.updatePosition()
         this.updateCameraPos()
         this.updateCameraTarget()
-        this.updateSpeedBasedOnTrackBounds()
     }
 
 
