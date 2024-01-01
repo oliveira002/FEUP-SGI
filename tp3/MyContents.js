@@ -107,7 +107,7 @@ class MyContents {
     }
 
     if(this.hud === null) {
-      this.hud = new MyHUD(this.app)
+      //this.hud = new MyHUD(this.app)
       //this.app.scene.add(this.hud)
     }
 
@@ -191,7 +191,7 @@ class MyContents {
             case ' ':
               this.car.updateKeyPressed(event.type, event.key)
               break;
-              
+
           case 'Escape':
             if(event.type == 'keydown') {
               this.hud.resumeTimer()
@@ -257,10 +257,6 @@ class MyContents {
   }
 
   update() {
-    if(this.opponent) {
-      this.opponent.update()
-    }
-    this.hud.update(this.game.state)
     switch(this.game.state) {
 
       case State.CHOOSE_GAME_SETTINGS:
@@ -278,6 +274,13 @@ class MyContents {
           this.opponent.update()
         }
         //this.updateSnow()
+    }
+    
+    if(this.opponent) {
+      this.opponent.update()
+    }
+    if(this.hud) {
+      this.hud.update(this.game.state)
     }
 
     //this.powerup.update()
@@ -347,12 +350,13 @@ class MyContents {
 
       
         this.game.state = State.PLAYING
-        // should start time
-        this.hud.startTimer()
-        this.app.scene.add(this.hud)
+        this.hud = new MyHUD(this.app)
         this.app.scene.remove(this.garage, this.obsGarage)
         this.pickableObjs = []
         this.app.setActiveCamera('Car')
+        this.hud.startTimer()
+        this.app.scene.add(this.hud)
+        
         
         break;
       }
