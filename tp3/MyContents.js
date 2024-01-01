@@ -117,14 +117,14 @@ class MyContents {
     //this.powerup = new MyPowerUp(this.app)
     //this.app.scene.add(this.powerup)
 
-    
+   
     this.menu = new MyMenu(this.app)
     this.menu.updateCameraByGameState(this.game.state)
     this.app.scene.add(this.menu)
     this.pickableObjs = this.menu.pickableObjs
     this.app.setActiveCamera('Menu')
 
-  
+    
     if(this.garage === null) {
       this.garage = new MyGarage(this.app)
       this.garage.translateX(this.menu.positionOffset + 120)
@@ -170,7 +170,26 @@ class MyContents {
           case ' ':
             this.car.updateKeyPressed(event.type, event.key)
             break;
+          
+          case 'Escape':
+            if(event.type == 'keydown') {
+              this.game.state = State.PAUSED
+              this.menu.updateCameraByGameState(this.game.state)
+              this.app.setActiveCamera('Menu')
+            }
+            break;
         }
+      else if(this.game.state == State.PAUSED) {
+        console.log(event.key)
+        switch (event.key) {
+          case 'Escape':
+            if(event.type == 'keydown') {
+              this.game.state = State.PLAYING
+              this.app.setActiveCamera('Car')
+            }
+            break;
+        }
+      }
     }
 
     function updatePlayerName(event) {

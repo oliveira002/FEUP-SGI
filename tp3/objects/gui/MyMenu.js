@@ -8,7 +8,7 @@ const StateToIndex = Object.freeze({
     MAIN_MENU: 0,
     NAME_MENU: 1,
     CHOOSE_GAME_SETTINGS: 2,
-	PAUSED: 6,
+	PAUSED: 5,
 	END: 7
 })
 
@@ -51,7 +51,7 @@ class MyMenu extends THREE.Object3D {
         this.add(this.gameSettingsMenu)
 
         this.pauseMenu = new MyPauseMenu(this.app)
-        this.pauseMenu.translateX(this.positionOffset+186)
+        this.pauseMenu.translateX(this.positionOffset+210)
         this.add(this.pauseMenu)
 
         this.currentMenu = this.mainMenu
