@@ -54,13 +54,14 @@ class MyCar extends THREE.Object3D {
     init(){
 
         const loader = new GLTFLoader();
-        if(this.model === "Silvia") {
+        if(this.model === "Nissan S15") {
             loader.load(
                 'images/Nissan_Silvia_S15.glb',
                 (gltf) => {
                     this.car = gltf.scene;
                     this.car.name = "car";
                     this.car.position.set(0,0,0)
+                    this.car.scale.set(0.8,0.8,0.8)
                     //this.car.position.set(0.02, -0.4, -0.72);
             
                     let helpers = [];
@@ -124,7 +125,7 @@ class MyCar extends THREE.Object3D {
                 (gltf) => {
                     this.car = gltf.scene
                     this.car.name = "car"
-                    this.car.scale.set(0.003,0.003,0.003)
+                    this.car.scale.set(0.005,0.005,0.005)
 
                     let helpers = []
     

@@ -4,13 +4,14 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 class MyOpponent extends THREE.Object3D {
 
-    constructor(app, keyPoints, trackCurve) {
+    constructor(app, keyPoints, trackCurve, model) {
         super();
         this.app = app;
         this.type = 'Group';
         this.keyPoints = keyPoints
         this.trackCurve = trackCurve
         this.boxMesh = null
+        this.model = model
         this.clock = new THREE.Clock()
         this.wheels = []
         this.cur = 0
@@ -111,33 +112,81 @@ class MyOpponent extends THREE.Object3D {
     buildBox() {
         return new Promise((resolve, reject) => {
             const loader = new GLTFLoader();
-            loader.load(
-                'images/Nissan_Silvia_S15.glb',
-                (gltf) => {
-                    this.boxMesh = gltf.scene;
-                    this.boxMesh.name = "car";
-                    this.boxMesh.position.set(0, 0, 0);
-    
-                    this.wheels.push(this.boxMesh.children[0].children[1]);
-                    this.wheels.push(this.boxMesh.children[0].children[2]);
-                    
-                    this.wheel1Mixer = new THREE.AnimationMixer(this.wheels[0]); // Assuming you have one wheel for simplicity
-                    this.wheel2Mixer = new THREE.AnimationMixer(this.wheels[1]);
-                    this.app.scene.add(this.boxMesh);
+            switch(this.model) {
+                case "Nissan S15":
+                    loader.load(
+                        'images/Nissan_Silvia_S15.glb',
+                        (gltf) => {
+                            this.boxMesh = gltf.scene;
+                            this.boxMesh.name = "car";
+                            this.boxMesh.position.set(0, 0, 0);
+                            this.boxMesh.scale.set(0.8,0.8,0.8)
+                            //this.boxMesh.scale.set(0.7,0.7,0.7)
+            
+                            this.wheels.push(this.boxMesh.children[0].children[1]);
+                            this.wheels.push(this.boxMesh.children[0].children[2]);
+                            
+                            this.wheel1Mixer = new THREE.AnimationMixer(this.wheels[0]); 
+                            this.wheel2Mixer = new THREE.AnimationMixer(this.wheels[1]);
+                            this.app.scene.add(this.boxMesh);
+        
+                            this.boxMesh.rotation.y -= -Math.PI / 2
+            
+                            console.log('Model loaded successfully');
+                            resolve(this.boxMesh);
+                        },
+                        (xhr) => {
+                            console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
+                        },
+                        (error) => {
+                            console.log('An error happened', error);
+                            reject(error);
+                        }
+                    );
+                break;
 
-                    this.boxMesh.rotation.y -= -Math.PI / 2
-    
-                    console.log('Model loaded successfully');
-                    resolve(this.boxMesh);
-                },
-                (xhr) => {
-                    console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
-                },
-                (error) => {
-                    console.log('An error happened', error);
-                    reject(error);
-                }
-            );
+                case "Lambo":
+                    loader.load(
+                        'images/lambo.glb',
+                        (gltf) => {
+                            this.boxMesh = gltf.scene
+                            this.boxMesh.name = "car"
+                            this.boxMesh.scale.set(0.005,0.005,0.005)
+            
+                            this.wheels.push(this.boxMesh.children[2]);
+                            this.wheels.push(this.boxMesh.children[3]);
+
+                            this.wheels.forEach(wheel => {
+                                const wheelCenter = new THREE.Vector3();
+                                wheel.geometry.computeBoundingBox();
+                                wheel.geometry.boundingBox.getCenter(wheelCenter);
+                            
+                                const offset = wheelCenter.clone().sub(wheel.position);
+                            
+                                wheel.geometry.center();
+                            
+                                wheel.position.add(offset);
+                            });
+                            
+                            this.wheel1Mixer = new THREE.AnimationMixer(this.wheels[0]); 
+                            this.wheel2Mixer = new THREE.AnimationMixer(this.wheels[1]);
+                            this.app.scene.add(this.boxMesh);
+        
+                            this.boxMesh.rotation.y -= -Math.PI / 2
+            
+                            console.log('Model loaded successfully');
+                            resolve(this.boxMesh);
+                        },
+                        (xhr) => {
+                            console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
+                        },
+                        (error) => {
+                            console.log('An error happened', error);
+                            reject(error);
+                        }
+                    );
+                    break;
+            }
         });
     }
     setMixerTime() {

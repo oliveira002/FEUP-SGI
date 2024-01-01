@@ -67,6 +67,8 @@ class MyContents {
     this.myCar = null
     this.opponentCar = null
     this.name = ""
+    this.botDifficulty = null
+    this.trackName = null
     this.track = this.reader.track;
 
     //this.app.scene.add(this.track);
@@ -89,8 +91,8 @@ class MyContents {
     }
 
     if(this.car === null){
-      this.car = new MyCar(this.app, "Car", null, "Silvia", this.reader.track)
-      this.app.scene.add(this.car)
+      //this.car = new MyCar(this.app, "Car", null, "Lambo", this.reader.track)
+      //this.app.scene.add(this.car)
     }
     
     if(this.opponent === null){
@@ -100,12 +102,12 @@ class MyContents {
     if(this.scenery === null) {
       this.scenery = new MyScenery(this.app, 100, 100)
       this.scenery.translateY(-33)
-      //this.app.scene.add(this.scenery)
+      this.app.scene.add(this.scenery)
     }
 
     if(this.hud === null) {
       this.hud = new MyHUD(this.app)
-      this.app.scene.add(this.hud)
+      //this.app.scene.add(this.hud)
     }
 
     if(this.spritesheet === null) {
@@ -115,7 +117,7 @@ class MyContents {
     //this.powerup = new MyPowerUp(this.app)
     //this.app.scene.add(this.powerup)
 
-    /*
+    
     this.menu = new MyMenu(this.app)
     this.menu.updateCameraByGameState(this.game.state)
     this.app.scene.add(this.menu)
@@ -242,6 +244,9 @@ class MyContents {
       case State.PLAYING:
         this.car.update()
         this.hud.update()
+        if(this.opponent) {
+          this.opponent.update()
+        }
         //this.updateSnow()
     }
 
@@ -284,8 +289,9 @@ class MyContents {
           this.app.setActiveCamera('Garage')
           this.pickableObjs = this.garage.pickableObjs
           // difficulty and track stored in these variables
-          //console.log(this.menu.gameSettingsMenu.activeDifficulty) 
-          //console.log(this.menu.gameSettingsMenu.activeTrack)
+
+          console.log(this.menu.gameSettingsMenu.activeDifficulty.name) 
+          console.log(this.menu.gameSettingsMenu.activeTrack.name)
         }
         else {
           this.menu.gameSettingsMenu.handleClick(obj.parent.name)
@@ -294,17 +300,25 @@ class MyContents {
       }
       case State.CHOOSE_CAR_PLAYER: {
         obj = this.getObjectParent(obj)
-        this.myCar = this.garage.carMapping[obj.name]
-        this.garage.removeCarPickable(this.myCar)
+        this.garage.removeCarPickable(this.garage.carMapping[obj.name])
+        this.car = new MyCar(this.app,"Car",null,obj.name,this.track)
+        this.app.scene.add(this.car)
         this.game.state = State.CHOOSE_CAR_OPP
         break;
       }
       case State.CHOOSE_CAR_OPP: {
         obj = this.getObjectParent(obj)
         this.opponentCar = this.garage.carMapping[obj.name]
+        this.opponent = new MyOpponent(this.app,this.reader.keyPoints,this.reader.trackCurve, obj.name)
+        this.app.scene.add(this.opponent)
+
+      
         this.game.state = State.PLAYING
+        this.app.scene.add(this.hud)
+        this.app.scene.remove(this.garage, this.obsGarage)
         this.pickableObjs = []
         this.app.setActiveCamera('Car')
+        
         break;
       }
       case State.CHOOSE_OBSTACLE: {
@@ -314,17 +328,6 @@ class MyContents {
         this.game.state = State.PLACE_OBSTACLE
         break;
       }
-    }
-  }
-
-  chooseCar(obj) {
-    if(this.game.state === State.CHOOSE_CAR_PLAYER) {
-      this.myCar = this.carMapping[obj.name]
-      this.game.state = State.CHOOSE_CAR_OPP
-    }
-    else if(this.game.state === State.CHOOSE_CAR_OPP) {
-      this.opponentCar = this.carMapping[obj.name]
-      this.game.state = State.CHOOSE_OBSTACLE
     }
   }
 
