@@ -38,9 +38,9 @@ class MyPauseMenu extends THREE.Object3D {
         this.pause.translateX(-4)
         this.pause.translateY(-1.5)
 
-        this.space = this.spritesheetBlack.createTextGroup("Press space to resume the game...")
+        this.space = this.spritesheetBlack.createTextGroup("Press ESC to resume the game...")
         this.space.scale.set(10,10,10)
-        this.space.translateX(-10)
+        this.space.translateX(-9)
         this.space.translateY(-3.5)
 
 

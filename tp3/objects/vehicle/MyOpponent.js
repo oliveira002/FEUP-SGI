@@ -24,7 +24,7 @@ class MyOpponent extends THREE.Object3D {
         this.mixerTime = 0
         this.mixerPause = false
         this.enableAnimationPosition = true
-        this.totalTime = 50
+        this.totalTime = 20
         this.init()
     }
 
@@ -67,7 +67,6 @@ class MyOpponent extends THREE.Object3D {
             } else {
                 initRot += curvature / 2;
         
-                // Limit the rotation
                 if (Math.abs(initRot) >= Math.PI / 5) {
                     initRot = Math.sign(initRot) * Math.PI / 5;
                 }
