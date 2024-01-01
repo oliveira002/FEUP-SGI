@@ -41,39 +41,38 @@ class MyOpponent extends THREE.Object3D {
 
         const totalPoints = this.keyPoints.length
 
-        let initRot = this.wheels[0].rotation.z
+        let initRot = 0
     
         for (var i = 0; i < totalPoints - 1; i++) {
             const startPoint = new THREE.Vector3(...this.keyPoints[i]);
             const endPoint = new THREE.Vector3(...this.keyPoints[i + 1]);
+            const nextPoint = new THREE.Vector3(...this.keyPoints[i + 2] || endPoint);
+        
+            const direction1 = new THREE.Vector3().subVectors(endPoint, startPoint).normalize();
+            const direction2 = new THREE.Vector3().subVectors(nextPoint, endPoint).normalize();
             const direction = new THREE.Vector3().subVectors(endPoint, startPoint).normalize();
             const angle = Math.atan2(direction.x, direction.z);
+
+            const curvature = direction1.cross(direction2).y;
         
             keyframeTimes.push(i * this.totalTime / (totalPoints - 1));
-            keyframeValues.push(...this.keyPoints[i]);
-        
-            quaternionAng.push(new THREE.Quaternion().setFromAxisAngle(yAxis, angle));
-
             wheelKeyframeTimes.push(i * this.totalTime / (totalPoints - 1));
-            
+            keyframeValues.push(...this.keyPoints[i]);
+            quaternionAng.push(new THREE.Quaternion().setFromAxisAngle(yAxis, angle));
+        
 
-            let wheelAngle = 0;
-
-            let lastRot = wheelKeyframeValues[i - 1];
-            if(Math.abs(angle) <= 0.3) {
-                wheelAngle = Math.sign(lastRot) * -0.01
+            if (Math.abs(curvature) < 0.02) {
+                initRot = Math.sign(initRot) * -0.01;
+            } else {
+                initRot += curvature / 2;
+        
+                // Limit the rotation
+                if (Math.abs(initRot) >= Math.PI / 5) {
+                    initRot = Math.sign(initRot) * Math.PI / 5;
+                }
             }
-            else {
-                wheelAngle = angle / 8
-            }
-
-            if(Math.abs(initRot + wheelAngle) > Math.PI / 7) {
-                initRot = Math.sign(wheelAngle) * Math.PI / 7
-                wheelAngle = initRot
-            }
-
-            wheelKeyframeValues.push(wheelAngle);
-            
+        
+            wheelKeyframeValues.push(initRot);
         }
         
         const lastPoint = new THREE.Vector3(...this.keyPoints[totalPoints - 1]);
