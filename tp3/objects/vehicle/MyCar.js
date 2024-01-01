@@ -363,7 +363,7 @@ class MyCar extends THREE.Object3D {
 
     updateSpeedBasedOnTrackBounds(){
 
-        console.log(this.track)
+        //console.log(this.track)
 
         let i = 0
         let wheel = {
@@ -372,10 +372,10 @@ class MyCar extends THREE.Object3D {
             2: "BR",
             3: "BL",
         }
-        console.log("--------------")
+        //console.log("--------------")
         this.raycasters.forEach( raycaster => {
             const intersections = raycaster.intersectObject( this.track );
-            console.log(wheel[i++], intersections) 
+            //console.log(wheel[i++], intersections) 
             if(intersections.length === 0){
                //console.log(wheel[i++], "out") 
             }
