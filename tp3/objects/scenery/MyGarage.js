@@ -4,7 +4,7 @@ import { MyShelf } from './MyShelf.js';
 import { MyBoxStack } from './MyBoxStack.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'; // Make sure to import GLTFLoader
 import { Reflector } from 'three/addons/objects/Reflector.js';
-import { MyCaution } from './MyCaution.js';
+import { MyCaution } from '../track/MyCaution.js';
 import {MyPortrait} from './MyPortrait.js'
 import { MyTable } from './MyTable.js';
 import { MySpriteSheet } from '../single/MySpriteSheet.js';
