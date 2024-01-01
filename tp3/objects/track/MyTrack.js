@@ -52,6 +52,7 @@ class MyTrack extends THREE.Object3D {
         geo.computeVertexNormals();
         
         let mat = new THREE.MeshPhongMaterial({color: 0x696969, side: THREE.DoubleSide})
+        mat.wireframe = true
         let mesh = new THREE.Mesh(geo, mat);
         this.add(mesh);
 
