@@ -89,7 +89,7 @@ class MyMenu extends THREE.Object3D {
 
         this.camera.position.set(42*index+this.positionOffset, 0, frustumSize /4)
         this.camera.lookAt( new THREE.Vector3(42*index+this.positionOffset,0,0) );
-        console.log("Menu:",this.mainMenu.position,"Cam:",this.camera.position)
+        //console.log("Menu:",this.mainMenu.position,"Cam:",this.camera.position)
 
         //this.remove(this.helper)
         //this.helper = new THREE.CameraHelper( this.camera );

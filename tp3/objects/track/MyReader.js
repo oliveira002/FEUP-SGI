@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { MyTrack } from './MyTrack.js';
 import { tracks } from './tracks.js';
+import { MyPowerUp } from './MyPowerUp.js';
 
 
 
@@ -15,6 +16,7 @@ class MyReader extends THREE.Object3D {
         this.trackCurve = null
         this.keyframes = []
         this.keyPoints = []
+        this.powerups = []
 
         this.init(trackName);
     }
@@ -26,7 +28,6 @@ class MyReader extends THREE.Object3D {
         this.createTrack(object.track, object.starting_point_index);
         this.createPowerUps(object.power_ups);
         this.createObstacles(object.obstacles);
-        this.createRoutes(object.routes);
         this.createKeyFrames(object.track, 20);
 
     }
@@ -40,18 +41,23 @@ class MyReader extends THREE.Object3D {
         });
 
         this.track = new MyTrack(curvePoints)
-        this.app.scene.add(this.track)
+        this.add(this.track)
     }
 
-    createPowerUps(powerups){
+    createPowerUps(powerup_coords){
+        powerup_coords.forEach(coords => {
 
+            let radius = 1
+            let powerup = new MyPowerUp(radius)
+            powerup.position.set(...coords)
+            powerup.translateY(radius/2)
+
+            this.powerups.push(powerup)
+            this.add(powerup)
+        });
     }
 
     createObstacles(obstacles){
-
-    }
-
-    createRoutes(routes){
 
     }
 
@@ -82,8 +88,17 @@ class MyReader extends THREE.Object3D {
             sphere.scale.set(0.2, 0.2, 0.2)
             sphere.position.set(... this.keyPoints[i])
 
-            this.app.scene.add(sphere)
+            this.add(sphere)
         }
+    }
+
+    update(){
+        this.powerups.forEach(powerup => {
+            powerup.update()
+        })
+
+        
+
     }
 
 }

@@ -21,6 +21,7 @@ class MyCar extends THREE.Object3D {
         this.rayHelpers = []
         this.track = track
         this.wheelsOut = []
+        this.meshes = []
 
         THREE.BufferGeometry.prototype.computeBoundsTree = computeBoundsTree;
         THREE.BufferGeometry.prototype.disposeBoundsTree = disposeBoundsTree;
@@ -64,7 +65,8 @@ class MyCar extends THREE.Object3D {
                     this.car.scale.set(0.8,0.8,0.8)
                     //this.car.position.set(0.02, -0.4, -0.72);
             
-                    let helpers = [];
+                    let helpers = []; 
+                    let meshes = []
             
                     this.car.traverse((o) => {
                         if (o.isMesh) {
@@ -74,13 +76,15 @@ class MyCar extends THREE.Object3D {
             
                             mesh.position.set(this.car.position.x - 0.02, this.car.position.y + 0.4, this.car.position.z + 0.72);
                             mesh.geometry.computeBoundsTree();
+                            meshes.push(mesh)
             
                             let helper = new MeshBVHVisualizer(mesh);
                             helper.update();
                             helpers.push(helper);
                         }
                     });
-            
+                    
+                    this.meshes = meshes
                     this.helpers = helpers;
                     this.add(...this.helpers);
                     this.add(this.car);
@@ -128,6 +132,7 @@ class MyCar extends THREE.Object3D {
                     this.car.scale.set(0.005,0.005,0.005)
 
                     let helpers = []
+                    let meshes = []
     
                     this.car.traverse((o) => {
                         if (o.isMesh) {
@@ -141,6 +146,7 @@ class MyCar extends THREE.Object3D {
                             mesh.position.copy(o.position);
                             mesh.rotation.copy(o.rotation);
                             mesh.scale.copy(o.scale);
+                            meshes.push(mesh)
             
                             let helper = new MeshBVHVisualizer(mesh);
                             helper.update();
@@ -148,6 +154,7 @@ class MyCar extends THREE.Object3D {
                         }
                     });
                     this.helpers = helpers
+                    this.meshes = meshes
                     this.add(...this.helpers)
 
                     this.add(this.car); 
@@ -325,7 +332,7 @@ class MyCar extends THREE.Object3D {
                 this.rayHelpers[index].setColor(0x00ff00);
               } else {
                 isOutside = true
-                console.log(`Wheel ${index + 1} is off the track.`);
+                //console.log(`Wheel ${index + 1} is off the track.`);
                 this.rayHelpers[index].setDirection(raycaster.ray.direction);
                 this.rayHelpers[index].setColor(0xff0000); // Change color to red for off-track
               }
@@ -425,6 +432,11 @@ class MyCar extends THREE.Object3D {
         this.updatePosition()
         this.updateCameraPos()
         this.updateCameraTarget()
+        console.log(this.car)
+    }
+
+    checkCollisions( objects ){
+        console.log(this.car)
     }
 
 

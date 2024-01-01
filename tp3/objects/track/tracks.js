@@ -30,16 +30,14 @@ export const tracks = {
         ],
         "starting_point_index": 1,
         "power_ups": [
+            [-47.98, 0, 0.0]
 
         ],
         "obstacles":[
-
-        ],
-        "routes":{
-            "easy": [
-
-            ]
-        }
+            {"Oil": [19, 0, -9]},
+            {"Banana": [40.3, 0, -9]},
+            {"Caution": [64.6, 0, 41.5]},
+        ]
     },
     "Track 2": {
         "track": [
@@ -79,16 +77,13 @@ export const tracks = {
         ],
         "starting_point_index": 1,
         "power_ups": [
-
+            [-10.25, 0, -5.5]
         ],
         "obstacles":[
-
-        ],
-        "routes":{
-            "easy": [
-
-            ]
-        }
+            {"Oil": [-12.5, 0, -14]},
+            {"Banana": [19.6, 0, -5.8]},
+            {"Caution": [23.46, 0, 10]},
+        ]
     },
     "Track 3": {
         "track": [
@@ -118,11 +113,6 @@ export const tracks = {
         ],
         "obstacles":[
 
-        ],
-        "routes":{
-            "easy": [
-
-            ]
-        }
+        ]
     }
 }

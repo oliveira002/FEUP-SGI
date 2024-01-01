@@ -277,6 +277,9 @@ class MyContents {
         if(this.opponent) {
           this.opponent.update()
         }
+        if(this.reader){
+          this.reader.update()
+        }
         //this.updateSnow()
     }
 
@@ -323,6 +326,7 @@ class MyContents {
           const bot_difficulty = this.menu.gameSettingsMenu.activeDifficulty.name
 
           this.reader = new MyReader(this.app, num_track)
+          this.app.scene.add(this.reader)
           this.track = this.reader.track
 
         }
