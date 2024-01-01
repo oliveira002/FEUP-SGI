@@ -34,7 +34,7 @@ class MyContents {
     this.app = app;
     this.builder = new MyNurbsBuilder();
     this.helpersOn = false;
-    this.reader = new MyReader(this.app,"Portimão")
+    this.reader = new MyReader(this.app,"Track 1")
     this.opponent = null
 
     // Globals
