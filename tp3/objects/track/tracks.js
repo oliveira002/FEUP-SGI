@@ -1,5 +1,5 @@
 export const tracks = {
-    "Monza": {
+    "Track 1": {
         "track": [
             [-33.95, 0, 0.0],
             [-40.96, 0, 0.0],
@@ -41,7 +41,7 @@ export const tracks = {
             ]
         }
     },
-    "Portimão": {
+    "Track 2": {
         "track": [
             [-8.2, 0, -4.4],
             [-10.25, 0, -5.5],
@@ -90,7 +90,7 @@ export const tracks = {
             ]
         }
     },
-    "Custom": {
+    "Track 3": {
         "track": [
             [0,0,0],
             [0,0,10],
