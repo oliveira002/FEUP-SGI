@@ -62,7 +62,7 @@ class MyCar extends THREE.Object3D {
                     this.car = gltf.scene;
                     this.car.name = "car";
                     this.car.position.set(0,0,0)
-                    this.car.scale.set(0.8,0.8,0.8)
+                    
                     //this.car.position.set(0.02, -0.4, -0.72);
             
                     let helpers = []; 
@@ -113,6 +113,8 @@ class MyCar extends THREE.Object3D {
                         this.add(arrowHelper);
                         
                     });
+
+                    this.scale.set(0.8,0.8,0.8)
  
                 },
                 (xhr) => {
@@ -378,7 +380,7 @@ class MyCar extends THREE.Object3D {
 
     rotateWheel(wheel, angle, wheelAngle) {
         switch(this.model) {
-            case "Silvia":
+            case "Nissan S15":
                 if(this.speed === 0 && wheelAngle != 0) {
                     wheelAngle = wheelAngle
                 }
@@ -397,8 +399,10 @@ class MyCar extends THREE.Object3D {
                 else {
                     wheel.rotateZ(wheelAngle)
                 }
-                break;
-            
+
+            break;
+
+      
             case "Lambo":
                 if(this.speed === 0 && wheelAngle != 0) {
                     wheelAngle = wheelAngle
@@ -412,13 +416,13 @@ class MyCar extends THREE.Object3D {
                 }
                 
     
-                wheel.rotateY(wheelAngle)
-                
+
                 if(Math.abs(wheel.rotation.y + wheelAngle) > Math.PI / 5) {
                     wheel.rotation.y = Math.sign(wheelAngle) * Math.PI / 5
                 }
-
-                break;
+                else {
+                    wheel.rotateY(wheelAngle)
+                }
         }
     }
 

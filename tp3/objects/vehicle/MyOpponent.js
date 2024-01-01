@@ -85,10 +85,12 @@ class MyOpponent extends THREE.Object3D {
         quaternionAng.forEach(q => {
             quaternionVal.push(...q.toArray());
         });
+
+        const rot = (this.model === "Nissan S15") ?  '.rotation[z]' : '.rotation[y]'
     
         const positionKF = new THREE.VectorKeyframeTrack('.position', keyframeTimes, keyframeValues, THREE.InterpolateSmooth);
         const quaternionKF = new THREE.QuaternionKeyframeTrack('.quaternion', keyframeTimes, quaternionVal, THREE.InterpolateSmooth);
-        const wheelRotationKF = new THREE.NumberKeyframeTrack('.rotation[z]', wheelKeyframeTimes, wheelKeyframeValues);
+        const wheelRotationKF = new THREE.NumberKeyframeTrack(rot, wheelKeyframeTimes, wheelKeyframeValues);
     
         const positionClip = new THREE.AnimationClip('positionAnimation', this.totalTime, [positionKF])
         const rotationClip = new THREE.AnimationClip('rotationAnimation', this.totalTime, [quaternionKF])
