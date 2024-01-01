@@ -34,7 +34,7 @@ class MyContents {
     this.app = app;
     this.builder = new MyNurbsBuilder();
     this.helpersOn = false;
-    this.reader = new MyReader(this.app,"Track 1")
+    this.reader = null
     this.opponent = null
 
     // Globals
@@ -69,7 +69,8 @@ class MyContents {
     this.name = ""
     this.botDifficulty = null
     this.trackName = null
-    this.track = this.reader.track;
+    this.track =  null
+    this.clock = null
 
     //this.app.scene.add(this.track);
 
@@ -173,6 +174,7 @@ class MyContents {
           
           case 'Escape':
             if(event.type == 'keydown') {
+              this.hud.stopTimer()
               this.game.state = State.PAUSED
               this.menu.updateCameraByGameState(this.game.state)
               this.app.setActiveCamera('Menu')
@@ -182,8 +184,17 @@ class MyContents {
       else if(this.game.state == State.PAUSED) {
         console.log(event.key)
         switch (event.key) {
+          case 'w':
+            case 'd':
+            case 's':
+            case 'a':
+            case ' ':
+              this.car.updateKeyPressed(event.type, event.key)
+              break;
+              
           case 'Escape':
             if(event.type == 'keydown') {
+              this.hud.resumeTimer()
               this.game.state = State.PLAYING
               this.app.setActiveCamera('Car')
             }
@@ -249,6 +260,7 @@ class MyContents {
     if(this.opponent) {
       this.opponent.update()
     }
+    this.hud.update(this.game.state)
     switch(this.game.state) {
 
       case State.CHOOSE_GAME_SETTINGS:
@@ -262,7 +274,6 @@ class MyContents {
         break;
       case State.PLAYING:
         this.car.update()
-        this.hud.update()
         if(this.opponent) {
           this.opponent.update()
         }
@@ -307,10 +318,13 @@ class MyContents {
           this.game.state = State.CHOOSE_CAR_PLAYER
           this.app.setActiveCamera('Garage')
           this.pickableObjs = this.garage.pickableObjs
-          // difficulty and track stored in these variables
 
-          console.log(this.menu.gameSettingsMenu.activeDifficulty.name) 
-          console.log(this.menu.gameSettingsMenu.activeTrack.name)
+          const num_track = this.menu.gameSettingsMenu.activeTrack.name
+          const bot_difficulty = this.menu.gameSettingsMenu.activeDifficulty.name
+
+          this.reader = new MyReader(this.app, num_track)
+          this.track = this.reader.track
+
         }
         else {
           this.menu.gameSettingsMenu.handleClick(obj.parent.name)
@@ -333,6 +347,8 @@ class MyContents {
 
       
         this.game.state = State.PLAYING
+        // should start time
+        this.hud.startTimer()
         this.app.scene.add(this.hud)
         this.app.scene.remove(this.garage, this.obsGarage)
         this.pickableObjs = []

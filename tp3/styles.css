@@ -72,6 +72,9 @@ body {
     margin-left: 5em;
 }
 
+#hud {
+    display: none;
+}
 #rotacoes {
     font-size: 150px;
     position: absolute;

@@ -160,7 +160,7 @@ class MyGameSettingsMenu extends THREE.Object3D {
         this.track1.scale.set(10,10,10)
         this.track1.translateX(-2.4)
         this.track1.translateY(-5.8)
-        this.track1.name = "track1"
+        this.track1.name = "Track 1"
         this.activeTrack = this.track1
         this.add(this.activeTrack)
 
@@ -168,13 +168,13 @@ class MyGameSettingsMenu extends THREE.Object3D {
         this.track2.scale.set(10,10,10)
         this.track2.translateX(-2.4)
         this.track2.translateY(-5.8)
-        this.track2.name = "track2"
+        this.track2.name = "Track 2"
 
         this.track3 = this.spritesheetBlack.createTextGroup("Track 3")
         this.track3.scale.set(10,10,10)
         this.track3.translateX(-2.4)
         this.track3.translateY(-5.8)
-        this.track3.name = "track3"
+        this.track3.name = "Track 3"
 
         this.trackArrowLeft = this.spritesheetBlack.createTextGroup("<")
         this.trackArrowLeft.name = "trackLeft"

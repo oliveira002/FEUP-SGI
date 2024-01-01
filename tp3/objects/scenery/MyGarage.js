@@ -154,7 +154,7 @@ class MyGarage extends THREE.Object3D {
                 this.add(model); 
             },
             (xhr) => {
-                console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+                //console.log((xhr.loaded / xhr.total * 100) + '% loaded');
             },
             (error) => {
                 console.log('An error happened', error);
@@ -172,7 +172,7 @@ class MyGarage extends THREE.Object3D {
                 this.add(model); 
             },
             (xhr) => {
-                console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+                //console.log((xhr.loaded / xhr.total * 100) + '% loaded');
             },
             (error) => {
                 console.log('An error happened', error);
@@ -201,7 +201,7 @@ class MyGarage extends THREE.Object3D {
                 this.add(model); 
             },
             (xhr) => {
-                console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+                //console.log((xhr.loaded / xhr.total * 100) + '% loaded');
             },
             (error) => {
                 console.log('An error happened', error);
@@ -219,7 +219,7 @@ class MyGarage extends THREE.Object3D {
                 this.add(model); 
             },
             (xhr) => {
-                console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+                //console.log((xhr.loaded / xhr.total * 100) + '% loaded');
             },
             (error) => {
                 console.log('An error happened', error);
@@ -264,7 +264,7 @@ class MyGarage extends THREE.Object3D {
                 }
             },
             (xhr) => {
-                console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+                //console.log((xhr.loaded / xhr.total * 100) + '% loaded');
             },
             (error) => {
                 console.log('An error happened', error);
@@ -383,7 +383,7 @@ class MyGarage extends THREE.Object3D {
     
           },
           (xhr) => {
-              console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+              //console.log((xhr.loaded / xhr.total * 100) + '% loaded');
           },
           (error) => {
               console.log('An error happened', error);
@@ -405,7 +405,7 @@ class MyGarage extends THREE.Object3D {
               this.carMapping["Lambo"] = this.lambo
           },
           (xhr) => {
-              console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+              //console.log((xhr.loaded / xhr.total * 100) + '% loaded');
           },
           (error) => {
               console.log('An error happened', error);
