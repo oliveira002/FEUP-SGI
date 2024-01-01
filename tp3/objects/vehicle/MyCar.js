@@ -18,6 +18,7 @@ class MyCar extends THREE.Object3D {
         this.name = name
         this.loaded = false
         this.raycasters = []
+        this.rayHelpers = []
         this.track = track
         this.wheel_pos = []
 
@@ -86,27 +87,31 @@ class MyCar extends THREE.Object3D {
             
                     this.wheels.push(this.car.children[0].children[1]);
                     this.wheels.push(this.car.children[0].children[2]);
+                    this.wheels.push(this.car.children[0].children[3]);
+                    this.wheels.push(this.car.children[0].children[4]);
 
                     this.wheel_pos = [
-                        this.car.children[0].children[1].clone().position.add(new THREE.Vector3(0,1,0)), // FL
-                        this.car.children[0].children[2].clone().position.add(new THREE.Vector3(0,1,0)), // FR
-                        this.car.children[0].children[3].clone().position.add(new THREE.Vector3(0,1,0)), // BL
-                        this.car.children[0].children[4].clone().position.add(new THREE.Vector3(0,1,0)), // BR 
+                        this.car.children[0].children[1], // FL
+                        this.car.children[0].children[2], // FR
+                        this.car.children[0].children[3], // BL
+                        this.car.children[0].children[4], // BR 
                     ]
-                    let dir = new THREE.Vector3(0,-1,0)
-
-                    this.wheel_pos.forEach( wheelPos => {
+                   
+                    this.wheels.forEach((wheel, index) => {
                         const raycaster = new THREE.Raycaster();
-                        raycaster.set(wheelPos, dir);
-
-                        this.raycasters.push(raycaster)
-                    })
-
-                    this.raycasters.forEach( raycaster => {
-                        var arrow = new THREE.ArrowHelper( raycaster.ray.direction, raycaster.ray.origin, 8, 0xff0000 );
-                        this.add(arrow)
-                    })
-
+                        raycaster.ray.direction.set(0, -1, 0);
+                        raycaster.ray.origin.copy(wheel.position);
+                        this.raycasters.push(raycaster);
+                      
+                        const arrowHelper = new THREE.ArrowHelper(
+                          raycaster.ray.direction,
+                          wheel.position,
+                          2, // Length of the arrow
+                          0x00ff00 // Color of the arrow (green)
+                        );
+                        this.rayHelpers.push(arrowHelper);
+                        this.add(arrowHelper)
+                    });
 
                 },
                 (xhr) => {
@@ -275,9 +280,21 @@ class MyCar extends THREE.Object3D {
 
     updateRaycastersPosition(){
 
-        this.raycasters.forEach((raycaster, idx) => {
-            raycaster.ray.origin.addVectors(this.wheel_pos[idx], this.position)
-        })
+        this.raycasters.forEach((raycaster, index) => {
+            raycaster.ray.origin.copy(this.position).add(this.wheel_pos[index].position);
+            raycaster.ray.origin.y += 1; 
+            const intersections = raycaster.intersectObject(this.track);
+        
+            if (intersections.length > 0) {
+              console.log(`Wheel ${index + 1} is on the track.`);
+              this.rayHelpers[index].setDirection(raycaster.ray.direction);
+              this.rayHelpers[index].setColor(0x00ff00);
+            } else {
+              console.log(`Wheel ${index + 1} is off the track.`);
+              this.rayHelpers[index].setDirection(raycaster.ray.direction);
+              this.rayHelpers[index].setColor(0xff0000); // Change color to red for off-track
+            }
+          });
     }
 
     updateAngle(){
@@ -374,10 +391,10 @@ class MyCar extends THREE.Object3D {
         }
         //console.log("--------------")
         this.raycasters.forEach( raycaster => {
-            const intersections = raycaster.intersectObject( this.track );
+            const intersections = raycaster.intersectObjects( [this.track] );
             //console.log(wheel[i++], intersections) 
-            if(intersections.length === 0){
-               //console.log(wheel[i++], "out") 
+            if(intersections.length !== 0){
+               console.log("in") 
             }
 
             //console.log(i++, raycaster)

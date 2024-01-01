@@ -94,7 +94,7 @@ class MyContents {
     }
     
     if(this.opponent === null){
-      this.opponent = new MyOpponent(this.app, this.reader.keyPoints, this.reader.trackCurve, "Silvia")
+      //this.opponent = new MyOpponent(this.app, this.reader.keyPoints, this.reader.trackCurve, "Silvia")
     }
 
     if(this.scenery === null) {
