@@ -88,10 +88,10 @@ class MyCar extends THREE.Object3D {
                     this.wheels.push(this.car.children[0].children[2]);
 
                     this.wheel_pos = [
-                        this.car.children[0].children[1].position, // FL
-                        this.car.children[0].children[2].position, // FR
-                        this.car.children[0].children[3].position, // BL
-                        this.car.children[0].children[4].position, // BR 
+                        this.car.children[0].children[1].clone().position.add(new THREE.Vector3(0,1,0)), // FL
+                        this.car.children[0].children[2].clone().position.add(new THREE.Vector3(0,1,0)), // FR
+                        this.car.children[0].children[3].clone().position.add(new THREE.Vector3(0,1,0)), // BL
+                        this.car.children[0].children[4].clone().position.add(new THREE.Vector3(0,1,0)), // BR 
                     ]
                     let dir = new THREE.Vector3(0,-1,0)
 
@@ -275,15 +275,8 @@ class MyCar extends THREE.Object3D {
 
     updateRaycastersPosition(){
 
-       //console.log(this.wheel_pos[0])
-
-        this.wheel_pos.forEach(wheelpos => {
-            //console.log(wheelpos)        
-        })
-
         this.raycasters.forEach((raycaster, idx) => {
             raycaster.ray.origin.addVectors(this.wheel_pos[idx], this.position)
-            //console.log(idx, raycaster)
         })
     }
 
@@ -369,6 +362,9 @@ class MyCar extends THREE.Object3D {
     }
 
     updateSpeedBasedOnTrackBounds(){
+
+        console.log(this.track)
+
         let i = 0
         let wheel = {
             0: "FR",
@@ -376,12 +372,12 @@ class MyCar extends THREE.Object3D {
             2: "BR",
             3: "BL",
         }
-
+        console.log("--------------")
         this.raycasters.forEach( raycaster => {
-            const intersections = raycaster.intersectObjects( [this.track] );
-            //console.log(wheel[i++], intersections) 
+            const intersections = raycaster.intersectObject( this.track );
+            console.log(wheel[i++], intersections) 
             if(intersections.length === 0){
-               console.log("out") 
+               //console.log(wheel[i++], "out") 
             }
 
             //console.log(i++, raycaster)
