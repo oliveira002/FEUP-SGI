@@ -23,6 +23,7 @@ import { MyObstaclesGarage } from "./objects/scenery/MyObstaclesGarage.js";
 import { MyOpponent } from "./objects/vehicle/MyOpponent.js";
 import { MyBillboard } from "./objects/scenery/MyBillboard.js";
 import { MyCaution } from "./objects/track/MyCaution.js";
+import {MyPodium} from "./objects/scenery/MyPodium.js";
 
 /**
  *  This class contains the contents of out application
@@ -36,8 +37,8 @@ class MyContents {
     this.app = app;
     this.builder = new MyNurbsBuilder();
     this.helpersOn = false;
-    this.reader = new MyReader(this.app, "Track 1")
-    this.app.scene.add(this.reader)
+    this.reader = null
+    //this.app.scene.add(this.reader)
     this.opponent = null
 
     // Globals
@@ -51,6 +52,7 @@ class MyContents {
     this.car = null;
     this.scenery = null;
     this.garage = null;
+    this.podium = null;
     this.obsGarage = null
     this.snow = []
     this.powerup = null;
@@ -122,7 +124,7 @@ class MyContents {
     //this.powerup = new MyPowerUp(this.app)
     //this.app.scene.add(this.powerup)
 
-    
+  
     this.menu = new MyMenu(this.app)
     this.menu.updateCameraByGameState(this.game.state)
     this.app.scene.add(this.menu)
@@ -147,6 +149,11 @@ class MyContents {
       this.obsGarage.translateZ(-9)
       this.obsGarage.rotateY(-Math.PI / 2)
       this.app.scene.add(this.obsGarage)
+    }
+
+    if(this.podium === null) {
+     //this.podium = new MyPodium(this.app)
+     //this.app.scene.add(this.podium)
     }
     
   
@@ -300,6 +307,11 @@ class MyContents {
             this.opponent.update()
           }
           break;
+        
+        case State.END:
+          if(this.podium) {
+            this.podium.update()
+          }
     }
     
     if(this.hud) {
