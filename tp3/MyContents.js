@@ -276,6 +276,7 @@ class MyContents {
         if(this.reader){
           this.reader.update()
         }
+        this.car.checkCollisions(this.reader.powerups)
         //this.updateSnow()
     }
     

@@ -3,25 +3,18 @@ import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import { TTFLoader } from 'three/addons/loaders/TTFLoader.js';
 import { Font } from 'three/addons/loaders/FontLoader.js';
 import { MyShader } from '../../MyShader.js';
-import { computeBoundsTree, disposeBoundsTree, acceleratedRaycast, MeshBVHVisualizer } from 'three-mesh-bvh';
-
-
 
 class MyPowerUp extends THREE.Object3D {
   /**
    * @param {MyApp} app the application object
    */
-  constructor(app, radius) {
+  constructor(radius, coords) {
     super();
-    this.app = app;
     this.type = 'Group';
-    this.radius = radius || 5; 
+    this.radius = radius || 5;
+    this.coords = new THREE.Vector3(...coords)
     this.startTime = Date.now();
     this.scaleFactor = 0.1
-
-    THREE.BufferGeometry.prototype.computeBoundsTree = computeBoundsTree;
-    THREE.BufferGeometry.prototype.disposeBoundsTree = disposeBoundsTree;
-    THREE.Mesh.prototype.raycast = acceleratedRaycast;
 
     this.material = new THREE.MeshPhysicalMaterial({
         color: 0xadd8e6,
@@ -83,16 +76,19 @@ class MyPowerUp extends THREE.Object3D {
     this.shader.material.opacity = 0.6
     this.shader.material.transparent = true
     this.mesh = new THREE.Mesh(this.geometry, this.shader.material);
-    this.mesh.geometry.computeBoundsTree();
     this.mesh.scale.set(this.scaleFactor,this.scaleFactor,this.scaleFactor)
-            
-    console.log(this.mesh)
-    let helper = new MeshBVHVisualizer(this.mesh);
-    helper.update();
-    this.add(helper);
-
 		this.add(this.mesh)
+
+    this.mesh.geometry.boundingBox = new THREE.Box3().setFromObject(this.mesh).translate(this.coords);
+
+
+    var boundingBoxMesh = new THREE.Mesh(new THREE.BoxGeometry(), new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true }));
+    this.add(boundingBoxMesh);
+
+
+    this.position.set(...this.coords)
 	}
+
 
   update() {
     if(this.mesh) {

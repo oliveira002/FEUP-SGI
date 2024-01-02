@@ -47,10 +47,9 @@ class MyReader extends THREE.Object3D {
     createPowerUps(powerup_coords){
         powerup_coords.forEach(coords => {
 
-            let radius = 1
-            let powerup = new MyPowerUp(radius)
-            powerup.position.set(...coords)
-            powerup.translateY(radius/2)
+            let radius = 5
+            let powerup = new MyPowerUp(radius, coords)
+            //powerup.position.set(...coords)
 
             this.powerups.push(powerup)
             this.add(powerup)
@@ -88,7 +87,7 @@ class MyReader extends THREE.Object3D {
             sphere.scale.set(0.2, 0.2, 0.2)
             sphere.position.set(... this.keyPoints[i])
 
-            this.add(sphere)
+            //this.add(sphere)
         }
     }
 
@@ -96,9 +95,6 @@ class MyReader extends THREE.Object3D {
         this.powerups.forEach(powerup => {
             powerup.update()
         })
-
-        
-
     }
 
 }
