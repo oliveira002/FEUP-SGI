@@ -337,7 +337,7 @@ class MyCar extends THREE.Object3D {
               }
           });
           
-          this.speed = isOutside ? this.speed * 0.982 : this.speed
+          this.maxSpeed = isOutside ? 0.05 : 0.1
     }
 
     boundingBoxPosition() {
