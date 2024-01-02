@@ -22,6 +22,7 @@ import { MyMainMenu } from "./objects/gui/menus/MyMainMenu.js";
 import { MyObstaclesGarage } from "./objects/scenery/MyObstaclesGarage.js";
 import { MyOpponent } from "./objects/vehicle/MyOpponent.js";
 import { MyBillboard } from "./objects/scenery/MyBillboard.js";
+import { MyCaution } from "./objects/track/MyCaution.js";
 
 /**
  *  This class contains the contents of out application
@@ -35,7 +36,8 @@ class MyContents {
     this.app = app;
     this.builder = new MyNurbsBuilder();
     this.helpersOn = false;
-    this.reader = null
+    this.reader = new MyReader(this.app, "Track 1")
+    this.app.scene.add(this.reader)
     this.opponent = null
 
     // Globals
@@ -72,6 +74,7 @@ class MyContents {
     this.trackName = null
     this.track =  null
     this.clock = null
+    this.pickedObs = null
 
     //this.app.scene.add(this.track);
 
@@ -178,6 +181,7 @@ class MyContents {
             if(event.type == 'keydown') {
               this.hud.stopTimer()
               this.game.state = State.PAUSED
+              this.opponent.mixerPause = true
               this.menu.updateCameraByGameState(this.game.state)
               this.app.setActiveCamera('Menu')
             }
@@ -197,6 +201,7 @@ class MyContents {
             if(event.type == 'keydown') {
               this.hud.resumeTimer()
               this.game.state = State.PLAYING
+              this.opponent.mixerPause = false
               this.app.setActiveCamera('Car')
             }
             break;
@@ -230,7 +235,7 @@ class MyContents {
       pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
       pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
       this.raycaster.setFromCamera(pointer, this.app.getActiveCamera());
-  
+      
       return this.raycaster.intersectObjects(this.pickableObjs);
     }
 
@@ -241,9 +246,9 @@ class MyContents {
   
     function mouseClickRaycast(event) {
       var intersections = getIntersections.call(this, event)
+
       if (intersections.length > 0) {
-          const obj = intersections[0].object
-          this.handleClick(obj)
+          this.handleClick(intersections[0])
       }
     }
 
@@ -268,6 +273,9 @@ class MyContents {
         break;
       case State.PAUSED:
         this.menu.pauseMenu.update()
+        if(this.opponent) {
+          this.opponent.update()
+        }
         break;
       case State.PLAYING:
         if(this.car) {
@@ -281,6 +289,17 @@ class MyContents {
           this.reader.update()
         }
         //this.updateSnow()
+        break;
+        case State.CHOOSE_OBSTACLE:
+          if(this.opponent) {
+            this.opponent.update()
+          }
+          break;
+        case State.PLACE_OBSTACLE:
+          if(this.opponent) {
+            this.opponent.update()
+          }
+          break;
     }
     
     if(this.hud) {
@@ -311,7 +330,8 @@ class MyContents {
     }
   }
 
-  handleClick(obj) {
+  handleClick(intersections) {
+    var obj = intersections.object
     this.lastPickedObj = null
     switch(this.game.state) {
       case State.MAIN_MENU: {
@@ -353,7 +373,6 @@ class MyContents {
         this.opponent = new MyOpponent(this.app,this.reader.keyPoints,this.reader.trackCurve, obj.name)
         this.app.scene.add(this.opponent)
 
-      
         this.game.state = State.PLAYING
         this.hud = new MyHUD(this.app)
         this.app.scene.remove(this.garage, this.obsGarage)
@@ -362,16 +381,47 @@ class MyContents {
         this.hud.startTimer()
         this.app.scene.add(this.hud)
         
-        
         break;
       }
+
       case State.CHOOSE_OBSTACLE: {
         obj = this.getObjectParent(obj)
         this.objectPickingEffect(obj, false)
         this.selectedObstacle = this.obsGarage.obsMapping[obj.name]
+
+        this.createObstacle(obj.name)
+
+        this.pickableObjs = [this.reader.track]
         this.game.state = State.PLACE_OBSTACLE
         break;
       }
+
+      case State.PLACE_OBSTACLE: {
+        const coords = intersections.point 
+        this.pickedObs.position.set(...coords)
+        this.app.scene.add(this.pickedObs)
+
+        this.pickableObjs = []
+        this.game.state = State.PLAYING
+        break;
+      }
+
+    }
+  }
+
+  createObstacle(name) {
+    switch(name){
+      case "Banana":
+        this.pickedObs = new MyBanana(this.app)
+        break;
+      
+      case "Oil":
+        this.pickedObs = new MyOil(this.app)
+        break;
+
+      case "Caution":
+        this.pickedObs = new MyCaution(this.app, 0.8, 0.14, 1.6)
+        break;
     }
   }
 
