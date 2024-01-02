@@ -226,12 +226,14 @@ class MyCar extends THREE.Object3D {
 
     updateCameraPos(){
 
+        console.log(this.car)
+
         let cameraPos = this.dir.clone().multiplyScalar(-1)
         cameraPos.x *= 2
         cameraPos.z *= 2
         
         cameraPos.add(new THREE.Vector3(0,2,0))
-        cameraPos.add(this.position)
+        cameraPos.add(this.car.position)
 
         this.camera.position.set(...cameraPos)
 
@@ -325,7 +327,7 @@ class MyCar extends THREE.Object3D {
     }
 
     updateSpeedBasedOnTrack(){
-        let isOutside = false
+        let insideN = 4
 
         this.raycasters.forEach((raycaster, index) => {
             const intersections = raycaster.intersectObject(this.track);
@@ -334,14 +336,14 @@ class MyCar extends THREE.Object3D {
                 this.rayHelpers[index].setDirection(raycaster.ray.direction);
                 this.rayHelpers[index].setColor(0x00ff00);
               } else {
-                isOutside = true
+                insideN -= 1
                 //console.log(`Wheel ${index + 1} is off the track.`);
                 this.rayHelpers[index].setDirection(raycaster.ray.direction);
                 this.rayHelpers[index].setColor(0xff0000); // Change color to red for off-track
               }
           });
           
-          this.maxSpeed = isOutside ? 0.05 : 0.1
+          this.maxSpeed = 0.05 + (0.25*insideN)*0.05
     }
 
     boundingBoxPosition() {
