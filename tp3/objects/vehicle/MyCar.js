@@ -15,6 +15,7 @@ class MyCar extends THREE.Object3D {
         this.app = app;
         this.type = 'Group';
         this.pressedKeys = { w: false, a: false, s: false, d: false, space: false };
+        this.effectTimes = { "Speed": [0, Date.now()], "NoClip": [0, Date.now()], "Offroad": [0, Date.now()], "Oil": [0, Date.now()], "Caution": [0, Date.now()], "Banana": [0, Date.now()]};
         this.name = name
         this.loaded = false
         this.raycasters = []
@@ -22,6 +23,7 @@ class MyCar extends THREE.Object3D {
         this.track = track
         this.wheelsOut = []
         this.meshes = []
+        this.lastIntersection
 
         this.wheels = []
         this.modelMapping = {}
@@ -226,8 +228,6 @@ class MyCar extends THREE.Object3D {
 
     updateCameraPos(){
 
-        console.log(this.car)
-
         let cameraPos = this.dir.clone().multiplyScalar(-1)
         cameraPos.x *= 2
         cameraPos.z *= 2
@@ -373,9 +373,7 @@ class MyCar extends THREE.Object3D {
             obb.halfSize,
             obb.rotation
         )
-
         
-        console.log(this.car.userData)
     }
 
     updateHelper(){
@@ -467,19 +465,66 @@ class MyCar extends THREE.Object3D {
     }
 
     update(){
+        this.updateAttributesBasedOnEffects()
         this.updatePosition()
         this.updateCameraPos()
         this.updateCameraTarget()
         this.updateSpeedBasedOnTrack()
     }
 
+    updateAttributesBasedOnEffects(){
+        for (let [effect, [time, lastupdate]] of Object.entries(this.effectTimes)) {
+            if(time > 0 && (Date.now() - lastupdate > 1000)){
+                this.effectTimes[effect][0] -= 1
+                this.effectTimes[effect][1] = Date.now()
+
+                console.log("----- REDUCT -----")
+                for (let [effect, [time, _]] of Object.entries(this.effectTimes)) {
+                    console.log(`${effect}: ${time}`);
+                }
+            }
+        }
+    }
+
     checkCollisions( objects ){
         objects.forEach(obj => {
+            
             let intersects = this.car.userData.obb.intersectsBox3(obj.geometry.boundingBox)
-            if(intersects) console.log(intersects)
+            if(intersects){
+                let effect = obj.getEffect()
+                if(effect !== "None") {
+                    this.effectTimes[effect][0] += 3
+                    this.effectTimes[effect][1] = Date.now()
+
+                    console.log("----- NEW -----")
+                    for (let [effect, [time, _]] of Object.entries(this.effectTimes)) {
+                        console.log(`${effect}: ${time}`);
+                    }
+                }
+            }
         })
     }
 
+    /*
+    case "Speed":{
+        break;
+    }
+    case "NoClip":{
+        break;
+    }
+    case "Offroad":{
+        break;
+    }
+    case "Oil":{
+        break;
+    }
+    case "Caution":{
+        break;
+    }
+    case "Banana":{
+        break;
+    }
+    */
 
 }
 

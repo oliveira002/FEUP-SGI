@@ -15,6 +15,10 @@ class MyPowerUp extends THREE.Object3D {
     this.coords = new THREE.Vector3(...coords)
     this.startTime = Date.now();
     this.scaleFactor = 0.1
+    this.effects = ["Speed", "NoClip", "Offroad", "None"]
+    this.disabled = false
+    this.lastDisabledTime = null
+    this.cooldown = 5000
 
     this.material = new THREE.MeshPhysicalMaterial({
         color: 0xadd8e6,
@@ -90,6 +94,15 @@ class MyPowerUp extends THREE.Object3D {
 	}
 
 
+  getEffect(){
+    if(this.disabled) return "None"
+
+    let effect = Math.floor(Math.random() * this.effects.length);
+    this.disabled = true
+    this.lastDisabledTime = Date.now()
+    return this.effects[effect];
+  }
+
   update() {
     if(this.mesh) {
       const elapsedTime = (Date.now() - this.startTime) / 1000;
@@ -98,6 +111,15 @@ class MyPowerUp extends THREE.Object3D {
     if (this.textMesh) {
       this.textMesh.rotation.y += 0.01;
     }
+
+    this.updateState()
+
+  }
+
+  updateState(){
+    if(!this.lastDisabledTime) return
+
+    if((Date.now() - this.lastDisabledTime > this.cooldown) && this.disabled) this.disabled = false
   }
 }
 
