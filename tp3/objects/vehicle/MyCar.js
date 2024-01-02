@@ -105,12 +105,16 @@ class MyCar extends THREE.Object3D {
 
                     this.car.scale.set(0.8,0.8,0.8)
 
-                    this.bbox = new THREE.Box3()
-                    
-                    this.bbhelper = new THREE.Box3Helper( this.bbox, 0xffff00 );
-                    this.add( this.bbhelper );
+                    this.box = new THREE.Box3()
+                    this.box.setFromObject(this.car)
 
-                    this.car.userData.obb = new OBB().fromBox3(this.bbox);
+                    this.car.userData.startObb = new OBB().fromBox3(this.box);
+                    this.car.userData.obb = this.car.userData.startObb
+
+                    
+                    this.helper = new THREE.Box3Helper( this.box, 0xffff00 );
+                    this.add( this.helper );
+
                 },
                 (xhr) => {
                     //console.log((xhr.loaded / xhr.total * 100) + '% loaded');
@@ -341,8 +345,39 @@ class MyCar extends THREE.Object3D {
     }
 
     boundingBoxPosition() {
-        this.bbox.setFromObject(this.car);
-        this.car.userData.obb.fromBox3(this.bbox);
+        //this.bbox.setFromObject(this.car);
+        //this.car.userData.obb.fromBox3(this.bbox);
+
+        let obb = this.car.userData.obb
+        let start = this.car.userData.startObb
+        
+        let pos = new THREE.Vector3()
+        this.car.getWorldPosition(pos)
+        pos.add(start.center)
+
+        let rot = this.car.rotation
+        let rot1 = new THREE.Matrix4().makeRotationFromEuler(rot)
+        let rot2 = new THREE.Matrix3().setFromMatrix4(rot1)
+        
+        //this.box.applyMatrix4(rot1)
+        //this.car.userData.obb.fromBox3(this.bbox)
+
+        //console.log(this.car, rot, rot1, rot2)
+
+        obb.applyMatrix4(rot1)
+
+        this.car.userData.obb = new OBB(
+            pos,
+            obb.halfSize,
+            obb.rotation
+        )
+
+        
+        console.log(this.car.userData)
+    }
+
+    updateHelper(){
+
     }
 
 
