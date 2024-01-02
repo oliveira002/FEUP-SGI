@@ -31,7 +31,7 @@ class MyCar extends THREE.Object3D {
         this.pos = position ?? new THREE.Vector3(0, 0, 0)
 
         // Direction (in rad)
-        this.dir = new THREE.Vector3(1, 0, 0)
+        this.dir = new THREE.Vector3(0, 0, 1)
         this.prevDir = this.dir
         this.turningAngle = 2*Math.PI/350
 
@@ -103,19 +103,14 @@ class MyCar extends THREE.Object3D {
                         
                     });
 
-                    this.scale.set(0.8,0.8,0.8)
+                    this.car.scale.set(0.8,0.8,0.8)
 
-                    let box = new THREE.Box3()
-                    box.setFromCenterAndSize( 
-                        new THREE.Vector3( 0, 0.4, 0.85 ), 
-                        new THREE.Vector3( 1.15, 0.8, 3 ) 
-                    );
+                    this.bbox = new THREE.Box3()
+                    
+                    this.bbhelper = new THREE.Box3Helper( this.bbox, 0xffff00 );
+                    this.add( this.bbhelper );
 
-                    const helper = new THREE.Box3Helper( box, 0xffff00 );
-                    this.add( helper );
-
-                    this.car.userData.startObb = new OBB().fromBox3(box);
-                    this.car.userData.obb = this.car.userData.startObb
+                    this.car.userData.obb = new OBB().fromBox3(this.bbox);
                 },
                 (xhr) => {
                     //console.log((xhr.loaded / xhr.total * 100) + '% loaded');
@@ -194,7 +189,12 @@ class MyCar extends THREE.Object3D {
                         this.add(arrowHelper);
                     });
 
-                    this.car.userData.obb = new OBB();
+                    this.bbox = new THREE.Box3()
+
+                    this.bbhelper = new THREE.Box3Helper( this.bbox, 0xffff00 );
+                    this.add( this.bbhelper );
+
+                    this.car.userData.obb = new OBB().fromBox3(this.bbox);
                 },
                 (xhr) => {
                     //console.log((xhr.loaded / xhr.total * 100) + '% loaded');
@@ -206,7 +206,7 @@ class MyCar extends THREE.Object3D {
         }
 
         this.initCamera()
-        this.rotateY(degToRad(90))
+
     }
 
     initCamera(){
@@ -234,12 +234,14 @@ class MyCar extends THREE.Object3D {
     }
 
     updateCameraTarget(){
-        this.app.targets[this.name] = new THREE.Vector3(
-            this.position.x, 
-            this.position.y, 
-            this.position.z
-        )
-        this.camera.lookAt(this.app.targets[this.name])
+        if(this.car) {
+            this.app.targets[this.name] = new THREE.Vector3(
+                this.car.position.x, 
+                this.car.position.y, 
+                this.car.position.z
+            )
+            this.camera.lookAt(this.app.targets[this.name])
+        }
     }
 
     updateKeyPressed(type, key){
@@ -297,10 +299,10 @@ class MyCar extends THREE.Object3D {
         this.updateAngle()
 
         // Update position
-        this.position.set(this.pos.x, this.pos.y, this.pos.z);
+        this.car.position.set(this.pos.x, this.pos.y, this.pos.z);
 
         this.updateRaycastersPosition()
-        this.updateBoundingBoxPosition()
+        this.boundingBoxPosition()
     }
 
     updateRaycastersPosition() {
@@ -338,28 +340,11 @@ class MyCar extends THREE.Object3D {
           this.speed = isOutside ? this.speed * 0.982 : this.speed
     }
 
-    updateBoundingBoxPosition(){
-        let obb = this.car.userData.obb
-        let start = this.car.userData.startObb
-        let pos = new THREE.Vector3()
-        this.car.getWorldPosition(pos)
-        pos.add(start.center)
-
-        let rot = this.car.children[0].children[0].rotation
-        let rot1 = new THREE.Matrix4().makeRotationFromEuler(rot)
-        let rot2 = new THREE.Matrix3().setFromMatrix4(rot1)
-
-        console.log(this.car, rot, rot1, rot2)
-
-        this.car.userData.obb = new OBB(
-            pos,
-            obb.halfSize,
-            rot2
-        )
-
-        
-        console.log(this.car.userData.obb)
+    boundingBoxPosition() {
+        this.bbox.setFromObject(this.car);
+        this.car.userData.obb.fromBox3(this.bbox);
     }
+
 
     updateAngle(){
         let angle = 0;
@@ -387,7 +372,7 @@ class MyCar extends THREE.Object3D {
         }
 
         const quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), angle);
-        this.quaternion.multiplyQuaternions(quaternion, this.quaternion);
+        this.car.quaternion.multiplyQuaternions(quaternion, this.car.quaternion);
 
         
         this.wheels.forEach(wheel => {
@@ -452,9 +437,6 @@ class MyCar extends THREE.Object3D {
     }
 
     checkCollisions( objects ){
-        
-        //console.log(this.car, objects[0])
-
         objects.forEach(obj => {
             let intersects = this.car.userData.obb.intersectsBox3(obj.geometry.boundingBox)
             if(intersects) console.log(intersects)

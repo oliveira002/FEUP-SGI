@@ -21,6 +21,7 @@ import { MyGame, State } from "./MyGame.js";
 import { MyMainMenu } from "./objects/gui/menus/MyMainMenu.js";
 import { MyObstaclesGarage } from "./objects/scenery/MyObstaclesGarage.js";
 import { MyOpponent } from "./objects/vehicle/MyOpponent.js";
+import { MyBillboard } from "./objects/scenery/MyBillboard.js";
 
 /**
  *  This class contains the contents of out application
@@ -92,7 +93,7 @@ class MyContents {
     }
 
     if(this.car === null){
-      //this.car = new MyCar(this.app, "Car", null, "Lambo", this.reader.track)
+      //this.car = new MyCar(this.app, "Car", null, "Nissan S15", this.reader.track)
       //this.app.scene.add(this.car)
     }
     
@@ -118,7 +119,7 @@ class MyContents {
     //this.powerup = new MyPowerUp(this.app)
     //this.app.scene.add(this.powerup)
 
-   
+    
     this.menu = new MyMenu(this.app)
     this.menu.updateCameraByGameState(this.game.state)
     this.app.scene.add(this.menu)
@@ -157,6 +158,7 @@ class MyContents {
     //console.log(this.reader)
     //this.app.scene.add(new MyOpponent(this.app, this.reader))
 
+    //this.app.scene.add(new MyBillboard(this.app))
   }
 
   setupEventListeners(){
@@ -182,7 +184,6 @@ class MyContents {
             break;
         }
       else if(this.game.state == State.PAUSED) {
-        console.log(event.key)
         switch (event.key) {
           case 'w':
             case 'd':
@@ -269,20 +270,19 @@ class MyContents {
         this.menu.pauseMenu.update()
         break;
       case State.PLAYING:
-        this.car.update()
+        if(this.car) {
+          this.car.update()
+          this.car.checkCollisions(this.reader.powerups)
+        }
         if(this.opponent) {
           this.opponent.update()
         }
         if(this.reader){
           this.reader.update()
         }
-        this.car.checkCollisions(this.reader.powerups)
         //this.updateSnow()
     }
     
-    if(this.opponent) {
-      this.opponent.update()
-    }
     if(this.hud) {
       this.hud.update(this.game.state)
     }
