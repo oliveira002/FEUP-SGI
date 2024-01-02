@@ -347,9 +347,6 @@ class MyCar extends THREE.Object3D {
     }
 
     boundingBoxPosition() {
-        //this.bbox.setFromObject(this.car);
-        //this.car.userData.obb.fromBox3(this.bbox);
-
         let obb = this.car.userData.obb
         let start = this.car.userData.startObb
         

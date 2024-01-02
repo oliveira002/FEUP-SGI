@@ -195,16 +195,18 @@ class MyOpponent extends THREE.Object3D {
     }
 
     checkAnimationStateIsPause() {
-        if (this.mixerPause)
+        if (this.mixerPause) {
             this.mixer.timeScale = 0
-        else
+            this.wheel1Mixer.timeScale = 0
+            this.wheel2Mixer.timeScale = 0
+        } else { 
             this.mixer.timeScale = 1
+            this.wheel1Mixer.timeScale = 1
+            this.wheel2Mixer.timeScale = 1
+        }   
     }
 
 
-    /**
-     * Start/Stop if position or rotation animation track is running
-     */
     checkTracksEnabled() {
 
         const actions = this.mixer._actions
@@ -235,6 +237,9 @@ class MyOpponent extends THREE.Object3D {
 
         if (this.wheel2Mixer) {
             this.wheel2Mixer.update(delta);
+        }
+        if(this.wheel1Mixer && this.wheel2Mixer && this.mixer) {
+            this.checkAnimationStateIsPause()
         }
     }
 }

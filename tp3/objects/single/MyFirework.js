@@ -22,7 +22,7 @@ class MyFirework {
             depthTest: false,
         })
         
-        this.height = 20
+        this.height = 10
         this.speed = 60
 
 
