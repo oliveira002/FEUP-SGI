@@ -348,7 +348,7 @@ class MyContents {
           }
     }
     
-    if(this.hud && this.game.state != State.END) {
+    if(this.hud) {
       this.hud.update(this.game.state)
     }
 

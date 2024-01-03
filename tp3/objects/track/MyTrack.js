@@ -12,6 +12,14 @@ class MyTrack extends THREE.Object3D {
         this.trackWidth = 6
         this.samples = 500
         this.checkpoints = []
+        this.carStart = this.points[this.points.length-3]
+
+        const geometry = new THREE.SphereGeometry(1, 32, 32);
+        const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+        const sphere = new THREE.Mesh(geometry, material);
+        sphere.scale.set(0.2, 0.2, 0.2)
+        sphere.position.set(...this.carStart)
+        this.add( sphere );
 
         this.init()
         this.initCheckpoints()
@@ -67,7 +75,12 @@ class MyTrack extends THREE.Object3D {
         geo.setAttribute('uv', new THREE.Float32BufferAttribute(UVCoords, 2));  
         geo.computeVertexNormals();
         
-        let mat = new THREE.MeshPhongMaterial({color: 0x696969, side: THREE.DoubleSide})
+        const texture = new THREE.TextureLoader().load('images/asphalt.jpg');
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.wrapT = THREE.RepeatWrapping;
+        texture.repeat.set(1, 40);
+
+        let mat = new THREE.MeshPhongMaterial({color: 0x696969, side: THREE.DoubleSide, map: texture, bumpMap: texture})
         let mesh = new THREE.Mesh(geo, mat);
         this.add(mesh);
 
