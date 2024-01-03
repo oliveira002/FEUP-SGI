@@ -94,9 +94,10 @@ class MyCar extends THREE.Object3D {
                     this.add(this.car);
 
                     let dir = this.app.contents.reader.track.carStartDir
-                    const rotationAxis = new THREE.Vector3(0, 1, 0);
-                    const angle = Math.atan2(dir.x, dir.z);
+                    let rotationAxis = new THREE.Vector3(0, 1, 0);
+                    let angle = Math.atan2(dir.x, dir.z);
                     this.car.setRotationFromAxisAngle(rotationAxis, angle);
+                    this.car.position.set(...this.app.contents.reader.track.carStart)
                     
                     this.wheels.push(this.car.children[0].children[1]);
                     this.wheels.push(this.car.children[0].children[2]);
@@ -168,7 +169,13 @@ class MyCar extends THREE.Object3D {
                     });
                     this.meshes = meshes
 
-                    this.add(this.car); 
+                    this.add(this.car);
+                    
+                    let dir = this.app.contents.reader.track.carStartDir
+                    let rotationAxis = new THREE.Vector3(0, 1, 0);
+                    let angle = Math.atan2(dir.x, dir.z);
+                    this.car.setRotationFromAxisAngle(rotationAxis, angle);
+                    this.car.position.set(...this.app.contents.reader.track.carStart)
 
                     this.wheels.push(this.car.children[2])
                     this.wheels.push(this.car.children[3])
@@ -207,7 +214,7 @@ class MyCar extends THREE.Object3D {
                             0x00ff00 // Color of the arrow (green)
                         );
                         this.rayHelpers.push(arrowHelper);
-                        this.add(arrowHelper);
+                        //this.add(arrowHelper);
                     });
 
                     this.bbox = new THREE.Box3()
@@ -216,11 +223,6 @@ class MyCar extends THREE.Object3D {
                     this.add( this.bbhelper );
 
                     this.car.userData.obb = new OBB().fromBox3(this.bbox);
-
-                    this.dir = this.app.contents.reader.track.carStartDir
-                    const rotationAxis = new THREE.Vector3(0, 1, 0);
-                    const angle = Math.atan2(this.dir.x, this.dir.z);
-                    this.car.setRotationFromAxisAngle(rotationAxis, angle);
                 },
                 (xhr) => {
                     //console.log((xhr.loaded / xhr.total * 100) + '% loaded');
