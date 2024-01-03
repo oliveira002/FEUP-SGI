@@ -560,8 +560,14 @@ class MyCar extends THREE.Object3D {
                 if(!obj.disabled) {
                     let effect = obj.getEffect()
                     if(obj instanceof MyPowerUp) {
-                        obj.startTimer()
                        this.app.contents.game.state = State.CHOOSE_OBSTACLE
+                       
+                       console.log(obj)
+                       obj.startTimer()
+
+                       this.app.contents.reader.powerups.forEach(pu => {
+                        pu.stopTimer()
+                       })
                        this.app.contents.hud.stopTimer()
                        this.app.contents.opponent.mixerPause = true
                        this.app.contents.pickableObjs = this.app.contents.obsGarage.pickableObjs

@@ -409,9 +409,6 @@ class MyContents {
       }
 
       case State.CHOOSE_OBSTACLE: {
-        this.reader.powerups.forEach(pu => {
-          pu.stopTimer()
-        })
         obj = this.getObjectParent(obj)
         this.objectPickingEffect(obj, false)
         this.selectedObstacle = this.obsGarage.obsMapping[obj.name]
