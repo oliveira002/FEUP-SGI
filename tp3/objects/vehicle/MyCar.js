@@ -25,7 +25,12 @@ class MyCar extends THREE.Object3D {
         this.track = track
         this.wheelsOut = []
         this.meshes = []
-        this.lastIntersection
+        this.lastIntersection = null
+        this.isCollidable = true
+        this.isOffroad = false
+        this.hasBrakes = true
+        this.inverted = false
+        this.effectTime = 5000
 
         this.wheels = []
         this.modelMapping = {}
@@ -276,18 +281,27 @@ class MyCar extends THREE.Object3D {
 
     updatePosition(){
         // Brake
-        if(this.pressedKeys.space) {
+        if(this.pressedKeys.space && this.hasBrakes) {
             this.speed *= this.brakingFactor
         }
         else{ 
             // Accelerate
-            if(this.pressedKeys.w) {
+            if((this.pressedKeys.w && this.inverted) && this.hasBrakes) {
+                if(this.speed === 0) this.speed = -this.minSpeed
+                if(this.speed < 0) this.speed *= this.accelerationFactor;
+                if(this.speed > 0) this.speed *= this.brakingFactor
+            }
+            else if(this.pressedKeys.w) {
                 if(this.speed === 0) this.speed = this.minSpeed
                 if(this.speed < 0) this.speed *= this.brakingFactor
                 if(this.speed > 0) this.speed *= this.accelerationFactor;
-
             }
-            else if(this.pressedKeys.s) {
+            else if(this.pressedKeys.s && this.inverted) {
+                if(this.speed === 0) this.speed = this.minSpeed
+                if(this.speed < 0) this.speed *= this.brakingFactor
+                if(this.speed > 0) this.speed *= this.accelerationFactor;
+            }
+            else if(this.pressedKeys.s && this.hasBrakes) {
                 if(this.speed === 0) this.speed = -this.minSpeed
                 if(this.speed < 0) this.speed *= this.accelerationFactor;
                 if(this.speed > 0) this.speed *= this.brakingFactor
@@ -330,24 +344,30 @@ class MyCar extends THREE.Object3D {
     }
 
     updateSpeedBasedOnTrack(){
-        let insideN = 4
 
-        this.raycasters.forEach((raycaster, index) => {
-            const intersections = raycaster.intersectObject(this.track);
-            if (intersections.length > 0) {
-                //console.log(`Wheel ${index + 1} is on the track.`);
-                this.rayHelpers[index].setDirection(raycaster.ray.direction);
-                this.rayHelpers[index].setColor(0x00ff00);
-              } else {
-                insideN -= 1
-                //console.log(`Wheel ${index + 1} is off the track.`);
-                this.rayHelpers[index].setDirection(raycaster.ray.direction);
-                this.rayHelpers[index].setColor(0xff0000); // Change color to red for off-track
-              }
-          });
+        if(!this.isOffroad){
+
+            let insideN = 4
+
+            this.raycasters.forEach((raycaster, index) => {
+                const intersections = raycaster.intersectObject(this.track);
+                if (intersections.length > 0) {
+                    //console.log(`Wheel ${index + 1} is on the track.`);
+                    this.rayHelpers[index].setDirection(raycaster.ray.direction);
+                    this.rayHelpers[index].setColor(0x00ff00);
+                } else {
+                    insideN -= 1
+                    //console.log(`Wheel ${index + 1} is off the track.`);
+                    this.rayHelpers[index].setDirection(raycaster.ray.direction);
+                    this.rayHelpers[index].setColor(0xff0000); // Change color to red for off-track
+                }
+            });
+                
             
-          
-          this.maxSpeed = this.maxmaxspeed/2 + (0.25*insideN)*(this.maxmaxspeed/2)
+            this.maxSpeed = this.maxmaxspeed/2 + (0.25*insideN)*(this.maxmaxspeed/2)
+            return
+        }
+        this.maxSpeed = this.maxmaxspeed
     }
 
     boundingBoxPosition() {
@@ -388,21 +408,36 @@ class MyCar extends THREE.Object3D {
 
 
         if(this.speed !== 0){
-            if(this.pressedKeys.a && !this.pressedKeys.d) {
+            if(this.pressedKeys.a && !this.pressedKeys.d && this.inverted) {
+                this.dir.applyAxisAngle(new THREE.Vector3(0,1,0), -this.turningAngle * Math.sign(this.speed));
+                angle = -this.turningAngle * Math.sign(this.speed)
+            }
+            else if(this.pressedKeys.a && !this.pressedKeys.d) {
                 this.dir.applyAxisAngle(new THREE.Vector3(0,1,0), this.turningAngle * Math.sign(this.speed));
                 angle = this.turningAngle * Math.sign(this.speed)
             }
-            if(this.pressedKeys.d && !this.pressedKeys.a) {
+            
+            if(this.pressedKeys.d && !this.pressedKeys.a && this.inverted) {
+                this.dir.applyAxisAngle(new THREE.Vector3(0,1,0), this.turningAngle * Math.sign(this.speed));
+                angle = this.turningAngle * Math.sign(this.speed)
+            }
+            else if(this.pressedKeys.d && !this.pressedKeys.a) {
                 this.dir.applyAxisAngle(new THREE.Vector3(0,1,0), -this.turningAngle * Math.sign(this.speed));
                 angle = -this.turningAngle * Math.sign(this.speed)
             }
         }
-
         else {
-            if(this.pressedKeys.a && !this.pressedKeys.d) {
+            if(this.pressedKeys.a && !this.pressedKeys.d && this.inverted) {
+                wheelAngle = -this.turningAngle
+            }
+            else if(this.pressedKeys.a && !this.pressedKeys.d) {
                 wheelAngle = this.turningAngle 
             }
-            if(this.pressedKeys.d && !this.pressedKeys.a) {
+
+            if(this.pressedKeys.d && !this.pressedKeys.a && this.inverted) {
+                wheelAngle = this.turningAngle 
+            }
+            else if(this.pressedKeys.d && !this.pressedKeys.a) {
                 wheelAngle = -this.turningAngle 
             }
         }
@@ -482,7 +517,7 @@ class MyCar extends THREE.Object3D {
 
     updateAttributesBasedOnEffects(){
         this.effects.forEach((e,i) => {
-            if(e.elapsedTime < 3000){
+            if(e.elapsedTime < this.effectTime){
                 switch(e.name){
                     case "Speed":{
                         this.maxmaxspeed = 0.15
@@ -551,6 +586,9 @@ class MyCar extends THREE.Object3D {
             let intersects = this.car.userData.obb.intersectsBox3(obj.geometry.boundingBox)
             if(intersects){
                 if(!obj.disabled) {
+
+                    if(!this.isCollidable && !(obj instanceof MyPowerUp)) return
+
                     let effect = obj.getEffect()
 
                     var efeito = new MyEffect(effect)
