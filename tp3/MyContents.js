@@ -180,6 +180,7 @@ class MyContents {
           case 'w':
             if(!this.opponentStarted) {
               this.opponent.startOpponent()
+              this.hud.startTimer()
               this.opponentStarted = true
             }
           case 'd':
@@ -420,11 +421,11 @@ class MyContents {
         this.app.scene.add(this.opponent)
 
         this.game.state = State.PLAYING
-        this.hud = new MyHUD(this.app)
+        this.hud = new MyHUD(this.app, this.botDifficulty)
         this.app.scene.remove(this.garage, this.obsGarage)
         this.pickableObjs = []
         this.app.setActiveCamera('Car')
-        this.hud.startTimer()
+
         this.app.scene.add(this.hud)
         
         break;
