@@ -42,8 +42,8 @@ class MyCar extends THREE.Object3D {
         // Position
         this.pos = position ?? new THREE.Vector3(0, 0, 0)
 
-        // Direction (in rad)
-        this.dir = new THREE.Vector3(0, 0, 1)
+        // Direction
+        this.dir = this.app.contents.reader.track.carStartDir.normalize()
         this.prevDir = this.dir
         this.turningAngle = 2*Math.PI/350
 
@@ -91,6 +91,13 @@ class MyCar extends THREE.Object3D {
                     
                     this.meshes = meshes
                     this.add(this.car);
+
+                    let dir = this.app.contents.reader.track.carStartDir
+                    const rotationAxis = new THREE.Vector3(0, 1, 0);
+                    const angle = Math.atan2(dir.x, dir.z);
+                    console.log(this.car.rotation)
+                    this.car.setRotationFromAxisAngle(rotationAxis, angle);
+                    console.log(this.car.rotation)
                     
                     this.wheels.push(this.car.children[0].children[1]);
                     this.wheels.push(this.car.children[0].children[2]);
@@ -210,6 +217,11 @@ class MyCar extends THREE.Object3D {
                     this.add( this.bbhelper );
 
                     this.car.userData.obb = new OBB().fromBox3(this.bbox);
+
+                    this.dir = this.app.contents.reader.track.carStartDir
+                    const rotationAxis = new THREE.Vector3(0, 1, 0);
+                    const angle = Math.atan2(this.dir.x, this.dir.z);
+                    this.car.setRotationFromAxisAngle(rotationAxis, angle);
                 },
                 (xhr) => {
                     //console.log((xhr.loaded / xhr.total * 100) + '% loaded');
@@ -219,7 +231,6 @@ class MyCar extends THREE.Object3D {
                 }
             );
         }
-
         this.initCamera()
 
     }

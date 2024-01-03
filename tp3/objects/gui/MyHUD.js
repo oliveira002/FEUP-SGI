@@ -170,11 +170,12 @@ class MyHUD extends THREE.Object3D {
             }
     
             if (existingDiv) {
-                existingDiv.textContent = `Effect: ${name}, Time Elapsed: ${time}`;
+                existingDiv.textContent = `Effect: ${name}, Time Remaining: ${time}s`;
             } else {
                 const newElement = document.createElement('div');
                 newElement.id = effectId;
-                newElement.textContent = `Effect: ${name}, Time Elapsed: ${time}`;
+                newElement.textContent = `Effect: ${name}, Time Remaining: ${time}s`;
+                newElement.style.fontSize = "20px"
                 overlayDiv.appendChild(newElement);
             }
         });
