@@ -32,6 +32,8 @@ class MyCar extends THREE.Object3D {
         this.hasBrakes = true
         this.inverted = false
         this.effectTime = 5000
+        this.checkpointNr = -1
+        this.lap = 0
 
         this.wheels = []
         this.modelMapping = {}
@@ -595,7 +597,17 @@ class MyCar extends THREE.Object3D {
                     this.collidedObjects.add(obj.uuid);
 
                     if (obj instanceof MyCheckpoint) {
-                        console.log("Checkpoint:", obj.number);
+
+                        if(obj.number === (this.checkpointNr+1) % 10){
+                            this.checkpointNr = (this.checkpointNr + 1) % 10
+                            console.log("Passed checkpoint:",this.checkpointNr)
+                            if(this.checkpointNr === 0){
+                                this.lap++
+                                console.log(this.lap)
+                            }
+                        }
+
+                        //console.log("Passed checkpoint:", obj.number);
                         return;
                     }
 

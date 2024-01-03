@@ -79,7 +79,9 @@ export const tracks = {
         ],
         "starting_point_index": 1,
         "power_ups": [
-            [-10.25, 0, -5.5]
+            [-10.25, 0, -5.5],
+            [-56.4, 0, -4.5],
+            [-4.1, 0, -2.2]
         ],
         "obstacles":[
             {"Oil": [-12.5, 0, -14]},
@@ -111,7 +113,7 @@ export const tracks = {
         ],
         "starting_point_index": 1,
         "power_ups": [
-            [0,0,10]
+            [10,0,10]
         ],
         "obstacles":[
             {"Oil": [30,0,10]},

@@ -64,7 +64,7 @@ class MyHUD extends THREE.Object3D {
         this.timeElement.textContent = '00:00:01';
         this.velElement.textContent = Math.abs(velocity);
         this.updateRotation(velocity);
-        this.curLapElement.textContent = "1";
+        this.curLapElement.textContent = this.app.contents.car.lap;
         this.totalLapElement.textContent = '/' + "3";
 
         let dashArray = `calc(40 * 3.142 * 1.85 * ${Math.abs(velocity) / (this.app.contents.car.maxmaxspeed * 1000)}) calc(40 * 3.142 * 1.85)`;

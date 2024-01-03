@@ -66,6 +66,7 @@ class MyTrack extends THREE.Object3D {
 
     initCheckpoints(){
         let samplePoints = this.path.getSpacedPoints(10);
+        samplePoints = samplePoints.slice(0, 10);
 
         samplePoints.forEach( (point, index) => {
 
@@ -74,8 +75,7 @@ class MyTrack extends THREE.Object3D {
 
             let checkpointWidth = this.trackWidth + 2
 
-            let plane = new MyCheckpoint(tangent, checkpointWidth, index+1)
-            console.log(plane)
+            let plane = new MyCheckpoint(tangent, checkpointWidth, index)
             plane.position.set(point.x, point.y+3/2, point.z)
         
             const boundingBox = new THREE.Box3().setFromObject(plane);
