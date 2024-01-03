@@ -113,7 +113,7 @@ class MyCar extends THREE.Object3D {
                             0x00ff00 // Color of the arrow (green)
                         );
                         this.rayHelpers.push(arrowHelper);
-                        this.add(arrowHelper);
+                        //this.add(arrowHelper);
                         
                     });
 
