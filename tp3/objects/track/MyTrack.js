@@ -67,7 +67,12 @@ class MyTrack extends THREE.Object3D {
         geo.setAttribute('uv', new THREE.Float32BufferAttribute(UVCoords, 2));  
         geo.computeVertexNormals();
         
-        let mat = new THREE.MeshPhongMaterial({color: 0x696969, side: THREE.DoubleSide})
+        const texture = new THREE.TextureLoader().load('images/asphalt.jpg');
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.wrapT = THREE.RepeatWrapping;
+        texture.repeat.set(1, 40);
+
+        let mat = new THREE.MeshPhongMaterial({color: 0x696969, side: THREE.DoubleSide, map: texture, bumpMap: texture})
         let mesh = new THREE.Mesh(geo, mat);
         this.add(mesh);
 
