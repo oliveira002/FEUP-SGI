@@ -152,12 +152,6 @@ class MyContents {
       this.app.scene.add(this.obsGarage)
     }
 
-    if(this.podium === null) {
-     //this.podium = new MyPodium(this.app)
-     //this.app.scene.add(this.podium)
-    }
-    
-  
     //this.menu.mainMenu = new MyMainMenu(this.app)
     //this.menu.mainMenu.translateX(-200,0,0)
     //this.app.scene.add(this.menu.mainMenu)
@@ -348,7 +342,7 @@ class MyContents {
           }
     }
     
-    if(this.hud) {
+    if(this.hud && this.game.state != State.END) {
       this.hud.update(this.game.state)
     }
 
@@ -488,6 +482,16 @@ class MyContents {
         break;
     }
   }
+
+  createPodium(winner, loser, time) {
+    this.podium = new MyPodium(this.app, winner, loser, time)
+    this.podium.translateX(this.menu.positionOffset + 180)
+    this.podium.translateY(-10)
+    this.podium.translateZ(-9)
+    this.podium.rotateY(-Math.PI / 2)
+    this.app.scene.add(this.podium)
+    this.app.setActiveCamera('Podium')
+}
 
   restoreObjectProperty() {
     if (this.lastPickedObj)

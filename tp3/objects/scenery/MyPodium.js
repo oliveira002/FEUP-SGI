@@ -16,16 +16,21 @@ class MyPodium extends THREE.Object3D {
      * 
      * @param {MyApp} app the application object
      */
-    constructor(app) {
+    constructor(app, winner, loser, time) {
         super();
         this.app = app;
         this.type = 'Group';
         this.pickableObjs = []
+        this.carMap = {"Nissan S15": [2.5,4,-3.6], "Lambo": [2.5,4,4.5]}
         this.spritesheet = new MySpriteSheet(15,8, "images/test2.png");
         this.spritesheetRed = new MySpriteSheet(15,8, "images/test3.png");
         this.carMapping = {}
         this.checkObjs = ["Nissan S15", "Lambo"]
         this.spriteMapping = {}
+        this.winner = winner
+        this.loser = loser
+        this.res = [this.winner, this.loser]
+        this.elapsedTime = time
         
         this.initFloor()
         this.initCeiling()
@@ -65,14 +70,14 @@ class MyPodium extends THREE.Object3D {
         let cameraPos = new THREE.Vector3(15,7,0)
         this.camera.position.set(...cameraPos)
 
-        this.app.targets["Garage"] = new THREE.Vector3(
+        this.app.targets["Podium"] = new THREE.Vector3(
             this.position.x-20, 
             this.position.y, 
             this.position.z
         )
-        this.camera.lookAt(this.app.targets["Garage"])
+        this.camera.lookAt(this.app.targets["Podium"])
 
-        this.app.cameras["Garage"] = this.camera
+        this.app.cameras["Podium"] = this.camera
 
         this.add(this.camera)
 
@@ -344,51 +349,29 @@ class MyPodium extends THREE.Object3D {
     initCarSprites() {
         this.initWinner()
         this.initLoser()
-        this.initTime()
     }
 
     initWinner() {
-        this.pickupSprite = this.spritesheetRed.createTextGroup("Winner");
-        this.pickupSprite.translateY(3)
-        this.pickupSprite.translateZ(-3.6)
-        this.pickupSprite.translateX(2.5)
-        this.pickupSprite.scale.set(5,5,5)
-        this.pickupSprite.rotateY(Math.PI / 2)
-        this.spriteMapping["Nissan S15"] = this.pickupSprite
+        var name = this.winner[0]
+        var car = this.winner[1]
+        var time = this.winner[2]
 
-        this.winnerName = this.spritesheetRed.createTextGroup("John");
-        this.winnerName.translateY(2.2)
-        this.winnerName.translateZ(-3.8)
-        this.winnerName.translateX(2.5)
-        this.winnerName.scale.set(5,5,5)
-        this.winnerName.rotateY(Math.PI / 2)
-        this.spriteMapping["winner"] = this.winnerName
+        time = this.formatTime(time)
 
-        this.add(this.pickupSprite, this.winnerName)
-    }
+        var val = 0
+        if(car == "Lambo") val -= 0.9
 
-    initLoser() {
-        this.casualSprite = this.spritesheet.createTextGroup("Loser")
-        this.casualSprite.translateY(3)
-        this.casualSprite.translateZ(4)
-        this.casualSprite.translateX(2.5)
-        this.casualSprite.scale.set(5,5,5)
-        this.casualSprite.rotateY(Math.PI / 2)
-        this.spriteMapping["Lambo"] = this.casualSprite
 
-        this.loserName = this.spritesheet.createTextGroup("Bot - Hard")
-        this.loserName.translateY(2.2)
-        this.loserName.translateZ(4.8)
-        this.loserName.translateX(2.5)
-        this.loserName.scale.set(5,5,5)
-        this.loserName.rotateY(Math.PI / 2)
-        this.spriteMapping["loser"] = this.loserName
+        this.winnerSprite = this.spritesheetRed.createTextGroup("Winner")
+        this.winnerSprite.position.set(this.carMap[car][0], this.carMap[car][1], this.carMap[car][2] + val)
+        this.winnerSprite.scale.set(5,5,5)
+        this.winnerSprite.rotateY(Math.PI / 2)
 
-    
-        this.add(this.casualSprite, this.loserName)
-    }
+        this.winnerNameSprite = this.spritesheetRed.createTextGroup(name)
+        this.winnerNameSprite.position.set(this.carMap[car][0], this.carMap[car][1] - 1, this.carMap[car][2] + val)
+        this.winnerNameSprite.scale.set(5,5,5)
+        this.winnerNameSprite.rotateY(Math.PI / 2)
 
-    initTime() {
         this.timeSprite = this.spritesheetRed.createTextGroup("Time")
         this.timeSprite.translateY(7)
         this.timeSprite.translateX(-4.5)
@@ -396,7 +379,7 @@ class MyPodium extends THREE.Object3D {
         this.timeSprite.scale.set(5,5,5)
         this.timeSprite.rotateY(Math.PI / 2)
 
-        this.actTimeSprite = this.spritesheetRed.createTextGroup("00:00:00")
+        this.actTimeSprite = this.spritesheetRed.createTextGroup(String(time))
         this.actTimeSprite.translateY(6.2)
         this.actTimeSprite.translateX(-4.5)
         this.actTimeSprite.translateZ(1.2)
@@ -404,8 +387,43 @@ class MyPodium extends THREE.Object3D {
         this.actTimeSprite.rotateY(Math.PI / 2)
 
 
-        this.add(this.timeSprite, this.actTimeSprite)
+        this.add(this.winnerSprite, this.winnerNameSprite, this.timeSprite, this.actTimeSprite)
     }
+
+    initLoser() {
+        var name = this.loser[0]
+        var car = this.loser[1]
+        var time = this.loser[2]
+
+        var val = 0
+        if(car == "Lambo") val = -0.7
+        if(car == "Nissan S15") val = 0.5
+
+        this.loserSprite = this.spritesheet.createTextGroup("Loser")
+        this.loserSprite.position.set(this.carMap[car][0], this.carMap[car][1], this.carMap[car][2] + val)
+        this.loserSprite.scale.set(5,5,5)
+        this.loserSprite.rotateY(Math.PI / 2)
+
+        this.loserNameSprite = this.spritesheet.createTextGroup(name)
+        this.loserNameSprite.position.set(this.carMap[car][0], this.carMap[car][1] - 1, this.carMap[car][2] + val)
+        this.loserNameSprite.scale.set(5,5,5)
+        this.loserNameSprite.rotateY(Math.PI / 2)
+
+        this.add(this.loserSprite, this.loserNameSprite)
+    }
+
+    formatTime(seconds) {
+        var hours = Math.floor(seconds / 3600);
+        var minutes = Math.floor((seconds % 3600) / 60);
+        var remainingSeconds = seconds % 60;
+      
+        var formattedTime = 
+          (hours < 10 ? '0' : '') + hours + ':' +
+          (minutes < 10 ? '0' : '') + minutes + ':' +
+          (remainingSeconds < 10 ? '0' : '') + remainingSeconds;
+      
+        return formattedTime;
+      }
 
     initCars() {
 
@@ -454,34 +472,17 @@ class MyPodium extends THREE.Object3D {
         );
     }
 
-    removeCarPickable(car) {
-        var index = this.pickableObjs.indexOf(car);
-        this.pickableObjs.splice(index, 1);
-
-        this.carSelectedSprite = this.spritesheetRed.createTextGroup("Your Car");
-        this.carSelectedSprite.rotateY(Math.PI / 2)
-        this.carSelectedSprite.position.set(...this.spriteMapping[car.name].position)
-        this.carSelectedSprite.translateX(0.5)
-        this.carSelectedSprite.scale.set(5,5,5)
-
-        this.remove(this.spriteMapping[car.name])
-        this.add(this.carSelectedSprite)
-    }
-
     update() {
         if(Math.random()  < 0.05 ) {
-            this.fireworks.push(new MyFirework(this.app, this))
-            console.log("firework added")
+            var firework = new MyFirework(this.app)
+            this.add(firework)
+            this.fireworks.push(firework)
         }
         for( let i = 0; i < this.fireworks.length; i++ ) {
-            // is firework finished?
             if (this.fireworks[i].done) {
-                // remove firework 
                 this.fireworks.splice(i,1) 
-                console.log("firework removed")
                 continue 
             }
-            // otherwise upsdate  firework
             this.fireworks[i].update()
 
         }

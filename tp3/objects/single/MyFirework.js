@@ -1,10 +1,10 @@
 import * as THREE from 'three'
 
-class MyFirework {
+class MyFirework extends THREE.Object3D {
 
-    constructor(app, scene) {
+    constructor(app) {
+        super()
         this.app = app
-        this.scene = scene
         this.done = false 
         this.dest = [] 
         
@@ -54,8 +54,7 @@ class MyFirework {
         this.points = new THREE.Points( this.geometry, this.material )
         this.points.castShadow = true;
         this.points.receiveShadow = true;
-        this.app.scene.add( this.points )  
-        console.log("firework launched")
+        this.add( this.points )  
     }
 
     /**
@@ -63,7 +62,7 @@ class MyFirework {
      * @param {*} vector 
      */
     explode(origin, n, rangeBegin, rangeEnd) {
-        this.app.scene.remove(this.points);
+        this.remove(this.points);
         const explosionGeometry = new THREE.BufferGeometry();
         const explosionVertices = [];
         const explosionColors = [];
@@ -99,13 +98,13 @@ class MyFirework {
         const explosionPoints = new THREE.Points(explosionGeometry, explosionMaterial);
         explosionPoints.castShadow = true;
         explosionPoints.receiveShadow = true;
-        this.app.scene.add(explosionPoints);
+        this.add(explosionPoints);
 
         // Optionally, you can dispose of the explosion geometry and material after a certain time
         setTimeout(() => {
             explosionPoints.geometry.dispose();
             explosionPoints.material.dispose();
-            this.app.scene.remove(explosionPoints);
+            this.remove(explosionPoints);
             this.done = true
         }, 500);
     }
@@ -114,8 +113,7 @@ class MyFirework {
      * cleanup
      */
     reset() {
-        console.log("firework reseted")
-        this.app.scene.remove( this.points )  
+        this.remove( this.points )  
         this.dest     = [] 
         this.vertices = null
         this.colors   = null 
@@ -173,4 +171,5 @@ class MyFirework {
     }
 }
 
+MyFirework.prototype.isGroup = true;
 export { MyFirework }

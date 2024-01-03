@@ -85,7 +85,7 @@ class MyTrack extends THREE.Object3D {
             this.checkpoints.push(plane)
 
 
-            console.log(plane)
+            //console.log(plane)
         })
 
     }

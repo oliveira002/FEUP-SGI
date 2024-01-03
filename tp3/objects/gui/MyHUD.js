@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { CSS2DRenderer } from 'three/addons/renderers/CSS2DRenderer.js';
 import { State } from '../../MyGame.js';
+import { MyPodium } from '../scenery/MyPodium.js';
 
 
 
@@ -29,8 +30,9 @@ class MyHUD extends THREE.Object3D {
         this.velElement = document.getElementById('vel');
         this.rotationsElement = document.getElementById('rotacoes');
         this.powerups = ["Speed","NoClip", "Offroad"]
-
         this.difficultyMap = {"easy": 3, "normal": 2, "hard": 1}
+
+        this.modelMap = {"Nissan S15": "Lambo", "Lambo": "Nissan S15"}
 
         //this.needleElement = document.getElementById('needle');
     }
@@ -131,10 +133,22 @@ class MyHUD extends THREE.Object3D {
     
     checkWinner() {
         if((this.elapsedTime/ 1000) >= 20 * this.difficultyMap[this.difficulty] * 3 ) {
-            this.app.contents.game.state = State.END
             this.stopTimer()
+            this.loser = [this.app.contents.name ,this.app.contents.car.model, this.elapsedTime/1000]
+            this.winner = ["Bot - " + this.app.contents.botDifficulty, this.modelMap[this.app.contents.car.model], 20 * this.difficultyMap[this.difficulty] * 3]
+            this.app.contents.game.state = State.END
+            this.app.contents.createPodium(this.winner, this.loser, 20 * this.difficultyMap[this.difficulty] * 3)
+        }
+        if(this.app.contents.car.lap >= -1) {
+            this.stopTimer()
+            this.winner = [this.app.contents.name ,this.app.contents.car.model, this.elapsedTime/1000]
+            this.loser = ["Bot - " + this.app.contents.botDifficulty, this.modelMap[this.app.contents.car.model], 20 * this.difficultyMap[this.difficulty] * 3]
+            this.app.contents.game.state = State.END
+            this.app.contents.createPodium(this.winner, this.loser, this.elapsedTime)
         }
     }
+
+    
 
     updateEffects() {
         this.resetDivs()
