@@ -1,10 +1,27 @@
+#include <packing>
+
+uniform sampler2D tDiffuse;
+uniform sampler2D tDepth;
+uniform float cameraNear;
+uniform float cameraFar;
+
 varying vec2 vUv;
-uniform sampler2D uSampler1;
+
+
+float readDepth( sampler2D depthSampler, vec2 coord ) {
+    float fragCoordZ = texture2D( depthSampler, coord ).x;
+    float viewZ = perspectiveDepthToViewZ( fragCoordZ, cameraNear, cameraFar );
+    return viewZToOrthographicDepth( viewZ, cameraNear, cameraFar );
+}
 
 void main() {
     vUv = uv;
 
-    vec3 offset = vec3(0.0, 0.0, texture2D(uSampler1, vUv).r);
+    float depth = 1.0 - readDepth( tDepth, vUv );
 
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position.xy, position.z + offset.z * 1.4, 1.0);
+    
+    vec3 offset = vec3(depth);    
+
+    vec4 modelViewPosition = modelViewMatrix * vec4(position + normal * offset, 1.0);
+    gl_Position = projectionMatrix * modelViewPosition;
 }
