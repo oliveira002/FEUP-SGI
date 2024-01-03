@@ -192,6 +192,11 @@ class MyContents {
           case 'Escape':
             if(event.type == 'keydown') {
               this.hud.stopTimer()
+              this.reader.powerups.forEach(pu => {
+                pu.stopTimer()
+              })
+
+              this.car.stopTimerEffects()
               this.game.state = State.PAUSED
               this.opponent.mixerPause = true
               this.menu.updateCameraByGameState(this.game.state)
@@ -201,7 +206,7 @@ class MyContents {
         }
       else if(this.game.state == State.PAUSED) {
         switch (event.key) {
-          case 'w':
+            case 'w':
             case 'd':
             case 's':
             case 'a':
@@ -212,6 +217,11 @@ class MyContents {
           case 'Escape':
             if(event.type == 'keydown') {
               this.hud.resumeTimer()
+              this.reader.powerups.forEach(pu => {
+                pu.resumeTimer()
+              })
+
+              this.car.resumeTimerEffects()
               this.game.state = State.PLAYING
               this.opponent.mixerPause = false
               this.app.setActiveCamera('Car')
@@ -219,6 +229,16 @@ class MyContents {
             break;
         }
       }
+      else if(this.game.state == State.CHOOSE_OBSTACLE || this.game.state == State.PLACE_OBSTACLE) {
+        switch (event.key) {
+          case 'w':
+          case 'd':
+          case 's':
+          case 'a':
+          case ' ':
+            this.car.updateKeyPressed(event.type, event.key)
+            break;
+      }}
     }
 
     function updatePlayerName(event) {
@@ -309,6 +329,7 @@ class MyContents {
           if(this.reader){
             this.reader.update()
           }
+          this.car.updateEffects()
           break;
         case State.PLACE_OBSTACLE:
           if(this.opponent) {
@@ -317,6 +338,7 @@ class MyContents {
           if(this.reader){
             this.reader.update()
           }
+          this.car.updateEffects()
           break;
         
         case State.END:
@@ -409,9 +431,6 @@ class MyContents {
       }
 
       case State.CHOOSE_OBSTACLE: {
-        this.reader.powerups.forEach(pu => {
-          pu.stopTimer()
-        })
         obj = this.getObjectParent(obj)
         this.objectPickingEffect(obj, false)
         this.selectedObstacle = this.obsGarage.obsMapping[obj.name]
@@ -434,9 +453,12 @@ class MyContents {
         this.game.state = State.PLAYING
         this.opponent.mixerPause = false
         this.app.setActiveCamera('Car')
+
         this.reader.powerups.forEach(pu => {
           pu.resumeTimer()
         })
+
+        this.car.resumeTimerEffects()
         break;
       }
 

@@ -30,7 +30,8 @@ export const tracks = {
         ],
         "starting_point_index": 1,
         "power_ups": [
-            [0, 0, 5]
+            [0, 0, 5],
+            [0, 0, -5]
 
         ],
         "obstacles":[

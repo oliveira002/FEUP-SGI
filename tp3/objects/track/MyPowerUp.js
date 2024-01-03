@@ -14,11 +14,12 @@ class MyPowerUp extends THREE.Object3D {
     this.type = 'Group';
     this.radius = radius || 5;
     this.coords = new THREE.Vector3(...coords)
-    this.startTime = Date.now();
+    this.startTime = null;
+    this.startTime2 = Date.now()
     this.scaleFactor = 0.1
     this.effects = ["Speed", "NoClip", "Offroad"]
     this.disabled = false
-    this.lastDisabledTime = null
+    this.elapsedTime = 0
     this.cooldown = 5000
 
     this.material = new THREE.MeshPhysicalMaterial({
@@ -103,50 +104,49 @@ class MyPowerUp extends THREE.Object3D {
 
   update() {
     if(this.mesh) {
-      const elapsedTime = (Date.now() - this.startTime) / 1000;
-      this.mesh.material.uniforms.time.value = elapsedTime
+      const elapsedTime2 = (Date.now() - this.startTime2) / 1000;
+      this.mesh.material.uniforms.time.value = elapsedTime2
     }
     if (this.textMesh) {
       this.textMesh.rotation.y += 0.01;
     }
-    //console.log(this)
     this.updateState()
 
   }
 
   updateState(){
     this.updateTimer()
-    
+
     if((this.elapsedTime > this.cooldown) && this.disabled){
       this.disabled = false
     }
   }
 
   startTimer() {
-    this.lastDisabledTime = Date.now();
+    this.startTime = Date.now();
     this.elapsedTime = 0;
     this.updateTimer(); // Update the timer immediately
   }
 
   stopTimer() {
-      if (this.lastDisabledTime !== null) {
-          this.elapsedTime += Date.now() - this.lastDisabledTime;
-          this.lastDisabledTime = null;
+      if (this.startTime !== null) {
+          this.elapsedTime += Date.now() - this.startTime;
+          this.startTime = null;
       }
   }
 
   resumeTimer() {
-      if (this.lastDisabledTime === null) {
-          this.lastDisabledTime = Date.now();
+      if (this.startTime === null && this.disabled) {
+          this.startTime = Date.now();
           this.updateTimer(); // Update the timer immediately
       }
   }
 
   updateTimer() {
-      if (this.lastDisabledTime !== null) {
+      if (this.startTime !== null) {
           const currentTime = Date.now();
-          this.elapsedTime += currentTime - this.lastDisabledTime;
-          this.lastDisabledTime = currentTime;
+          this.elapsedTime += currentTime - this.startTime;
+          this.startTime = currentTime;
       }
   }
 

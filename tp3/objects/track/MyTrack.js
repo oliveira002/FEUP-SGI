@@ -7,7 +7,7 @@ class MyTrack extends THREE.Object3D {
         this.type = 'Group';
         this.points = points
         this.path = new THREE.CatmullRomCurve3(this.points);
-        this.trackWidth = 4
+        this.trackWidth = 6
         this.samples = 500
 
         this.init()
