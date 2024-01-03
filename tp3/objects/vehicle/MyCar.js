@@ -95,9 +95,7 @@ class MyCar extends THREE.Object3D {
                     let dir = this.app.contents.reader.track.carStartDir
                     const rotationAxis = new THREE.Vector3(0, 1, 0);
                     const angle = Math.atan2(dir.x, dir.z);
-                    console.log(this.car.rotation)
                     this.car.setRotationFromAxisAngle(rotationAxis, angle);
-                    console.log(this.car.rotation)
                     
                     this.wheels.push(this.car.children[0].children[1]);
                     this.wheels.push(this.car.children[0].children[2]);
