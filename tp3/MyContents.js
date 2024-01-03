@@ -453,7 +453,7 @@ class MyContents {
         const boundingBox = new THREE.Box3().setFromObject(this.pickedObs);
         this.pickedObs.boundingBox = boundingBox
         this.boundingBoxHelper = new THREE.Box3Helper(boundingBox, 0xffff00);
-        this.app.scene.add(this.boundingBoxHelper)
+        //this.app.scene.add(this.boundingBoxHelper)
 
         this.reader.obstacles.push(this.pickedObs)
         this.app.scene.add(this.pickedObs)
