@@ -24,6 +24,7 @@ import { MyOpponent } from "./objects/vehicle/MyOpponent.js";
 import { MyBillboard } from "./objects/scenery/MyBillboard.js";
 import { MyCaution } from "./objects/track/MyCaution.js";
 import {MyPodium} from "./objects/scenery/MyPodium.js";
+import { MyTree } from "./objects/scenery/MyTree.js";
 
 /**
  *  This class contains the contents of out application
@@ -121,6 +122,7 @@ class MyContents {
     if(this.spritesheet === null) {
       this.spritesheet = new MySpriteSheet(15,8, "images/test2.png");
     }
+
 
     //this.powerup = new MyPowerUp(this.app)
     //this.app.scene.add(this.powerup)

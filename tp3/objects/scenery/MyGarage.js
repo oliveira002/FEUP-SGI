@@ -427,6 +427,25 @@ class MyGarage extends THREE.Object3D {
         this.remove(this.spriteMapping[car.name])
         this.add(this.carSelectedSprite)
     }
+
+    initSpotlight() {
+        // Create a spotlight
+        const spotlight = new THREE.SpotLight(0xffffff);
+    
+        // Set spotlight position
+        spotlight.position.set(10, 5, 0);
+    
+        // Set spotlight target (where it is looking at)
+        const target = new THREE.Object3D();
+        target.position.set(0, 5, 0);
+        spotlight.target = target;
+    
+        // Add the spotlight to the scene
+        this.add(spotlight);
+    
+        // Add the spotlight target to the scene
+        this.add(target);
+    }
 }
 
 MyGarage.prototype.isGroup = true;
