@@ -82,14 +82,23 @@ class MyReader extends THREE.Object3D {
                         break;
                     }
                 }
-
-                obstacle.position.set(...coords)
-                const boundingBox = new THREE.Box3().setFromObject(obstacle);
-                obstacle.boundingBox = boundingBox
-                this.boundingBoxHelper = new THREE.Box3Helper(boundingBox, 0xffff00);
-                this.add(this.boundingBoxHelper);
-                this.obstacles.push(obstacle)
-                this.add(obstacle)
+                
+                if(type == "Banana") {
+                    obstacle.position.set(...coords)
+                    obstacle.updateBoundingBox()
+                    this.obstacles.push(obstacle)
+                    this.add(obstacle)
+                    console.log(obstacle)
+                }
+                else {
+                    obstacle.position.set(...coords)
+                    const boundingBox = new THREE.Box3().setFromObject(obstacle);
+                    obstacle.boundingBox = boundingBox
+                    this.boundingBoxHelper = new THREE.Box3Helper(boundingBox, 0xffff00);
+                    this.add(this.boundingBoxHelper);
+                    this.obstacles.push(obstacle)
+                    this.add(obstacle)
+                }
             }
         })
     }

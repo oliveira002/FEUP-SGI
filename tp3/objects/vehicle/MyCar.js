@@ -568,6 +568,8 @@ class MyCar extends THREE.Object3D {
 
     checkCollisions(objects) {
         objects.forEach((obj) => {
+
+            console.log(obj)
             // Check if the object has already been collided with
             if (this.collidedObjects.has(obj.uuid)) {
                 let intersects;
