@@ -415,15 +415,25 @@ class MyPodium extends THREE.Object3D {
     formatTime(seconds) {
         var hours = Math.floor(seconds / 3600);
         var minutes = Math.floor((seconds % 3600) / 60);
-        var remainingSeconds = seconds % 60;
-      
-        var formattedTime = 
-          (hours < 10 ? '0' : '') + hours + ':' +
-          (minutes < 10 ? '0' : '') + minutes + ':' +
-          (remainingSeconds < 10 ? '0' : '') + remainingSeconds;
-      
+        var remainingSeconds = Math.round(seconds % 60); // Round the seconds
+    
+        // Adjust minutes and hours if rounding up
+        if (remainingSeconds === 60) {
+            remainingSeconds = 0;
+            minutes++;
+            if (minutes === 60) {
+                minutes = 0;
+                hours++;
+            }
+        }
+    
+        var formattedTime =
+            (hours < 10 ? '0' : '') + hours + ':' +
+            (minutes < 10 ? '0' : '') + minutes + ':' +
+            (remainingSeconds < 10 ? '0' : '') + remainingSeconds;
+    
         return formattedTime;
-      }
+    }
 
     initCars() {
 
