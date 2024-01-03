@@ -81,8 +81,8 @@ class MyReader extends THREE.Object3D {
 
                 obstacle.position.set(...coords)
                 const boundingBox = new THREE.Box3().setFromObject(obstacle);
+                obstacle.boundingBox = boundingBox
                 this.boundingBoxHelper = new THREE.Box3Helper(boundingBox, 0xffff00);
-
                 this.add(this.boundingBoxHelper);
                 this.obstacles.push(obstacle)
                 this.add(obstacle)

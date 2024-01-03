@@ -286,10 +286,11 @@ class MyCar extends THREE.Object3D {
         }
         else{ 
             // Accelerate
-            if((this.pressedKeys.w && this.inverted) && this.hasBrakes) {
+            if(this.pressedKeys.w && this.inverted) {
                 if(this.speed === 0) this.speed = -this.minSpeed
                 if(this.speed < 0) this.speed *= this.accelerationFactor;
-                if(this.speed > 0) this.speed *= this.brakingFactor
+                if(this.speed > 0 && this.hasBrakes) this.speed *= this.brakingFactor
+                else this.speed = Math.sign(this.speed) * Math.max(Math.abs(this.speed * this.dragFactor), 0)
             }
             else if(this.pressedKeys.w) {
                 if(this.speed === 0) this.speed = this.minSpeed
@@ -301,10 +302,11 @@ class MyCar extends THREE.Object3D {
                 if(this.speed < 0) this.speed *= this.brakingFactor
                 if(this.speed > 0) this.speed *= this.accelerationFactor;
             }
-            else if(this.pressedKeys.s && this.hasBrakes) {
+            else if(this.pressedKeys.s) {
                 if(this.speed === 0) this.speed = -this.minSpeed
                 if(this.speed < 0) this.speed *= this.accelerationFactor;
-                if(this.speed > 0) this.speed *= this.brakingFactor
+                if(this.speed > 0 && this.hasBrakes) this.speed *= this.brakingFactor
+                else this.speed = Math.sign(this.speed) * Math.max(Math.abs(this.speed * this.dragFactor), 0)
             }
             else this.speed = Math.sign(this.speed) * Math.max(Math.abs(this.speed * this.dragFactor), 0)
         }
@@ -583,7 +585,13 @@ class MyCar extends THREE.Object3D {
 
     checkCollisions( objects ){
         objects.forEach(obj => {
-            let intersects = this.car.userData.obb.intersectsBox3(obj.geometry.boundingBox)
+            let intersects
+            console.log(obj)
+            if(obj instanceof MyPowerUp)
+                intersects = this.car.userData.obb.intersectsBox3(obj.geometry.boundingBox)
+            else
+                intersects = this.car.userData.obb.intersectsBox3(obj.boundingBox)
+
             if(intersects){
                 if(!obj.disabled) {
 
@@ -663,7 +671,6 @@ class MyEffect {
     }
 
     updateTimer() {
-        console.log(this.elapsedTime)
         if (this.startTime !== null) {
             const currentTime = Date.now();
             this.elapsedTime += currentTime - this.startTime;
