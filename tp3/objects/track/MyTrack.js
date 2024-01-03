@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { MyCheckpoint } from './MyCheckpoint.js';
 
 class MyTrack extends THREE.Object3D {
 
@@ -9,8 +10,10 @@ class MyTrack extends THREE.Object3D {
         this.path = new THREE.CatmullRomCurve3(this.points);
         this.trackWidth = 6
         this.samples = 500
+        this.checkpoints = []
 
         this.init()
+        this.initCheckpoints()
     }
 
     init(){
@@ -60,6 +63,34 @@ class MyTrack extends THREE.Object3D {
         let mesh2 = new THREE.Line(line, mat2);
         //this.add(mesh2);
     }
+
+    initCheckpoints(){
+        let samplePoints = this.path.getSpacedPoints(10);
+
+        samplePoints.forEach( (point, index) => {
+
+            // Get the tangent of the curve at each point
+            let tangent = this.path.getTangent(index / samplePoints.length);
+
+            let checkpointWidth = this.trackWidth + 2
+
+            let plane = new MyCheckpoint(tangent, checkpointWidth, index+1)
+            console.log(plane)
+            plane.position.set(point.x, point.y+3/2, point.z)
+        
+            const boundingBox = new THREE.Box3().setFromObject(plane);
+            plane.children[0].geometry.boundingBox = boundingBox
+
+            this.add(plane)
+            this.checkpoints.push(plane)
+
+
+            console.log(plane)
+        })
+
+    }
+
+
 }
 
 MyTrack.prototype.isGroup = true;

@@ -5,6 +5,7 @@ import { degToRad } from '../../utils.js';
 import { OBB } from 'three/addons/math/OBB.js';
 import { MyPowerUp } from '../track/MyPowerUp.js';
 import { State } from '../../MyGame.js';
+import { MyCheckpoint } from '../track/MyCheckpoint.js';
 
 class MyCar extends THREE.Object3D {
 
@@ -586,13 +587,19 @@ class MyCar extends THREE.Object3D {
     checkCollisions( objects ){
         objects.forEach(obj => {
             let intersects
-            console.log(obj)
             if(obj instanceof MyPowerUp)
                 intersects = this.car.userData.obb.intersectsBox3(obj.geometry.boundingBox)
+            else if(obj instanceof MyCheckpoint)
+                intersects = this.car.userData.obb.intersectsBox3(obj.children[0].geometry.boundingBox)
             else
                 intersects = this.car.userData.obb.intersectsBox3(obj.boundingBox)
 
             if(intersects){
+                if(obj instanceof MyCheckpoint){
+                    console.log("Checkpoint:", obj.number)
+                    return
+                }
+
                 if(!obj.disabled) {
 
                     if(!this.isCollidable && !(obj instanceof MyPowerUp)) return

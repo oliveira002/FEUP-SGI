@@ -312,7 +312,7 @@ class MyContents {
       case State.PLAYING:
         if(this.car) {
           this.car.update()
-          this.car.checkCollisions([...this.reader.powerups, ...this.reader.obstacles])
+          this.car.checkCollisions([...this.reader.powerups, ...this.reader.obstacles, ...this.reader.track.checkpoints])
         }
         if(this.opponent) {
           this.opponent.update()
