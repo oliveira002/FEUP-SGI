@@ -622,6 +622,7 @@ class MyContents {
 
   resetGame() {
     this.pickableObjs = []
+    this.app.scene.children.splice(1)
     this.app.scene.remove(this.menu)
     this.app.scene.remove(this.obsGarage)
     this.app.scene.remove(this.garage)
