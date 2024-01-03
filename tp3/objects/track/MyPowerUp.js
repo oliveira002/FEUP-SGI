@@ -16,7 +16,7 @@ class MyPowerUp extends THREE.Object3D {
     this.coords = new THREE.Vector3(...coords)
     this.startTime = Date.now();
     this.scaleFactor = 0.1
-    this.effects = ["Speed"]//, "NoClip", "Offroad"]
+    this.effects = ["Speed", "NoClip", "Offroad"]
     this.disabled = false
     this.lastDisabledTime = null
     this.cooldown = 5000
@@ -109,7 +109,7 @@ class MyPowerUp extends THREE.Object3D {
     if (this.textMesh) {
       this.textMesh.rotation.y += 0.01;
     }
-    console.log(this)
+    //console.log(this)
     this.updateState()
 
   }

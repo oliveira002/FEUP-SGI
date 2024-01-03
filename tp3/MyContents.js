@@ -426,6 +426,7 @@ class MyContents {
       case State.PLACE_OBSTACLE: {
         const coords = intersections.point 
         this.pickedObs.position.set(...coords)
+        this.reader.obstacles.push(this.pickedObs)
         this.app.scene.add(this.pickedObs)
 
         this.pickableObjs = []

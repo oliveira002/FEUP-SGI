@@ -31,6 +31,10 @@ class MyBanana extends THREE.Object3D {
             }
         );
     }
+
+    getEffect(){
+        return this.name
+    }
 }
 
 MyBanana.prototype.isGroup = true;

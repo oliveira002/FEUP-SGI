@@ -2,6 +2,9 @@ import * as THREE from 'three';
 import { MyTrack } from './MyTrack.js';
 import { tracks } from './tracks.js';
 import { MyPowerUp } from './MyPowerUp.js';
+import { MyBanana } from './MyBanana.js';
+import { MyOil } from './MyOil.js';
+import { MyCaution } from './MyCaution.js';
 
 
 
@@ -17,6 +20,7 @@ class MyReader extends THREE.Object3D {
         this.keyframes = []
         this.keyPoints = []
         this.powerups = []
+        this.obstacles = []
 
         this.init(trackName);
     }
@@ -57,7 +61,29 @@ class MyReader extends THREE.Object3D {
     }
 
     createObstacles(obstacles){
-
+        obstacles.forEach(obs => {
+            for (const [type, coords] of Object.entries(obs)) {
+                console.log(type, coords)
+                let obstacle
+                switch(type){
+                    case "Oil":{
+                        obstacle = new MyOil(this.app)
+                        break;
+                    }
+                    case "Banana":{
+                        obstacle = new MyBanana(this.app)
+                        break;
+                    }
+                    case "Caution":{
+                        obstacle = new MyCaution(this.app, 0.8, 0.14, 1.6)
+                        break;
+                    }
+                }
+                obstacle.position.set(...coords)
+                this.obstacles.push(obstacle)
+                this.add(obstacle)
+            }
+        })
     }
 
     createKeyFrames(track, totalTime) {

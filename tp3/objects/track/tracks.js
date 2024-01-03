@@ -34,9 +34,9 @@ export const tracks = {
 
         ],
         "obstacles":[
-            {"Oil": [19, 0, -9]},
-            {"Banana": [40.3, 0, -9]},
-            {"Caution": [64.6, 0, 41.5]},
+            {"Oil": [5, 0, 0]},
+            {"Banana": [10, 0, 0]},
+            {"Caution": [15, 0, 0]},
         ]
     },
     "Track 2": {
@@ -109,10 +109,12 @@ export const tracks = {
         ],
         "starting_point_index": 1,
         "power_ups": [
-
+            [0,0,10]
         ],
         "obstacles":[
-
+            {"Oil": [30,0,10]},
+            {"Banana": [60,0,25]},
+            {"Caution": [30,0,-20]},
         ]
     }
 }

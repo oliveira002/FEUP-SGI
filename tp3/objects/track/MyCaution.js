@@ -14,7 +14,7 @@ class MyCaution extends THREE.Object3D {
      * @param {number} height 
      * @param {string} cautionTexturePath the path to the caution texture 
      */
-    constructor(app, width, depth, height, cautionTexturePath) {
+    constructor(app, width, depth, height) {
         super();
         this.app = app;
         this.type = 'Group';
@@ -68,6 +68,10 @@ class MyCaution extends THREE.Object3D {
         });
 
         this.name = "Caution"
+    }
+
+    getEffect(){
+        return this.name
     }
 }
 

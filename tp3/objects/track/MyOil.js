@@ -54,6 +54,10 @@ class MyOil extends THREE.Object3D {
         this.add(this.oil);
         this.name = "Oil";
     }
+
+    getEffect(){
+        return this.name
+    }
 }
 
 MyOil.prototype.isGroup = true;
