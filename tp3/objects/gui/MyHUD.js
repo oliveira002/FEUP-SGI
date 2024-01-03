@@ -14,10 +14,11 @@ class MyHUD extends THREE.Object3D {
         this.app = app;
         this.type = 'Group';
 
-        this.maxSpeed = 200
         this.startTime = null;
         this.elapsedTime = 0; // to keep track of the elapsed time
+        this.maxSpeed = 100
 
+        this.overlay = document.getElementById('overlay');
         this.stateElement = document.getElementById('state');
         this.timeElement = document.getElementById('timeElapsed');
         this.velocityElement = document.getElementById('velocity');
@@ -65,7 +66,7 @@ class MyHUD extends THREE.Object3D {
         this.curLapElement.textContent = "1";
         this.totalLapElement.textContent = '/' + "3";
 
-        let dashArray = `calc(40 * 3.142 * 1.85 * ${Math.abs(velocity) / this.maxSpeed}) calc(40 * 3.142 * 1.85)`;
+        let dashArray = `calc(40 * 3.142 * 1.85 * ${Math.abs(velocity) / (this.app.contents.car.maxmaxspeed * 1000)}) calc(40 * 3.142 * 1.85)`;
         document.querySelector('.purple').style.strokeDasharray = dashArray;
       }
       
@@ -81,6 +82,7 @@ class MyHUD extends THREE.Object3D {
         } else {
             hudElement.style.display = 'block';
             this.updateValues();
+            this.updateEffects()
         }
     }
 
@@ -119,6 +121,72 @@ class MyHUD extends THREE.Object3D {
         this.timeElement.textContent = formattedTime;
     }
 
+    updateEffects() {
+        this.resetDivs()
+        const overlayDiv = document.getElementById('overlay');
+        const effectsArray = this.app.contents.car.effects;
+
+        effectsArray.forEach((e, i) => {
+            const effectId = e.name;
+            const name = this.mapNames(e)
+            const existingDiv = document.getElementById(effectId);
+            const time = (3000 - e.elapsedTime) / 1000;
+    
+            if (existingDiv) {
+                existingDiv.textContent = `Effect: ${name}, Time Elapsed: ${time}`;
+            } else {
+                const newElement = document.createElement('div');
+                newElement.id = effectId;
+                newElement.textContent = `Effect: ${name}, Time Elapsed: ${time}`;
+                overlayDiv.appendChild(newElement);
+            }
+        });
+    }
+
+    resetDivs() {
+        const divsEffects = [
+            document.getElementById("Speed"),
+            document.getElementById("NoClip"),
+            document.getElementById("Offroad"),
+            document.getElementById("Oil"),
+            document.getElementById("Caution"),
+            document.getElementById("Banana")
+        ];
+    
+        divsEffects.forEach((div) => {
+            if (div) {
+                const timeInText = parseInt(div.textContent.match(/\d+/)); // Extract numeric value from text
+    
+                if (timeInText <= 0) {
+                    // Remove the div if the time is <= 0
+                    div.remove();
+                }
+            }
+        });
+    }
+
+    mapNames(e) {
+        switch(e.name){
+            case "Speed":{
+                return "Extra Speed"
+            }
+            case "NoClip":{
+                return "No Collisions"
+            }
+            case "Offroad":{
+               return "Off Road"
+            }
+            case "Oil":{
+               return "No Brakes"
+            }
+            case "Caution":{
+               return "Inverted Controls"
+            }
+            case "Banana":{
+                return "Reduced Speed"
+            }
+        }
+    }
 }
 
 MyHUD.prototype.isGroup = true;

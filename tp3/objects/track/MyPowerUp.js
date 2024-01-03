@@ -116,7 +116,7 @@ class MyPowerUp extends THREE.Object3D {
 
   updateState(){
     this.updateTimer()
-    
+
     if((this.elapsedTime > this.cooldown) && this.disabled){
       this.disabled = false
     }
@@ -136,7 +136,7 @@ class MyPowerUp extends THREE.Object3D {
   }
 
   resumeTimer() {
-      if (this.startTime === null) {
+      if (this.startTime === null && this.disabled) {
           this.startTime = Date.now();
           this.updateTimer(); // Update the timer immediately
       }
@@ -148,7 +148,6 @@ class MyPowerUp extends THREE.Object3D {
           this.elapsedTime += currentTime - this.startTime;
           this.startTime = currentTime;
       }
-      console.log(this.elapsedTime)
   }
 
 

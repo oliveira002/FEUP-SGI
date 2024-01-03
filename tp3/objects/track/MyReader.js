@@ -97,6 +97,8 @@ class MyReader extends THREE.Object3D {
         })
     }
 
+    
+
 }
 
 MyReader.prototype.isGroup = true;
