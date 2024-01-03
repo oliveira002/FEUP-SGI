@@ -18,10 +18,9 @@ class MyPowerUp extends THREE.Object3D {
     this.startTime2 = Date.now()
     this.scaleFactor = 0.1
     this.effects = [
-      //"Speed", 
-      //"NoClip", 
-      //"Offroad",
-      "Banana"
+      "Speed", 
+      "NoClip", 
+      "Offroad"
     ]
     this.disabled = false
     this.elapsedTime = 0

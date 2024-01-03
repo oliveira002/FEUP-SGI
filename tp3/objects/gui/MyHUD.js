@@ -130,7 +130,7 @@ class MyHUD extends THREE.Object3D {
             const effectId = e.name;
             const name = this.mapNames(e)
             const existingDiv = document.getElementById(effectId);
-            const time = (3000 - e.elapsedTime) / 1000;
+            const time = (5000 - e.elapsedTime) / 1000;
     
             if (existingDiv) {
                 existingDiv.textContent = `Effect: ${name}, Time Elapsed: ${time}`;
