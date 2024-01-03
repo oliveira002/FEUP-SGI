@@ -4,7 +4,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 class MyOpponent extends THREE.Object3D {
 
-    constructor(app, keyPoints, trackCurve, model) {
+    constructor(app, keyPoints, trackCurve, model, difficulty) {
         super();
         this.app = app;
         this.type = 'Group';
@@ -16,15 +16,16 @@ class MyOpponent extends THREE.Object3D {
         this.wheels = []
         this.cur = 0
 
-
-        //console.log(keyPoints)
         this.mixer = null
         this.wheel1Mixer = null
         this.wheel2Mixer = null
         this.mixerTime = 0
         this.mixerPause = false
         this.enableAnimationPosition = true
-        this.totalTime = 20
+        this.difficulty = difficulty
+        
+        const difficultyMap = {"easy": 3, "normal": 2, "hard": 1}
+        this.totalTime = difficultyMap[this.difficulty] * 20
         this.init()
     }
 

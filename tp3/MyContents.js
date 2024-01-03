@@ -393,9 +393,9 @@ class MyContents {
 
           const num_track = this.menu.gameSettingsMenu.activeTrack.name
           const bot_difficulty = this.menu.gameSettingsMenu.activeDifficulty.name
-          this.botDifficulty = bot_difficulty
 
-          this.reader = new MyReader(this.app, num_track)
+          this.botDifficulty = bot_difficulty
+          this.reader = new MyReader(this.app, num_track, this.botDifficulty)
           this.app.scene.add(this.reader)
           this.track = this.reader.track
 
@@ -416,7 +416,7 @@ class MyContents {
       case State.CHOOSE_CAR_OPP: {
         obj = this.getObjectParent(obj)
         this.opponentCar = this.garage.carMapping[obj.name]
-        this.opponent = new MyOpponent(this.app,this.reader.keyPoints,this.reader.trackCurve, obj.name)
+        this.opponent = new MyOpponent(this.app,this.reader.keyPoints,this.reader.trackCurve, obj.name, this.botDifficulty)
         this.app.scene.add(this.opponent)
 
         this.game.state = State.PLAYING

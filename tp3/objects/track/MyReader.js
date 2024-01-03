@@ -11,7 +11,7 @@ import { MyCaution } from './MyCaution.js';
 
 class MyReader extends THREE.Object3D {
 
-    constructor(app, trackName) {
+    constructor(app, trackName, difficulty) {
         super();
         this.app = app
         this.type = 'Group';
@@ -21,6 +21,10 @@ class MyReader extends THREE.Object3D {
         this.keyPoints = []
         this.powerups = []
         this.obstacles = []
+        this.difficulty = difficulty
+         
+        const difficultyMap = {"easy": 3, "normal": 2, "hard": 1}
+        this.totalTime = difficultyMap[this.difficulty] * 20
 
         this.init(trackName);
     }
@@ -32,7 +36,7 @@ class MyReader extends THREE.Object3D {
         this.createTrack(object.track, object.starting_point_index);
         this.createPowerUps(object.power_ups);
         this.createObstacles(object.obstacles);
-        this.createKeyFrames(object.track, 20);
+        this.createKeyFrames(object.track, this.totalTime);
 
     }
 
