@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { CSS2DRenderer } from 'three/addons/renderers/CSS2DRenderer.js';
+import { State } from '../../MyGame.js';
 
 
 
@@ -9,7 +10,7 @@ class MyHUD extends THREE.Object3D {
      * 
      * @param {MyApp} app the application object
      */
-    constructor(app) {
+    constructor(app, difficulty) {
         super();
         this.app = app;
         this.type = 'Group';
@@ -17,6 +18,7 @@ class MyHUD extends THREE.Object3D {
         this.startTime = null;
         this.elapsedTime = 0; // to keep track of the elapsed time
         this.maxSpeed = 100
+        this.difficulty = difficulty
 
         this.overlay = document.getElementById('overlay');
         this.stateElement = document.getElementById('state');
@@ -27,6 +29,9 @@ class MyHUD extends THREE.Object3D {
         this.velElement = document.getElementById('vel');
         this.rotationsElement = document.getElementById('rotacoes');
         this.powerups = ["Speed","NoClip", "Offroad"]
+
+        this.difficultyMap = {"easy": 3, "normal": 2, "hard": 1}
+
         //this.needleElement = document.getElementById('needle');
     }
 
@@ -74,6 +79,7 @@ class MyHUD extends THREE.Object3D {
     update(state) {
         this.updateHud(state)
         this.updateTimer()
+        this.checkWinner()
     }
 
     updateHud(state) {
@@ -84,6 +90,7 @@ class MyHUD extends THREE.Object3D {
             hudElement.style.display = 'block';
             this.updateValues();
             this.updateEffects()
+            this.checkWinner()
         }
     }
 
@@ -120,6 +127,13 @@ class MyHUD extends THREE.Object3D {
 
         const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
         this.timeElement.textContent = formattedTime;
+    }
+    
+    checkWinner() {
+        if((this.elapsedTime/ 1000) >= 20 * this.difficultyMap[this.difficulty] * 3 ) {
+            this.app.contents.game.state = State.END
+            this.stopTimer()
+        }
     }
 
     updateEffects() {

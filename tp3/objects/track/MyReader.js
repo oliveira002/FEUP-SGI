@@ -24,7 +24,7 @@ class MyReader extends THREE.Object3D {
         this.difficulty = difficulty
          
         const difficultyMap = {"easy": 3, "normal": 2, "hard": 1}
-        this.totalTime = difficultyMap[this.difficulty] * 20
+        this.totalTime = difficultyMap[this.difficulty] * 20 
 
         this.init(trackName);
     }
