@@ -56,6 +56,7 @@ class MyCar extends THREE.Object3D {
         // Acceleration
         this.accelerationFactor = 1.01
 
+        this.collidedObjects = new Set();
         this.init()
 
     }
@@ -116,15 +117,12 @@ class MyCar extends THREE.Object3D {
 
                     this.car.scale.set(0.8,0.8,0.8)
 
-                    this.box = new THREE.Box3()
-                    this.box.setFromObject(this.car)
-
-                    this.car.userData.startObb = new OBB().fromBox3(this.box);
-                    this.car.userData.obb = this.car.userData.startObb
-
+                    this.bbox = new THREE.Box3()
                     
-                    this.helper = new THREE.Box3Helper( this.box, 0xffff00 );
-                    this.add( this.helper );
+                    this.bbhelper = new THREE.Box3Helper( this.bbox, 0xffff00 );
+                    this.add( this.bbhelper );
+
+                    this.car.userData.obb = new OBB().fromBox3(this.bbox);
 
                 },
                 (xhr) => {
@@ -205,7 +203,7 @@ class MyCar extends THREE.Object3D {
                     });
 
                     this.bbox = new THREE.Box3()
-
+                    
                     this.bbhelper = new THREE.Box3Helper( this.bbox, 0xffff00 );
                     this.add( this.bbhelper );
 
@@ -374,30 +372,8 @@ class MyCar extends THREE.Object3D {
     }
 
     boundingBoxPosition() {
-        let obb = this.car.userData.obb
-        let start = this.car.userData.startObb
-        
-        let pos = new THREE.Vector3()
-        this.car.getWorldPosition(pos)
-        pos.add(start.center)
-
-        let rot = this.car.rotation
-        let rot1 = new THREE.Matrix4().makeRotationFromEuler(rot)
-        let rot2 = new THREE.Matrix3().setFromMatrix4(rot1)
-        
-        //this.box.applyMatrix4(rot1)
-        //this.car.userData.obb.fromBox3(this.bbox)
-
-        //console.log(this.car, rot, rot1, rot2)
-
-        obb.applyMatrix4(rot1)
-
-        this.car.userData.obb = new OBB(
-            pos,
-            obb.halfSize,
-            obb.rotation
-        )
-        
+        this.bbox.setFromObject(this.car);
+        this.car.userData.obb.fromBox3(this.bbox);
     }
 
     updateHelper(){
@@ -519,7 +495,11 @@ class MyCar extends THREE.Object3D {
     }
 
     updateAttributesBasedOnEffects(){
+        let tempo = ["Speed","NoClip", "Offroad"]
+
         this.effects.forEach((e,i) => {
+            if(tempo.includes(e.name)) this.effectTime = 10000
+            else this.effectTime = 5000
             if(e.elapsedTime < this.effectTime){
                 switch(e.name){
                     case "Speed":{
@@ -584,53 +564,72 @@ class MyCar extends THREE.Object3D {
         })
     }
 
-    checkCollisions( objects ){
-        objects.forEach(obj => {
-            let intersects
-            if(obj instanceof MyPowerUp)
-                intersects = this.car.userData.obb.intersectsBox3(obj.geometry.boundingBox)
-            else if(obj instanceof MyCheckpoint)
-                intersects = this.car.userData.obb.intersectsBox3(obj.children[0].geometry.boundingBox)
-            else
-                intersects = this.car.userData.obb.intersectsBox3(obj.boundingBox)
+    checkCollisions(objects) {
+        objects.forEach((obj) => {
+            // Check if the object has already been collided with
+            if (this.collidedObjects.has(obj.uuid)) {
+                let intersects;
+                if (obj instanceof MyPowerUp)
+                    intersects = this.car.userData.obb.intersectsBox3(obj.geometry.boundingBox);
+                else if (obj instanceof MyCheckpoint)
+                    intersects = this.car.userData.obb.intersectsBox3(obj.children[0].geometry.boundingBox);
+                else
+                    intersects = this.car.userData.obb.intersectsBox3(obj.boundingBox);
 
-            if(intersects){
-                if(obj instanceof MyCheckpoint){
-                    console.log("Checkpoint:", obj.number)
-                    return
+                if (!intersects) {
+                    // Remove the object from the set if it's no longer intersected
+                    this.collidedObjects.delete(obj.uuid);
                 }
+            } else {
+                // Object has not been collided with yet
+                let intersects;
+                if (obj instanceof MyPowerUp)
+                    intersects = this.car.userData.obb.intersectsBox3(obj.geometry.boundingBox);
+                else if (obj instanceof MyCheckpoint)
+                    intersects = this.car.userData.obb.intersectsBox3(obj.children[0].geometry.boundingBox);
+                else
+                    intersects = this.car.userData.obb.intersectsBox3(obj.boundingBox);
 
-                if(!obj.disabled) {
+                if (intersects) {
+                    // Mark the object as collided
+                    this.collidedObjects.add(obj.uuid);
 
-                    if(!this.isCollidable && !(obj instanceof MyPowerUp)) return
+                    if (obj instanceof MyCheckpoint) {
+                        console.log("Checkpoint:", obj.number);
+                        return;
+                    }
 
-                    let effect = obj.getEffect()
+                    if (!obj.disabled) {
+                        if (!this.isCollidable && !(obj instanceof MyPowerUp)) return;
 
-                    var efeito = new MyEffect(effect)
-                    efeito.startTimer()
-                    this.effects.push(efeito)
+                        let effect = obj.getEffect();
 
-                    if(obj instanceof MyPowerUp) {
-                       this.app.contents.game.state = State.CHOOSE_OBSTACLE
+                        var efeito = new MyEffect(effect);
+                        efeito.startTimer();
+                        this.effects.push(efeito);
 
-                       obj.startTimer()
+                        if (obj instanceof MyPowerUp) {
+                            this.app.contents.game.state = State.CHOOSE_OBSTACLE
+                            obj.startTimer()
 
-                       this.app.contents.reader.powerups.forEach(pu => {
-                        pu.stopTimer()
-                       })
+                            this.app.contents.reader.powerups.forEach(pu => {
+                                pu.stopTimer()
+                            })
 
-                       this.stopTimerEffects()
+                            this.stopTimerEffects()
 
-                       this.app.contents.hud.stopTimer()
-                       this.app.contents.opponent.mixerPause = true
-                       this.app.contents.pickableObjs = this.app.contents.obsGarage.pickableObjs
-                       this.app.scene.add(this.app.contents.obsGarage)
-                       this.app.setActiveCamera('Obstacles')   
+                            this.app.contents.hud.stopTimer()
+                            this.app.contents.opponent.mixerPause = true
+                            this.app.contents.pickableObjs = this.app.contents.obsGarage.pickableObjs
+                            this.app.scene.add(this.app.contents.obsGarage)
+                            this.app.setActiveCamera('Obstacles')   
+                        }
                     }
                 }
             }
-        })
+        });
     }
+
 
     stopTimerEffects() {
         this.effects.forEach(e => {

@@ -56,6 +56,7 @@ class MyGarage extends THREE.Object3D {
         this.caution.translateY(Math.sin(Math.PI /3) * 0.8)
         this.caution.translateZ(-0.2)
         this.caution.rotateY(Math.PI / 1.8)
+        this.caution.scale.set(1.4,1.4,1.4)
         this.add(this.caution)
     }
 

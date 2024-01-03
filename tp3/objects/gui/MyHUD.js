@@ -26,6 +26,7 @@ class MyHUD extends THREE.Object3D {
         this.totalLapElement = document.getElementById('totalLap');
         this.velElement = document.getElementById('vel');
         this.rotationsElement = document.getElementById('rotacoes');
+        this.powerups = ["Speed","NoClip", "Offroad"]
         //this.needleElement = document.getElementById('needle');
     }
 
@@ -130,7 +131,14 @@ class MyHUD extends THREE.Object3D {
             const effectId = e.name;
             const name = this.mapNames(e)
             const existingDiv = document.getElementById(effectId);
-            const time = (5000 - e.elapsedTime) / 1000;
+
+            var time = 0
+            if(this.powerups.includes(e.name)) {
+                 time = (10000 - e.elapsedTime) / 1000;
+            }
+            else {
+                 time = (5000 - e.elapsedTime) / 1000;
+            }
     
             if (existingDiv) {
                 existingDiv.textContent = `Effect: ${name}, Time Elapsed: ${time}`;

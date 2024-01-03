@@ -373,6 +373,7 @@ class MyObstaclesGarage extends THREE.Object3D {
         this.banana.translateX(3)
         this.banana.translateZ(5)
         this.banana.rotateY(Math.PI / 1.8)
+        this.banana.scale.set(2,2,2)
         this.pickableObjs.push(this.banana)
         this.obsMapping["Banana"] = this.banana
         this.add(this.banana)
@@ -390,6 +391,7 @@ class MyObstaclesGarage extends THREE.Object3D {
         this.caution.translateX(3)
         this.caution.translateZ(-0.2)
         this.caution.rotateY(Math.PI / 1.8)
+        this.caution.scale.set(1.4,1.4,1.4)
         this.pickableObjs.push(this.caution)
         this.obsMapping["Caution"] = this.caution
         this.add(this.caution)

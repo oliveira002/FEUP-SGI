@@ -22,6 +22,10 @@ class MyCheckpoint extends THREE.Object3D {
 
         this.add(plane)
     }
+
+    getEffect(){
+        return this.number
+    }
 }
 
 MyCheckpoint.prototype.isGroup = true;
