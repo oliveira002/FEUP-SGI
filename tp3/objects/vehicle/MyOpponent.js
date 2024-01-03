@@ -98,16 +98,17 @@ class MyOpponent extends THREE.Object3D {
     
         this.mixer = new THREE.AnimationMixer(this.boxMesh)
     
-        const positionAction = this.mixer.clipAction(positionClip)
-        const rotationAction = this.mixer.clipAction(rotationClip)
-        const wheel1Action = this.wheel1Mixer.clipAction(wheelsClip)
-        const wheel2Action = this.wheel2Mixer.clipAction(wheelsClip)
+        this.positionAction = this.mixer.clipAction(positionClip)
+        this.rotationAction = this.mixer.clipAction(rotationClip)
+        this.wheel1Action = this.wheel1Mixer.clipAction(wheelsClip)
+        this.wheel2Action = this.wheel2Mixer.clipAction(wheelsClip)
+    }
 
-
-        positionAction.play()
-        rotationAction.play()
-        wheel1Action.play()
-        wheel2Action.play()
+    startOpponent() {
+        this.positionAction.play()
+        this.rotationAction.play()
+        this.wheel1Action.play()
+        this.wheel2Action.play()
     }
 
     buildBox() {

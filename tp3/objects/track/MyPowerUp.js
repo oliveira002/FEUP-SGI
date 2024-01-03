@@ -121,6 +121,7 @@ class MyPowerUp extends THREE.Object3D {
 
     if((Date.now() - this.lastDisabledTime > this.cooldown) && this.disabled) this.disabled = false
   }
+  
 }
 
 MyPowerUp.prototype.isGroup = true;

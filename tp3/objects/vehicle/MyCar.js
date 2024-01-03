@@ -3,6 +3,8 @@ import { MyApp } from '../../MyApp.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { degToRad } from '../../utils.js';
 import { OBB } from 'three/addons/math/OBB.js';
+import { MyPowerUp } from '../track/MyPowerUp.js';
+import { State } from '../../MyGame.js';
 
 class MyCar extends THREE.Object3D {
 
@@ -40,7 +42,7 @@ class MyCar extends THREE.Object3D {
         // speed
         this.speed = 0
         this.minSpeed = 0.008
-        this.maxSpeed = 0.1
+        this.maxSpeed = 0.2
         this.brakingFactor = 0.985
         this.dragFactor = 0.995
 
@@ -79,7 +81,7 @@ class MyCar extends THREE.Object3D {
                     
                     this.meshes = meshes
                     this.add(this.car);
-            
+                    
                     this.wheels.push(this.car.children[0].children[1]);
                     this.wheels.push(this.car.children[0].children[2]);
 
@@ -342,8 +344,10 @@ class MyCar extends THREE.Object3D {
                 this.rayHelpers[index].setColor(0xff0000); // Change color to red for off-track
               }
           });
+            
           
-          this.maxSpeed = 0.05 + (0.25*insideN)*0.05
+          
+        this.maxSpeed = this.maxSpeed/2 + (0.25*insideN)*(this.maxSpeed/2) 
     }
 
     boundingBoxPosition() {
@@ -462,6 +466,8 @@ class MyCar extends THREE.Object3D {
     }
 
     update(){
+        console.log("SPEED:", this.speed)
+        console.log("MAX SPEED", this.maxSpeed)
         this.updateAttributesBasedOnEffects()
         this.updatePosition()
         this.updateCameraPos()
@@ -485,11 +491,18 @@ class MyCar extends THREE.Object3D {
 
     checkCollisions( objects ){
         objects.forEach(obj => {
-            
             let intersects = this.car.userData.obb.intersectsBox3(obj.geometry.boundingBox)
             if(intersects){
                 let effect = obj.getEffect()
                 if(effect !== "None") {
+                    if(obj instanceof MyPowerUp) {
+                        this.app.contents.game.state = State.CHOOSE_OBSTACLE
+                        this.app.contents.hud.stopTimer()
+                        this.app.contents.opponent.mixerPause = true
+                        this.app.contents.pickableObjs = this.app.contents.obsGarage.pickableObjs
+                        this.app.scene.add(this.app.contents.obsGarage)
+                        this.app.setActiveCamera('Obstacles')   
+                    }
                     this.effectTimes[effect][0] += 3
                     this.effectTimes[effect][1] = Date.now()
 

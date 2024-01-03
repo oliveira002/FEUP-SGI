@@ -77,6 +77,7 @@ class MyContents {
     this.track =  null
     this.clock = null
     this.pickedObs = null
+    this.opponentStarted = false
 
     //this.app.scene.add(this.track);
 
@@ -177,6 +178,10 @@ class MyContents {
       if(this.game.state == State.PLAYING)
         switch (event.key) {
           case 'w':
+            if(!this.opponentStarted) {
+              this.opponent.startOpponent()
+              this.opponentStarted = true
+            }
           case 'd':
           case 's':
           case 'a':
@@ -360,6 +365,7 @@ class MyContents {
 
           const num_track = this.menu.gameSettingsMenu.activeTrack.name
           const bot_difficulty = this.menu.gameSettingsMenu.activeDifficulty.name
+          this.botDifficulty = bot_difficulty
 
           this.reader = new MyReader(this.app, num_track)
           this.app.scene.add(this.reader)
@@ -414,7 +420,12 @@ class MyContents {
         this.app.scene.add(this.pickedObs)
 
         this.pickableObjs = []
+        this.hud.resumeTimer()
         this.game.state = State.PLAYING
+        this.opponent.mixerPause = false
+        this.app.setActiveCamera('Car')
+        console.log("fudeu")
+
         break;
       }
 

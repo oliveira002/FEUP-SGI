@@ -64,7 +64,7 @@ class MyHUD extends THREE.Object3D {
         this.curLapElement.textContent = "1";
         this.totalLapElement.textContent = '/' + "3";
 
-        let dashArray = `calc(40 * 3.142 * 1.85 * ${Math.abs(velocity) / 100}) calc(40 * 3.142 * 1.85)`;
+        let dashArray = `calc(40 * 3.142 * 1.85 * ${Math.abs(velocity) / 200}) calc(40 * 3.142 * 1.85)`;
         document.querySelector('.purple').style.strokeDasharray = dashArray;
       }
       
