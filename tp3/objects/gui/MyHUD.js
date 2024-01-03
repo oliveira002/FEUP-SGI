@@ -14,6 +14,7 @@ class MyHUD extends THREE.Object3D {
         this.app = app;
         this.type = 'Group';
 
+        this.maxSpeed = 200
         this.startTime = null;
         this.elapsedTime = 0; // to keep track of the elapsed time
 
@@ -64,7 +65,7 @@ class MyHUD extends THREE.Object3D {
         this.curLapElement.textContent = "1";
         this.totalLapElement.textContent = '/' + "3";
 
-        let dashArray = `calc(40 * 3.142 * 1.85 * ${Math.abs(velocity) / 100}) calc(40 * 3.142 * 1.85)`;
+        let dashArray = `calc(40 * 3.142 * 1.85 * ${Math.abs(velocity) / this.maxSpeed}) calc(40 * 3.142 * 1.85)`;
         document.querySelector('.purple').style.strokeDasharray = dashArray;
       }
       
@@ -82,22 +83,6 @@ class MyHUD extends THREE.Object3D {
             this.updateValues();
         }
     }
-
-    updateTimer() {
-        if (this.startTime !== null) {
-            const currentTime = Date.now();
-            this.elapsedTime += currentTime - this.startTime;
-            this.startTime = currentTime;
-        }
-
-        const seconds = Math.floor(this.elapsedTime / 1000) % 60;
-        const minutes = Math.floor(this.elapsedTime / (1000 * 60)) % 60;
-        const hours = Math.floor(this.elapsedTime / (1000 * 60 * 60));
-
-        const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-        this.timeElement.textContent = formattedTime;
-    }
-
 
     startTimer() {
         this.startTime = Date.now();

@@ -40,7 +40,8 @@ class MyCar extends THREE.Object3D {
         // speed
         this.speed = 0
         this.minSpeed = 0.008
-        this.maxSpeed = 0.1
+        this.maxmaxspeed = 0.1
+        this.maxSpeed = this.maxmaxspeed
         this.brakingFactor = 0.985
         this.dragFactor = 0.995
 
@@ -343,7 +344,7 @@ class MyCar extends THREE.Object3D {
               }
           });
           
-          this.maxSpeed = 0.05 + (0.25*insideN)*0.05
+          this.maxSpeed = this.maxmaxspeed/2 + (0.25*insideN)*(this.maxmaxspeed/2)
     }
 
     boundingBoxPosition() {
@@ -470,14 +471,80 @@ class MyCar extends THREE.Object3D {
     }
 
     updateAttributesBasedOnEffects(){
-        for (let [effect, [time, lastupdate]] of Object.entries(this.effectTimes)) {
-            if(time > 0 && (Date.now() - lastupdate > 1000)){
-                this.effectTimes[effect][0] -= 1
-                this.effectTimes[effect][1] = Date.now()
 
-                console.log("----- REDUCT -----")
-                for (let [effect, [time, _]] of Object.entries(this.effectTimes)) {
-                    console.log(`${effect}: ${time}`);
+        for (let [effect, [time, lastupdate]] of Object.entries(this.effectTimes)) {
+            if(time > 0){
+
+                switch(effect){
+                    case "Speed":{
+                        this.maxmaxspeed = 0.15
+                        this.maxSpeed = this.maxmaxspeed
+                        break;
+                    }
+                    case "NoClip":{
+                        this.isCollidable = false
+                        break;
+                    }
+                    case "Offroad":{
+                        this.isOffroad = true
+                        break;
+                    }
+                    case "Oil":{
+                        this.hasBrakes = false
+                        break;
+                    }
+                    case "Caution":{
+                        this.inverted = true
+                        break;
+                    }
+                    case "Banana":{
+                        this.maxmaxspeed = 0.05 
+                        this.maxSpeed = this.maxmaxspeed
+                        break;
+                    }
+                }
+
+                if((Date.now() - lastupdate > 1000)){
+
+                    let newTime = this.effectTimes[effect][0] - 1
+                    this.effectTimes[effect][0] = newTime
+                    this.effectTimes[effect][1] = Date.now()
+
+                    if(newTime === 0){
+                        switch(effect){
+                            case "Speed":{
+                                this.maxmaxspeed = 0.1
+                                this.maxSpeed = this.maxmaxspeed
+                                break;
+                            }
+                            case "NoClip":{
+                                this.isCollidable = true
+                                break;
+                            }
+                            case "Offroad":{
+                                this.isOffroad = false
+                                break;
+                            }
+                            case "Oil":{
+                                this.hasBrakes = true
+                                break;
+                            }
+                            case "Caution":{
+                                this.inverted = false
+                                break;
+                            }
+                            case "Banana":{
+                                this.maxmaxspeed = 0.1
+                                this.maxSpeed = this.maxmaxspeed
+                                break;
+                            }
+                        }
+                    }
+
+                    console.log("----- REDUCT -----")
+                    for (let [effect, [time, _]] of Object.entries(this.effectTimes)) {
+                        console.log(`${effect}: ${time}`);
+                    }
                 }
             }
         }
@@ -490,7 +557,17 @@ class MyCar extends THREE.Object3D {
             if(intersects){
                 let effect = obj.getEffect()
                 if(effect !== "None") {
-                    this.effectTimes[effect][0] += 3
+                    if(obj instanceof MyPowerUp) {
+                        obj.startTimer()
+                       this.app.contents.game.state = State.CHOOSE_OBSTACLE
+                       this.app.contents.hud.stopTimer()
+                       this.app.contents.opponent.mixerPause = true
+                       this.app.contents.pickableObjs = this.app.contents.obsGarage.pickableObjs
+                       this.app.scene.add(this.app.contents.obsGarage)
+                       this.app.setActiveCamera('Obstacles')   
+                    }
+
+                    this.effectTimes[effect][0] = 3
                     this.effectTimes[effect][1] = Date.now()
 
                     console.log("----- NEW -----")
@@ -501,28 +578,6 @@ class MyCar extends THREE.Object3D {
             }
         })
     }
-
-    /*
-    case "Speed":{
-        break;
-    }
-    case "NoClip":{
-        break;
-    }
-    case "Offroad":{
-        break;
-    }
-    case "Oil":{
-        break;
-    }
-    case "Caution":{
-        break;
-    }
-    case "Banana":{
-        break;
-    }
-    */
-
 }
 
 MyCar.prototype.isGroup = true;

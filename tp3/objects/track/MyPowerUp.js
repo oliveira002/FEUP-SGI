@@ -3,6 +3,7 @@ import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import { TTFLoader } from 'three/addons/loaders/TTFLoader.js';
 import { Font } from 'three/addons/loaders/FontLoader.js';
 import { MyShader } from '../../MyShader.js';
+import { State } from '../../MyGame.js';
 
 class MyPowerUp extends THREE.Object3D {
   /**
@@ -15,7 +16,7 @@ class MyPowerUp extends THREE.Object3D {
     this.coords = new THREE.Vector3(...coords)
     this.startTime = Date.now();
     this.scaleFactor = 0.1
-    this.effects = ["Speed", "NoClip", "Offroad", "None"]
+    this.effects = ["None", "Speed"]//, "NoClip", "Offroad"]
     this.disabled = false
     this.lastDisabledTime = null
     this.cooldown = 5000
@@ -99,7 +100,6 @@ class MyPowerUp extends THREE.Object3D {
 
     let effect = Math.floor(Math.random() * this.effects.length);
     this.disabled = true
-    this.lastDisabledTime = Date.now()
     return this.effects[effect];
   }
 
@@ -111,16 +111,48 @@ class MyPowerUp extends THREE.Object3D {
     if (this.textMesh) {
       this.textMesh.rotation.y += 0.01;
     }
-
+    console.log(this)
     this.updateState()
 
   }
 
   updateState(){
-    if(!this.lastDisabledTime) return
-
-    if((Date.now() - this.lastDisabledTime > this.cooldown) && this.disabled) this.disabled = false
+    this.updateTimer()
+    
+    if((this.elapsedTime > this.cooldown) && this.disabled){
+      this.disabled = false
+    }
   }
+
+  startTimer() {
+    this.lastDisabledTime = Date.now();
+    this.elapsedTime = 0;
+    this.updateTimer(); // Update the timer immediately
+  }
+
+  stopTimer() {
+      if (this.lastDisabledTime !== null) {
+          this.elapsedTime += Date.now() - this.lastDisabledTime;
+          this.lastDisabledTime = null;
+      }
+  }
+
+  resumeTimer() {
+      if (this.lastDisabledTime === null) {
+          this.lastDisabledTime = Date.now();
+          this.updateTimer(); // Update the timer immediately
+      }
+  }
+
+  updateTimer() {
+      if (this.lastDisabledTime !== null) {
+          const currentTime = Date.now();
+          this.elapsedTime += currentTime - this.lastDisabledTime;
+          this.lastDisabledTime = currentTime;
+      }
+  }
+
+
 }
 
 MyPowerUp.prototype.isGroup = true;
