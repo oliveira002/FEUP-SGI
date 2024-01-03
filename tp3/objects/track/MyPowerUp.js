@@ -153,6 +153,7 @@ class MyPowerUp extends THREE.Object3D {
   }
 
 
+  
 }
 
 MyPowerUp.prototype.isGroup = true;

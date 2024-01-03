@@ -3,6 +3,8 @@ import { MyApp } from '../../MyApp.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { degToRad } from '../../utils.js';
 import { OBB } from 'three/addons/math/OBB.js';
+import { MyPowerUp } from '../track/MyPowerUp.js';
+import { State } from '../../MyGame.js';
 
 class MyCar extends THREE.Object3D {
 
@@ -80,7 +82,7 @@ class MyCar extends THREE.Object3D {
                     
                     this.meshes = meshes
                     this.add(this.car);
-            
+                    
                     this.wheels.push(this.car.children[0].children[1]);
                     this.wheels.push(this.car.children[0].children[2]);
 
@@ -343,6 +345,7 @@ class MyCar extends THREE.Object3D {
                 this.rayHelpers[index].setColor(0xff0000); // Change color to red for off-track
               }
           });
+            
           
           this.maxSpeed = this.maxmaxspeed/2 + (0.25*insideN)*(this.maxmaxspeed/2)
     }
@@ -463,6 +466,8 @@ class MyCar extends THREE.Object3D {
     }
 
     update(){
+        console.log("SPEED:", this.speed)
+        console.log("MAX SPEED", this.maxSpeed)
         this.updateAttributesBasedOnEffects()
         this.updatePosition()
         this.updateCameraPos()
@@ -552,7 +557,6 @@ class MyCar extends THREE.Object3D {
 
     checkCollisions( objects ){
         objects.forEach(obj => {
-            
             let intersects = this.car.userData.obb.intersectsBox3(obj.geometry.boundingBox)
             if(intersects){
                 let effect = obj.getEffect()
