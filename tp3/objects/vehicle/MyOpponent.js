@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { OBB } from 'three/addons/math/OBB.js';
+
 
 
 class MyOpponent extends THREE.Object3D {
@@ -134,6 +136,11 @@ class MyOpponent extends THREE.Object3D {
                             this.app.scene.add(this.boxMesh);
         
                             this.boxMesh.rotation.y -= -Math.PI / 2
+
+                            this.bbox = new THREE.Box3()  
+                            this.bbhelper = new THREE.Box3Helper( this.bbox, 0xffff00 );
+                            this.add( this.bbhelper );
+                            this.boxMesh.userData.obb = new OBB().fromBox3(this.bbox);
             
                             console.log('Model loaded successfully');
                             resolve(this.boxMesh);
@@ -176,6 +183,10 @@ class MyOpponent extends THREE.Object3D {
                             this.app.scene.add(this.boxMesh);
         
                             this.boxMesh.rotation.y -= -Math.PI / 2
+                            this.bbox = new THREE.Box3()  
+                            this.bbhelper = new THREE.Box3Helper( this.bbox, 0xffff00 );
+                            this.add( this.bbhelper );
+                            this.boxMesh.userData.obb = new OBB().fromBox3(this.bbox);
             
                             console.log('Model loaded successfully');
                             resolve(this.boxMesh);
@@ -191,6 +202,7 @@ class MyOpponent extends THREE.Object3D {
                     break;
             }
         });
+        
     }
     setMixerTime() {
         this.mixer.setTime(this.mixerTime)
@@ -227,7 +239,10 @@ class MyOpponent extends THREE.Object3D {
 
 
     update() {
-
+        if(this.bbox && this.boxMesh && this.boxMesh.userData.obb) {
+            this.bbox.setFromObject(this.boxMesh);
+            this.boxMesh.userData.obb.fromBox3(this.bbox); 
+        }
         const delta = this.clock.getDelta()
         if(this.mixer) {
             this.mixer.update(delta)
@@ -243,6 +258,10 @@ class MyOpponent extends THREE.Object3D {
         if(this.wheel1Mixer && this.wheel2Mixer && this.mixer) {
             this.checkAnimationStateIsPause()
         }
+    }
+
+    getEffect() {
+        return "Opponent";
     }
 }
 

@@ -87,8 +87,8 @@ class MyReader extends THREE.Object3D {
                 let boundingBox
                 if(type == "Banana") {
                     obstacle.updateBoundingBox()
-                    boundingBox = obstacle.boundingBox
-
+                    this.obstacles.push(obstacle)
+                    this.add(obstacle)
                 }
                 else {
                     boundingBox = new THREE.Box3().setFromObject(obstacle);

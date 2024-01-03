@@ -188,7 +188,8 @@ class MyHUD extends THREE.Object3D {
             document.getElementById("Offroad"),
             document.getElementById("Oil"),
             document.getElementById("Caution"),
-            document.getElementById("Banana")
+            document.getElementById("Banana"),
+            document.getElementById("Opponent")
         ];
     
         divsEffects.forEach((div) => {
@@ -220,6 +221,7 @@ class MyHUD extends THREE.Object3D {
             case "Caution":{
                return "Inverted Controls"
             }
+            case "Opponent":
             case "Banana":{
                 return "Reduced Speed"
             }
