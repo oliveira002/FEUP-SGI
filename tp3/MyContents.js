@@ -444,7 +444,13 @@ class MyContents {
 
       case State.PLACE_OBSTACLE: {
         const coords = intersections.point 
+        
         this.pickedObs.position.set(...coords)
+
+        const boundingBox = new THREE.Box3().setFromObject(this.pickedObs);
+        this.boundingBoxHelper = new THREE.Box3Helper(boundingBox, 0xffff00);
+        this.app.scene.add(this.boundingBoxHelper)
+
         this.reader.obstacles.push(this.pickedObs)
         this.app.scene.add(this.pickedObs)
 
