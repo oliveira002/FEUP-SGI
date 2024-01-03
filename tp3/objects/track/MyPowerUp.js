@@ -17,10 +17,15 @@ class MyPowerUp extends THREE.Object3D {
     this.startTime = null;
     this.startTime2 = Date.now()
     this.scaleFactor = 0.1
-    this.effects = ["Speed", "NoClip", "Offroad"]
+    this.effects = [
+      //"Speed", 
+      //"NoClip", 
+      //"Offroad",
+      "Banana"
+    ]
     this.disabled = false
     this.elapsedTime = 0
-    this.cooldown = 5000
+    this.cooldown = 10000
 
     this.material = new THREE.MeshPhysicalMaterial({
         color: 0xadd8e6,
