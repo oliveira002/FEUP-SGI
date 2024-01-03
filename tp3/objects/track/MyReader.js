@@ -63,7 +63,6 @@ class MyReader extends THREE.Object3D {
     createObstacles(obstacles){
         obstacles.forEach(obs => {
             for (const [type, coords] of Object.entries(obs)) {
-                console.log(type, coords)
                 let obstacle
                 switch(type){
                     case "Oil":{
