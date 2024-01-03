@@ -62,10 +62,7 @@ class MyCaution extends THREE.Object3D {
         this.translateZ(Math.cos(Math.PI / 3) * (this.height / 2) - this.depth)
         this.translateY(-Math.sin(Math.PI /3) * (this.height / 2))
 
-        this.children.forEach(element => {
-            element.castShadow = true
-            element.receiveShadow = true
-        });
+        this.scale.set(0.5,0.5,0.5)
 
         this.name = "Caution"
     }

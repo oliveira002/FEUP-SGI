@@ -87,7 +87,6 @@ class MyPowerUp extends THREE.Object3D {
 
     this.mesh.geometry.boundingBox = new THREE.Box3().setFromObject(this.mesh).translate(this.coords);
 
-
     var boundingBoxMesh = new THREE.Mesh(new THREE.BoxGeometry(), new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true }));
     this.add(boundingBoxMesh);
 

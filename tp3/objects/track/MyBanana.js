@@ -17,11 +17,12 @@ class MyBanana extends THREE.Object3D {
         loader.load(
             'images/banana_peel_mario_kart.glb',
             (gltf) => {
-                var model = gltf.scene
-                model.scale.set(0.0015,0.0015,0.0015)
-                model.translateY(0.54)
+                var model = gltf.scene;
+                model.scale.set(0.0015, 0.0015, 0.0015);
+                model.translateY(0.24);
                 this.add(model); 
-                this.name = "Banana"
+                this.name = "Banana";
+
             },
             (xhr) => {
                 //console.log((xhr.loaded / xhr.total * 100) + '% loaded');
