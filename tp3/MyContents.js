@@ -443,8 +443,8 @@ class MyContents {
       }
 
       case State.PLACE_OBSTACLE: {
-        const coords = intersections.point 
-        
+        var coords = intersections.point 
+        coords.z += 0.04
         this.pickedObs.position.set(...coords)
 
         const boundingBox = new THREE.Box3().setFromObject(this.pickedObs);
