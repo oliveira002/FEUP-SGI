@@ -139,7 +139,7 @@ class MyHUD extends THREE.Object3D {
             this.app.contents.game.state = State.END
             this.app.contents.createPodium(this.winner, this.loser, 20 * this.difficultyMap[this.difficulty] * 3)
         }
-        if(this.app.contents.car.lap >= -1) {
+        if(this.app.contents.car.lap >= 4) {
             this.stopTimer()
             this.winner = [this.app.contents.name ,this.app.contents.car.model, this.elapsedTime/1000]
             this.loser = ["Bot - " + this.app.contents.botDifficulty, this.modelMap[this.app.contents.car.model], 20 * this.difficultyMap[this.difficulty] * 3]
