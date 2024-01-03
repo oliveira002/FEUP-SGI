@@ -6,6 +6,7 @@ import { OBB } from 'three/addons/math/OBB.js';
 import { MyPowerUp } from '../track/MyPowerUp.js';
 import { State } from '../../MyGame.js';
 import { MyCheckpoint } from '../track/MyCheckpoint.js';
+import { MyOpponent } from './MyOpponent.js';
 
 class MyCar extends THREE.Object3D {
 
@@ -536,6 +537,7 @@ class MyCar extends THREE.Object3D {
                         this.inverted = true
                         break;
                     }
+                    case "Opponent":
                     case "Banana":{
                         this.maxmaxspeed = 0.05 
                         this.maxSpeed = this.maxmaxspeed
@@ -567,6 +569,7 @@ class MyCar extends THREE.Object3D {
                         this.inverted = false
                         break;
                     }
+                    case "Opponent":
                     case "Banana":{
                         this.maxmaxspeed = 0.1
                         this.maxSpeed = this.maxmaxspeed
@@ -579,8 +582,6 @@ class MyCar extends THREE.Object3D {
 
     checkCollisions(objects) {
         objects.forEach((obj) => {
-
-            console.log(obj)
             // Check if the object has already been collided with
             if (this.collidedObjects.has(obj.uuid)) {
                 let intersects;
@@ -588,6 +589,11 @@ class MyCar extends THREE.Object3D {
                     intersects = this.car.userData.obb.intersectsBox3(obj.geometry.boundingBox);
                 else if (obj instanceof MyCheckpoint)
                     intersects = this.car.userData.obb.intersectsBox3(obj.children[0].geometry.boundingBox);
+                else if (obj instanceof MyOpponent) {
+                    if(obj.bbox) {
+                        intersects = this.car.userData.obb.intersectsBox3(obj.bbox); 
+                    }
+                }
                 else
                     intersects = this.car.userData.obb.intersectsBox3(obj.boundingBox);
 
@@ -602,6 +608,11 @@ class MyCar extends THREE.Object3D {
                     intersects = this.car.userData.obb.intersectsBox3(obj.geometry.boundingBox);
                 else if (obj instanceof MyCheckpoint)
                     intersects = this.car.userData.obb.intersectsBox3(obj.children[0].geometry.boundingBox);
+                else if (obj instanceof MyOpponent) {
+                    if(obj.bbox) {
+                        intersects = this.car.userData.obb.intersectsBox3(obj.bbox); 
+                    }
+                }
                 else
                     intersects = this.car.userData.obb.intersectsBox3(obj.boundingBox);
 

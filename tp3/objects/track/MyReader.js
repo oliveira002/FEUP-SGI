@@ -88,7 +88,6 @@ class MyReader extends THREE.Object3D {
                     obstacle.updateBoundingBox()
                     this.obstacles.push(obstacle)
                     this.add(obstacle)
-                    console.log(obstacle)
                 }
                 else {
                     obstacle.position.set(...coords)
