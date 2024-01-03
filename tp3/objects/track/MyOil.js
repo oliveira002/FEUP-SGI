@@ -46,11 +46,9 @@ class MyOil extends THREE.Object3D {
         ];
     
         this.oil = new THREE.Mesh(this.oilGeometry, materials);
-        
-        this.oil.translateY(this.oilSize / 2 + 0.2)
-        this.oil.rotateX(-Math.PI / 2);
-        this.oil.translateZ(0.03);
-    
+
+        this.oil.translateY(this.oilSize / 2)
+        this.oil.rotateX(-Math.PI / 2);    
         this.add(this.oil);
         this.name = "Oil";
     }
