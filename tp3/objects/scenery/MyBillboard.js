@@ -1,5 +1,10 @@
 import * as THREE from 'three';
 import { MyShader } from '../../MyShader.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'; // Make sure to import GLTFLoader
+
+
+const outdoorVertexShader  = await fetch('shaders/billboard.vert').then(r => r.text());
+const outdooFragmentShader  = await fetch('shaders/billboard.frag').then(r => r.text());
 
 class MyBillboard extends THREE.Object3D {
     /**
@@ -10,88 +15,80 @@ class MyBillboard extends THREE.Object3D {
         this.app = app;
         this.type = 'Group';
 
-        const planeGeometry = new THREE.PlaneGeometry(10, 10,100,100); // Adjust the size as needed
+        this.planeGeometry = new THREE.PlaneGeometry(14.8, 6.4,100,100); // Adjust the size as needed
 
-        const planeMaterial = new THREE.MeshBasicMaterial({ map: new THREE.Texture() });
+        const loader = new GLTFLoader();
+        loader.load(
+            'images/billboard_hoarding_free_lowpoly_model_download.glb',
+            (gltf) => {
+                var model = gltf.scene
 
-        this.texture = null
-        this.billboardPlane = new THREE.Mesh(planeGeometry, planeMaterial);
-        this.billboardPlane.translateY(5)
+                model.position.set(0,0,0)
+                model.scale.set(1.2,1.8,1.2)
+                this.add(model)
+            },
+            (xhr) => {
+                console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+            },
+            (error) => {
+                console.log('An error happened', error);
+            }
+        );
 
-    
 
         this.updateInterval = setInterval(() => {
             this.update();
-        }, 10000); // 10000 milliseconds = 10 seconds
+        }, 1000); 
     }
-
-    waitForShaders() {
-		if(this.shader.ready === false) {
-			setTimeout(this.waitForShaders.bind(this), 100)
-			return;
-		}
-
-        this.billboardPlane.material = this.shader.material
-
-        this.add(this.billboardPlane)
-
-	}
-
 
 
     update() {
-        const activeCamera = this.app.activeCamera;
-        if (activeCamera) {
-            const renderTarget = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, {depthBuffer: true});
-            this.app.renderer.setRenderTarget(renderTarget);
-            this.app.renderer.render(this.app.scene, activeCamera);
-            this.app.renderer.setRenderTarget(null);
-
-            this.texture = renderTarget.texture;
-
-            this.shader = new MyShader(this.app, 'Billboard Shader', "Billboard Shader", "shaders/billboard.vert", "shaders/billboard.frag", {
-                uSampler1: {type: 'sampler2D', value: this.texture},
-            })
-            
-
-            this.waitForShaders()
+        if(this.billboardPlane) {
+            this.remove(this.billboardPlane)
         }
-    }
-    convertToGrayscale(texture) {
-        // Get the pixel data from the texture
-        var imageData = texture.image;
-        
-        // Create a canvas and context
-        const canvas = document.createElement('canvas');
-        const context = canvas.getContext('2d');
+
+        const renderTarget = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
+        renderTarget.texture.minFilter = THREE.NearestFilter;
+        renderTarget.texture.magFilter = THREE.NearestFilter;
+        renderTarget.stencilBuffer = false;
+        renderTarget.depthBuffer = true;
+        renderTarget.depthTexture = new THREE.DepthTexture();
+        renderTarget.depthTexture.format = THREE.DepthFormat;
+        renderTarget.depthTexture.type = THREE.UnsignedShortType;
     
-        // Set the canvas size to the texture size
-        canvas.width = imageData.width;
-        canvas.height = imageData.height;
+        this.app.getActiveCamera().near = 0.2;
+        this.app.getActiveCamera().far = 40;
     
-        // Draw the texture onto the canvas
-        context.drawImage(imageData, 0, 0, imageData.width, imageData.height);
-    
-        // Get the pixel data from the canvas
-        imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-    
-        // Loop through the pixel data and convert to grayscale
-        for (let i = 0; i < imageData.data.length; i += 4) {
-            const average = (imageData.data[i] + imageData.data[i + 1] + imageData.data[i + 2]) / 3;
-            imageData.data[i] = average;
-            imageData.data[i + 1] = average;
-            imageData.data[i + 2] = average;
-        }
-    
-        // Update the texture with the grayscale pixel data
-        texture.image = imageData;
-        texture.needsUpdate = true;
+        this.app.renderer.setRenderTarget(renderTarget);
+        this.app.renderer.render(this.app.scene, this.app.getActiveCamera());
+
+        this.texture = renderTarget.texture;
+        this.depthTexture = renderTarget.depthTexture;
+
+        this.app.renderer.setRenderTarget(null);
+
+        this.outdoorShaderMaterial = new THREE.ShaderMaterial({
+            vertexShader: outdoorVertexShader,
+            fragmentShader: outdooFragmentShader,
+            uniforms: {
+                cameraNear: { value: this.app.activeCamera.near },
+                cameraFar: { value: this.app.activeCamera.far },
+                tDiffuse: { value:  this.texture },
+                tDepth: { value: this.depthTexture }
+                
+            },
+        });
+
+        this.billboardPlane = new THREE.Mesh(this.planeGeometry, this.outdoorShaderMaterial)
+        this.billboardPlane.translateY(13.3)
+        this.billboardPlane.translateZ(0.5)
+
+        this.add(this.billboardPlane)
+
+        this.app.getActiveCamera().near = 0.1;
+        this.app.getActiveCamera().far = 500;
     }
 
-    // Make sure to clear the interval when the billboard is no longer needed
-    dispose() {
-        clearInterval(this.updateInterval);
-    }
 }
 
 MyBillboard.prototype.isGroup = true;

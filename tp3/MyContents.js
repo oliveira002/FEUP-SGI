@@ -125,7 +125,7 @@ class MyContents {
     //this.powerup = new MyPowerUp(this.app)
     //this.app.scene.add(this.powerup)
 
-  
+    
     this.menu = new MyMenu(this.app)
     this.menu.updateCameraByGameState(this.game.state)
     this.app.scene.add(this.menu)
@@ -151,6 +151,12 @@ class MyContents {
       this.obsGarage.rotateY(-Math.PI / 2)
       this.app.scene.add(this.obsGarage)
     }
+
+    /*
+    this.billboard = new MyBillboard(this.app)
+    this.billboard.translateZ(-74)
+    this.billboard.scale.set(3,3,3)
+    this.app.scene.add(this.billboard)*/
 
     //this.menu.mainMenu = new MyMainMenu(this.app)
     //this.menu.mainMenu.translateX(-200,0,0)

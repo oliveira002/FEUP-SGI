@@ -1,10 +1,20 @@
-uniform sampler2D uSampler1;
+#include <packing>
 
 varying vec2 vUv;
+uniform sampler2D tDiffuse;
+uniform sampler2D tDepth;
+uniform float cameraNear;
+uniform float cameraFar;
+
+
+float readDepth( sampler2D depthSampler, vec2 coord ) {
+    float fragCoordZ = texture2D( depthSampler, coord ).x;
+    float viewZ = perspectiveDepthToViewZ( fragCoordZ, cameraNear, cameraFar );
+    return viewZToOrthographicDepth( viewZ, cameraNear, cameraFar );
+}
 
 void main() {
-    vec4 color = texture2D(uSampler1, vUv);
-    vec4 color1 = texture2D(uSampler1, vUv);
-
-    gl_FragColor = color * 1.0 + color1 * 0.0;
+    vec3 diffuse = texture2D( tDiffuse, vUv ).rgb;
+    gl_FragColor.rgb = vec3(diffuse);
+    gl_FragColor.a = 1.0;
 }
