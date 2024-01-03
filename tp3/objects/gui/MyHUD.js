@@ -81,7 +81,8 @@ class MyHUD extends THREE.Object3D {
     update(state) {
         this.updateHud(state)
         this.updateTimer()
-        this.checkWinner()
+        if(state !== "END")
+            this.checkWinner()
     }
 
     updateHud(state) {
@@ -144,7 +145,7 @@ class MyHUD extends THREE.Object3D {
             this.winner = [this.app.contents.name ,this.app.contents.car.model, this.elapsedTime/1000]
             this.loser = ["Bot - " + this.app.contents.botDifficulty, this.modelMap[this.app.contents.car.model], 20 * this.difficultyMap[this.difficulty] * 3]
             this.app.contents.game.state = State.END
-            this.app.contents.createPodium(this.winner, this.loser, this.elapsedTime)
+            this.app.contents.createPodium(this.winner, this.loser, this.elapsedTime/1000)
         }
     }
 
