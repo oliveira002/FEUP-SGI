@@ -306,10 +306,16 @@ class MyContents {
           if(this.opponent) {
             this.opponent.update()
           }
+          if(this.reader){
+            this.reader.update()
+          }
           break;
         case State.PLACE_OBSTACLE:
           if(this.opponent) {
             this.opponent.update()
+          }
+          if(this.reader){
+            this.reader.update()
           }
           break;
         
@@ -425,11 +431,11 @@ class MyContents {
         this.pickableObjs = []
         this.hud.resumeTimer()
         this.game.state = State.PLAYING
+        this.opponent.mixerPause = false
+        this.app.setActiveCamera('Car')
         this.reader.powerups.forEach(pu => {
           pu.resumeTimer()
         })
-        this.opponent.mixerPause = false
-        this.app.setActiveCamera('Car')
         break;
       }
 

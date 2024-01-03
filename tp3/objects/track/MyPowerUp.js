@@ -16,7 +16,7 @@ class MyPowerUp extends THREE.Object3D {
     this.coords = new THREE.Vector3(...coords)
     this.startTime = Date.now();
     this.scaleFactor = 0.1
-    this.effects = ["None", "Speed"]//, "NoClip", "Offroad"]
+    this.effects = ["Speed"]//, "NoClip", "Offroad"]
     this.disabled = false
     this.lastDisabledTime = null
     this.cooldown = 5000
@@ -96,8 +96,6 @@ class MyPowerUp extends THREE.Object3D {
 
 
   getEffect(){
-    if(this.disabled) return "None"
-
     let effect = Math.floor(Math.random() * this.effects.length);
     this.disabled = true
     return this.effects[effect];

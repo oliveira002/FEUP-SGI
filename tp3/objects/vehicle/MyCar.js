@@ -466,8 +466,6 @@ class MyCar extends THREE.Object3D {
     }
 
     update(){
-        console.log("SPEED:", this.speed)
-        console.log("MAX SPEED", this.maxSpeed)
         this.updateAttributesBasedOnEffects()
         this.updatePosition()
         this.updateCameraPos()
@@ -559,8 +557,8 @@ class MyCar extends THREE.Object3D {
         objects.forEach(obj => {
             let intersects = this.car.userData.obb.intersectsBox3(obj.geometry.boundingBox)
             if(intersects){
-                let effect = obj.getEffect()
-                if(effect !== "None") {
+                if(!obj.disabled) {
+                    let effect = obj.getEffect()
                     if(obj instanceof MyPowerUp) {
                         obj.startTimer()
                        this.app.contents.game.state = State.CHOOSE_OBSTACLE
