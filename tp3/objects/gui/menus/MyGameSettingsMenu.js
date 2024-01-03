@@ -98,18 +98,14 @@ class MyGameSettingsMenu extends THREE.Object3D {
             if (this.activeTrack === this.track1) {
                 this.activeTrack = this.track2;
             } else if (this.activeTrack === this.track2) {
-                this.activeTrack = this.track3;
-            } else {
                 this.activeTrack = this.track1;
             }
         } else if (name === "trackLeft") {
             if (this.activeTrack === this.track1) {
-                this.activeTrack = this.track3;
+                this.activeTrack = this.track2;
             } else if (this.activeTrack === this.track2) {
                 this.activeTrack = this.track1;
-            } else {
-                this.activeTrack = this.track2;
-            }
+            } 
         }
     
         this.add(this.activeTrack); 

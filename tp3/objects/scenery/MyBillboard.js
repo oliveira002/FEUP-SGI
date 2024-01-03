@@ -15,7 +15,13 @@ class MyBillboard extends THREE.Object3D {
         this.app = app;
         this.type = 'Group';
 
-        this.planeGeometry = new THREE.PlaneGeometry(14.8, 6.4,100,100); // Adjust the size as needed
+        this.planeGeometry = new THREE.PlaneGeometry(14.8, 6.4,100,100);
+        var mat = new THREE.MeshPhongMaterial({color: "0x000000"})
+        this.billboardPlane = new THREE.Mesh(this.planeGeometry, mat)
+        this.billboardPlane.translateY(13.3)
+        this.billboardPlane.translateZ(0.5)
+        this.add(this.billboardPlane) 
+
 
         const loader = new GLTFLoader();
         loader.load(
@@ -35,10 +41,9 @@ class MyBillboard extends THREE.Object3D {
             }
         );
 
-
         this.updateInterval = setInterval(() => {
             this.update();
-        }, 1000); 
+        }, 10000); 
     }
 
 
