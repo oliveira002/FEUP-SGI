@@ -17,14 +17,14 @@ class MyScenery extends THREE.Object3D{
 			maxX: -6,
 			minZ: 40,
 			maxZ: 70,
-		  })
+		})
 
-		  this.createTreeInstances(10, {
-			minX: -35,
-			maxX: 26,
-			minZ: -40,
-			maxZ: -70,
-		  })
+		this.createTreeInstances(10, {
+		minX: -35,
+		maxX: 26,
+		minZ: -40,
+		maxZ: -70,
+		})
 		this.app.scene.fog = new THREE.Fog( 0xcccccc, 20,505);
 
 		this.skyboxTex = new THREE.TextureLoader().load('images/sky.jpg');
@@ -73,22 +73,32 @@ class MyScenery extends THREE.Object3D{
 
 		this.initClouds()
 
-		this.floorGeometry = new THREE.PlaneGeometry(5.7, 5.7, 100, 100);
+		this.floorGeometry = new THREE.PlaneGeometry(5.7, 5.7, 10, 10);
 		
 		this.floorTex = new THREE.TextureLoader().load('images/mfloor3.jpg' )
 		this.floorTex.wrapS = THREE.RepeatWrapping;
 		this.floorTex.wrapT = THREE.RepeatWrapping;
-		this.floorTex.magFilter = THREE.NearestFilter;
-    	this.floorTex.minFilter = THREE.LinearMipMapLinearFilter;
-		this.floorMaterial = new THREE.MeshPhongMaterial({bumpMap: this.floorTex, bumpScale: 10,map: this.floorTex, side: THREE.DoubleSide, shininess: 20})
+		//this.floorTex.magFilter = THREE.NearestFilter;
+    	//this.floorTex.minFilter = THREE.LinearMipMapLinearFilter;
+		this.floorMaterial = new THREE.MeshPhongMaterial({bumpMap: this.floorTex, bumpScale: 1,map: this.floorTex, side: THREE.DoubleSide, shininess: 20})
 
 		this.billboard = new MyBillboard(this.app)
 		this.billboard.translateY(33)
 		this.billboard.translateX(85)
 		this.billboard.rotateY(-Math.PI /2 )
 		this.add(this.billboard)
+
+		this.initLights()
 	}
 	
+	initLights(){
+		const directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
+		directionalLight.position.set(0, 1000, 50)
+		directionalLight.castShadow = true
+		this.add(directionalLight)
+	}
+
+
 	waitForShaders() {
 		if(this.shader.ready === false) {
 			setTimeout(this.waitForShaders.bind(this), 100)

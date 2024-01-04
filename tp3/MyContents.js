@@ -388,7 +388,6 @@ class MyContents {
       this.hud.update(this.game.state)
     }
 
-    //this.powerup.update()
   }
 
   updateSnow(){
@@ -651,6 +650,7 @@ class MyContents {
     this.pickedObs = null
     this.opponentStarted = false
     this.podium = null
+    this.snow = []
   }
 }
 
