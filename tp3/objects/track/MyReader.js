@@ -33,14 +33,14 @@ class MyReader extends THREE.Object3D {
 
         let object = tracks[trackName];
 
-        this.createTrack(object.track, object.starting_point_index);
+        this.createTrack(object.track);
         this.createPowerUps(object.power_ups);
         this.createObstacles(object.obstacles);
         this.createKeyFrames(object.track, this.totalTime);
 
     }
 
-    createTrack(points, starting_point_index){
+    createTrack(points){
         let curvePoints = []
         points.forEach(point => {
             curvePoints.push(

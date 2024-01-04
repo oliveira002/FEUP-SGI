@@ -12,15 +12,15 @@ class MyTrack extends THREE.Object3D {
         this.trackWidth = 6
         this.samples = 500
         this.checkpoints = []
-        this.carStart = this.points[this.points.length-3]
-        this.carStartDir = this.points[0].clone().sub(this.carStart)
+        this.carStart = this.points[0]
+        this.carStartDir = this.points[1].clone().sub(this.carStart)
 
         const geometry = new THREE.SphereGeometry(1, 32, 32);
         const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
         const sphere = new THREE.Mesh(geometry, material);
         sphere.scale.set(0.2, 0.2, 0.2)
         sphere.position.set(...this.carStart)
-        this.add( sphere );
+        //this.add( sphere );
 
         this.init()
         this.initCheckpoints()

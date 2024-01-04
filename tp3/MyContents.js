@@ -96,7 +96,7 @@ class MyContents {
 
     if(this.axis === null) {
       this.axis = new MyAxis(this);
-      this.app.scene.add(this.axis);
+      //this.app.scene.add(this.axis);
     }
 
     if(this.car === null){
