@@ -1,10 +1,9 @@
 #include <packing>
 
 uniform sampler2D tDiffuse;
-uniform sampler2D tDepth;
 uniform float cameraNear;
 uniform float cameraFar;
-
+uniform sampler2D tDepth;
 varying vec2 vUv;
 
 
@@ -19,7 +18,6 @@ void main() {
 
     float depth = 1.0 - readDepth( tDepth, vUv );
 
-    
     vec3 offset = vec3(depth);    
 
     vec4 modelViewPosition = modelViewMatrix * vec4(position + normal * offset, 1.0);
