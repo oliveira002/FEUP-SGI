@@ -73,14 +73,14 @@ class MyScenery extends THREE.Object3D{
 
 		this.initClouds()
 
-		this.floorGeometry = new THREE.PlaneGeometry(5.7, 5.7, 100, 100);
+		this.floorGeometry = new THREE.PlaneGeometry(5.7, 5.7, 10, 10);
 		
 		this.floorTex = new THREE.TextureLoader().load('images/mfloor3.jpg' )
 		this.floorTex.wrapS = THREE.RepeatWrapping;
 		this.floorTex.wrapT = THREE.RepeatWrapping;
-		this.floorTex.magFilter = THREE.NearestFilter;
-    	this.floorTex.minFilter = THREE.LinearMipMapLinearFilter;
-		this.floorMaterial = new THREE.MeshPhongMaterial({bumpMap: this.floorTex, bumpScale: 10,map: this.floorTex, side: THREE.DoubleSide, shininess: 20})
+		//this.floorTex.magFilter = THREE.NearestFilter;
+    	//this.floorTex.minFilter = THREE.LinearMipMapLinearFilter;
+		this.floorMaterial = new THREE.MeshPhongMaterial({bumpMap: this.floorTex, bumpScale: 1,map: this.floorTex, side: THREE.DoubleSide, shininess: 20})
 
 		this.billboard = new MyBillboard(this.app)
 		this.billboard.translateY(33)
