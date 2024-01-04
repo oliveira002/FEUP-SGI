@@ -130,7 +130,7 @@ class MyCar extends THREE.Object3D {
                     this.bbox = new THREE.Box3()
                     
                     this.bbhelper = new THREE.Box3Helper( this.bbox, 0xffff00 );
-                    this.add( this.bbhelper );
+                    //this.add( this.bbhelper );
 
                     this.car.userData.obb = new OBB().fromBox3(this.bbox);
 
@@ -222,7 +222,7 @@ class MyCar extends THREE.Object3D {
                     this.bbox = new THREE.Box3()
                     
                     this.bbhelper = new THREE.Box3Helper( this.bbox, 0xffff00 );
-                    this.add( this.bbhelper );
+                    //this.add( this.bbhelper );
 
                     this.car.userData.obb = new OBB().fromBox3(this.bbox);
                 },
@@ -629,7 +629,7 @@ class MyCar extends THREE.Object3D {
                             console.log("Passed checkpoint:",this.checkpointNr)
                             if(this.checkpointNr === 0){
                                 this.lap++
-                                console.log(this.lap)
+                                //console.log(this.lap)
                             }
                         }
 

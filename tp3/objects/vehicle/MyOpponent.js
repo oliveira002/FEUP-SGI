@@ -139,7 +139,7 @@ class MyOpponent extends THREE.Object3D {
 
                             this.bbox = new THREE.Box3()  
                             this.bbhelper = new THREE.Box3Helper( this.bbox, 0xffff00 );
-                            this.add( this.bbhelper );
+                            //this.add( this.bbhelper );
                             this.boxMesh.userData.obb = new OBB().fromBox3(this.bbox);
 
                             let dir = this.app.contents.reader.track.carStartDir
@@ -192,7 +192,7 @@ class MyOpponent extends THREE.Object3D {
                             this.boxMesh.rotation.y -= -Math.PI / 2
                             this.bbox = new THREE.Box3()  
                             this.bbhelper = new THREE.Box3Helper( this.bbox, 0xffff00 );
-                            this.add( this.bbhelper );
+                            //this.add( this.bbhelper );
                             this.boxMesh.userData.obb = new OBB().fromBox3(this.bbox);
 
                         

@@ -20,7 +20,7 @@ class MyTrack extends THREE.Object3D {
         const sphere = new THREE.Mesh(geometry, material);
         sphere.scale.set(0.2, 0.2, 0.2)
         sphere.position.set(...this.carStart)
-        this.add( sphere );
+        //this.add( sphere );
 
         this.init()
         this.initCheckpoints()
