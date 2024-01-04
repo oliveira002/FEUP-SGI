@@ -17,14 +17,14 @@ class MyScenery extends THREE.Object3D{
 			maxX: -6,
 			minZ: 40,
 			maxZ: 70,
-		  })
+		})
 
-		  this.createTreeInstances(10, {
-			minX: -35,
-			maxX: 26,
-			minZ: -40,
-			maxZ: -70,
-		  })
+		this.createTreeInstances(10, {
+		minX: -35,
+		maxX: 26,
+		minZ: -40,
+		maxZ: -70,
+		})
 		this.app.scene.fog = new THREE.Fog( 0xcccccc, 20,505);
 
 		this.skyboxTex = new THREE.TextureLoader().load('images/sky.jpg');
@@ -87,8 +87,18 @@ class MyScenery extends THREE.Object3D{
 		this.billboard.translateX(85)
 		this.billboard.rotateY(-Math.PI /2 )
 		this.add(this.billboard)
+
+		this.initLights()
 	}
 	
+	initLights(){
+		const directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
+		directionalLight.position.set(0, 100, 50)
+		directionalLight.castShadow = true
+		this.add(directionalLight)
+	}
+
+
 	waitForShaders() {
 		if(this.shader.ready === false) {
 			setTimeout(this.waitForShaders.bind(this), 100)
