@@ -124,8 +124,8 @@ class MyOpponent extends THREE.Object3D {
                         (gltf) => {
                             this.boxMesh = gltf.scene;
                             this.boxMesh.name = "car";
-                            this.boxMesh.position.set(0, 0, 0);
                             this.boxMesh.scale.set(0.8,0.8,0.8)
+                            this.boxMesh.position.set(this.keyPoints[0])
                             //this.boxMesh.scale.set(0.7,0.7,0.7)
             
                             this.wheels.push(this.boxMesh.children[0].children[1]);
@@ -141,6 +141,11 @@ class MyOpponent extends THREE.Object3D {
                             this.bbhelper = new THREE.Box3Helper( this.bbox, 0xffff00 );
                             this.add( this.bbhelper );
                             this.boxMesh.userData.obb = new OBB().fromBox3(this.bbox);
+
+                            let dir = this.app.contents.reader.track.carStartDir
+                            let rotationAxis = new THREE.Vector3(0, 1, 0);
+                            let angle = Math.atan2(dir.x, dir.z);
+                            this.boxMesh.setRotationFromAxisAngle(rotationAxis, angle);
             
                             console.log('Model loaded successfully');
                             resolve(this.boxMesh);
@@ -162,6 +167,8 @@ class MyOpponent extends THREE.Object3D {
                             this.boxMesh = gltf.scene
                             this.boxMesh.name = "car"
                             this.boxMesh.scale.set(0.005,0.005,0.005)
+                            let pos = [this.keyPoints[0].x, this.keyPoints[0].y, this.keyPoints[0].z-1.5]
+                            this.boxMesh.position.set(...pos)
             
                             this.wheels.push(this.boxMesh.children[2]);
                             this.wheels.push(this.boxMesh.children[3]);
@@ -187,7 +194,13 @@ class MyOpponent extends THREE.Object3D {
                             this.bbhelper = new THREE.Box3Helper( this.bbox, 0xffff00 );
                             this.add( this.bbhelper );
                             this.boxMesh.userData.obb = new OBB().fromBox3(this.bbox);
-            
+
+                        
+                            let dir = this.app.contents.reader.track.carStartDir
+                            let rotationAxis = new THREE.Vector3(0, 1, 0);
+                            let angle = Math.atan2(dir.x, dir.z);
+                            this.boxMesh.setRotationFromAxisAngle(rotationAxis, angle);
+
                             console.log('Model loaded successfully');
                             resolve(this.boxMesh);
                         },

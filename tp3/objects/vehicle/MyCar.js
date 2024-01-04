@@ -97,7 +97,8 @@ class MyCar extends THREE.Object3D {
                     let rotationAxis = new THREE.Vector3(0, 1, 0);
                     let angle = Math.atan2(dir.x, dir.z);
                     this.car.setRotationFromAxisAngle(rotationAxis, angle);
-                    this.car.position.set(...this.app.contents.reader.track.carStart)
+                    this.pos = this.app.contents.reader.track.carStart
+                    this.pos.z += 1.5
                     
                     this.wheels.push(this.car.children[0].children[1]);
                     this.wheels.push(this.car.children[0].children[2]);
@@ -175,7 +176,8 @@ class MyCar extends THREE.Object3D {
                     let rotationAxis = new THREE.Vector3(0, 1, 0);
                     let angle = Math.atan2(dir.x, dir.z);
                     this.car.setRotationFromAxisAngle(rotationAxis, angle);
-                    this.car.position.set(...this.app.contents.reader.track.carStart)
+                    this.pos = this.app.contents.reader.track.carStart
+                    this.pos.z += 1.5
 
                     this.wheels.push(this.car.children[2])
                     this.wheels.push(this.car.children[3])
