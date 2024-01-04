@@ -96,6 +96,7 @@ class MyPowerUp extends THREE.Object3D {
 
 
     this.position.set(...this.coords)
+    this.translateY(this.radius*this.scaleFactor)
 	}
 
 

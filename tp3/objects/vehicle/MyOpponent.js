@@ -125,7 +125,8 @@ class MyOpponent extends THREE.Object3D {
                             this.boxMesh = gltf.scene;
                             this.boxMesh.name = "car";
                             this.boxMesh.scale.set(0.8,0.8,0.8)
-                            this.boxMesh.position.set(this.keyPoints[0])
+                            let pos = [this.keyPoints[0].x, this.keyPoints[0].y, this.keyPoints[0].z-1.5]
+                            this.boxMesh.position.set(...pos)
                             //this.boxMesh.scale.set(0.7,0.7,0.7)
             
                             this.wheels.push(this.boxMesh.children[0].children[1]);

@@ -243,7 +243,7 @@ class MyCar extends THREE.Object3D {
         this.camera = new THREE.PerspectiveCamera( 100, aspect, 0.1, 1000 )
 
 
-        this.app.cameras[this.name] = this.camera
+        this.app.cameras["Car"] = this.camera
 
         this.updateCameraTarget()
 
@@ -264,12 +264,12 @@ class MyCar extends THREE.Object3D {
 
     updateCameraTarget(){
         if(this.car) {
-            this.app.targets[this.name] = new THREE.Vector3(
+            this.app.targets["Car"] = new THREE.Vector3(
                 this.car.position.x, 
                 this.car.position.y, 
                 this.car.position.z
             )
-            this.camera.lookAt(this.app.targets[this.name])
+            this.camera.lookAt(this.app.targets["Car"])
         }
     }
 

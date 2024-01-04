@@ -475,6 +475,7 @@ class MyContents {
 
         this.pickableObjs = [this.reader.track]
         this.game.state = State.PLACE_OBSTACLE
+        this.app.setActiveCamera('Free roam')
         break;
       }
 

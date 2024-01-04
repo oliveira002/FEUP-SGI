@@ -31,6 +31,7 @@ class MyGuiInterface  {
     
     init() {
         if (Array.isArray(this.app.cameras) && Object.keys(this.app.cameras).length) {
+            console.log(Object.keys(this.app.cameras))
             const cameraFolder = this.datgui.addFolder('Camera');
             cameraFolder.add(this.app, 'activeCameraName', Object.keys(this.app.cameras)).name("Active camera");
             cameraFolder.open();

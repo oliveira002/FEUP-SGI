@@ -30,7 +30,7 @@ class MyBanana extends THREE.Object3D {
                 this.name = "Banana";
 
                 // Add bounding box helper to the scene
-                this.add(this.boundingBoxHelper);
+                //this.add(this.boundingBoxHelper);
             },
             (xhr) => {
                 //console.log((xhr.loaded / xhr.total * 100) + '% loaded');
