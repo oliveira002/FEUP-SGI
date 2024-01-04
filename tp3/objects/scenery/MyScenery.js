@@ -92,8 +92,8 @@ class MyScenery extends THREE.Object3D{
 	}
 	
 	initLights(){
-		const directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
-		directionalLight.position.set(0, 100, 50)
+		const directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
+		directionalLight.position.set(0, 1000, 50)
 		directionalLight.castShadow = true
 		this.add(directionalLight)
 	}

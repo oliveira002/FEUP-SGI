@@ -58,6 +58,11 @@ class MyGarage extends THREE.Object3D {
         this.caution.rotateY(Math.PI / 1.8)
         this.caution.scale.set(1.4,1.4,1.4)
         this.add(this.caution)
+
+        this.children.forEach(element => {
+            element.castShadow = true
+            element.receiveShadow = true
+        });
     }
 
     initCamera(){

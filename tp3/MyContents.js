@@ -357,7 +357,7 @@ class MyContents {
         if(this.reader){
           this.reader.update()
         }
-        //this.updateSnow()
+        this.updateSnow()
         break;
         case State.CHOOSE_OBSTACLE:
           if(this.opponent) {
@@ -388,7 +388,6 @@ class MyContents {
       this.hud.update(this.game.state)
     }
 
-    //this.powerup.update()
   }
 
   updateSnow(){
@@ -651,6 +650,7 @@ class MyContents {
     this.pickedObs = null
     this.opponentStarted = false
     this.podium = null
+    this.snow = []
   }
 }
 
