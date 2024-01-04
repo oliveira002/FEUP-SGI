@@ -232,6 +232,40 @@ class MyContents {
             break;
         }
       }
+      else if(this.game.state == State.END) {
+        switch (event.key) {
+          case 'r':
+            if(event.type == 'keydown') {
+              this.resetGame()
+
+              this.game.state = State.MAIN_MENU
+              this.menu = new MyMenu(this.app)
+              this.menu.updateCameraByGameState(this.game.state)
+              this.app.scene.add(this.menu)
+              this.pickableObjs = this.menu.pickableObjs
+              this.app.setActiveCamera('Menu')
+
+              this.scenery = new MyScenery(this.app, 100, 100)
+              this.scenery.translateY(-33)
+              this.app.scene.add(this.scenery)
+
+              this.garage = new MyGarage(this.app)
+              this.garage.translateX(this.menu.positionOffset + 120)
+              this.garage.translateY(-10)
+              this.garage.translateZ(-9)
+              this.garage.rotateY(-Math.PI / 2)
+              this.app.scene.add(this.garage)
+
+              this.obsGarage = new MyObstaclesGarage(this.app)
+              this.obsGarage.translateX(this.menu.positionOffset + 150)
+              this.obsGarage.translateY(-10)
+              this.obsGarage.translateZ(-9)
+              this.obsGarage.rotateY(-Math.PI / 2)
+              this.app.scene.add(this.obsGarage)
+          }
+          break;
+      }
+      } 
       else if(this.game.state == State.CHOOSE_OBSTACLE || this.game.state == State.PLACE_OBSTACLE) {
         switch (event.key) {
           case 'w':
@@ -584,6 +618,39 @@ class MyContents {
       }
       default: {}
     }
+  }
+
+  resetGame() {
+    this.pickableObjs = []
+    this.app.scene.children.splice(1)
+    this.app.scene.remove(this.menu)
+    this.app.scene.remove(this.obsGarage)
+    this.app.scene.remove(this.garage)
+    this.app.scene.remove(this.car)
+    this.app.scene.remove(this.reader)
+    this.app.scene.remove(this.opponent)
+    this.app.scene.remove(this.scenery)
+    this.app.scene.remove(this.podium)
+    this.app.scene.remove(this.hud)
+
+    this.hud = null
+    this.menu = null
+    this.obsGarage = null
+    this.garage = null
+    this.car = null
+    this.opponent = null
+    this.scenery = null
+    this.reader = null
+    this.myCar = null
+    this.opponentCar = null
+    this.name = ""
+    this.botDifficulty = null
+    this.trackName = null
+    this.track =  null
+    this.clock = null
+    this.pickedObs = null
+    this.opponentStarted = false
+    this.podium = null
   }
 }
 
