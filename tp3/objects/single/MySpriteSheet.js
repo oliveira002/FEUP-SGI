@@ -7,7 +7,7 @@ class MySpriteSheet {
     this.rows = rows;
     this.texture = null;
     this.sprites = [];
-    this.spriteWidth = 1 / this.columns;
+    this.width = 1 / this.columns;
     this.mapping = {
       " ": 0,
       "!": 1,
@@ -95,7 +95,7 @@ class MySpriteSheet {
     for (let y = 0; y < this.rows; y++) {
       for (let x = 0; x < this.columns; x++) {
         const material = new THREE.MeshBasicMaterial({
-          map: this.texture.clone(), // Clone the texture for each sprite
+          map: this.texture.clone(), 
           transparent: true,
           depthTest: false,
           depthWrite: false,
@@ -106,7 +106,6 @@ class MySpriteSheet {
 
         sprite.position.set(x * spriteWidth, -y * spriteHeight, 0);
 
-        // Set UV coordinates based on the current character's position in the spritesheet
         sprite.geometry.setAttribute('uv', new THREE.Float32BufferAttribute([
           x / this.columns, 1 - y / this.rows,
           (x + 1) / this.columns, 1 - y / this.rows,
@@ -124,7 +123,6 @@ class MySpriteSheet {
     if (index !== undefined) {
       return this.sprites[index];
     } else {
-      console.error('Character not found in mapping.');
       return null;
     }
   }
@@ -138,7 +136,7 @@ class MySpriteSheet {
         const spriteClone = sprite.clone();
         spriteClone.position.set(offsetX, 0, 0);
         textGroup.add(spriteClone);
-        offsetX += this.spriteWidth // Update the offset
+        offsetX += this.width
       }
     }
     textGroup.scale.set(2,2,2)

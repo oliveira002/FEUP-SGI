@@ -72,7 +72,7 @@ class MyBillboard extends THREE.Object3D {
 
         this.app.renderer.setRenderTarget(null);
 
-        this.outdoorShaderMaterial = new THREE.ShaderMaterial({
+        this.material = new THREE.ShaderMaterial({
             vertexShader: outdoorVertexShader,
             fragmentShader: outdooFragmentShader,
             uniforms: {
@@ -84,7 +84,7 @@ class MyBillboard extends THREE.Object3D {
             },
         });
 
-        this.billboardPlane = new THREE.Mesh(this.planeGeometry, this.outdoorShaderMaterial)
+        this.billboardPlane = new THREE.Mesh(this.planeGeometry, this.material)
         this.billboardPlane.translateY(13.3)
         this.billboardPlane.translateZ(0.5)
 

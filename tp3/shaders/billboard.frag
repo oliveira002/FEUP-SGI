@@ -1,10 +1,11 @@
 #include <packing>
 
-varying vec2 vUv;
 uniform sampler2D tDiffuse;
 uniform sampler2D tDepth;
+varying vec2 vUv;
 uniform float cameraNear;
 uniform float cameraFar;
+
 
 
 float readDepth( sampler2D depthSampler, vec2 coord ) {
@@ -14,7 +15,7 @@ float readDepth( sampler2D depthSampler, vec2 coord ) {
 }
 
 void main() {
-    vec3 diffuse = texture2D( tDiffuse, vUv ).rgb;
-    gl_FragColor.rgb = vec3(diffuse);
+    vec3 color = texture2D( tDiffuse, vUv ).rgb;
+    gl_FragColor.rgb = vec3(color);
     gl_FragColor.a = 1.0;
 }
